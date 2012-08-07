@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}</ProjectGuid>
+    <Target>Bin</Target>
+    <Language>C</Language>
+    <Compiler>
+      <Compiler ctype="GccCompiler" />
+    </Compiler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineSymbols>DEBUG MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OutputName>Headers</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <DefineSymbols>MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <OptimizationLevel>3</OptimizationLevel>
+    <OutputName>Headers</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="AGSAttachment.h" />
+    <None Include="AGSAttachmentInfo.h" />
+    <None Include="AGSAttachmentManager.h" />
+    <None Include="AGSBase64.h" />
+    <None Include="AGSBingMapLayer.h" />
+    <None Include="AGSCallout.h" />
+    <None Include="AGSClassBreak.h" />
+    <None Include="AGSClassBreaksRenderer.h" />
+    <None Include="AGSClosestFacilityLayerInfo.h" />
+    <None Include="AGSClosestFacilityResult.h" />
+    <None Include="AGSClosestFacilityTask.h" />
+    <None Include="AGSClosestFacilityTaskParameters.h" />
+    <None Include="AGSClosestFacilityTaskResult.h" />
+    <None Include="AGSCoding.h" />
+    <None Include="AGSCompositeLineSymbol.h" />
+    <None Include="AGSCompositeSymbol.h" />
+    <None Include="AGSCredential.h" />
+    <None Include="AGSDirectionGraphic.h" />
+    <None Include="AGSDirectionSet.h" />
+    <None Include="AGSDynamicLayer.h" />
+    <None Include="AGSDynamicLayerView.h" />
+    <None Include="AGSDynamicMapServiceLayer.h" />
+    <None Include="AGSEditFieldsInfo.h" />
+    <None Include="AGSEditResult.h" />
+    <None Include="AGSEnumerations.h" />
+    <None Include="AGSEnvelope.h" />
+    <None Include="AGSFacilityGraphic.h" />
+    <None Include="AGSFeatureLayer.h" />
+    <None Include="AGSFeatureLayer+Editing.h" />
+    <None Include="AGSFeatureLayerModelObjects.h" />
+    <None Include="AGSFeatureSet.h" />
+    <None Include="AGSFillSymbol.h" />
+    <None Include="AGSFillSymbolSubclass.h" />
+    <None Include="AGSFindTask.h" />
+    <None Include="AGSGeometries.h" />
+    <None Include="AGSGeometry.h" />
+    <None Include="AGSGeometryEdit.h" />
+    <None Include="AGSGeometryEngine.h" />
+    <None Include="AGSGeometryParameters.h" />
+    <None Include="AGSGeometryServiceTask.h" />
+    <None Include="AGSGeometryServiceTask+AGSGeometryArray.h" />
+    <None Include="AGSGeometryServiceTask+AreasAndLengths.h" />
+    <None Include="AGSGeoprocessor.h" />
+    <None Include="AGSGPResultLayer.h" />
+    <None Include="AGSGPS.h" />
+    <None Include="AGSGraphic.h" />
+    <None Include="AGSGraphicsLayer.h" />
+    <None Include="AGSIdentifyTask.h" />
+    <None Include="AGSImageParameters.h" />
+    <None Include="AGSImageRequestOperation.h" />
+    <None Include="AGSImageServiceIdentifyParameters.h" />
+    <None Include="AGSImageServiceIdentifyResult.h" />
+    <None Include="AGSImageServiceIdentifyTask.h" />
+    <None Include="AGSImageServiceInfo.h" />
+    <None Include="AGSImageServiceLayer.h" />
+    <None Include="AGSIncidentGraphic.h" />
+    <None Include="AGSInfoTemplateDelegate.h" />
+    <None Include="AGSJSON.h" />
+    <None Include="AGSJSONRequestOperation.h" />
+    <None Include="AGSJSONUtility.h" />
+    <None Include="AGSLabelClass.h" />
+    <None Include="AGSLayer.h" />
+    <None Include="AGSLayerDefinition.h" />
+    <None Include="AGSLayerDelegate.h" />
+    <None Include="AGSLayers.h" />
+    <None Include="AGSLayerView.h" />
+    <None Include="AGSLocalTiledLayer.h" />
+    <None Include="AGSLocator.h" />
+    <None Include="AGSLOD.h" />
+    <None Include="AGSMapServiceInfo.h" />
+    <None Include="AGSMapServiceLayerInfo.h" />
+    <None Include="AGSMapServiceTableInfo.h" />
+    <None Include="AGSMapView.h" />
+    <None Include="AGSMarkerSymbol.h" />
+    <None Include="AGSMarkerSymbolSubclass.h" />
+    <None Include="AGSModels.h" />
+    <None Include="AGSMosaicRule.h" />
+    <None Include="AGSMultipoint.h" />
+    <None Include="AGSNADirectionsString.h" />
+    <None Include="AGSNALayerDefinition.h" />
+    <None Include="AGSNALayerInfoBase.h" />
+    <None Include="AGSNAMessage.h" />
+    <None Include="AGSNetworkLayerInfo.h" />
+    <None Include="AGSOpenStreetMapLayer.h" />
+    <None Include="AGSPictureFillSymbol.h" />
+    <None Include="AGSPictureMarkerSymbol.h" />
+    <None Include="AGSPoint.h" />
+    <None Include="AGSPolygon.h" />
+    <None Include="AGSPolyline.h" />
+    <None Include="AGSPopup.h" />
+    <None Include="AGSPopupFieldInfo.h" />
+    <None Include="AGSPopupInfo.h" />
+    <None Include="AGSPopupMediaInfo.h" />
+    <None Include="AGSPopupsContainer.h" />
+    <None Include="AGSPopupsContainerDelegate.h" />
+    <None Include="AGSPopupsContainerEditingStyle.h" />
+    <None Include="AGSPopupsContainerPagingStyle.h" />
+    <None Include="AGSPopupsContainerStyle.h" />
+    <None Include="AGSPopupsContainerViewController.h" />
+    <None Include="AGSPopupViewType.h" />
+    <None Include="AGSPortal.h" />
+    <None Include="AGSPortalFolder.h" />
+    <None Include="AGSPortalGroup.h" />
+    <None Include="AGSPortalInfo.h" />
+    <None Include="AGSPortalItem.h" />
+    <None Include="AGSPortalItemComment.h" />
+    <None Include="AGSPortalQueryParams.h" />
+    <None Include="AGSPortalQueryResultSet.h" />
+    <None Include="AGSPortalUser.h" />
+    <None Include="AGSQueryTask.h" />
+    <None Include="AGSRampInterpolator.h" />
+    <None Include="AGSRasterFunction.h" />
+    <None Include="AGSRenderer.h" />
+    <None Include="AGSRenderers.h" />
+    <None Include="AGSRequest.h" />
+    <None Include="AGSRequestOperation.h" />
+    <None Include="AGSRouteLayerInfo.h" />
+    <None Include="AGSRouteResult.h" />
+    <None Include="AGSRouteTask.h" />
+    <None Include="AGSRouteTaskParameters.h" />
+    <None Include="AGSRouteTaskResult.h" />
+    <None Include="AGSRunLoopOperation.h" />
+    <None Include="AGSSBJsonIncludes.h" />
+    <None Include="AGSSBJsonParser.h" />
+    <None Include="AGSSBJsonStreamParser.h" />
+    <None Include="AGSSBJsonStreamParserAccumulator.h" />
+    <None Include="AGSSBJsonStreamParserAdapter.h" />
+    <None Include="AGSSBJsonStreamParserState.h" />
+    <None Include="AGSSBJsonStreamWriter.h" />
+    <None Include="AGSSBJsonStreamWriterAccumulator.h" />
+    <None Include="AGSSBJsonStreamWriterState.h" />
+    <None Include="AGSSBJsonTokeniser.h" />
+    <None Include="AGSSBJsonWriter.h" />
+    <None Include="AGSSBStateStack.h" />
+    <None Include="AGSSBUTF8Stream.h" />
+    <None Include="AGSServiceAreaLayerInfo.h" />
+    <None Include="AGSServiceAreaTask.h" />
+    <None Include="AGSServiceAreaTaskParameters.h" />
+    <None Include="AGSServiceAreaTaskResult.h" />
+    <None Include="AGSSimpleFillSymbol.h" />
+    <None Include="AGSSimpleLineSymbol.h" />
+    <None Include="AGSSimpleMarkerSymbol.h" />
+    <None Include="AGSSimpleRenderer.h" />
+    <None Include="AGSSketchGraphicsLayer.h" />
+    <None Include="AGSSpatialReference.h" />
+    <None Include="AGSStopGraphic.h" />
+    <None Include="AGSSymbol.h" />
+    <None Include="AGSSymbolInterpolator.h" />
+    <None Include="AGSSymbols.h" />
+    <None Include="AGSSymbolSubclass.h" />
+    <None Include="AGSTask.h" />
+    <None Include="AGSTasks.h" />
+    <None Include="AGSTemporalRenderer.h" />
+    <None Include="AGSTextSymbol.h" />
+    <None Include="AGSTile.h" />
+    <None Include="AGSTiledLayer.h" />
+    <None Include="AGSTiledLayerView.h" />
+    <None Include="AGSTiledMapServiceLayer.h" />
+    <None Include="AGSTileInfo.h" />
+    <None Include="AGSTileOperation.h" />
+    <None Include="AGSTileRequestOperation.h" />
+    <None Include="AGSTime.h" />
+    <None Include="AGSTimeClassBreaksAger.h" />
+    <None Include="AGSUniqueValue.h" />
+    <None Include="AGSUniqueValueRenderer.h" />
+    <None Include="AGSWebMap.h" />
+    <None Include="AGSWebMapBaseMap.h" />
+    <None Include="AGSWebMapBookmark.h" />
+    <None Include="AGSWebMapFeatureCollection.h" />
+    <None Include="AGSWebMapLayerInfo.h" />
+    <None Include="AGSWebMapQuery.h" />
+    <None Include="AGSWebMapQueryParameter.h" />
+    <None Include="AGSWebMapSubLayerInfo.h" />
+    <None Include="AGSWMSLayer.h" />
+    <None Include="AGSWMSLayerInfo.h" />
+    <None Include="ArcGIS.h" />
+    <None Include="NSBundleUtility.h" />
+    <None Include="NSError+AGSAdditions.h" />
+    <None Include="NSNull+AGSAdditions.h" />
+    <None Include="NSObject+AGSJSON.h" />
+    <None Include="NSURLConnection+AGSAdditions.h" />
+    <None Include="UIApplication+AGSAdditions.h" />
+    <None Include="UIColor+AGSAdditions.h" />
+    <None Include="UIDevice+AGSAdditions.h" />
+    <None Include="UILabel+AGSAdditons.h" />
+    <None Include="UIScreen+AGSAdditions.h" />
+  </ItemGroup>
+</Project>
