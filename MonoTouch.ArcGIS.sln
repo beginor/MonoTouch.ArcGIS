@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binding", "Binding\Binding.
 EndProject
 Project("{2857B73E-F847-4B02-9238-064979017E93}") = "Headers", "Headers\Headers.cproj", "{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,12 +17,16 @@ Global
 		{677363EB-5B1F-4548-B055-B94538D646A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677363EB-5B1F-4548-B055-B94538D646A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677363EB-5B1F-4548-B055-B94538D646A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1EE8B79-B41B-4FEF-9398-FD236FF5EE23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Binding\Binding.csproj
+		StartupItem = Parser\Parser.csproj
 	EndGlobalSection
 EndGlobal
