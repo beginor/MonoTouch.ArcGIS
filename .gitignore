@@ -9,6 +9,7 @@
 *.Publish.xml
 *.dSYM
 *.a
+.*
 [Tt]est[Rr]esults
 [Oo]bj
 [Oo]utput
