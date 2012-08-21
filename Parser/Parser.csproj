@@ -41,6 +41,7 @@
     <Compile Include="ObjcPropertyToken.cs" />
     <Compile Include="ObjcPropertyConverter.cs" />
     <Compile Include="ObjcTokenException.cs" />
+    <Compile Include="ObjcMethodToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

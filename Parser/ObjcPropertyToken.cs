@@ -17,6 +17,39 @@ namespace Parser {
 			private set;
 		}
 
+		public bool IsReadOnly {
+			get {
+				return this.Attributes.Contains("readonly");
+			}
+		}
+
+		public string Semantic {
+			get {
+				if (this.Attributes.Contains("assign")) {
+					return "Assign";
+				}
+				if (this.Attributes.Contains("copy")) {
+					return "Copy";
+				}
+				if (this.Attributes.Contains("retain")) {
+					return "Retain";
+				}
+				return "None";
+			}
+		}
+
+		public string Getter {
+			get {
+				return this.FindGetterOrSetterValue("getter=");
+			}
+		}
+
+		public string Setter {
+			get {
+				return this.FindGetterOrSetterValue("setter=");
+			}
+		}
+
 		public IEnumerable<string> Attributes {
 			get;
 			private set;
@@ -54,7 +87,20 @@ namespace Parser {
 			}
 			this.PropertyType = typeAndName[0];
 			this.PropertyName = typeAndName[1];
+			if (this.PropertyName.StartsWith("*")) {
+				this.PropertyName = this.PropertyName.Substring(1).Trim();
+			}
 		}
+
+		private string FindGetterOrSetterValue(string name) {
+			var val = string.Empty;
+			var attr = this.Attributes.FirstOrDefault(a => a.StartsWith(name));
+			if (attr != null) {
+				val = attr.Substring(attr.IndexOf('=') + 1);
+			}
+			return val;
+		}
+
 
 		public override ObjcConverter CreateConverter() {
 			return new ObjcPropertyConverter(this);
