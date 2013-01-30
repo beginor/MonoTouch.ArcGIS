@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSRenderer;
 @class AGSSymbol;
@@ -44,54 +44,33 @@
  @since 1.0
  */
 
-@interface AGSUniqueValueRenderer : AGSRenderer {
- @private
-    AGSSymbol *_defaultSymbol;
-	NSString *_field1;
-	NSString *_field2;
-	NSString *_field3;
-	NSString *_fieldDelimiter;
-	NSString *_defaultLabel;
-	NSMutableArray *_uniqueValues;
-}
+@interface AGSUniqueValueRenderer : AGSRenderer
 
 /** Default symbol for the renderer. This symbol is used for any unmatched values.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSymbol *defaultSymbol;
+@property (nonatomic, strong, readwrite) AGSSymbol *defaultSymbol;
 
-/** The name of the attribute field the renderer uses to match values against.
- @since 1.0
+/** An array of strings with field names.
+ The names represent attributes of a graphic that the renderer uses to match values against.
+ @since 10.1.1
  */
-@property (nonatomic, retain, readwrite) NSString *field1;
-
-/** If @em needed , specifies an additional attribute field the renderer uses to 
- match values.
- @since 1.0
- */
-@property (nonatomic, retain, readwrite) NSString *field2;
-
-/** If @em needed , specifies an additional attribute field the renderer uses to 
- match values.
- @since 1.0
- */
-@property (nonatomic, retain, readwrite) NSString *field3;
+@property (nonatomic, copy, readwrite) NSArray *fields;
 
 /** String inserted between the values if multiple attribute fields are specified.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) NSString *fieldDelimiter;
+@property (nonatomic, copy, readwrite) NSString *fieldDelimiter;
 
 /** Label for the default symbol used to draw unspecified values.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) NSString *defaultLabel;
+@property (nonatomic, copy, readwrite) NSString *defaultLabel;
 
 /** An array of @c AGSUniqueValue objects defined for the renderer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSMutableArray *uniqueValues;
-
+@property (nonatomic, copy) NSArray *uniqueValues;
 
 @end
 

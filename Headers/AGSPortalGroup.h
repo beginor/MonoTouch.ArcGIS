@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+@class AGSPortal;
 @protocol AGSPortalGroupDelegate;
 
 /** @file AGSPortalGroup.h */ //Required for Globals API doc
@@ -37,57 +37,57 @@
 /** The delegate for the portal group operations. 
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) id<AGSPortalGroupDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<AGSPortalGroupDelegate> delegate;
 
 /** The portal that the group belongs to. 
  @since 2.2
  */
-@property (nonatomic, assign, readonly) AGSPortal *portal;
+@property (nonatomic, weak, readonly) AGSPortal *portal;
 
 /** Id of the group.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *groupId;
+@property (nonatomic, copy, readonly) NSString *groupId;
 
 /** The group title.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 
 /** The user who created the group. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *owner;
+@property (nonatomic, copy, readonly) NSString *owner;
 
 /** The description of the group, if exists. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *groupDescription;
+@property (nonatomic, copy, readonly) NSString *groupDescription;
 
 /** Snippet or summary of the group with a character limit of 250 characters.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *snippet;
+@property (nonatomic, copy, readonly) NSString *snippet;
 
 /** The name of the thumbnail image of the group.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *thumbnailFileName;
+@property (nonatomic, copy, readonly) NSString *thumbnailFileName;
 
 /** Words or short phrases that describe the group.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *tags;
+@property (nonatomic, copy, readonly) NSArray *tags;
 
 /** The date on which the group was created.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *created;
+@property (nonatomic, strong, readonly) NSDate *created;
 
 /** The date on which the group was modified.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *modified;
+@property (nonatomic, strong, readonly) NSDate *modified;
 
 /** Determines who can access the group's conent. Can be either @c AGSPortalAccessPrivate, @c AGSPortalAccessOrganization, or @c AGSPortalAccessPublic.
  
@@ -105,17 +105,17 @@
 /** The thumbnail image file. This needs to be fetched explicitly using #fetchThumbnail
  @since 2.2
  */
-@property (nonatomic, retain, readonly) UIImage *thumbnail;
+@property (nonatomic, strong, readonly) AGSImage *thumbnail;
 
 /** Array of strings representing users of the group. These need to be fetched explicitly using #fetchUsers
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *users;
+@property (nonatomic, copy, readonly) NSArray *users;
 
 /** Array of strings representing admin users of the group. These need to be fetched explicitly using #fetchUsers
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *admins;
+@property (nonatomic, copy, readonly) NSArray *admins;
 
 
 /** Kicks off an operation to fetch a thumbnail image for the group. The corresponding methods on @c AGSPortalGroupDelegate are invoked when the operation completes successfully or encounters an error.
@@ -150,7 +150,7 @@
  @param thumbnail The thumbnail image file.
  @since 2.2
  */
--(void)portalGroup:(AGSPortalGroup*)portalGroup operation:(NSOperation*)op didFetchThumbnail:(UIImage*)thumbnail;
+-(void)portalGroup:(AGSPortalGroup*)portalGroup operation:(NSOperation*)op didFetchThumbnail:(AGSImage*)thumbnail;
 
 /** Tells the delegate that the specified error was encountered while tyring to fetch the thumbnail image. 
  @param portalGroup The portal group for which the thumbnail was fetched. 

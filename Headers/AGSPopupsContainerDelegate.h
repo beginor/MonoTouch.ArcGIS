@@ -17,8 +17,10 @@
  */
 
 #import <UIKit/UIKit.h>
-@class AGSPopup;
+
 @protocol AGSPopupsContainer;
+
+@class AGSPopup;
 
 /** @file AGSPopupsContainerDelegate.h */ //Required for Globals API doc
 
@@ -135,5 +137,11 @@
  @since 2.3
  */
 -(void)popupsContainer:(id<AGSPopupsContainer>)popupsContainer wantsToPreviewDocumentAtURL:(NSURL*)documentURL fromViewController:(UIViewController*)fvc atRect:(CGRect)rect;
+
+/** The AGSPopupsContainer will call this when the user switches a feature type for the current popup.
+ Potentially at this point symbology will change for the feature.
+ @since 10.1.1
+ */
+-(void)popupsContainer:(id<AGSPopupsContainer>)popupsContainer didChangeFeatureTypeForPopup:(AGSPopup *)popup;
 @end
 

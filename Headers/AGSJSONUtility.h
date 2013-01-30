@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+/** @file AGSJSONUtility.h */ //Required for Globals API doc
 
 /** @brief Utility interface for dealing with JSON.
 

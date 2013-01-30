@@ -1,5 +1,5 @@
 /*
- COPYRIGHT 2009 ESRI
+ COPYRIGHT 2012 ESRI
  
  TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
  Unpublished material - all rights reserved under the
@@ -16,11 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <pthread.h>
-
 @class AGSSymbol;
-@class AGSSimpleLineSymbol;
 
 /** @file AGSMarkerSymbol.h */ //Required for Globals API doc
 
@@ -33,31 +29,19 @@
  
  @define{AGSMarkerSymbol.h, ArcGIS}
  @since 1.0
+ 
  */
-@interface AGSMarkerSymbol : AGSSymbol {
-@private
-    CGFloat _angle;
-    CGFloat _xoffset;
-    CGFloat _yoffset;  
-	CGPoint _hotspot;
-    BOOL _rotateAroundOffset;
-    CGPoint _rotatedHotspot;
-    
-    CGLayerRef _layer;
-    pthread_mutex_t _layerCreationMutex;
-    
-    BOOL _shouldCacheSymbol;
-}
+@interface AGSMarkerSymbol : AGSSymbol
 
 /** The rotation angle (in degrees) of the marker. The marker is rotated in a counter-clockwise direction by the amount specified. 
  @since 1.0
  */
-@property (nonatomic) CGFloat angle;
+@property (nonatomic, assign) double angle;
 
-// @todo : Add image to illustrate
-
-/** The offset on the x-axis in points, relative to the center of the marker. Default is 0.0
- For example, a value of -5 will shift the marker left by 5 points.
+/** The offset on the x-axis & y-axis in points, relative to the center of the marker. Default is 0.0
+ The values specified are interpreted in a cartesian coordinate system.
+ Thus, a value of -5,-5 will shift the marker left by 5 points on the x-axis and
+ down by 5 points on the y-axis.
  
  This is useful when the marker needs to be offset to properly coincide with a 
  location on the map. 
@@ -65,56 +49,24 @@
  For example, consider an @c AGSPictureMarkerSymbol using the image of a pushpin.  
  By default, the center of the image will be used as the anchor to center the 
  image at the map location. However, if you wanted the needle of the pushpin to 
- end at the map location, you would need to specify an #xoffset and a #yoffset 
+ end at the map location, you would need to specify the #offset
  to shift the image appropriately. 
  
  @since 1.0
  */
-@property (nonatomic) CGFloat xoffset;
+@property (nonatomic, assign) CGPoint offset;
 
-/** The offset on the y-axis in points, relative to the center of the marker. Default is 0.0
- For example, a value of -5 will shift the marker down by 5 points.
- 
- This is useful when the marker needs to be offset to properly conicide with a 
- location on the map. 
- 
- For example, consider an @c AGSPictureMarkerSymbol using the  image of a pushpin.  
- By default, the center of the image will be used as the anchor to center the 
- image at the map location. However, if you wanted the needle of the pushpin to 
- end at the map location, you would need to specify an #xoffset and a #yoffset 
- to shift the image appropriately. 
- 
- @since 1.0
+/** The location where to show the callout's leader (for example, when a user taps on the symbol)
+  By default, the leader is shown at the center of the symbol. The values specified here are interpreted in
+ a cartesian coordinate system and in points (not pixels). Thus, a value of (-5,-5) will move the leaderPoint location left on the x-axis by 5 points and down on the y-axis by 5 points.
+ @since 10.1.1
  */
-@property (nonatomic) CGFloat yoffset;
+@property (nonatomic, assign) CGPoint leaderPoint;
 
-// @todo Add image to illustrate
-
-/** The location in pixels that defines whether a user tapped on this symbol or not.
- 
- For example, consider an @c AGSPictureMarkerSymbol using the image of a pushpin. 
- By default, the hotspot would be in the center of the image and so a tap would 
- be registered only if a user tapped in the middle of the pushpin. To allow the 
- user to tap on the head of the pin to show a callout, you would need to specify the corresponding 
- location's hotspot. Furthermore, the callout’s leader will be anchored to this hotspot location.
- 
- @since 1.0
+/** The size of the marker in points (not pixels).
+ On retina devices, 1 point = 2 pixels. On non-retina, 1 point = 1 pixel.
+ @since 10.1.1
  */
-@property (nonatomic) CGPoint hotspot;
-
-
-/** If <code>true</code>, the symbol will rotate around the offset location as opposed
- to the center of the symbol.
- @since 1.8
- */
-@property (nonatomic, assign) BOOL rotateAroundOffset;
-
-
-/** This property determines whether or not the symbol can be cached for better performance.
- Default is YES. Set to NO if you have a symbol that changes often, or if it is a temporary symbol
- that you only use to draw once. For most cases this should be YES.
- @since 2.2
- */
-@property (nonatomic, assign) BOOL shouldCacheSymbol;
+@property (nonatomic, assign) CGSize size;
 
 @end

@@ -1,12 +1,22 @@
-//
-//  AGSLabelClass.h
-//  ArcGIS
-//
-//  Created by ryan3374 on 12/21/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*
+ COPYRIGHT 2010 ESRI
+ 
+ TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+ Unpublished material - all rights reserved under the
+ Copyright Laws of the United States and applicable international
+ laws, treaties, and conventions.
+ 
+ For additional information, contact:
+ Environmental Systems Research Institute, Inc.
+ Attn: Contracts and Legal Services Department
+ 380 New York Street
+ Redlands, California, 92373
+ USA
+ 
+ email: contracts@esri.com
+ */
 
-#import <Foundation/Foundation.h>
+
 @class AGSTextSymbol;
 
 /** The placement of a label.
@@ -50,15 +60,7 @@ typedef enum {
  Represents the properties of how a service should be labelled.
  @since 1.8
  */
-@interface AGSLabelClass : NSObject <AGSCoding>{
-@private
-	AGSLabelPlacement _placement;
-	NSString *_labelExpression;
-	BOOL _useCodedValues;
-	AGSTextSymbol *_symbol;
-	float _minScale;
-	float _maxScale;
-}
+@interface AGSLabelClass : NSObject <AGSCoding>
 
 /** The placement of the label.
  @since 1.8
@@ -68,7 +70,7 @@ typedef enum {
 /** The expression that specifies what text is drawn in the label.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *labelExpression;
+@property (nonatomic, copy, readonly) NSString *labelExpression;
 
 /** Specifies whether or not the labelling should use coded values.
  @since 1.8
@@ -78,17 +80,17 @@ typedef enum {
 /** The symbol that is used for this label class.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSTextSymbol *symbol;
+@property (nonatomic, strong, readonly) AGSTextSymbol *symbol;
 
 /** The min scale that this label class should be used.
  @since 1.8
  */
-@property (nonatomic, assign, readonly) float minScale;
+@property (nonatomic, assign, readonly) CGFloat minScale;
 
 /** The max scale that this label class should be used.
  @since 1.8
  */
-@property (nonatomic, assign, readonly) float maxScale;
+@property (nonatomic, assign, readonly) CGFloat maxScale;
 
 @end
 

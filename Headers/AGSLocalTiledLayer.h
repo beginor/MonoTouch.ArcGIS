@@ -16,9 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSTiledLayer;
+
+/** @file AGSLocalTiledLayer.h */ //Required for Globals API doc
 
 /** @brief A layer based on a tile package
  
@@ -28,7 +28,7 @@
  @see @concept{About_the_layer/00pw0000005q000000/, Using a local tiled layer}
  @see @sample{af2ec7bf652343c1bf98ff9fd06af5e0, Local Tiled Layer}
 
-
+ @define{AGSLocalTiledLayer.h, ArcGIS}
  @since 2.1
  */
 @interface AGSLocalTiledLayer : AGSTiledLayer
@@ -43,7 +43,7 @@
  of a zipped cache.
  @since 2.1
  */
-@property (nonatomic, retain, readonly) UIImage *thumbnail;
+@property (nonatomic, strong, readonly) AGSImage *thumbnail;
 
 /** 
  Flag indicating if the layer renders at the native resolution. 
@@ -59,6 +59,14 @@
  */
 @property (nonatomic, assign, readwrite) BOOL renderNativeResolution;
 
+/** An array of @c AGSLayerInfo objects representing the layers within this layer. 
+ This only applies to TPKs.
+ @since 10.1.1
+ */
+@property (nonatomic, copy, readonly) NSArray *layerInfos;
+
+
+#if TARGET_OS_IPHONE
 /** Initialize a local layer with the name of a cache within the application bundle, or the
  application's shared Documents directory.
  @param name The name of the tile package, excluding the '.tpk' extension.
@@ -74,6 +82,7 @@
  @since 2.1
  */
 + (id)localTiledLayerWithName:(NSString*)name;
+#endif
 
 /** Initialize a local layer with the full path to a tile package within the application bundle, or the
  application's shared Documents directory.

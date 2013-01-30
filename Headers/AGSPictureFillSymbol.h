@@ -35,71 +35,47 @@
  @define{AGSPictureFillSymbol.h, ArcGIS}
  @since 1.8
  */
-@interface AGSPictureFillSymbol : AGSFillSymbol {
- @private
-    CGSize _size;
-    NSString *_imageName;
-    UIImage *_image;
-	float _angle;
-	float _xoffset;
-	float _yoffset;
-	float _xscale;
-	float _yscale;
-}
+@interface AGSPictureFillSymbol : AGSFillSymbol
 
-/** Size in pixels. Default is 12x12.
+/** Size in points.
  @since 1.8
  */
 @property (nonatomic) CGSize size;
 
-/** Name of the image to be used as the fill.
- @since 1.8
- */
-@property (nonatomic, copy, readonly) NSString *imageName;
-
 /** Image used as the fill.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) UIImage *image;
+@property (nonatomic, copy, readonly) AGSImage *image;
 
 /** The rotation angle (in degrees) of the picture. The picture is rotated in a counter-clockwise direction by the amount specified. 
  @since 1.8
  */
-@property (nonatomic, assign) float angle;
+@property (nonatomic, assign) double angle;
 
-/** The offset on the x-axis in points, relative to the center of the image. Default is 0.0.
- For example, a value of -5 will shift the image left by 5 points.
- @since 1.8
+/** The offset on the x and y axises in points, relative to the center of the image. Default is 0.0.
+ For example, an value of (-5, -5) will shift the image left by 5 points along x-asix, down by 5 points along y-axis.
+ Similar to a cartesian coordinate system.
+ @since 10.1.1
  */
-@property (nonatomic, assign) float xoffset;
+@property (nonatomic, assign) CGPoint offset;
 
-/** The offset on the y-axis in points, relative to the center of the image. Default is 0.0.
- For example, a value of -5 will shift the image down by 5 points.
- @since 1.8
+/** Amount to scale the image along x & y axis.
+ For example, a value of (2,0.5) will make the image twice as big along the x-axis, but half the original size along y-axis.
+ @since 10.1.1
  */
-@property (nonatomic, assign) float yoffset;
-
-/** Amount to scale the image along x-axis
- @since 1.8
- */
-@property (nonatomic, assign) float xscale;
-
-/** Amount to scale the image along y-axis
- @since 1.8
- */
-@property (nonatomic, assign) float yscale;
+@property (nonatomic, assign) CGSize scale;
 
 /** Initialize symbol with image.
  @param image The image for the fill.
  @since 1.8
  */
-- (id)initWithImage:(UIImage *)image;
+- (id)initWithImage:(AGSImage *)image;
 
 /** Initialize autoreleased symbol with image.
  @param image The image for the fill.
  @since 1.8
  */
-+ (id)pictureFillSymbolWithImage:(UIImage *)image;
++ (id)pictureFillSymbolWithImage:(AGSImage *)image;
 
 /** Initialize symbol with name of image to draw in the fill.
  @param imageName The name of the image to draw in the fill.
@@ -112,5 +88,11 @@
  @since 1.8
  */
 + (id)pictureFillSymbolWithImageNamed:(NSString *)imageName;
+
+/** Initialize symbol with a path to the image file on the device.
+ @param imagePath The path to the image file.
+ @since 10.1.1
+ */
+- (id)initWithContentsOfFile:(NSString *)imagePath;
 
 @end

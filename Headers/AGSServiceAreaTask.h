@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSServiceAreaTask.h */
 
@@ -39,16 +39,13 @@
  @see @sample{1d5c8a7a86334b1a8191ac61cfe0d52e, Service Area}
  @since 1.8
  */
-@interface AGSServiceAreaTask : AGSTask {
- @private
-	id<AGSServiceAreaTaskDelegate> _delegate;
-}
+@interface AGSServiceAreaTask : AGSTask
 
 /** Delegate to be notified when the service area operation has completed or returned 
  an error.
  @since 1.8
  */
-@property (nonatomic, assign) id<AGSServiceAreaTaskDelegate> delegate;
+@property (nonatomic, weak) id<AGSServiceAreaTaskDelegate> delegate;
 
 /**
  @since 1.8
@@ -64,12 +61,16 @@
  @param serviceAreaParams The input parameters for the service area operation.
  @return <code>NSOperation</code> for the current service area task.
  @since 1.8
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didSolveServiceAreaWithResult: , method on delegate for success
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailSolveWithError:  , method on delegate for failure
  */
 - (NSOperation*)solveServiceAreaWithParameters:(AGSServiceAreaTaskParameters*)serviceAreaParams;
 
 /** Retrieves the default service area parameters. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didRetrieveDefaultServiceAreaTaskParameters: , method on delegate for success
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailToRetrieveDefaultServiceAreaTaskParametersWithError:  , method on delegate for failure
  */
 - (NSOperation*)retrieveDefaultServiceAreaTaskParameters;
 

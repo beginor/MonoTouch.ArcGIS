@@ -16,15 +16,17 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import "AGSGeometryParameters.h"
+
+@class AGSGeometry;
+@class AGSPolygon;
+@class AGSPolyline;
+@class AGSCredential;
+@class AGSTask;
+@class AGSDistanceParameters;
+@class AGSRelationParameters;
 
 @protocol AGSCoding;
 @protocol AGSGeometryServiceTaskDelegate;
-@class AGSGeometry;
-@class AGSPolygon;
-@class AGSCredential;
-@class AGSTask;
 
 /** @file AGSGeometryServiceTask.h */ //Required for Globals API doc
 
@@ -54,16 +56,13 @@
  
 
  */
-@interface AGSGeometryServiceTask : AGSTask {
- @private
-    id<AGSGeometryServiceTaskDelegate> _delegate;
-}
+@interface AGSGeometryServiceTask : AGSTask
 
 /** Delegate to be notified when the task completes successfully or encounters 
  an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSGeometryServiceTaskDelegate> delegate;
+@property (nonatomic, weak) id<AGSGeometryServiceTaskDelegate> delegate;
 
 /** Initialize an autoreleased Geometry service task.
  @param url URL to a geometry service.
@@ -503,57 +502,3 @@
 - (void)geometryServiceTask:(AGSGeometryServiceTask *)geometryServiceTask operation:(NSOperation*)op didFailTrimExtendWithError:(NSError*)error;
 
 @end
-
-/** @brief Object returned by <code>AGSGeometryServiceTask</code>'s 
- <code>relationWithParameters:</code> operation.
- 
- The <code>relationWithParameters:</code> operation on @c AGSGeometryServiceTask
- returns an array of <code>%AGSGeometryRelationship</code> objects. These
- objects demonstrate the relationship of @p geometry1 in relation to 
- @p geometry2 characterized by the given @p type.
- 
- Possible values of @p type include members of the @c AGSGeometryRelation
- enumeration.
- 
- @since 1.0
- */
-@interface AGSGeometryRelationship : NSObject {
- @private
-	AGSGeometry *_geometry1;
-	AGSGeometry *_geometry2;
-	AGSGeometryRelation _type;
-}
-
-/** The geometry whose relation is being questioned.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSGeometry *geometry1;
-
-/** The geometry being used to relate to.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSGeometry *geometry2;
-
-/** Relationship between @p geometry1 and @p geometry2. Possible values include
- 
- @li @c		AGSGeometryRelationCross
- @li @c		AGSGeometryRelationDisjoint
- @li @c		AGSGeometryRelationIn
- @li @c		AGSGeometryRelationInteriorIntersection
- @li @c		AGSGeometryRelationIntersection
- @li @c		AGSGeometryRelationLineCoincidence
- @li @c		AGSGeometryRelationLineTouch
- @li @c		AGSGeometryRelationOverlap
- @li @c		AGSGeometryRelationPointTouch
- @li @c		AGSGeometryRelationTouch
- @li @c		AGSGeometryRelationWithin
- @li @c		AGSGeometryRelationRelation		
- 
- @since 1.0
- */
-@property (nonatomic, assign, readonly) AGSGeometryRelation type;
-
-
-
-@end
-

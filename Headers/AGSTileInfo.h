@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSEnvelope;
 @class AGSLOD;
 @class AGSPoint;
@@ -35,7 +33,7 @@
  @define{AGSTileInfo.h, ArcGIS}
  @since 1.0
  */
-@interface AGSTileInfo : NSObject <AGSCoding> {}
+@interface AGSTileInfo : NSObject <AGSCoding>
 
 /** The Dots-Per-Inch (DPI) resolution of tiled images.
  @since 1.0
@@ -56,17 +54,17 @@
  in the tiling scheme.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *lods;
+@property (nonatomic, copy, readonly) NSArray *lods;
 
 /** The tiling scheme origin.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSPoint *origin;
+@property (nonatomic, strong, readonly) AGSPoint *origin;
 
 /** The spatial reference of the tiling scheme.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 /** For each level of detail in the tiling scheme, compute start/end column/row.
  @param envelope The envelope of service to compute tile bounds.

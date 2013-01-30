@@ -16,7 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
 @protocol AGSPortalDelegate;
 @protocol AGSPortalModelObject;
 @class AGSPortalItem;
@@ -25,6 +24,7 @@
 @class AGSPortalGroup;
 @class AGSPortalInfo;
 @class AGSPortalQueryResultSet;
+@class AGSCredential;
 @protocol AGSSecuredResource;
 
 
@@ -92,27 +92,32 @@
 /** The URL of the portal.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSURL *URL;
+@property (nonatomic, strong, readonly) NSURL *URL;
 
 /** The credential of the user for authenticated access. Can be nil, in which case it requests for anonymous access to the portal.
  @since 2.2
  */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default, each portal will create it's own cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
 
 /** The delegate for the portal operations. 
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) id<AGSPortalDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<AGSPortalDelegate> delegate;
 
 /** Returned upon successful initialization of the portal. Contains details of the portal/organization as seen by the current user, anonymous or logged in. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSPortalInfo *portalInfo;
+@property (nonatomic, strong, readonly) AGSPortalInfo *portalInfo;
 
 /** Represents the registered user of the portal/organization and is returned upon successful initialization of the portal with a credential. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSPortalUser *user;
+@property (nonatomic, strong, readonly) AGSPortalUser *user;
 
 
 /** Instantiates the AGSPortal and initiates a connection to the portal. It will fetch the portal properties and 
@@ -123,6 +128,19 @@
  @since 2.2
  */
 -(id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
+
+/** If the portal failed to load with a specific url and credential, you can
+ resubmit it to try and load again using the same url and credential. If you want to modify the
+ credential, you can update the credential on the portal before calling this method.
+ If you also want to update the url, you should use @c # resubmitWithURL:credential: instead.
+ 
+ This function does nothing if the
+ portal is already loaded. This function also does nothing if the portal is currently
+ trying to load.
+ @since 10.1.1
+
+ */
+- (void)resubmit;
 
 /** If the portal fails to load, you can resubmit it with a different URL and/or credential.
  This method will do nothing if the portal is already loaded.

@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSRouteTaskParameters.h */
 
@@ -46,7 +46,7 @@
  "Network Dataset -> Network Attributes" as "Usage Type: esriNAUTCost".
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *accumulateAttributeNames;
+@property (nonatomic, copy) NSArray *accumulateAttributeNames;
 
 /** An array of NSDictionary objects that describe the parameter values. Properties of
  this object are:
@@ -55,7 +55,7 @@
  (Number) value						- Parameter value.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *attributeParameterValues;
+@property (nonatomic, copy) NSArray *attributeParameterValues;
 
 /** The language used when computing directions. For example, en_US, fr_FR, etc. 
  The default is as defined by the network analysis layer used in your task.
@@ -65,7 +65,7 @@
  additional languages.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *directionsLanguage;
+@property (nonatomic, copy) NSString *directionsLanguage;
 
 /** The length units to use when computing directions. 
  The default is as defined by the network analysis layer used in your task.
@@ -94,16 +94,16 @@
  */
 @property (nonatomic, assign) AGSNAUnit directionsLengthUnits;
 
-/** @todo
+/** The style to be used when returning the directions. The default is as defined in the network layer. 
  @since 1.8
  */
-@property (nonatomic, retain) NSString *directionsStyleName;
+@property (nonatomic, copy) NSString *directionsStyleName;
 
 /** The name of network attribute to use for the drive time when computing 
  directions. The default is as defined by the network analysis layer used in your task.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *directionsTimeAttributeName;
+@property (nonatomic, copy) NSString *directionsTimeAttributeName;
 
 /** If <code>true</code>, avoids network elements restricted by @p pointBarriers or
  due to restrictions specified in @p restrictionAttributeNames.
@@ -114,6 +114,7 @@
 /** If <code>true</code>, optimizes the order of the stops in the route while
  taking into account @p preserveFirstStop and @p preserveLastStop, if they are
  set to <code>true</code>. The default is as defined by the network analysis layer used in your task.
+ Default value is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL findBestSequence;
@@ -125,7 +126,8 @@
  When <code>true</code>, as long as there are at least two valid stops that have 
  been connected by a route, a valid result is returned. If multiple routes are
  processed in a single request, as long as at least one route is built, a valid
- result is returned. 
+ result is returned.
+ Default value is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL ignoreInvalidLocations;
@@ -139,7 +141,7 @@
  the default of the service.  
  @since 1.8
  */
-@property (nonatomic, retain) NSString *impedanceAttributeName;
+@property (nonatomic, copy) NSString *impedanceAttributeName;
 
 /** The precision of the output geometry after generalization. If 0, no generalization
  of output is performed. If present and positive, it represents the MaximumAllowableOffset
@@ -182,11 +184,12 @@
  spatial reference of the service.
  @since 1.8
  */
-@property (nonatomic, retain) AGSSpatialReference *outSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *outSpatialReference;
 
 /** If <code>true</code>, keeps the first stop fixed in the sequence even when
  @p findBestSequence is <code>true</code>. Only applicable if @p findBestSequence
  is <code>true</code>. 
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL preserveFirstStop;
@@ -194,6 +197,7 @@
 /** If <code>true</code>, keeps the last stop fixed in the sequence even when
  @p findBestSequence is <code>true</code>. Only applicable if @p findBestSequence
  is <code>true</code>. 
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL preserveLastStop;
@@ -205,7 +209,7 @@
  If you specify an empty array, it will default to the default of the service.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *restrictionAttributeNames;
+@property (nonatomic, copy) NSArray *restrictionAttributeNames;
 
 /** Specifies how U-Turns should be handled. U-turns can be allowed everywhere, 
  nowhere , only at dead ends, or only at intersections and dead ends.
@@ -257,15 +261,17 @@
  is executed.
  @since 1.8
  */
-@property (nonatomic, retain) NSDate *startTime;
+@property (nonatomic, strong) NSDate *startTime;
 
 /** If <code>true</code>, the hierarchy attribute for the network should be used 
- in analysis. 
+ in analysis.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL useHierarchy;
 
 /** If <code>true</code>, time windows should be used in the analysis. 
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL useTimeWindows;

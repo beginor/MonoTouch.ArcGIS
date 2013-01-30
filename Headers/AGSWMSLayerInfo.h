@@ -16,8 +16,7 @@ USA
 email: contracts@esri.com
 */
 
-
-#import <Foundation/Foundation.h>
+@class AGSEnvelope;
 
 
 /** @file AGSWMSLayerInfo.h */ //Required for Globals API doc
@@ -48,12 +47,12 @@ email: contracts@esri.com
 /** The extent of this layer.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *extent;
+@property (nonatomic, strong, readonly) AGSEnvelope *extent;
 
 /** The sublayers of this layer, represented as an array of @c AGSWMSLayerInfo objects.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *subLayers;
+@property (nonatomic, copy, readonly) NSArray *subLayers;
 
 
 @end

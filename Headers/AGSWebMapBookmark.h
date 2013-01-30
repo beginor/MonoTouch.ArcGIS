@@ -23,19 +23,16 @@
  Instances of this class represent spatial bookmarks in a web map.
  @since 2.0
  */
-@interface AGSWebMapBookmark : NSObject <AGSCoding> {	
-    AGSEnvelope *_extent;
-    NSString    *_name;
-}
+@interface AGSWebMapBookmark : NSObject <AGSCoding>
 
 /** The geographic location of the bookmark.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *extent;
+@property (nonatomic, strong, readonly) AGSEnvelope *extent;
 
 /** The name of the bookmark.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *name;
 
 @end

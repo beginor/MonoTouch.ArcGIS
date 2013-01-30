@@ -16,7 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+@class AGSPortal;
+@class AGSWebMapBaseMap;
+@class AGSEnvelope;
 @protocol AGSPortalInfoDelegate;
 
 /** @file AGSPortalInfo.h */ //Required for Globals API doc
@@ -40,37 +42,37 @@
 /** The delegate for operations on AGSPortalInfo.
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) id<AGSPortalInfoDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<AGSPortalInfoDelegate> delegate;
 
 /** The portal that is being referred to. 
  @since 2.2
  */
-@property (nonatomic, assign, readonly) AGSPortal *portal;
+@property (nonatomic, weak, readonly) AGSPortal *portal;
 
 /** The id of the organization. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *organizationId;
+@property (nonatomic, copy, readonly) NSString *organizationId;
 
 /** The name of the organization.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *organizationName;
+@property (nonatomic, copy, readonly) NSString *organizationName;
 
 /** The description of the organization.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *organizationDescription;
+@property (nonatomic, copy, readonly) NSString *organizationDescription;
 
 /** The name of the portal.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *portalName;
+@property (nonatomic, copy, readonly) NSString *portalName;
 
 /** The pre-defined query string for finding featured items group. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *featuredItemsGroupQuery;
+@property (nonatomic, copy, readonly) NSString *featuredItemsGroupQuery;
 
 /** Indicates whether the members of the organization can share content outside of the organization.
  @since 2.2
@@ -85,47 +87,47 @@
 /** The name of the Organization's thumbnail file.  
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *organizationThumbnailFileName;
+@property (nonatomic, copy, readonly) NSString *organizationThumbnailFileName;
 
 /** The name of the Portal's thumbnail file.  
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *portalThumbnailFileName;
+@property (nonatomic, copy, readonly) NSString *portalThumbnailFileName;
 
 /** The pre-defined query string for finding the collection of basemaps.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *basemapGalleryGroupQuery;
+@property (nonatomic, copy, readonly) NSString *basemapGalleryGroupQuery;
 
 /** The default basemap of the portal/organization.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSWebMapBaseMap *defaultBasemap;
+@property (nonatomic, strong, readonly) AGSWebMapBaseMap *defaultBasemap;
 
 /** The default extent for the basemaps.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *defaultExtent;
+@property (nonatomic, strong, readonly) AGSEnvelope *defaultExtent;
 
 /** The pre-defined query string for finding homepage featured items group.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *homepageFeaturedContentGroupQuery;
+@property (nonatomic, copy, readonly) NSString *homepageFeaturedContentGroupQuery;
 
 /** Array of pre-defined query strings for finding featured groups.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *featuredGroupsQueries;
+@property (nonatomic, copy, readonly) NSArray *featuredGroupsQueries;
 
 /** The thumbnail image of the portal. This needs to be fetched explicitly using #fetchPortalThumbnail. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) UIImage *portalThumbnail;
+@property (nonatomic, strong, readonly) AGSImage *portalThumbnail;
 
 /** The thumbnail image of the organization. This needs to be fetched explicitly using #fetchOrganizationThumbnail. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) UIImage *organizationThumbnail;
+@property (nonatomic, strong, readonly) AGSImage *organizationThumbnail;
 
 /** Determines who can view the organization's content. Can be either  @c AGSPortalAccessPublic or @c AGSPortalAccessPrivate. 
  
@@ -143,18 +145,39 @@
 @property (nonatomic, assign, readonly) AGSPortalMode portalMode;
 
 /** The portion of the URL's host component that identifies the portal
- For example, http://<urlkey>.<customBaseUrl>/
+ For example, http://&lt;urlkey&gt;.&lt;customBaseUrl&gt;/
  @since 2.3
  @see #urlKey
  */
-@property (nonatomic, retain, readonly) NSString *customBaseUrl;
+@property (nonatomic, copy, readonly) NSString *customBaseUrl;
 
 /** The portion of the URL's host component that identifies a specific organization subscription within a portal.
- For example, http://<urlkey>.<customBaseUrl>/
+ For example, http://&lt;urlkey&gt;.&lt;customBaseUrl&gt;/
  @since 2.3
  @see #customBaseUrl
  */
-@property (nonatomic, retain, readonly) NSString *urlKey;
+@property (nonatomic, copy, readonly) NSString *urlKey;
+
+/** The locator services configured for this portal..
+ @since 10.1.1
+ */
+@property (nonatomic, copy, readonly) NSArray *geocodeServiceUrls;
+
+/** The route service configured for this portal..
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readonly) NSURL *routeServiceUrl;
+
+/** The geometry service configured for this portal.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readonly) NSURL *geometryServiceUrl;
+
+/** The print service configured for this portal.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readonly) NSURL *printTaskUrl;
+
 
 /** Kicks off an operation that fetches the portal thumbnail. The corresponding methods on @c AGSPortalInfoDelegate are invoked when the operation completes successfully or encounters an error.
  @since 2.2
@@ -185,7 +208,7 @@
  @param thumbnail The thumbnail image file.
  @since 2.2
  */
--(void)portalInfo:(AGSPortalInfo*)portalInfo operation:(NSOperation*)op didFetchPortalThumbnail:(UIImage*)thumbnail;
+-(void)portalInfo:(AGSPortalInfo*)portalInfo operation:(NSOperation*)op didFetchPortalThumbnail:(AGSImage*)thumbnail;
 
 /** Tells the delegate that the specified error was encountered while tyring to fetch the thumbnail image. 
  @param portalInfo The portal info on which the fetch was done.
@@ -201,7 +224,7 @@
  @param thumbnail The thumbnail image file.
  @since 2.2
  */
--(void)portalInfo:(AGSPortalInfo*)portalInfo operation:(NSOperation*)op didFetchOrganizationThumbnail:(UIImage*)thumbnail;
+-(void)portalInfo:(AGSPortalInfo*)portalInfo operation:(NSOperation*)op didFetchOrganizationThumbnail:(AGSImage*)thumbnail;
 
 /** Tells the delegate that the specified error was encountered while tyring to fetch the thumbnail image. 
  @param portalInfo The portal info on which the fetch was done.

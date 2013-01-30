@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSMapServiceTableInfo.h */ //Required for Globals API doc
 
 /** @brief Information about a table in an ArcGIS Server service
@@ -26,11 +24,7 @@
  
  @since 1.8
  */
-@interface AGSMapServiceTableInfo : NSObject <AGSCoding> {
-@private
-	NSUInteger _tableId;
-	NSString *_name;
-}
+@interface AGSMapServiceTableInfo : NSObject <AGSCoding>
 
 /** The id of the table.
  @since 1.8
@@ -41,6 +35,6 @@
  The name of the table.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *name;
 
 @end

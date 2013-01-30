@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSPortalQueryParams.h */ //Required for Globals API doc
 
 /** @brief Defines a query on a portal. 
@@ -36,12 +34,12 @@
 /** The query string specified for the search. 
  @since 2.2
  */
-@property (nonatomic, retain, readwrite) NSString *query;
+@property (nonatomic, copy, readwrite) NSString *query;
 
 /** The field on which sorting should be done. 
  @since 2.2
  */
-@property (nonatomic, retain, readwrite) NSString *sortField;
+@property (nonatomic, copy, readwrite) NSString *sortField;
 
 /** The order of sorting. 
 
@@ -52,12 +50,12 @@
 /** The index from which the results should be returned. The index number is 1-based. You should use this for paginating the search results. 
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) int startIndex;
+@property (nonatomic, assign, readwrite) NSInteger startIndex;
 
 /** The number of results to be returned. This, along with the @c #startIndex, can help you paginate the search results. . 
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) int limit;
+@property (nonatomic, assign, readwrite) NSInteger limit;
 
 /** Initializes a AGSPortalQueryParams with a query string. 
  @param query The query string.  
@@ -76,14 +74,14 @@
  @param limit The number of results to be returned. 
  @since 2.2
  */
--(id)initWithQuery:(NSString*)query limit:(int)limit;
+-(id)initWithQuery:(NSString*)query limit:(NSInteger)limit;
 
 /** A method to get an initialized, autoreleased query params object with a query string and the limit. 
  @param query The query string. 
  @param limit The number of results to be returned.  
  @since 2.2
  */
-+(AGSPortalQueryParams*)queryParamsWithQuery:(NSString*)query limit:(int)limit;
++(AGSPortalQueryParams*)queryParamsWithQuery:(NSString*)query limit:(NSInteger)limit;
 
 /** Returns query params that will find groups with a specified owner and title. Either property can be 
  nil, but not simultaneously.

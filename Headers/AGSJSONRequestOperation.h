@@ -16,13 +16,15 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSRequestOperation;
 
-/** @brief Represents an object to invoke a JSON based REST webservice.
+/** @file AGSJSONRequestOperation.h */ //Required for Globals API doc
+
+/** @brief Represents an object to retrieve JSON formatted data from an ArcGIS 
+ resource.
  
- Instances of this object represent an operation that can be used to invoke a JSON based REST webservice. You can use it with your own custom or third party webservices. You can also use it for ArcGIS  REST webservices, such as ArcGIS Server services, ArcGIS Server server object extensions, and ArcGIS Online.
+ Instances of this object represent an operation to retrieve JSON formatted data 
+ from some specified ArcGIS resource. 
  
  @since 1.0
  @see @concept{Working_with_JSON/00pw0000004w000000/, Working with JSON}

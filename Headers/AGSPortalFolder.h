@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSPortalFolder.h */ //Required for Globals API doc
 
 /** @brief Represents a folder of content within the Portal or Organization.
@@ -31,15 +29,15 @@
 /** The Id of the folder
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *folderId;
+@property (nonatomic, copy, readonly) NSString *folderId;
 
 /** The title of the folder
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 
 /** The date of creation of the folder.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *created;
+@property (nonatomic, strong, readonly) NSDate *created;
 @end

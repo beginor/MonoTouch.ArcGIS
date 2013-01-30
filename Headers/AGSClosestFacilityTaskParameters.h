@@ -16,11 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSClosestFacilityTaskParameters.h */
-
-#import "AGSEnumerations.h"
 
 @protocol AGSCoding;
 @class AGSNALayerDefinition;
@@ -47,7 +45,7 @@
  "Network Dataset -> Network Attributes" as "Usage Type: esriNAUTCost".
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *accumulateAttributeNames;
+@property (nonatomic, copy) NSArray *accumulateAttributeNames;
 
 /** An array of NSDictionary objects that describe the parameter values. Properties of
  this object are:
@@ -56,7 +54,7 @@
  (Number) value						- Parameter value.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *attributeParameterValues;
+@property (nonatomic, copy) NSArray *attributeParameterValues;
 
 /** The cutoff value used to determine when to stop traversing.
  @since 1.8
@@ -66,12 +64,12 @@
 /** The number of facilities to find.
  @since 1.8
  */
-@property (nonatomic, assign) int defaultTargetFacilityCount;
+@property (nonatomic, assign) NSInteger defaultTargetFacilityCount;
 
 /** The language used when computing directions. The default is as defined by the network analysis layer used in your task.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *directionsLanguage;
+@property (nonatomic, copy) NSString *directionsLanguage;
 
 /** The length units used when computing directions. The default is as defined by the network analysis layer used in your task.
  @since 1.8
@@ -81,14 +79,14 @@
 /** 
  @since 1.8 
  */
-@property (nonatomic, retain) NSString *directionsStyleName;
+@property (nonatomic, copy) NSString *directionsStyleName;
 
 /** The name of the attribute field that contains the drive time values. If not 
  specified the task will use the attribute field defined by the closest facility 
  network layer.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *directionsTimeAttributeName;
+@property (nonatomic, copy) NSString *directionsTimeAttributeName;
 
 /** The network attribute name to be used as the impedance attribute in analysis. 
  The default is as defined in the specific closest facility network layer used in your 
@@ -99,7 +97,7 @@
  the default of the service.  
  @since 1.8
  */
-@property (nonatomic, retain) NSString *impedanceAttributeName;
+@property (nonatomic, copy) NSString *impedanceAttributeName;
 
 /** The output geometry precision. The default value is 5.0.
  @since 1.8
@@ -124,7 +122,7 @@
  spatial reference of the service.
  @since 1.8
  */
-@property (nonatomic, retain) AGSSpatialReference *outSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *outSpatialReference;
 
 /** The list of network attribute names to be used as restrictions with the 
  analysis. Possible values are listed in the Service Directory 
@@ -133,7 +131,7 @@
  If you specify an empty array, it will default to the default of the service.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *restrictionAttributeNames;
+@property (nonatomic, copy) NSArray *restrictionAttributeNames;
 
 /** Specifies how U-Turns should be handled. U-turns can be allowed everywhere, 
  nowhere , only at dead ends, or only at intersections and dead ends.
@@ -151,9 +149,8 @@
 @property (nonatomic, assign) BOOL returnPointBarriers;
 
 /** If <code>true</code>, directions will be generated and returned in the 
- directions property of each @c AGSRouteResult and @c AGSRouteTaskResult. Default 
+ directions property of each @c AGSClosestFacilityResult. Default
  value is <code>false</code>.
- @todo , why is this here?
  @since 1.8
  */
 @property (nonatomic, assign) BOOL returnDirections;
@@ -206,9 +203,9 @@
  This is useful if the network analyst service uses historic or real-time traffic data.
  @since 2.3
  @avail{10.1}
- @see #timeofDayUsage
+ @see #timeOfDayUsage
  */
-@property (nonatomic, retain) NSDate *timeOfDay;
+@property (nonatomic, strong) NSDate *timeOfDay;
 
 /** Defines the way @c #timeOfDay value is used. The default is as defined in the network layer.
  @avail{10.1}

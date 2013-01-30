@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSSymbol;
 
 /** @file AGSCompositeSymbol.h */ //Required for Globals API doc
@@ -38,22 +36,44 @@
  @define{AGSCompositeSymbol.h, ArcGIS}
  @since 1.0
  */
-@interface AGSCompositeSymbol : AGSSymbol {
- @private
-    NSMutableArray *_symbols;
-}
+@interface AGSCompositeSymbol : AGSSymbol
 
 /** The individual symbols which make up this composite symbol. The symbols are 
  drawn in the order they are stored in the array. The 0th symbol is drawn first,
  then the next symbol is drawn on top of it, and so on.
  @since 1.0
  */
-@property (nonatomic, retain) NSMutableArray *symbols;
+@property (nonatomic, copy, readonly) NSArray *symbols;
 
 /** A method to get an initialized and autoreleased composite symbol.
  @return A new, autoreleased, composite symbol object.
  @since 1.0
  */
 + (id)compositeSymbol;
+
+/** Add a symbol to the composite symbol.
+ The new symbol is added on top of existing symbols.
+ @param symbol
+ @since 10.1.1
+ */
+- (void)addSymbol:(AGSSymbol*)symbol;
+
+/** Add an array of symbols to the composite symbol.
+ The new symbols are added in the same sequence (0th, 1st, 2nd and so on) on top of existing symbols.
+ @param symbols An array of @c AGSSymbol objects
+ @since 10.1.1
+ */
+- (void)addSymbols:(NSArray*)symbols;
+
+/** Remove a symbol from the composite symbol
+ @param symbol
+ @since 10.1.1
+ */
+- (void)removeSymbol:(AGSSymbol*)symbol;
+
+/** Remove all symbols
+ @since 10.1.1
+ */
+- (void)removeAllSymbols;
 
 @end

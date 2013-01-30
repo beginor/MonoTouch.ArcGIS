@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 
 @class AGSGeometry;
@@ -30,26 +28,20 @@
  @define{AGSImageServiceIdentifyParameters.h, ArcGIS}
  @since 1.8
  */
-@interface AGSImageServiceIdentifyParameters : NSObject <AGSCoding> {
- @private
-	AGSGeometry *_geometry;
-	AGSMosaicRule *_mosaicRule;
-	double _pixelSizeX;
-	double _pixelSizeY;
-}
+@interface AGSImageServiceIdentifyParameters : NSObject <AGSCoding>
 
 /** The geometry according to which features should be identified. @c AGSPoint 
  is most commonly used for identifying features at a location, but @c AGSPolygon 
  may also be used for searching within an area.
  @since 1.8
  */
-@property (nonatomic, retain) AGSGeometry *geometry;
+@property (nonatomic, strong) AGSGeometry *geometry;
 
 /** Specifies the mosaic rule defining the image sorting order. When mosaic rule 
  is not specified, mosaic rule will default to AGSMosaicMethodCenter. 
  @since 1.8
  */
-@property (nonatomic, retain) AGSMosaicRule *mosaicRule;
+@property (nonatomic, strong) AGSMosaicRule *mosaicRule;
 
 /** The pixel level being identified (or the resolution being looked at). If pixel 
  size is not specified, then @p pixelSizeX will default to the x-value of the base 

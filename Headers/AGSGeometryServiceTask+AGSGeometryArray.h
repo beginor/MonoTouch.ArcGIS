@@ -21,6 +21,7 @@
 @class AGSGeneralizeParameters;
 @class AGSOffsetParameters;
 @class AGSSpatialReference;
+@class AGSTrimExtendParameters;
 
 /** @file AGSGeometryServiceTask+AGSGeometryArray.h  */ //Required for Globals API doc
 

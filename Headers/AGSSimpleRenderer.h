@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSRenderer;
 @class AGSSymbol;
 
@@ -37,27 +35,22 @@
  @define{AGSSimpleRenderer.h, ArcGIS}
  @since 1.0
  */
-@interface AGSSimpleRenderer : AGSRenderer {
- @private
-    AGSSymbol *_symbol;
-	NSString *_label;
-	NSString *_description;
-}
+@interface AGSSimpleRenderer : AGSRenderer
 
 /** The symbol for the renderer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSymbol *symbol;
+@property (nonatomic, strong, readonly) AGSSymbol *symbol;
 
 /** The label for the renderer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *label;
+@property (nonatomic, copy, readonly) NSString *label;
 
 /** The description for the renderer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *description;
+@property (nonatomic, copy, readonly) NSString *rendererDescription;
 
 /** Initialize renderer with desired symbol.
  @param symbol The symbol to be used to render all graphics.

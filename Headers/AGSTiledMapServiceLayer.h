@@ -16,12 +16,10 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
+@class AGSTiledServiceLayer;
 @class AGSCredential;
-@class AGSTiledLayer;
-@class AGSMapServiceLayerInfo;
 @class AGSMapServiceInfo;
+@class AGSMapServiceLayerInfo;
 
 /** @file AGSTiledMapServiceLayer.h */ //Required for Globals API doc
 
@@ -34,15 +32,12 @@
  A cached map service uses a cache of pre-generated tiles to create a map instead of 
  dynamically generating map images. 
  
- In a Model-View-Controller architecture, this object represents the Model. The 
- corresponding View object, @c AGSTiledLayerView, is created when this layer is 
- added to the map. 
  
  @define{AGSTiledMapServiceLayer.h,ArcGIS}
  @since 1.0
  @see AGSDynamicMapServiceLayer for dynamic map services.
  */
-@interface AGSTiledMapServiceLayer : AGSTiledLayer <AGSCoding, AGSSecuredResource> {}
+@interface AGSTiledMapServiceLayer : AGSTiledServiceLayer <AGSCoding, AGSSecuredResource>
 
 /** URL of a cached map service resource in ArcGIS Server REST Services Directory.
  For example, <a href="http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer">http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer</a>.
@@ -53,12 +48,17 @@
 /** Information about the map service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSMapServiceInfo *mapServiceInfo;
+@property (nonatomic, strong, readonly) AGSMapServiceInfo *mapServiceInfo;
 
 /** The credential to be used to access secured resources.
  @since 1.0
  */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default this will be set to the global cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
 
 /** Flag indicating if the layer renders at the native resolution. 
  This property will not have any affect iOS devices without a retina display. If using an iOS
@@ -77,6 +77,8 @@
  @param url URL to cached map service.
  @return A new tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithURL:(NSURL *)url;
 
@@ -86,6 +88,8 @@
  @param cred @c AGSCredential used to access the secured resource.
  @return A new tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -96,6 +100,8 @@
  @param info Previously retrieved map service info.
  @return A new tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -104,6 +110,8 @@
  @param url URL to a cached map service.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 + (id)tiledMapServiceLayerWithURL:(NSURL *)url;
 
@@ -113,6 +121,8 @@
  @param cred @c AGSCredential used to access the secured resource.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 + (id)tiledMapServiceLayerWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -123,6 +133,8 @@
  @param info Previously retrieved map service info.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 + (id)tiledMapServiceLayerWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -133,9 +145,24 @@
  @param cred The credential.
  @return A new tiled map service object.
  @since 2.0
- */
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+*/
 - (id)initWithJSON:(NSDictionary *)json URL:(NSURL*)url credential:(AGSCredential*)cred;
 
+/** If the layer failed to load with a specific url and credential, you can
+ resubmit it to try and load again using the same url and credential. If you want to modify the 
+ credential, you can update the credential on the layer before calling this method.
+ If you also want to update the url, you should use @c # resubmitWithURL:credential: instead.
+ 
+ This function does nothing if the
+ layer is already loaded. This function also does nothing if the layer is currently
+ trying to load.
+ @since 10.1.1
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+*/
+- (void)resubmit;
 
 /** If the layer failed to load with a specific url and credential, you can 
  resubmit it with a new URL and credential. This function does nothing if the 
@@ -144,7 +171,15 @@
  @param url URL to the tiled map service.
  @param cred @c AGSCredential used to access the secured resource.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 -(void)resubmitWithURL:(NSURL*)url credential:(AGSCredential*)cred;
 
+/** Returns a value that specifies if the given AGSMapServiceLayerInfo is
+ currently displaying on the map. Will return NO if the given AGSMapServiceLayerInfo
+ is not part of this layer, or this layer is not currently on a map.
+ @since 10.1.1
+ */
+-(BOOL)checkCurrentScaleVisibilityForSubLayer:(AGSMapServiceLayerInfo*)msli;
 @end

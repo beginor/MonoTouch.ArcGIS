@@ -16,39 +16,49 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 @protocol AGSLocatorDelegate;
 @class AGSPoint;
 @class AGSCredential;
 @class AGSTask;
+@class AGSAddressCandidate;
+@class AGSLocationsForAddressParameters;
+@class AGSLocatorFindParameters;
 
 /** @file AGSLocator.h */ //Required for Globals API doc
 
 /** @brief A locator to geocode and reverse-geocode addresses.
  
- An instance of this class allows you to geocode and reverse-geocode addresses 
- using a geocode service of ArcGIS Server. For example, <a href="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer">http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer</a>.
+ An instance of this class allows you to geocode addresses and reverse-geocode locations using a remote geocoding service.  Geocoding involves finding matching locations for a given address. Reverse-geocoding is the opposite and involves finding corresponding addresses for a given location.
  
- Geocoding involves finding matching locations for a given address. 
- Reverse-geocoding involves finding corresponding addresses for a given location.
+ The geocoding service could be hosted by ArcGIS Online or based on an ArcGIS Server ( For example, <a target="_blank" href="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer">http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer</a>.
+
+ 
+ The @link AGSLocator::locator default locator @endlink uses the <a target="_blank" href="http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/#/Overview_of_the_World_Geocoding_Service/02q000000008000000/">World Geocode Service</a> on ArcGIS Online. The service covers 100+ countries and is
+ capable of finding locations based on street addresses, points of interest, 
+ postal codes, x/y coordinates, place names, and more.
  
  @see @concept{Locator/00pw00000049000000/, Using a Locator}
  @see @sample{c1e9abdacf524c2f99d39fbac14b3e0d, Geocoding}
  @since 1.0
  
  */
-@interface AGSLocator : AGSTask {
- @private
-    id<AGSLocatorDelegate> _delegate;
-}
+@interface AGSLocator : AGSTask
 
-/** Delegate to be notified when the locator completes successfully or 
+/** Delegate to be notified when the locator completes successfully or
  encounters an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSLocatorDelegate> delegate;
+@property (nonatomic, weak) id<AGSLocatorDelegate> delegate;
+
+/** Initializes a default locator that uses the <a target="_blank" href="http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/#/Overview_of_the_World_Geocoding_Service/02q000000008000000/">World Geocode Service</a> on ArcGIS Online. The service covers 100+ countries and is
+ capable of finding locations based on street addresses, points of interest,
+ postal codes, x/y coordinates, place names, and more.
+
+ @since 10.1.1
+ @see @c #findWithParameters: 
+ */
++(id)locator;
 
 /** Initialize autoreleased Locator.
  @param url URL to a geocode service.
@@ -64,6 +74,48 @@
  @since 1.0
  */
 + (id)locatorWithURL:(NSURL *)url credential:(AGSCredential*)cred;
+
+/** Executes a reverse-geocoding operation to find address candidates for a 
+ given location. The @c #delegate will be notified when the operation completes 
+ or if an error is encountered..
+ 
+ It relies on the <i>Reverse Geocode</i> operation
+ of the REST resource.
+ 
+ @param location Location to search for address candidates. If the @c AGSPoint does 
+ not have a spatial reference, it is assumed to be in the same spatial reference 
+ as that of the geocode service.
+ @param distance Distance in meters from the given location within which a matching 
+ address should be searched. If this parameter is not provided or an invalid 
+ value is provided, a default value of 0 meters is used.
+ @return <code>NSOperation</code> for current request.
+ @since 1.0
+ @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , method on delegate for failure
+ */
+- (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance;
+
+/** Executes a reverse-geocoding operation to find address candidates for a 
+ given location. The @c #delegate will be notified when the operation completes 
+ or if an error is encountered.
+ 
+ It relies on the <i>Reverse Geocode</i> operation
+ of the REST resource.
+ 
+ @param location Location to search for address candidates. If the @c AGSPoint does 
+ not have a spatial reference, it is assumed to be in the same spatial reference 
+ as that of the geocode service.
+ @param distance Distance in meters from the given location within which a matching 
+ address should be searched. If this parameter is not provided or an invalid 
+ value is provided, a default value of 0 meters is used.
+ @param sr Spatial reference of output geometries.
+ @return <code>NSOperation</code> for current request.
+ @avail{10.0}
+ @since 1.0
+ @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , method on delegate for failure
+ */
+- (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance outSpatialReference:(AGSSpatialReference*)sr;
 
 /** Executes a geocoding operation to find location candidates for a given 
  address. The @c #delegate will be notified when the operation completes or if 
@@ -84,28 +136,10 @@
  fields.
  @return <code>NSOperation</code> for current operation.
  @since 1.0
- @see AGSLocatorDelegate
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
  */
 - (NSOperation *)locationsForAddress:(NSDictionary *)address returnFields:(NSArray *)outFields;
-
-/** Executes a reverse-geocoding operation to find address candidates for a 
- given location. The @c #delegate will be notified when the operation completes 
- or if an error is encountered..
- 
- It relies on the <i>Reverse Geocode</i> operation
- of the REST resource.
- 
- @param location Location to search for address candidates. If the @c AGSPoint does 
- not have a spatial reference, it is assumed to be in the same spatial reference 
- as that of the geocode service.
- @param distance Distance in meters from the given location within which a matching 
- address should be searched. If this parameter is not provided or an invalid 
- value is provided, a default value of 0 meters is used.
- @return <code>NSOperation</code> for current request.
- @since 1.0
- @see AGSLocatorDelegate
- */
-- (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance;
 
 /** Executes a geocoding operation to find location candidates for a given 
  address. The @c #delegate will be notified when the operation completes or if 
@@ -129,85 +163,46 @@
  @return <code>NSOperation</code> for current operation.
  @avail{10.0}
  @since 1.0
- @see AGSLocatorDelegate
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
  */
 - (NSOperation *)locationsForAddress:(NSDictionary *)address returnFields:(NSArray *)outFields outSpatialReference:(AGSSpatialReference*)sr;
 
-/** Executes a reverse-geocoding operation to find address candidates for a 
- given location. The @c #delegate will be notified when the operation completes 
- or if an error is encountered.
+/** Executes a geocoding operation to find location candidates for a given
+ address. The @c #delegate will be notified when the operation completes or if
+ an error is encountered.
  
- It relies on the <i>Reverse Geocode</i> operation
- of the REST resource.
- 
- @param location Location to search for address candidates. If the @c AGSPoint does 
- not have a spatial reference, it is assumed to be in the same spatial reference 
- as that of the geocode service.
- @param distance Distance in meters from the given location within which a matching 
- address should be searched. If this parameter is not provided or an invalid 
- value is provided, a default value of 0 meters is used.
- @param sr Spatial reference of output geometries.
- @return <code>NSOperation</code> for current request.
- @avail{10.0}
- @since 1.0
- @see AGSLocatorDelegate
+ This method is functionally equivalent to #locationsForAddress:returnFields:
+ #locationsForAddress:returnFields:outSpatialReference: , but its parameters provide a few more options
+ for narrowing down the results.
+ @param params Parameters for performing the operation
+ @since 10.1.1
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
  */
-- (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance outSpatialReference:(AGSSpatialReference*)sr;
+-(NSOperation *)locationsForAddressWithParameters:(AGSLocationsForAddressParameters*)params;
+
+/** Executes a geocoding operation to find location candidates for various types of inputs -
+ @li address <i>(380 New York St Redlands CA)</i>
+ @li point of interest <i>(Disneyland, bank in paris, los angeles starbucks, mount everest)</i>
+ @li administrative place name <i>(Seattle Washington)</i>
+ @li postal code <i>(90201 USA)</i>
+ @li X/Y coordinates <i>(-117.155579,32.703761)</i>
+ 
+ The @c #delegate will be notified when the operation completes or if
+ an error is encountered.
+ 
+ <b>Note</b>, this operation is only applicable to the @link AGSLocator::locator default locator @endlink at this time.
+ @param findParams Parameters for performing the operation
+ @since 10.1.1
+ @see @c AGSLocatorDelegate#locator:operation:didFind: , method on delegate for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailToFindWithError: , method on delegate for failure
+
+ */
+-(NSOperation*)findWithParameters:(AGSLocatorFindParameters*)findParams;
+
 @end
 
-
-
-#pragma mark -
-
-/** @brief Represents an address and its location.
- 
- Instances of this class represent results returned by @c AGSLocator for 
- geocoding and reverse-geocoding operations. Each result is an address 
- candidate.
- 
- @define{AGSLocator.h, ArcGIS}
- @since 1.0
- */
-@interface AGSAddressCandidate : NSObject <AGSCoding> {
- @private
-    NSString *_addressString;
-    NSDictionary *_address;
-    NSDictionary *_attributes;
-    AGSPoint *_location;
-    double _score;
-}
-
-/** A single line address of the candidate, if available.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) NSString *addressString;
-
-/** Address of the candidate. The dictionary contains a key-value pair for each 
- address field defined by the geocode service. Each address field describes some 
- part of the address information for the candidate.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) NSDictionary *address;
-
-/** A dictionary containing key-value pairs of address field name and value as 
- requested in the @p returnFields argument of 
- <code>locationsForAddress:returnFields:</code> on @c AGSLocator.  
- @since 1.0
- */
-@property (nonatomic, retain, readonly) NSDictionary *attributes;
-
-/** x,y coordinates of the candidate.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSPoint *location;
-
-/** Numeric score between 0 and 100 for the candidate. A score of 100 means a 
- perfect match, and 0 means no match.
- @since 1.0
- */
-@property (nonatomic, readonly) double score;
-
-@end
 
 
 
@@ -227,7 +222,7 @@
 @optional
 
 /** Tells the delegate that @c AGSLocator completed finding matching locations 
- with the provided results.
+ for the operation AGSLocator#locationsForAddresss:returnFields:
  @param locator The locator called to find locations.
  @param op <code>NSOperation</code> that performed the locate task.
  @param candidates Array of @c AGSAddressCandidate objects.
@@ -236,7 +231,7 @@
 - (void)locator:(AGSLocator *)locator operation:(NSOperation*)op didFindLocationsForAddress:(NSArray *)candidates;
 
 /** Tells the delegate that @c AGSLocator encountered an error while finding 
- matching locations.
+ matching locations for the operation AGSLocator#locationsForAddresss:returnFields:
  @param locator The locator called to find locations.
  @param op <code>NSOperation</code> that performed the locate task.
  @param error Information about the error returned by the service.
@@ -245,7 +240,7 @@
 - (void)locator:(AGSLocator *)locator operation:(NSOperation*)op didFailLocationsForAddress:(NSError *)error;
 
 /** Tells the delegate that @c AGSLocator completed finding an address candidate 
- with the provided result.
+for the operation AGSLocator#addressForLocation:maxSearchDistance:
  @param locator The locator called to find address candidate.
  @param op <code>NSOperation</code> that performed the locate task.
  @param candidate The address candidate for specified location.
@@ -254,12 +249,28 @@
 - (void)locator:(AGSLocator *)locator operation:(NSOperation*)op didFindAddressForLocation:(AGSAddressCandidate *)candidate;
 
 /** Tells the delegate that @c AGSLocator encountered an error while finding an 
- address candidate.
+ address candidate for the operation AGSLocator#addressForLocation:maxSearchDistance:
  @param locator The locator called to find address candidates.
  @param op <code>NSOperation</code> that performed the locate task.
  @param error Information about the error returned by the service.
  @since 1.0
  */
 - (void)locator:(AGSLocator *)locator operation:(NSOperation*)op didFailAddressForLocation:(NSError *)error;
+
+/** Tells the delegate that @c AGSLocator found locations for the operation @c AGSLocator#findWithParameters:
+ @param locator The locator called to find address candidates.
+ @param op <code>NSOperation</code> that performed the task.
+ @param results An array of @c AGSLocatorFindResult objects
+ @since 10.1.1
+ */
+-(void)locator:(AGSLocator*)locator operation:(NSOperation*)op didFind:(NSArray*)results;
+
+/** Tells the delegate that @c AGSLocator encountered an error for the operation @c AGSLocator#findWithParameters:
+ @param locator The locator called to find address candidates.
+ @param op <code>NSOperation</code> that performed the task.
+ @param error Information about the error returned by the service.
+ @since 10.1.1
+ */
+-(void)locator:(AGSLocator*)locator operation:(NSOperation*)op didFailToFindWithError:(NSError*)error;
 
 @end

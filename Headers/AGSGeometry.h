@@ -16,35 +16,12 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
-
 @protocol AGSCoding;
 
 @class AGSEnvelope;
 @class AGSSpatialReference;
 
 /** @file AGSGeometry.h */ //Required for Globals API doc
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-	
-/** Supported geometry types.
- @since 1.0
- */
-typedef enum  {
-    AGSGeometryTypeUndefined = -1, /*!<  */
-    AGSGeometryTypePoint,		/*!<  */
-    AGSGeometryTypePolyline,	/*!<  */
-    AGSGeometryTypePolygon,		/*!<  */
-    AGSGeometryTypeMultipoint,	/*!<  */
-    AGSGeometryTypeEnvelope	/*!<  */
-} AGSGeometryType;
-    
-#ifdef __cplusplus
-}
-#endif
 
 #pragma mark -
 
@@ -54,20 +31,17 @@ typedef enum  {
  @define{AGSGeometry.h, ArcGIS}
  @since 1.0
  */
-@interface AGSGeometry : NSObject <AGSCoding, NSCopying, NSMutableCopying> {
- @private
-    AGSSpatialReference *_spatialReference;
-}
+@interface AGSGeometry : NSObject <AGSCoding, NSCopying, NSMutableCopying>
 
 /** Geometry's spatial reference.
  @since 1.0
 */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 /** Smallest, rectangular bounding-box that covers the geometry.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *envelope;
+@property (nonatomic, copy, readonly) AGSEnvelope *envelope;
 
 /** Initialize geometry object with spatial reference.
  @param spatialReference The spatial referenc of geometry.
@@ -101,22 +75,7 @@ typedef enum  {
  */
 -(BOOL)isValid;
 
-/** Returns a drawing path used by symbols. 
- Caller must release the returned CGPathRef by calling CGPathRelease.
- @param env The envelope for drawing.
- @param res The resolution that is being drawn.
- @param buffer The buffer around the envelope (in screen points), usually the width of a line.
- This parameter is used for optimizing the path returned to be drawn.
- @return A CGPath that. The caller must release.
- @since 2.2
- */
--(CGPathRef)newDrawingPathForEnvelope:(AGSEnvelope*)env resolution:(double)res buffer:(CGFloat)buffer;
-
 @end
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #pragma mark -
 
@@ -124,7 +83,7 @@ extern "C" {
  @param json The JSON representation.
  @return A new geometry object.
  */
-extern AGSGeometry *AGSGeometryWithJSON(NSDictionary *json);
+AGS_EXTERN AGSGeometry *AGSGeometryWithJSON(NSDictionary *json);
 
 /** Return autoreleased geometry, initialized from JSON representation and 
  spatial reference.
@@ -132,28 +91,28 @@ extern AGSGeometry *AGSGeometryWithJSON(NSDictionary *json);
  @param sr The spatial reference of the geometry.
  @return A new geometry object.
  */
-extern AGSGeometry *AGSGeometryWithJSONAndSR(NSDictionary *json, AGSSpatialReference *sr);
+AGS_EXTERN AGSGeometry *AGSGeometryWithJSONAndSR(NSDictionary *json, AGSSpatialReference *sr);
 
 /** Return @c AGSGeometryType from geometry.
  @param geometry The geometry to determine geometry type.
  @return @c AGSGeometryType for @p geometry.
  @see AGSGeometryType
  */
-extern AGSGeometryType AGSGeometryTypeForGeometry(AGSGeometry *geometry);
+AGS_EXTERN AGSGeometryType AGSGeometryTypeForGeometry(AGSGeometry *geometry);
 
 /** Return geometry type string for @c AGSGeometryType.
  @param geometryType The type for geometry.
  @return String representation of @p geometryType.
  @see AGSGeometryType
  */
-extern NSString *AGSGeometryTypeString(AGSGeometryType geometryType);
+AGS_EXTERN NSString *AGSGeometryTypeString(AGSGeometryType geometryType);
 
 /** Return geometry type for type string.
  @param geometryType The string representation of a geometry type.
  @return @c AGSGeometryType for @p geometryType string.
  @see AGSGeometryType
  */
-extern AGSGeometryType AGSGeometryTypeFromString(NSString *geometryType);
+AGS_EXTERN AGSGeometryType AGSGeometryTypeFromString(NSString *geometryType);
 
 /** Returns whether @p path intersects @p rectangle.
  @param path The input path that may or may not intersect rectangle.
@@ -161,21 +120,21 @@ extern AGSGeometryType AGSGeometryTypeFromString(NSString *geometryType);
  @param rectangle The rectangle to test intersection relation.
  @return <code>YES</code> if @p path intersects @p rectangle.
  */
-extern BOOL AGSGeometryCGPathIntersectsRectangle(CGPathRef path, CGRect pathBBox, CGRect rectangle);
+AGS_EXTERN BOOL AGSGeometryCGPathIntersectsRectangle(CGPathRef path, CGRect pathBBox, CGRect rectangle);
 
 /** Returns a geometry converted from geographic to web mercator.
  @param geometry The geometry to convert to web mercator.
  @return An @c AGSGeometry object in web mercator.
  @since 1.0
  */
-extern AGSGeometry *AGSGeometryGeographicToWebMercator(AGSGeometry *geometry);
+AGS_EXTERN AGSGeometry *AGSGeometryGeographicToWebMercator(AGSGeometry *geometry);
 
 /** Returns a geometry converted from web mercator to geographic.
  @param geometry The geometry to convert to geographic.
  @return An @c AGSGeometry object in geographic.
  @since 1.0
  */
-extern AGSGeometry *AGSGeometryWebMercatorToGeographic(AGSGeometry *geometry);
+AGS_EXTERN AGSGeometry *AGSGeometryWebMercatorToGeographic(AGSGeometry *geometry);
 	
 /** Returns a mutable @c AGSGeometry from AGSGeometryType
  @param type The type of geometry to return.
@@ -183,8 +142,5 @@ extern AGSGeometry *AGSGeometryWebMercatorToGeographic(AGSGeometry *geometry);
  @return @c AGSGeometryType for @p geometry.
  @see AGSGeometryType
  */
-extern AGSGeometry *AGSMutableGeometryFromType(AGSGeometryType type, AGSSpatialReference *sr);
+AGS_EXTERN AGSGeometry *AGSMutableGeometryFromType(AGSGeometryType type, AGSSpatialReference *sr);
 	
-#ifdef __cplusplus
-}
-#endif

@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSBase64.h */ //Required for Globals API doc
 
 /** @brief Utility to help encode/decode strings in base 64.

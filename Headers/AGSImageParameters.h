@@ -16,10 +16,11 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSSpatialReference;
 @class AGSGeometry;
+@class AGSEnvelope;
 @class AGSTimeExtent;
 
 /** @file AGSImageParameters.h */ //Required for Globals API doc
@@ -32,24 +33,12 @@
  
  @since 1.0
  */
-@interface AGSImageParameters : NSObject {
- @private
-	AGSEnvelope *_bbox;
-	NSUInteger _dpi;
-	NSString *_format;
-	NSUInteger _height;
-	AGSSpatialReference *_imageSpatialReference;
-	NSArray *_layerIds;
-	BOOL _transparent;
-	NSUInteger _width;
-	AGSTimeExtent *_timeExtent;
-	NSArray *_layerTimeOptions;
-}
+@interface AGSImageParameters : NSObject
 
 /** Extent of the map to be exported.
  @since 1.0
  */
-@property (nonatomic, retain) AGSEnvelope *bbox;
+@property (nonatomic, strong) AGSEnvelope *bbox;
 
 /** Dots per inch setting for an image to render on the device.
  @since 1.0
@@ -59,7 +48,7 @@
 /** Map image format.
  @since 1.0
  */
-@property (nonatomic, retain) NSString *format;
+@property (nonatomic, copy) NSString *format;
 
 /** Requested image height in pixels.
  @since 1.0
@@ -69,13 +58,13 @@
 /** Spatial reference of exported map.
  @since 1.0
  */
-@property (nonatomic, retain) AGSSpatialReference *imageSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *imageSpatialReference;
 
 /** A list of layer ID's, that represent which layers to include in the exported 
  map. 
  @since 1.0
  */
-@property (nonatomic, retain) NSArray *layerIds;
+@property (nonatomic, copy) NSArray *layerIds;
  
 /** Whether or not background of dynamic image is transparent.
  @since 1.0
@@ -90,12 +79,12 @@
 /**
  @since 1.8
  */
-@property (nonatomic, retain) AGSTimeExtent *timeExtent;
+@property (nonatomic, strong) AGSTimeExtent *timeExtent;
 
 /**
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *layerTimeOptions;
+@property (nonatomic, copy) NSArray *layerTimeOptions;
 
 /** Method to encode the parameters into a JSON dictionary.
  @since 1.0

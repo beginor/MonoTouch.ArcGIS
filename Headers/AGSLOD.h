@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSLOD.h */ //Required for Globals API doc
 
 /** @brief A scale level of a cached map service.
@@ -37,11 +35,15 @@
 
 /** Resolution, in map units, of each pixel in a tile for the scale level.
  @since 1.0
+ @see @c AGSTiledLayer#convertedResolutionForLodResolution: to convert LOD resolution to map resolution.
+ @see @c AGSMapView#zoomToResolution:animated:
  */
 @property (nonatomic, readonly) double resolution;
 
 /** Scale for the level.
  @since 1.0
+ @see @c AGSTiledLayer#convertedScaleForLodScale: to convert LOD scale to map scale.
+ @see @c AGSMapView#zoomToScale:animated:
  */
 @property (nonatomic, readonly) double scale;
 

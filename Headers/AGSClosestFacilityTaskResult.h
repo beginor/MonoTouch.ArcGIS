@@ -19,10 +19,6 @@
 
 /** @file AGSClosestFacilityTaskResult.h */
 
-#import <Foundation/Foundation.h>
-
-#import "AGSEnumerations.h"
-
 @protocol AGSCoding;
 
 /** @brief The result from an @c AGSClosestFacilityTask operation.
@@ -31,40 +27,31 @@
 
  @since 1.8
  */
-@interface AGSClosestFacilityTaskResult : NSObject<AGSCoding> {
- @private
-    NSArray *_closestFacilityResults;    
-    NSArray *_facilities;
-    NSArray *_incidents;
-    NSArray *_messages;
-    NSArray *_pointBarriers;
-    NSArray *_polygonBarriers;
-    NSArray *_polylineBarriers;
-}
+@interface AGSClosestFacilityTaskResult : NSObject<AGSCoding>
 
 /** An array of @c AGSClosestFacilityResult objects containing an @c AGSDirectionsSet 
  (if <code>returnDirections</code> is <code>true</code>) and a route graphic (if 
  <code>returnRouteGraphics</code> is <code>true</code>) as well as the name of the route.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *closestFacilityResults;
+@property (nonatomic, copy, readonly) NSArray *closestFacilityResults;
 
 /** Facilities (points) as an array of @c AGSGraphic objects. These are only returned when <code>returnFacilities</code> is true.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *facilities;
+@property (nonatomic, copy, readonly) NSArray *facilities;
 
 /** Incidents (points) as an array of @c AGSGraphic objects. These are only returned when <code>returnIncidents</code> is true.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *incidents;
+@property (nonatomic, copy, readonly) NSArray *incidents;
 
 /** Messages as an array of @c AGSNAMessage objects. These are received when the solve is complete. If a closest facility cannot be
  solved, the message returned by the server identifies the incident that could not
  be solved.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *messages;
+@property (nonatomic, copy, readonly) NSArray *messages;
 
 /** The point barriers as an array of @c AGSGraphic objects. They are returned only if <code>returnPointBarriers</code>
  is <code>true</code> (which is not the default). If you send in the point barriers as a feature set 
@@ -72,20 +59,20 @@
  back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *pointBarriers;
+@property (nonatomic, copy, readonly) NSArray *pointBarriers;
 
 /** The polygon barriers as an array of  @c AGSGraphic objects. They are returned only if <code>returnPolygonBarriers</code> 
  was set to <code>true</code> (which is not the default). If you send in the polygon barriers as a featureSet 
  (instead of using DataLayer), you already have the barriers and might not need to request them back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *polygonBarriers;
+@property (nonatomic, copy, readonly) NSArray *polygonBarriers;
 
 /** The polyline barriers as an array of  @c AGSGraphic objects. They are returned only if <code>returnPolylineBarriers</code> 
  was set to <code>true</code> (which is not the default). If you send in the polyline barriers as a featureSet 
  (instead of using DataLayer), you already have the barriers and might not need to request them back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *polylineBarriers;
+@property (nonatomic, copy, readonly) NSArray *polylineBarriers;
 
 @end

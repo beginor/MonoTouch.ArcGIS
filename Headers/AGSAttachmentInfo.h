@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 
@@ -30,13 +30,7 @@
  @since 1.0
  @see AGSFeatureLayerEditingDelegate
  */
-@interface AGSAttachmentInfo : NSObject <AGSCoding> {
- @private
-	NSInteger _attachmentId;
-	NSString *_contentType;
-	NSInteger _size;
-	NSString *_name;
-}
+@interface AGSAttachmentInfo : NSObject <AGSCoding>
 
 /** The unique id of the attachment in the database.
  @since 1.0

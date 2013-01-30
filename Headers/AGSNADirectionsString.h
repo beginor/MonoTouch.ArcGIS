@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
-
 @protocol AGSCoding;
 
 /** @file AGSNADirectionsString.h */ //Required for Globals API doc

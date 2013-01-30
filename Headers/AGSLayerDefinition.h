@@ -16,7 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
 @protocol AGSCoding;
 
 /** @file AGSLayerDefinition.h */ //Required for Globals API doc
@@ -29,21 +28,17 @@
  @define{AGSLayerDefinition.h, ArcGIS}
  @since 1.0
  */
-@interface AGSLayerDefinition : NSObject {
- @private
-	int _layerId;
-	NSString *_definition;
-}
+@interface AGSLayerDefinition : NSObject
 
 /** Particular layer id the definition belongs to.
  @since 1.0
  */
-@property (nonatomic, assign) int layerId;
+@property (nonatomic, assign) NSInteger layerId;
 
 /** The definition by which to filter features.
  @since 1.0
  */
-@property (nonatomic, retain) NSString *definition;
+@property (nonatomic, copy) NSString *definition;
 
 /** Initializes the layer definition.
  @since 1.0
@@ -56,7 +51,7 @@
  @param definition The definition expression to filter the features in the layer.
  @since 1.0
  */
--(id)initWithLayerId:(int)layerId definition:(NSString*)definition;
+-(id)initWithLayerId:(NSInteger)layerId definition:(NSString*)definition;
 
 /** Initialize an autoreleased <code>AGSLayerDefinition</code> with a given 
  @p layerId and @p definition.
@@ -65,7 +60,7 @@
  @return An autoreleased <code>AGSLayerDefinition</code>.
  @since 1.0
  */
-+(id)layerDefinitionWithLayerId:(int)layerId definition:(NSString*)definition;
++(id)layerDefinitionWithLayerId:(NSInteger)layerId definition:(NSString*)definition;
 
 /** Encode an array of layer definitions to JSON representation.
  @param array The array of layer definitions to encode. 

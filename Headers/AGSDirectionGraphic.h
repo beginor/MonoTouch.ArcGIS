@@ -17,7 +17,7 @@
  */
 
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 
@@ -29,8 +29,7 @@
  
  @since 1.8
  */
-@interface AGSDirectionGraphic : AGSGraphic <AGSCoding> {
-}
+@interface AGSDirectionGraphic : AGSGraphic <AGSCoding>
 
 /** The length of the direction. 
  @since 1.8
@@ -45,12 +44,12 @@
 /** The text that describes the direction.
  @since 1.8
  */
-@property (nonatomic, readonly) NSString *text;
+@property (nonatomic, copy, readonly) NSString *text;
 
 /** The estimated time of arrival after upon completion of the direction.
  @since 1.8
  */
-@property (nonatomic, readonly) NSDate *ETA;
+@property (nonatomic, copy, readonly) NSDate *ETA;
 
 /** The type of maneuver required to complete the direction.
  @since 1.8
@@ -62,7 +61,7 @@
  @avail{10.1}
  @since 2.3
  */
-@property (nonatomic, retain, readonly) NSArray *directionsStrings;
+@property (nonatomic, copy, readonly) NSArray *directionsStrings;
 
 
 @end

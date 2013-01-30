@@ -17,7 +17,7 @@
  */
 
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSFeatureSet;
 @class AGSPoint;
@@ -29,52 +29,43 @@
  @define{AGSImageServiceIdentifyResult.h, ArcGIS}
  @since 1.8
  */
-@interface AGSImageServiceIdentifyResult : NSObject <AGSCoding> {
- @private
-	AGSFeatureSet *_catalogItems;
-	NSArray *_catalogItemVisibilities;
-	AGSPoint *_location;
-	NSString *_name;
-	NSNumber *_objectId;
-	NSDictionary *_properties;
-	NSString *_value;
-}
+@interface AGSImageServiceIdentifyResult : NSObject <AGSCoding>
 
 /** The set of catalog items that overlap the input geometry. CatalogItems are
  returned only when the image service source is a mosaic dataset.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSFeatureSet *catalogItems;
+@property (nonatomic, strong, readonly) AGSFeatureSet *catalogItems;
 
 /** The set of visible areas for the identified catalog items. CatalogItemVisibilities
  are returned only when the image service source is a mosaic dataset.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *catalogItemVisibilities;
+@property (nonatomic, copy, readonly) NSArray *catalogItemVisibilities;
 
 /** The identified location.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSPoint *location;
+@property (nonatomic, strong, readonly) AGSPoint *location;
 
 /** The identify property name.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *name;
 
 /** The identify property id.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSNumber *objectId;
+@property (nonatomic, strong, readonly) NSNumber *objectId;
 
 /** The attributes of the identified object.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSDictionary *properties;
+@property (nonatomic, copy, readonly) NSDictionary *properties;
 
 /** The identify property pixel value.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *value;
+@property (nonatomic, copy, readonly) NSString *value;
 
 @end

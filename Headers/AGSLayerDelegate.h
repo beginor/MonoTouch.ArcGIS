@@ -35,17 +35,6 @@
  */
 @protocol AGSLayerDelegate <NSObject>
 
-@required
-
-// This is currently used by FeatureLayer because it needs to know the map's full 
-// envelope for querying and selection.
-
-/** The layer can call this function on its delegate to find out what the full 
- envelope of the map is.
- @since 1.0
- */
--(AGSEnvelope*)mapFullEnvelope;
-
 @optional
 /** Tells the delegate that @p layer is loaded and ready to use.
  @param layer The layer that was loaded.
@@ -60,10 +49,12 @@
  */
 - (void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error;
 
-/** Tells the delegate that @p layer data has changed. The delegate may decide 
- to refresh the UI.
- @since 1.0
+/** Tells the delegate that the spatial reference status of the layer
+ has been initialized. This means that the map has determined that the layer 
+ either has a matching spatial reference (or has the capability to project to
+ a matching spatial reference), or does not have a matching spatial reference and does
+ not have the capability of reprojecting itself.
  */
-- (void)layerDataChanged:(AGSLayer *)layer;
+-(void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid;
 
 @end

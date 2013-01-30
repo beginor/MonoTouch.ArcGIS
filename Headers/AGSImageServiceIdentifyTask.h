@@ -16,9 +16,7 @@
  email: contracts@esri.com
  */
 
-
-#import <Foundation/Foundation.h>
-
+@class AGSTask;
 @class AGSImageServiceIdentifyParameters;
 @class AGSImageServiceIdentifyResult;
 @class AGSCredential;
@@ -35,43 +33,12 @@
 
  @since 1.8
  */
-@interface AGSImageServiceIdentifyTask : NSObject {
- @private
-	NSURL *_URL;
-	AGSCredential *_credential;
-	id<AGSImageServiceIdentifyDelegate> _delegate;
-}
-
-/** URL of the image service resource in the ArcGIS Server REST Services 
- Directory.
- @since 1.8
- */
-@property (nonatomic, copy, readonly) NSURL *URL;
-
-/** The credential to be used to access secured resources.
- @since 1.8
- */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@interface AGSImageServiceIdentifyTask : AGSTask
 
 /** Delegate to be notified when the task succeeds or fails.
  @since 1.8
  */
-@property (nonatomic, assign) id<AGSImageServiceIdentifyDelegate> delegate;
-
-/** Initalize this task with a URL to an ArcGIS Server image service.
- @param url URL pointing to an image service.
- @return A new, initialized, image service identify task.
- @since 1.8
- */
--(id)initWithURL:(NSURL *)url; 
-
-/** Initalize this task with a credential and URL to an ArcGIS Server image service.
- @param url URL pointing to an image service.
- @param cred @c AGSCredential used to access secure service.
- @return A new, initialized, image service identify task.
- @since 1.8
- */
--(id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
+@property (nonatomic, weak) id<AGSImageServiceIdentifyDelegate> delegate;
 
 /** Executes an identify operation with the specified parameters. The #delegate
  will be notified when the operation completes or if an error is encountered.

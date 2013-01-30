@@ -16,11 +16,13 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#include <pthread.h>
 @class AGSCredential;
+@class AGSCredentialCache;
 @class AGSRunLoopOperation;
 @class AGSProcessResultsOperation;
+@protocol AGSSecuredResource;
+
+/** @file AGSRequestOperation.h */ //Required for Globals API doc
 
 /** @brief Base class for operations that perform http requests.
  
@@ -47,32 +49,7 @@
  
  @since 1.0
  */
-@interface AGSRequestOperation : AGSRunLoopOperation {
- @private
-    NSURL *_URL;
-    NSString *_resource;
-    NSDictionary *_query;
-    BOOL _post;
-	
-	AGSCredential *_credential;
-	NSString *_token;
-	
-    NSURLRequest *_request;
-    NSURLConnection *_connection;
-    NSMutableData *_data;
-	NSMutableDictionary *_state;
-    NSURLResponse *_response;
-	
-	AGSProcessResultsOperation *_processResultsOperation;
-	
-	BOOL _requiresAuthentication;
-    BOOL _opDidStartCalled;
-    
-    // this is for when a token expires, we need to copy the 
-    // current operation and resubmit it with a valid token
-    AGSRequestOperation *_resubmitOperation;
-	BOOL _isResubmitOperation;	
-}
+@interface AGSRequestOperation : AGSRunLoopOperation
 
 /** URL of the resource to make a request from.
  @since 1.0
@@ -99,23 +76,49 @@
 /** Request object to be used instead of generating one on the fly.
  @since 1.0
  */
-@property (readonly, retain) NSURLRequest *request;
+@property (readonly, strong) NSURLRequest *request;
 
 /** A dictionary that can be filled with objects that need to be retrieved upon
  completion of an operation and are not passed back as results.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSMutableDictionary *state;
+@property (nonatomic, strong, readonly) NSMutableDictionary *state;
 
 /** Credentials to access a secured resource.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSCredential *credential;
+@property (nonatomic, strong, readwrite) AGSCredential *credential;
+
+/** Credential cache used to access a secured resources.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
+
+/** The secure resource, if applicable, that is making the request.
+ @since 10.1.1
+ */
+@property (nonatomic, weak, readwrite) id<AGSSecuredResource> securedResource;
 
 /** The response of the request.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSURLResponse *response;
+@property (nonatomic, strong, readonly) NSURLResponse *response;
+
+/** Whether the response should be cached. Default is YES
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) BOOL shouldCacheResponse;
+
+/** The cache policy that should be used for making the web request.
+ Default value is NSURLRequestUseProtocolCachePolicy
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSURLRequestCachePolicy requestCachePolicy;
+
+/** The timeout interval (in seconds) for this request. Default value is 60.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSTimeInterval timeoutInterval;
 
 /** Initialize an <code>AGSRequestOperation</code> with the specified request.
  @param req Request to initialize the operation with.
@@ -187,10 +190,4 @@
  */
 -(NSError *)processError:(NSError *)error;
 
-/** Creates a copy of the current operation to be re-added to the operation
- queue for resubmission. This is useful if a token expires and the operation
- needs to be resubmitted with a new token or set of credentials.
- @since 1.0
- */
-- (AGSRequestOperation*)copyOperation;
 @end

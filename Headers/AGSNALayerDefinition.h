@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSNALayerDefinition.h */
 
@@ -37,21 +37,13 @@
  
  @since 1.8
  */
-@interface AGSNALayerDefinition : NSObject <AGSCoding> {
- @private
-	AGSGeometry *_geometry;
-	NSString *_layerName;
-	AGSSpatialRelationship _spatialRelationship;;
-	NSString *_where;
-    NSURL *_URL;
-    AGSQuery *_query;
-}
+@interface AGSNALayerDefinition : NSObject <AGSCoding>
 
 /** The geometry used to select features. The #spatialRelationship is applied to this geometry by the network analysis service while selecting which features to use as inputs during the analysis. 
  @see #initWithLayerName:geometry:spatialRelationship:where:
  @since 1.8
  */
-@property (nonatomic, retain) AGSGeometry *geometry;
+@property (nonatomic, strong) AGSGeometry *geometry;
 
 /** The name of the data layer in the network analysis service itself. The service retrieves features from this data layer at run-time to use as stops/barriers/facilities/incidents when the analysis is being performed.
  @since 1.8
@@ -85,7 +77,7 @@
  @since 2.3
  @see #initWithURL:query:
  */
-@property (nonatomic, retain, readonly) AGSQuery *query;
+@property (nonatomic, strong, readonly) AGSQuery *query;
 
 /** Initialize a new @c AGSNALayerDefinition
  @param layerName The name of the data layer in the network analyst service to reference.

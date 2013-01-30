@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 @class AGSSpatialReference;
@@ -60,19 +60,19 @@
 /** The default list of network attribute names to be used as restrictions with the analysis.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *restrictions;
+@property (nonatomic, copy, readonly) NSArray *restrictions;
 
-/** @todo Divesh
+/** The tolerance amount by which locations can be snapped to the underlying transportation network.
  @since 1.8
  */
 @property (nonatomic, assign, readonly) NSUInteger snapTolerance;
 
-/** @todo Divesh
+/** The maximum snap tolerance
  @since 1.8
  */
 @property (nonatomic, assign, readonly) NSUInteger maxSnapTolerance;
 
-/** @todo Divesh
+/** Units in which #snapTolerance is specified
  @since 1.8
  */
 @property (nonatomic, assign, readonly) AGSUnits snapToleranceUnits;
@@ -99,20 +99,20 @@
  i.e. which attributes should be returned as part of the response.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *accumulateAttributeNames;
+@property (nonatomic, copy, readonly) NSArray *accumulateAttributeNames;
 
-/** @todo Divesh
+/** 
  Each element in the array is an object that describes the parameter values.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *attributeParameterValues;
+@property (nonatomic, copy, readonly) NSArray *attributeParameterValues;
 
 /** The well-known ID of the spatial reference for the geometries returned with 
  the analysis results. If not specified, the geometries are returned in the spatial 
  reference of the map.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSSpatialReference *outputSpatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *outputSpatialReference;
 
 /** Indicates the network layer's default value for whether the hierarchy attribute 
  for the network should be used in analysis.

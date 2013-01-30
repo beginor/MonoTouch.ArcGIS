@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSWebMapBaseMap.h */ //Required for Globals API doc
 
@@ -26,21 +26,17 @@
  @since 2.2
  */
 
-@interface AGSWebMapBaseMap : NSObject <AGSCoding> {
-@private
-	NSString *_title;
-	NSArray *_baseMapLayers;
-}
+@interface AGSWebMapBaseMap : NSObject <AGSCoding>
 
 /** The title of the basemap layer(s)
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 
 /**
  An array of @c AGSWebMapLayerInfo objects representing the basemap layer(s) of a webmap.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *baseMapLayers;
+@property (nonatomic, copy, readonly) NSArray *baseMapLayers;
 
 @end

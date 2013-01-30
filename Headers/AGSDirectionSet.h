@@ -17,7 +17,7 @@
  */
 
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 @class AGSEnvelope;
@@ -29,32 +29,22 @@
 
  @since 1.8
  */
-@interface AGSDirectionSet : NSObject <AGSCoding> {
- @private
-	NSArray *_graphics;
-	AGSEnvelope *_extent;
-	AGSPolyline *_mergedGeometry;
-	NSString *_routeId;
-	NSString *_routeName;
-	double _totalDriveTime;
-	double _totalLength;
-	double _totalTime;
-}
+@interface AGSDirectionSet : NSObject <AGSCoding>
 
 /** Array of @c AGSDirectionGraphic objects representing directions for a route.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *graphics;
+@property (nonatomic, copy, readonly) NSArray *graphics;
 
 /** The extent of the resulting route.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *extent;
+@property (nonatomic, strong, readonly) AGSEnvelope *extent;
 
 /** A single polyline representing the route.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSPolyline *mergedGeometry;
+@property (nonatomic, strong, readonly) AGSPolyline *mergedGeometry;
 
 /** The Id of the route returned from the server.
  @since 1.8
@@ -81,9 +71,5 @@
  @since 1.8
  */
 @property (nonatomic, assign, readonly) double totalTime;
-
-
-
-
 
 @end

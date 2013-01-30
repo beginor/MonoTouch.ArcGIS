@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 
 @class AGSCredential;
@@ -47,16 +45,13 @@
  @see AGSFindParameters for search criteria
  @see AGSFindTaskDelegate and AGSFindResult for search results
  */
-@interface AGSFindTask : AGSTask {
-@private
-    id<AGSFindTaskDelegate> _delegate;
-}
+@interface AGSFindTask : AGSTask
 
 /** Delegate to be notified when the task completes successfully or encounters 
  an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSFindTaskDelegate> delegate;
+@property (nonatomic, weak) id<AGSFindTaskDelegate> delegate;
 
 /** Initialize autoreleased find task.
  @param url URL to a map service resource in the ArcGIS Server REST Services 
@@ -125,133 +120,3 @@
 
 @end
 
-
-
-#pragma mark -
-
-/** @brief Parameters for an @c AGSFindTask operation.
- 
- Instances of this class represent parameters for @c AGSFindTask operations. 
- Parameters provide criteria for performing a search on the map service. 
- Parameters are passed as an argument to executeWithParameters: on @c AGSFindTask.
- 
- @define{AGSFindTask.h, ArcGIS}
- @since 1.0
- */
-@interface AGSFindParameters : NSObject <AGSCoding> {
-@private
-    BOOL _contains;
-    NSArray *_layerIds;
-    AGSSpatialReference *_outSpatialReference;
-    BOOL _returnGeometry;
-    NSArray *_searchFields;
-    NSString *_searchText;
-	NSArray *_layerDefinitions;
-	double _maxAllowableOffset;
-}
-
-/** If <code>NO</code>, @c AGSFindTask searches for an <i>exact match</i> of 
- #searchText and in a case sensitive manner. Otherwise, it searches for a value 
- that <i>contains</i> the #searchText and in a case agnostic manner.
- Default is <code>YES</code>.
- @since 1.0
- */
-@property (nonatomic) BOOL contains;
-
-/** The IDs of layers to to be searched. This parameter must be specified.
- @since 1.0
- */
-@property (nonatomic, retain) NSArray *layerIds;
-
-/** The spatial reference of the result geometries. By default, geometries 
- are returned in the spatial reference of the map service.
- @since 1.0
- */
-@property (nonatomic, retain) AGSSpatialReference *outSpatialReference;
-
-/** Whether or not the returned results should contain geometries. By default, 
- geometries are returned. You can reduce the size of the result payload by 
- excluding the geometries if you don't intend to display those results on the map.
- @since 1.0
- */
-@property (nonatomic) BOOL returnGeometry;
-
-/** The names of fields to be searched. If this parameter is not specified, all 
- fields are searched.
- @since 1.0 
- */
-@property (nonatomic, retain) NSArray *searchFields;
-
-/** The text to be searched.
- @since 1.0
- */
-@property (nonatomic, copy) NSString *searchText;
-
-/** Array of @c AGSLayerDefinition objects that allows you to filter the features 
- of individual layers. Definition expressions for layers that are currently not 
- visible will be ignored by the server.
- @avail{10.0}
- @since 1.0
- */
-@property (nonatomic, retain) NSArray *layerDefinitions;
-
-/** The maximum allowable offset used for generalizing geometries returned by 
- the query operation. The default is 0. If 0 is specified the value is not passed 
- to the server in a query. The offset is in the units of the spatial reference. 
- If a spatial reference is not defined the spatial reference of the map is used.
- @avail{10.0}
- @since 1.0
- */
-@property (nonatomic, assign) double maxAllowableOffset;
-
-@end
-
-
-
-#pragma mark -
-
-/** @brief A result of @c AGSFindTask operation
- 
- Instances of this class represent results of an @c AGSFindTask operation. 
- 
- @define{AGSFindTask.h, ArcGIS}
- @since 1.0
- */
-@interface AGSFindResult : NSObject <AGSCoding> {
-@private
-    NSString *_displayFieldName;
-    AGSGraphic *_feature;
-    NSString *_foundFieldName;
-    NSUInteger _layerId;
-    NSString *_layerName;
-}
-
-/** Name of the layer's primary display field. 
- @since 1.0
- */
-@property (nonatomic, readonly, retain) NSString *displayFieldName;
-
-/** The feature in the layer that contains or matches the search text. The 
- feature's attributes contain field values from the layer. The feature may or 
- may not have a geometry depending on whether it belongs to a layer or a table 
- respectively.
- @since 1.0
- */
-@property (nonatomic, readonly, retain) AGSGraphic *feature;
-
-/** Name of the layer's field that contains the search text.
- @since 1.0
- */
-@property (nonatomic, readonly, retain) NSString *foundFieldName;
-
-/** ID of the layer that contains the search text.
- @since 1.0
- */
-@property (nonatomic, readonly) NSUInteger layerId;
-
-/** Name of the layer that contains the search text.
- @since 1.0
- */
-@property (nonatomic, readonly, retain) NSString *layerName;
-
-@end

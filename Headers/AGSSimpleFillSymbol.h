@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSSymbol;
 @class AGSFillSymbol;
@@ -57,10 +57,7 @@ typedef enum {
  @since 1.0
  */
 
-@interface AGSSimpleFillSymbol : AGSFillSymbol {
- @private
-    AGSSimpleFillSymbolStyle _style;
-}
+@interface AGSSimpleFillSymbol : AGSFillSymbol
 
 /** The fill style. Possible values include
   
@@ -87,12 +84,12 @@ typedef enum {
 /** Initialize a symbol with a fill color and an outline color
  @since 1.8
  */
--(id)initWithColor:(UIColor*)fillColor outlineColor:(UIColor*)outlineColor;
+-(id)initWithColor:(AGSColor*)fillColor outlineColor:(AGSColor*)outlineColor;
 
 /** Initialize an autoreleased symbol with a fill color and an outline color
  @since 1.8
  */
-+(AGSSimpleFillSymbol*)simpleFillSymbolWithColor:(UIColor*)fillColor outlineColor:(UIColor*)outlineColor;
++(AGSSimpleFillSymbol*)simpleFillSymbolWithColor:(AGSColor*)fillColor outlineColor:(AGSColor*)outlineColor;
 
 @end
 

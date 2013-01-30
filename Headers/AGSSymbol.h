@@ -16,16 +16,18 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-@class AGSCoding;
+@protocol AGSCoding;
 @class AGSGeometry;
 @class AGSEnvelope;
 @class AGSPoint;
 @class AGSGraphic;
 
 /** @file AGSSymbol.h */ //Required for Globals API doc
+
+/** Notification that indicates that an AGSSymbol has all required information and is now ready to draw.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSSymbolReadyToDrawNotification;
 
 #pragma mark -
 
@@ -40,26 +42,19 @@
  @since 1.0
  */
 @interface AGSSymbol : NSObject <AGSCoding, NSCopying> {
- @private
-    UIColor *_color;
-    BOOL _readyToDraw;
-	/*
-	CGContextRef _hitTestBitmapContext;
-	uint8_t _byte[8];
-	 */
 }
 
 /** Symbol color.
  @since 1.0
  */
-@property (nonatomic, retain) UIColor *color;
+@property (nonatomic, copy) AGSColor *color;
 
 /** Returns an image that represents a swatch for a particular geometry type.
  @param geometryType The type of the geometry determines what kind of swatch is drawn.
  @param size Size of the output swatch.
- @return UIImage of the drawn swatch.
+ @return Image of the drawn swatch.
  */
-- (UIImage *)swatchForGeometryType:(AGSGeometryType)geometryType size:(CGSize)size;
+-(AGSImage *)swatchForGeometryType:(AGSGeometryType)geometryType size:(CGSize)size;
 
 @end
 

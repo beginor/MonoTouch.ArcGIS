@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+@class AGSPortal;
 @protocol AGSPortalUserDelegate;
 
 
@@ -42,52 +42,52 @@
 /** The delegate for the portal user operations. 
  @since 2.2
  */
-@property (nonatomic, assign, readwrite) id<AGSPortalUserDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<AGSPortalUserDelegate> delegate;
 
 /** The portal that the user belongs to. 
  @since 2.2
  */
-@property (nonatomic, assign, readonly) AGSPortal *portal;
+@property (nonatomic, weak, readonly) AGSPortal *portal;
 
 /** Username of the user.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *username;
+@property (nonatomic, copy, readonly) NSString *username;
 
 /** Full name of the user.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *fullName;
+@property (nonatomic, copy, readonly) NSString *fullName;
 
 /** Description of the user, if exists. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *userDescription;
+@property (nonatomic, copy, readonly) NSString *userDescription;
 
 /** Email of the user
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *email;
+@property (nonatomic, copy, readonly) NSString *email;
 
 /** The id of the organization if the user belongs to an organization. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *organizationId;
+@property (nonatomic, copy, readonly) NSString *organizationId;
 
 /** The file name of the thumbnail image of the user. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *thumbnailFileName;
+@property (nonatomic, copy, readonly) NSString *thumbnailFileName;
 
 /** Words or short phrases that describe the user.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *tags;
+@property (nonatomic, copy, readonly) NSArray *tags;
 
 /** Groups that the user is a member of.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *groups;
+@property (nonatomic, copy, readonly) NSArray *groups;
 
 /**  Determines if other users can search for this user's name to find content and groups owned by this
  user and to invite this user to join their groups.  Can be @ AGSPortalAccessPrivate, @c AGSPortalAccessOrganization, or @c AGSPortalAccessPublic. 
@@ -100,18 +100,22 @@
 /** The date on which the user account was created. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *created;
+@property (nonatomic, strong, readonly) NSDate *created;
 
 /** The date on which the user account was modified. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *modified;
+@property (nonatomic, strong, readonly) NSDate *modified;
 
 /** The thumbnail image for the user.  This needs to be fetched explicitly using #fetchThumbnail. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) UIImage *thumbnail;
+@property (nonatomic, strong, readonly) AGSImage *thumbnail;
 
+/** The role of the user within the organization.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readonly) AGSPortalUserRole role;
 
 /** Kicks off an operation that fetches the user's content at the root level (meaning, not under any folder).The corresponding methods on @c AGSPortalUserDelegate are invoked when the operation completes successfully or encounters an error.
  @since 2.2
@@ -188,7 +192,7 @@
  @param thumbnail The thumbnail image file.
  @since 2.2
  */
--(void)portalUser:(AGSPortalUser*)portalUser operation:(NSOperation*)op didFetchThumbnail:(UIImage*)thumbnail;
+-(void)portalUser:(AGSPortalUser*)portalUser operation:(NSOperation*)op didFetchThumbnail:(AGSImage*)thumbnail;
 
 /** Tells the delegate that an error was encountered while tyring to fetch the user's thumbnail image. 
  @param portalUser 	The portal user for which the thumbnail was fetched. 

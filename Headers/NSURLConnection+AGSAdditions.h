@@ -16,11 +16,12 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+/** @file NSURLConnection+AGSAdditions.h */ //Required for Globals API doc
 
-/** @brief A category to assist with network connections
+/** @brief A category on @c NSURLConnection containing convenience methods
  
  A category to assist with network connections
+ 
  @since 2.1
  */
 @interface NSURLConnection (AGSAdditions)
@@ -29,6 +30,6 @@
  self-signed certificates.
  @since 2.1
  */
-+(NSMutableArray*)trustedHosts;
++(NSMutableArray*)ags_trustedHosts;
 
 @end

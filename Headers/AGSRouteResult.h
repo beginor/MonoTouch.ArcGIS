@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSRouteResult.h */
 
@@ -29,25 +29,19 @@
  An array of @c AGSRouteResult objects will be returned within an @c AGSRouteTaskResult.
  @since 1.8
  */
-@interface AGSRouteResult : NSObject {
- @private
-	AGSDirectionSet *_directions;
-	AGSGraphic *_routeGraphic;
-	NSString *_routeName;
-	NSArray *_stopGraphics;
-}
+@interface AGSRouteResult : NSObject
 
 /** Route directions are returned if @c AGSRouteTaskParameters <code>returnDirections</code>
  property is set to <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSDirectionSet *directions;
+@property (nonatomic, strong, readonly) AGSDirectionSet *directions;
 
 /** The route graphic that is returned if @c AGSRouteTaskParameters 
  <code>returnRouteGraphics</code> property is <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSGraphic *routeGraphic;
+@property (nonatomic, strong, readonly) AGSGraphic *routeGraphic;
 
 /** The name of the route.
  @since 1.8
@@ -58,6 +52,6 @@
  <code>returnStopGraphics</code> property is <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *stopGraphics;
+@property (nonatomic, copy, readonly) NSArray *stopGraphics;
 
 @end

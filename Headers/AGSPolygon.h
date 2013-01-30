@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <pthread.h>
-
 @class AGSGeometry;
 @class AGSPoint;
 @class AGSEnvelope;
@@ -41,23 +38,24 @@
  @define{AGSPolygon.h, ArcGIS}
  @since 1.0
  */
-@interface AGSPolygon : AGSGeometry {
- @private
-    AGSEnvelope *_envelope;
-	pthread_mutex_t _envelopeMutex;
-}
+@interface AGSPolygon : AGSGeometry
 
 /** Number of rings in polygon.
  @since 1.0
  */
-@property (nonatomic, readonly) NSUInteger numRings;
+@property (nonatomic, readonly) NSInteger numRings;
 
 /** Get number of points in the specified ring.
  @param ring The index of desired ring in the polygon.
  @return Number of points in ring.
  @since 1.0
  */
-- (NSUInteger)numPointsInRing:(NSUInteger)ring;
+- (NSInteger)numPointsInRing:(NSInteger)ring;
+
+/** Returns the total number of points in the polygon.
+ @since 10.1.1
+ */
+- (NSInteger)numPoints;
 
 /** Get point from ring.
  @param ring The index of desired ring.
@@ -65,7 +63,7 @@
  @return Point in @p ring at @p index.
  @since 1.0
  */
-- (AGSPoint *)pointOnRing:(NSUInteger)ring atIndex:(NSUInteger)index;
+- (AGSPoint *)pointOnRing:(NSInteger)ring atIndex:(NSInteger)index;
 
 /** Initialize a new autoreleased polygon geometry.
  @param json The JSON representation for polygon. See <a href="http://services.arcgisonline.com/ArcGIS/SDK/REST/geometry.html">
@@ -112,7 +110,7 @@
 /** Inserts a ring at a specific index.
  @since 1.8
  */
--(void)insertRingAtIndex:(int)ringIndex;
+-(void)insertRingAtIndex:(NSInteger)ringIndex;
 
 /** Add @p point to end of current ring. 
  @param point The point to be added.
@@ -125,7 +123,7 @@
  @param ring The index of the ring to add @p point to.
  @since 1.0
  */
-- (void)addPoint:(AGSPoint *)point toRing:(NSUInteger)ring;
+- (void)addPoint:(AGSPoint *)point toRing:(NSInteger)ring;
 
 /** Insert @p point into @p ring at specific @p index.
  @param point The point to be added.
@@ -133,14 +131,14 @@
  @param index The index to add @p point at.
  @since 1.0
  */
-- (void)insertPoint:(AGSPoint *)point onRing:(NSUInteger)ring atIndex:(NSUInteger)index;
+- (void)insertPoint:(AGSPoint *)point onRing:(NSInteger)ring atIndex:(NSInteger)index;
 
 /** Remove point from specified ring.
  @param ring The index of the ring to remove @p point from.
  @param index The index of the point to remove.
  @since 1.0
  */
-- (void)removePointOnRing:(NSUInteger)ring atIndex:(NSUInteger)index;
+- (void)removePointOnRing:(NSInteger)ring atIndex:(NSInteger)index;
 
 /** Update point on specified @p ring at @p index with @p point.
  @param point The point to replace value at current index.
@@ -148,13 +146,13 @@
  @param index The index of the point to update.
  @since 1.0
  */
-- (void)updatePoint:(AGSPoint*)point onRing:(NSUInteger)ring atIndex:(NSUInteger)index;
+- (void)updatePoint:(AGSPoint*)point onRing:(NSInteger)ring atIndex:(NSInteger)index;
 
 /** Remove ring from polygon.
  @param index The index of the ring to be removed.
  @since 1.0
  */
-- (void)removeRingAtIndex:(NSUInteger)index;
+- (void)removeRingAtIndex:(NSInteger)index;
 
 /** Close the polygon if it is not closed. This means making the first vertex per part the same as the last vertex in that part.
  The server wants polygons to be closed when we send them to the server.
@@ -166,6 +164,6 @@
 /** Geometry's spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readwrite) AGSSpatialReference *spatialReference;
 
 @end

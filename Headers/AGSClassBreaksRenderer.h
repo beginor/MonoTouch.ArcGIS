@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSRenderer;
 @class AGSSymbol;
@@ -44,12 +44,6 @@
  @since 1.0
  */
 @interface AGSClassBreaksRenderer : AGSRenderer {
- @private
-    NSString *_field;
-	double _minValue;
-    NSArray *_classBreaks;
-	NSArray *_orderedClassBreaks;
-    AGSSymbol *_defaultSymbol;
 }
 
 /** Attribute field used by renderer to match values. This must be a key from 
@@ -62,7 +56,7 @@
  array of @c AGSClassBreak objects.
  @since 1.0
  */
-@property (nonatomic, retain) NSArray *classBreaks;
+@property (nonatomic, copy) NSArray *classBreaks;
 
 /** The minimum value for this class breaks renderer.
  @since 1.0
@@ -72,7 +66,7 @@
 /** The symbol to use if the value does not fall into any of the class breaks.
  @since 2.3
  */
-@property (nonatomic, retain, readwrite) AGSSymbol *defaultSymbol;
+@property (nonatomic, strong, readwrite) AGSSymbol *defaultSymbol;
 
 @end
 

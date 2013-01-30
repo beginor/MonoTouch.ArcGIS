@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <UIKit/UIKit.h>
-
 /** @file AGSPopupViewType.h */ //Required for Globals API doc
 
 /** The type of view within @c AGSPopupsContainerViewController

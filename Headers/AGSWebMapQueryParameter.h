@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSWebMapQueryParameter.h */ //Required for Globals API doc
 
@@ -28,39 +28,32 @@
  
  @since 2.2
  */
-@interface AGSWebMapQueryParameter : NSObject <AGSCoding> {
-@private
-	NSString *_defaultValue;
-	NSString *_field;
-	NSString *_paramOperator;
-	NSString *_prompt;
-	NSString *_helpTip;
-}
+@interface AGSWebMapQueryParameter : NSObject <AGSCoding>
 
 /** The default value to compare with the field's value in the event that a user does not provide another value.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *defaultValue;
+@property (nonatomic, copy, readonly) NSString *defaultValue;
 
 /** The name of the field (attribute) on which the query will be executed.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *field;
+@property (nonatomic, copy, readonly) NSString *field;
 
 /** The operator (<, >, =, etc) to be used to compare the field's value. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *paramOperator;
+@property (nonatomic, copy, readonly) NSString *paramOperator;
 
 /** The message to be displayed to the user to indicate what the user input represents. For example, "Earthquake Magnitude:".  This message should usually be displayed adjacent to the textfield.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *prompt;
+@property (nonatomic, copy, readonly) NSString *prompt;
 
 /** A tip explaining what input would be valid. For example, "A value between 0 and 10".
   @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *helpTip;
+@property (nonatomic, copy, readonly) NSString *helpTip;
 
 /**
  @since 2.2

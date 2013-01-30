@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSClosestFacilityTask.h */
 
@@ -47,16 +47,13 @@
  @see @sample{3092d2d547ef4f0c92d333841df8ee68, Closest Facility}
  @since 1.8
  */
-@interface AGSClosestFacilityTask : AGSTask {
-@private
-	id<AGSClosestFacilityTaskDelegate> _delegate;
-}
+@interface AGSClosestFacilityTask : AGSTask
 
 /** Delegate to be notified when the closest facility operation has completed or returned 
  an error.
  @since 1.8
  */
-@property (nonatomic, assign) id<AGSClosestFacilityTaskDelegate> delegate;
+@property (nonatomic, weak) id<AGSClosestFacilityTaskDelegate> delegate;
 
 /** Initialize a new, autoreleased closest facility task with the given url.
  @param url The url of the closest facility layer.
@@ -77,12 +74,17 @@
  @param closestFacilityParams The input parameters for the closest facility operation.
  @return <code>NSOperation</code> for the current closest facility task.
  @since 1.8
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didSolveClosestFacilityWithResult: , method on delegate for success
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didFailSolveWithError:  , method on delegate for failure
  */
 - (NSOperation*)solveClosestFacilityWithParameters:(AGSClosestFacilityTaskParameters*)closestFacilityParams;
 
 /** Retrieves the default closest facility parameters as defined by the service. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didRetrieveDefaultClosestFacilityTaskParameters: , method on delegate for success
+ @see @c AGSClosestFacilityTaskDelegate# closestFacilityTask:operation:didFailToRetrieveDefaultClosestFacilityTaskParametersWithError: , method on delegate for failure
+
  */
 - (NSOperation*)retrieveDefaultClosestFacilityTaskParameters;
 

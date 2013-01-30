@@ -16,15 +16,11 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import "AGSTime.h"
-
 @protocol AGSCoding;
 @protocol AGSQueryTaskDelegate;
 @protocol AGSFeatureLayerEditingDelegate;
 @protocol AGSFeatureLayerQueryDelegate;
 @protocol AGSInfoTemplateDelegate;
-
 
 @class AGSLayer;
 @class AGSDynamicLayer;
@@ -44,6 +40,10 @@
 @class AGSAttachmentManager;
 @class AGSTimerContainer;
 @class AGSEditFieldsInfo;
+@class AGSTimeExtent;
+@class AGSCredential;
+@class AGSRelationshipQuery;
+@class AGSFeatureSet;
 
 /** @file AGSFeatureLayer.h */ //Required for Globals API doc
 
@@ -67,6 +67,11 @@ typedef enum {
 	AGSFeatureLayerSelectionMethodSubtract	/*!< Removes newly selected features from existing list of selected features*/	
 } AGSFeatureLayerSelectionMethod;
 
+// example of this taken from "UIKeyboardDidShowNotification"
+/** Notification that indicates that AGSFeatureLayer completed loading its features (for example, from a remote feature service).
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
 
 #pragma mark -
 
@@ -92,90 +97,17 @@ typedef enum {
  you can also add, update, delete, and query attachments. 
  
  Note, Feature Services are only avaialble on ArcGIS Server 10.0 or above. 
-  
  
+ <h3>Notifications</h3>
+ The layer posts @c #AGSFeatureLayerDidLoadFeaturesNotification when it finishes loading features
+ from a remote feature service.
  
  @see @concept{ArcGIS_Feature_Layer/00pw0000004s000000/, ArcGIS Feature Layer}
  @see @sample{2ddb261648074b9aabb22240b6975918, Feature Layer Editing}
  @see @sample{feae3db9536c414f970302ee5f5f066a, Online-Offline Editing}
  @since 1.0
  */
-@interface AGSFeatureLayer : AGSGraphicsLayer <AGSCoding, AGSQueryTaskDelegate, AGSInfoTemplateDelegate, AGSSecuredResource> {
- @private
-	
-    NSURL *_URL;
-    AGSFeatureLayerMode _mode;
-    
-    AGSQueryTask *_queryTask;
-    AGSQuery *_query;
-	AGSRequestOperation *_queryOperation;
-	
-    NSArray *_outFields;
-	double _maxAllowableOffset;
-	
-	NSOperation *_loadOperation;
-	
-	AGSCredential *_credential;
-	
-	NSString *_serviceLayerName;
-    NSUInteger _layerId;
-    NSString *_layerDescription;
-    NSString *_type;
-    AGSGeometryType _geometryType;
-    NSString *_displayField;
-    NSArray *_fields;
-    NSString *_objectIdField;
-    NSString *_typeIdField;
-    NSString *_defaultDefinitionExpression;
-    NSString *_definitionExpression;
-    NSArray *_types;
-    NSArray *_templates;
-    NSArray *_relationships;
-	AGSTimeInfo *_timeInfo;
-    AGSEditFieldsInfo *_editFieldsInfo;
-    
-    BOOL _editable, _queryable, _attachments;
-    BOOL _canCreate, _canUpdate, _canDelete;
-	
-	AGSSpatialReference *_spatialReference;
-	AGSEnvelope *_serviceFullEnvelope;
-	AGSSpatialReference *_currentSpatialReference; // the last spatial reference that the layer drew at
-	NSMutableArray *_labelingInfo;
-	
-	id<AGSFeatureLayerEditingDelegate> _editingDelegate;
-	NSMutableDictionary *_graphicsDictionary;
-	
-	id<AGSFeatureLayerQueryDelegate> _queryDelegate;
-	
-	AGSFeatureLayerModeModule *_ags_currentModeModule;
-	
-	NSMutableArray *_selectedObjectIds;
-	AGSSymbol *_selectionSymbol;
-	
-	NSArray *_capabilities;
-	float _version;
-	
-    id<AGSInfoTemplateDelegate> _infoTemplateDelegate;
-	
-	int _timeOffset;
-	AGSTimeIntervalUnits _timeOffsetUnits;
-	AGSTimeExtent *_timeDefinition;
-	
-	//
-	// on demand caching vars
-	AGSEnvelope *_queryEnvelope;
-	CFAbsoluteTime _queryTimestamp;
-	double _expirationInterval;
-	BOOL _autoRefreshOnExpiration;
-	float _bufferFactor;
-	float _constraintFactor;
-	AGSTimerContainer *_expirationTimerContainer;
-	
-	NSMutableDictionary *_attachmentManagers;
-	NSDictionary *_overridingLayerDefinition;
-	
-	int _nextClientOID;
-}
+@interface AGSFeatureLayer : AGSGraphicsLayer <AGSCoding, AGSInfoTemplateDelegate, AGSSecuredResource>
 
 /** URL to a layer resource in the ArcGIS Server REST Services Directory. The 
  layer resource can belong to a Map Service or a Feature Service and can 
@@ -232,7 +164,23 @@ typedef enum {
 /** The credential to be used to access secured resources.
  @since 1.0
  */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default this will be set to the global cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
+
+/** The cache policy that should be used for making the web request.
+ Default value is NSURLRequestUseProtocolCachePolicy
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSURLRequestCachePolicy requestCachePolicy;
+
+/** The timeout interval (in seconds) for this request. Default value is 60.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSTimeInterval timeoutInterval;
 
 /** The ID of the layer as defined by the service.
  @since 1.0
@@ -242,18 +190,18 @@ typedef enum {
 /** The name of the layer as defined by the service.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *serviceLayerName;
+@property (nonatomic, copy, readonly) NSString *serviceLayerName;
 
 /** The description of the layer as defined by the service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *layerDescription;
+@property (nonatomic, copy, readonly) NSString *layerDescription;
 
 /** The type of the layer as defined by the service. Could be either 
  @em Feature @em Layer or @em Table.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *type;
+@property (nonatomic, copy, readonly) NSString *type;
 
 /** The geometry type of features contained in the layer as defined by the service.  
  All features in the layer will have the same geometry type.
@@ -270,32 +218,32 @@ typedef enum {
 /** The primary display field as defined by the service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *displayField;
+@property (nonatomic, copy, readonly) NSString *displayField;
 
 /** The fields available in the layer as defined by the service. The property is an
  array of @c AGSField objects. Attributes of features belonging to this layer 
  contain values for each field.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *fields;
+@property (nonatomic, copy, readonly) NSArray *fields;
 
 /** The name of field which contains the @em OBJECTID.
  @since 1.0
  @see #objectIdForFeature: to conveniently get a feature's @em OBJECTID.
  */
-@property (nonatomic, retain, readonly) NSString *objectIdField;
+@property (nonatomic, copy, readonly) NSString *objectIdField;
 
 /** The name of the field which contains the sub-type information.
  @avail{10.0}
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *typeIdField;
+@property (nonatomic, copy, readonly) NSString *typeIdField;
 
 /** Definition expression for the layer as defined by the service. This 
  expression limits which features are returned by the service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *defaultDefinitionExpression;
+@property (nonatomic, copy, readonly) NSString *defaultDefinitionExpression;
 
 /** A collection of @c AGSFeatureType objects representing feature sub-types in 
  the layer. For example, a @em roads layer may contain 2 feature sub-types : highways 
@@ -303,7 +251,7 @@ typedef enum {
  @avail{10.0}
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *types;
+@property (nonatomic, copy, readonly) NSArray *types;
 
 /** A collection of @c AGSFeatureTemplate objects representing feature templates 
  for the layer. Usually only present if the layer does not contain feature 
@@ -311,21 +259,21 @@ typedef enum {
  Service layer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *templates;
+@property (nonatomic, copy, readonly) NSArray *templates;
 
 /** Collection of @c AGSRelationship objects that describe this layer's 
  relationship with another layer or table in the service.
  @since 1.0
  @see #queryRelatedFeatures: to query features that participate in the relationship.
  */
-@property (nonatomic, retain, readonly) NSArray *relationships;
+@property (nonatomic, copy, readonly) NSArray *relationships;
 
 /** Time information for the layer, such as start time field, end time field, 
  track id field, layers time extent and the draw time interval. Only applicable 
  if the layer is time aware.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSTimeInfo *timeInfo;
+@property (nonatomic, strong, readonly) AGSTimeInfo *timeInfo;
 
 /** If <code>YES</code>, features in the layer may have attachments. Developers 
  should call #queryAttachmentInfosForObjectId: for each feature to see if it has 
@@ -351,20 +299,13 @@ typedef enum {
  encounter an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSFeatureLayerEditingDelegate> editingDelegate;
+@property (nonatomic, weak) id<AGSFeatureLayerEditingDelegate> editingDelegate;
 
 /** Delegate to be notified when query operations complete successfully or 
  encounter an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSFeatureLayerQueryDelegate> queryDelegate;
-
-/** The symbol to be used for features which have been selected.
- @see #selectedFeatures for the list of selected features.
- @see #selectFeaturesWithQuery:selectionMethod: to select features.
- @since 1.0
- */
-@property (nonatomic, retain) AGSSymbol *selectionSymbol;
+@property (nonatomic, weak) id<AGSFeatureLayerQueryDelegate> queryDelegate;
 
 /** An array of field names to include in the feature layer. If not specified, 
  the feature layer will return the OBJECTID field and if applicable the start 
@@ -373,7 +314,7 @@ typedef enum {
  the values for all fields in the layer, this is useful when editing features.
  @since 1.0
  */
-@property (nonatomic, retain) NSArray *outFields;
+@property (nonatomic, copy) NSArray *outFields;
 
 /** This is only applicable for feature layers that are not editable. The maximum 
  allowable offset used for generalizing geometries returned by the query operation. 
@@ -383,13 +324,6 @@ typedef enum {
  @since 1.0
  */
 @property (nonatomic, assign) double maxAllowableOffset;
-
-/** Specifies whether or not the layer is capable of editing features. 
- 
- @since 1.0
- @deprecated Deprecated at 2.3. Please use #canCreate, #canUpdateFeature:, #canDeleteFeature: instead for fine-grained edit capabilities.
- */
-@property (nonatomic, readonly, getter=isEditable) BOOL editable __attribute__((deprecated));
 
 /** Specifies whether or not the layer is queryable. If the layer is not queryable, 
  it will not be displayed.
@@ -403,7 +337,7 @@ typedef enum {
  <code>nil</code>.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSInfoTemplateDelegate> infoTemplateDelegate;
+@property (nonatomic, weak) id<AGSInfoTemplateDelegate> infoTemplateDelegate;
 
 /** The time interval in seconds that features in the layer will expire when the 
  layer is in @em OnDemand mode. Setting this to 0 will cause the features to not 
@@ -412,77 +346,65 @@ typedef enum {
  */
 @property (nonatomic, assign) double expirationInterval;
 
-/** Specifies whether or not the layer will refresh automatically when the 
+/** Specifies whether or not the layer will #refresh automatically when the
  expiration interval is reached. Default is <code>NO</code>. This uses an 
  <code>NSTimer</code> for implementation. This is used only in @em OnDemand mode.
- @since 1.0
+ @since 10.1.1
  */
 @property (nonatomic, assign) BOOL autoRefreshOnExpiration;
 
 /** This is the buffer around the current extent that features are retrieved for in @em OnDemand 
  mode. Features are not retrieved again until either they expire or the map extent changes and is 
  no longer in the buffered extent. Buffer factor can be up to 10. If it is set to 0,
- every time the map extent is changed a requery will take place in @em OnDemand mode. If the buffer factor
+ every time the map extent is changed a refresh with requery will take place in @em OnDemand mode. If the buffer factor
  is less than 0, then the layer will never requery from an extent change.
  This is not usually recommended. 
  @since 1.0
  */
-@property (nonatomic, assign) float bufferFactor;
+@property (nonatomic, assign) CGFloat bufferFactor;
 
 /** Constraint factor is used when the feature layer is in OnDemand mode. This property
- defines requery behavior for OnDemand mode when the user is zooming in. This property should be set to a fraction
+ defines refresh with requery behavior for OnDemand mode when the user is zooming in. This property should be set to a fraction
  between 0 and 1. If the size of the envelope the user zooms in to is less than that specified fraction of the buffered envelope's size
  then a requery will happen. For example: the constraintFactor is set to .1 (one-tenth), we have a buffered envelope of features
  that is 50 miles wide. The user zooms in to an envelope that is 4 miles wide. Since the envelope the layer needs to draw is less
  than one-tenth the size of the buffered envelope, the feature layer will requery, even though the zoomed-to envelope is contained 
  within the buffered envelope. This is useful if you have a service with a number of features that exceeds the ArcGIS server
- query limit and you want the layer to refresh when the user zooms in by a certain amount.
+ query limit and you want the layer to requery when the user zooms in by a certain amount.
  A value of 0 or less will never requery when the user zooms in within the buffered envelope.
  A value of 1 will always requery when the user zooms in within the buffered envelope.
  The default value is .1f (one-tenth).
  @since 2.1
  */
-@property (nonatomic, assign) float constraintFactor;
+@property (nonatomic, assign) CGFloat constraintFactor;
 
 /** The version of the service.
  @since 1.8
  */
-@property (nonatomic, assign, readonly) float version;
+@property (nonatomic, assign, readonly) CGFloat version;
 
 /** The full envelope of the service. In the service's native spatial reference.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *serviceFullEnvelope;
+@property (nonatomic, strong, readonly) AGSEnvelope *serviceFullEnvelope;
 
 /** An array of @c AGSLabelClass objects representing labeling information.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *labelingInfo;
-
-/** The amount of time by which data in this layer is offset from the time when the data was recorded. Specify the units using the
- #timeOffsetUnits property.
- @since 1.8
- */
-@property (nonatomic, assign) int timeOffset;
-
-/** Units of the amount specified by #timeOffset.
- Refer to @c AGSTimeIntervalUnits for possible values.
- @since 1.8
- */
-@property (nonatomic, assign) AGSTimeIntervalUnits timeOffsetUnits;
+@property (nonatomic, copy, readonly) NSArray *labelingInfo;
 
 /** A time definition is similar to a #definitionExpression in that it limits the features displayed by this
  layer based on some contraints. A time definition specifies contraints based on a time extent. Only those features 
  whose time information falls within the given time extent are retrieved by the layer.
  @since 1.8
  */
-@property (nonatomic, retain) AGSTimeExtent *timeDefinition;
+@property (nonatomic, strong) AGSTimeExtent *timeDefinition;
 
 /** Metadata regarding which fields or attributes of a feature contain information
  about who created/edited the feature and when was it created/edited.
  @since 2.3
  */
-@property (nonatomic, retain, readonly) AGSEditFieldsInfo *editFieldsInfo;
+@property (nonatomic, strong, readonly) AGSEditFieldsInfo *editFieldsInfo;
 
 /** Indicates whether the layer allows geometries of features to be updated.
   You should check this property before allowing the ability to update a feature's geometry in your app.
@@ -517,6 +439,8 @@ typedef enum {
  @param url URL to a map or feature service layer. 
  @param mode The mode in which to retrieve features.
  @return A new feature layer object.
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  @since 1.0
  */
 - (id)initWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode;
@@ -527,27 +451,35 @@ typedef enum {
  @param cred <code>AGSCredential</code> used to access secure resource.
  @return A new feature layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred;
 
 /** Initialize this layer, in a synchronous fashion, with a URL of an ArcGIS Server Map or Feature 
  Service layer.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL to a map or feature service layer.
  @param mode The mode in which to retrieve features.
  @param error Information about the error returned if init fails.
  @return A new feature layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithURL:(NSURL*)url mode:(AGSFeatureLayerMode)mode error:(NSError**)error;
 
-/** Initialize this layer, in a synchronous fashion, with a URL of an ArcGIS Server Map or Feature 
+/** Initialize this layer, in a synchronous fashion, with a URL of an ArcGIS Server Map or Feature
  Service layer.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL to a map or feature service layer.
  @param mode The mode in which to retrieve features.
  @param cred <code>AGSCredential</code> used to access secure resource.
  @param error Information about the error returned if init fails.
  @return A new feature layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 - (id)initWithURL:(NSURL*)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred error:(NSError**)error;
 
@@ -557,6 +489,8 @@ typedef enum {
  @param mode The mode in which to retrieve features.
  @return A new, autoreleased, feature layer object.
  @since 1.0
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 + (id)featureServiceLayerWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode;
 
@@ -567,7 +501,9 @@ typedef enum {
  @param cred <code>AGSCredential</code> used to access secure resource.
  @return A new, autoreleased, feature layer object.
  @since 1.0
- */
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+*/
 + (id)featureServiceLayerWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred;
 
 /** A way to get an initialized layer that does not work with an ArcGIS Server map or feature service, but instead
@@ -660,7 +596,7 @@ typedef enum {
  @return The operation performing the selection.
  
  @since 1.0
- @see #selectedFeatures
+ @see @c AGSGraphicsLayer#selectedFeatures
  */
 -(NSOperation*)selectFeaturesWithQuery:(AGSQuery*)query selectionMethod:(AGSFeatureLayerSelectionMethod)selectionMethod;
 
@@ -669,18 +605,14 @@ typedef enum {
  @param feature The feature that you want apply the selection method to
  @param selectionMethod Whether you want to add to, delete from, or entirely replace the existing set of selected features
  @since 1.8
+ @deprecated Deprecated at 10.1.1. Use #setSelected:forGraphic: instead.
  */
--(void)selectFeature:(AGSGraphic*)feature withSelectionMethod:(AGSFeatureLayerSelectionMethod)selectionMethod;
+-(void)selectFeature:(AGSGraphic*)feature withSelectionMethod:(AGSFeatureLayerSelectionMethod)selectionMethod __attribute__((deprecated));
 
 /** Clears the current selection.
  @since 1.0
  */
 -(void)clearSelection;
-
-/** Features that have been selected.
- @since 1.0
- */
--(NSArray*)selectedFeatures;
 
 /** A convenience method to lookup a feature in the graphics collection using 
  the specified object id.
@@ -690,9 +622,9 @@ typedef enum {
  */
 -(AGSGraphic*)lookupFeatureWithObjectId:(NSInteger)objectId;
 
-/** Refreshes the features in the feature layer. The feature layer requeries all 
+/** Requeries for the features in the feature layer. The feature layer requeries 
  the features in the service, according to it's mode, and updates itself.
- @since 1.0
+ @since 10.1.1
  */
 -(void)refresh;
 
@@ -701,7 +633,19 @@ typedef enum {
  @return The @em OBJECTID for @p feature.
  @since 1.0
  */
--(NSInteger)objectIdForFeature:(AGSGraphic*)feature;
+-(int)objectIdForFeature:(AGSGraphic*)feature;
+
+/** If the layer failed to load with a specific url and credential, you can
+ resubmit it to try and load again using the same url and credential. If you want to modify the
+ credential, you can update the credential on the layer before calling this method.
+ If you also want to update the url, you should use @c # resubmitWithURL:credential: instead.
+ 
+ This function does nothing if the
+ layer is already loaded. This function also does nothing if the layer is currently
+ trying to load.
+ @since 10.1.1
+ */
+- (void)resubmit;
 
 /** If the layer failed to load with a specific url and credential, you can 
  resubmit it with a new URL and credential. This function does nothing if the 

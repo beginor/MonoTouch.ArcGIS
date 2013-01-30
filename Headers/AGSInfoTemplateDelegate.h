@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSGraphic;
 @class AGSPoint;
@@ -43,20 +43,20 @@
 /** Title text to be displayed in the callout.
  @param graphic The graphic to display a title for.
  @param screen The coordinates at which the graphic callout will be displayed.
- @param map The coordinates at which the graphic callout will be displayed.
+ @param mapPoint The coordinates at which the graphic callout will be displayed.
  @return The title text for the callout.
  @since 1.0
  */
-- (NSString *)titleForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)map;
+- (NSString *)titleForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
 
 /** Detail string to be displayed in the callout.
  @param graphic The graphic to display detail for.
  @param screen The coordinates at which the graphic callout will be displayed.
- @param map The coordinates at which the graphic callout will be displayed.
+ @param mapPoint The coordinates at which the graphic callout will be displayed.
  @return The detail text for the callout.
  @since 1.0
  */
-- (NSString *)detailForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)map;
+- (NSString *)detailForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
 
 /** Image to be displayed in the callout to the left of the text. The image will be scaled to
  40x40 points.
@@ -66,7 +66,7 @@
  @return The image to be displayed in the callout.
  @since 1.8
  */
--(UIImage*)imageForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
+-(AGSImage*)imageForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
 
 /** The custom view to be displayed in the callout. If you implement this function then the title, detail
  and image methods will not get called, as only the custom view will be displayed in the callout. The callout will be expanded
@@ -77,46 +77,9 @@
  @return The custom view to be displayed in the callout.
  @since 1.8
  */
--(UIView*)customViewForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
+-(AGSView*)customViewForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint;
 
 @end
 
 
 
-#pragma mark -
-
-/** @brief A token-based @c AGSInfoTemplate.
- 
- Instances of this class represent a simple implementation of 
- @c AGSInfoTemplateDelegate. Tokens of the form <i>${...}</i> in the 
- #titleTemplate/#detailTemplate are replaced at runtime with corresponding values 
- from the graphic's attributes. The final text is then displayed in the 
- callout.
- 
- For example, consider a graphic which has an attribute <b>STATE_NAME</b> with 
- the value <b>California</b>. To display the attribute's value in the callout's 
- title, you need to set <i>${STATE_NAME}</i> as the @p titleTemplate. The token 
- <i>${STATE_NAME}</i> will then be automatically substituted with the value 
- <b>California</b> when the callout is displayed.
- 
- @define{AGSInfoTemplateDelegate.h, ArcGIS}
- @since 1.0
- @see AGSMapViewDelegate for events related to showing the callout.
- */
-@interface AGSCalloutTemplate : NSObject <AGSInfoTemplateDelegate> {
- @private
-    NSString *_titleTemplate;
-    NSString *_detailTemplate;
-}
-
-/** Template used to display the title in the callout.
- @since 1.0
- */
-@property (nonatomic, copy) NSString *titleTemplate;
-
-/** Template used to display the detail string in the callout.
- @since 1.0
- */
-@property (nonatomic, copy) NSString *detailTemplate;
-
-@end

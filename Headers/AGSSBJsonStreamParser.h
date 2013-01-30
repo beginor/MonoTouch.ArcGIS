@@ -32,7 +32,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class AGSSBStateStack;
 @class AGSSBJsonTokeniser;
 @class AGSSBJsonStreamParser;
 @class AGSSBJsonStreamParserState;
@@ -83,36 +82,62 @@ typedef enum {
 
 
 /**
- @brief JSON Stream-parser class
+ @brief Parse a stream of JSON data.
+ 
+ Using this class directly you can reduce the apparent latency for each
+ download/parse cycle of documents over a slow connection. You can start
+ parsing *and return chunks of the parsed document* before the entire
+ document is downloaded.
+ 
+ Using this class is also useful to parse huge documents on disk
+ bit by bit so you don't have to keep them all in memory. 
+ 
+ @see AGSSBJsonStreamParserAdapter for more information.
+ 
+ @see @ref objc2json
  
  */
 @interface AGSSBJsonStreamParser : NSObject {
-	BOOL multi;
-	id<AGSSBJsonStreamParserDelegate> delegate;
+@private
 	AGSSBJsonTokeniser *tokeniser;
-    AGSSBStateStack *stateStack;
-    AGSSBJsonStreamParserState *state;
-	NSUInteger maxDepth;
-	NSString *error;
 }
 
-@property (nonatomic, assign) AGSSBJsonStreamParserState *state; /// Private
-@property (nonatomic, readonly, retain) AGSSBStateStack *stateStack; /// Private
+@property (nonatomic, unsafe_unretained) AGSSBJsonStreamParserState *state; // Private
+@property (nonatomic, readonly, strong) NSMutableArray *stateStack; // Private
 
 /**
  @brief Expect multiple documents separated by whitespace
 
- If you set this property to true the parser will never return AGSSBJsonStreamParserComplete.
- Once an object is completed it will expect another object to follow, separated only by whitespace.
+ Normally the @p -parse: method returns AGSSBJsonStreamParserComplete when it's found a complete JSON document.
+ Attempting to parse any more data at that point is considered an error. ("Garbage after JSON".)
+ 
+ If you set this property to true the parser will never return AGSSBJsonStreamParserComplete. Rather,
+ once an object is completed it will expect another object to immediately follow, separated
+ only by (optional) whitespace.
 
- @see The TwitterStream example project.
+ @see The TweetStream app in the Examples
  */
-@property BOOL multi;
+@property BOOL supportMultipleDocuments;
 
-/// Set this to the object you want to receive messages
-@property (assign) id<AGSSBJsonStreamParserDelegate> delegate;
+/**
+ @brief Delegate to receive messages
 
-/// The max depth to allow the parser to reach
+ The object set here receives a series of messages as the parser breaks down the JSON stream
+ into valid tokens.
+
+ @note
+ Usually this should be an instance of AGSSBJsonStreamParserAdapter, but you can
+ substitute your own implementation of the AGSSBJsonStreamParserDelegate protocol if you need to. 
+ */
+@property (unsafe_unretained) id<AGSSBJsonStreamParserDelegate> delegate;
+
+/**
+ @brief The max parse depth
+ 
+ If the input is nested deeper than this the parser will halt parsing and return an error.
+
+ Defaults to 32. 
+ */
 @property NSUInteger maxDepth;
 
 /// Holds the error after AGSSBJsonStreamParserError was returned
@@ -122,7 +147,9 @@ typedef enum {
  @brief Parse some JSON
  
  The JSON is assumed to be UTF8 encoded. This can be a full JSON document, or a part of one.
- 
+
+ @param data An NSData object containing the next chunk of JSON
+
  @return 
  @li AGSSBJsonStreamParserComplete if a full document was found
  @li AGSSBJsonStreamParserWaitingForData if a partial document was found and more data is required to complete it

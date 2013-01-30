@@ -16,12 +16,18 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
+@class AGSGeometry;
 @class AGSGeometryError;
+@class AGSEnvelope;
+@class AGSMutablePoint;
+@class AGSMutablePolygon;
 @class AGSPoint;
+@class AGSPolyline;
+@class AGSPolygon;
 @class AGSProximityResult;
 @class AGSSpatialReference;
+
+/** @file AGSGeometryEngine.h */ //Required for Globals API doc
 
 /** @brief An engine to perform geometric operations
  
@@ -31,10 +37,7 @@
  
  @since 1.8
  */
-@interface AGSGeometryEngine : NSObject {
-@protected
-	struct BORGOperatorFactory *_borg;
-}
+@interface AGSGeometryEngine : NSObject
 
 /**  Projects the given geometry into a new spatial reference.
  @param geometry The geometry to be projected.
@@ -60,7 +63,7 @@
 
 /** Calculates the area of the geometry on the surface of the Earth ellipsoid. This method preserves the shape of the geometry in its coordinate system. This means the true area will be calculated for the geometry you see in the map.
  @param geometry whose area needs to be computed
- @param lengthUnit The unit in which length needs to be computed
+ @param areaUnit The unit in which area needs to be computed
  @return The area of the geometry
  @since 2.2
  */
@@ -179,7 +182,7 @@
 /** Constructs the polygon created by clipping geometry by envelope.
  @param geometry The geometry to be clipped by the given envelope.
  @param envelope The envelope in which to use in order to clip geometry.
- @return A geometry that represents the area of #geometry clipped by envelope.
+ @return A geometry that represents the area clipped by envelope.
  @since 2.2
  */
 -(AGSGeometry*)clipGeometry:(AGSGeometry*)geometry withEnvelope:(AGSEnvelope*)envelope;
@@ -316,7 +319,7 @@
  @return The MGRS coordinate string
  @since 2.2
  */
--(NSString*)mgrsFromPoint:(AGSPoint*)pt numDigits:(int)digits rounding:(BOOL)rounding addSpaces:(BOOL)addSpaces;
+-(NSString*)mgrsFromPoint:(AGSPoint*)pt numDigits:(NSInteger)digits rounding:(BOOL)rounding addSpaces:(BOOL)addSpaces;
 
 /** Returns a point for a given MGRS coordinate string
  @param mgrs The MGRS coordinate string. Can contain spaces.
@@ -328,45 +331,6 @@
 @end
 
 
-
-#pragma mark AGSProximityResult
-
-/** @brief The result of a proximity search.
- 
- Instances of this class represent results of a proximity search using AGSGeometryEngine
- such as finding the nearest vertex or a coordinate of a geometry.
- @since 1.8
- */
-@interface AGSProximityResult : NSObject
-{
-@private
-	int _pointIndex;
-	int _partIndex;
-	AGSPoint *_point;
-	double _distance;
-}
-
-/** The point found.
- @since 1.8
- */
-@property (nonatomic, retain, readonly) AGSPoint *point;
-
-/** The index of the point that was found within it's part.
- @since 1.8
- */
-@property (nonatomic, readonly) int pointIndex;
-
-/** The index of the part in which the point was found.
- @since 1.8
- */
-@property (nonatomic, readonly) int partIndex;
-
-/** The result distance.
- @since 1.8
- */
-@property (nonatomic, readonly) double distance;
-
-@end
 
 
 

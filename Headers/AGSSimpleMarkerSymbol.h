@@ -1,5 +1,5 @@
 /*
- COPYRIGHT 2009 ESRI
+ COPYRIGHT 2012 ESRI
  
  TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
  Unpublished material - all rights reserved under the
@@ -16,30 +16,10 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <pthread.h>
-
-@class AGSSymbol;
+@class AGSMarkerSymbol;
 @class AGSSimpleLineSymbol;
 
 /** @file AGSSimpleMarkerSymbol.h */ //Required for Globals API doc
-
-#pragma mark -
-
-/** Supported marker styles.
- @since 1.0
- */
-typedef enum {
-    AGSSimpleMarkerSymbolStyleCircle = 0,	/*!< */
-    AGSSimpleMarkerSymbolStyleCross,		/*!< */
-    AGSSimpleMarkerSymbolStyleDiamond,		/*!< */			
-    AGSSimpleMarkerSymbolStyleSquare,		/*!< */
-    AGSSimpleMarkerSymbolStyleX				/*!< */
-} AGSSimpleMarkerSymbolStyle;
-
-
-
-#pragma mark -
 
 /** @brief A marker symbol based on simple shapes.
  
@@ -53,18 +33,7 @@ typedef enum {
  @define{AGSMarkerSymbol.h, ArcGIS}
  @since 1.0
  */
-@interface AGSSimpleMarkerSymbol : AGSMarkerSymbol {
- @private
-    AGSSimpleMarkerSymbolStyle _style;
-    AGSSimpleLineSymbol *_outline;
-    CGFloat _size;
-}
-
-/** Size of the marker.
- @since 1.0
- */
-@property (nonatomic, assign) CGFloat size;
-
+@interface AGSSimpleMarkerSymbol : AGSMarkerSymbol
 /** The marker style. Possible values include 
  
  @li @c AGSSimpleMarkerSymbolStyleCircle
@@ -81,7 +50,7 @@ typedef enum {
 /** Outline of the marker.
  @since 1.0
  */
-@property (nonatomic, retain) AGSSimpleLineSymbol *outline;
+@property (nonatomic, strong) AGSSimpleLineSymbol *outline;
 
 /** Get autoreleased symbol initialized with default values.
  @return A new, autoreleased, marker symbol object.
@@ -93,12 +62,11 @@ typedef enum {
  @param color The color to initialize the marker symbol with.
  @since 1.0
  */
--(id)initWithColor:(UIColor*)color;
+-(id)initWithColor:(AGSColor*)color;
 
 /** Get autoreleased simple marker symbol with a color.
  @param color The color to initialize the marker symbol with.
  @since 1.0
  */
-+(id)simpleMarkerSymbolWithColor:(UIColor*)color;
-
++(id)simpleMarkerSymbolWithColor:(AGSColor*)color;
 @end

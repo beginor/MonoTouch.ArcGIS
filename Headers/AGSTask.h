@@ -16,9 +16,8 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSCredential;
+@protocol AGSSecuredResource;
 
 /** @file AGSTask.h */ //Required for Globals API doc
 
@@ -30,11 +29,7 @@
  @see @concept{Overview/00pw00000008000000/, Overview of Tasks}
  @since 1.0
  */
-@interface AGSTask : NSObject <AGSSecuredResource>{
- @private
-	AGSCredential *_credential;
-	NSURL *_URL;
-}
+@interface AGSTask : NSObject <AGSSecuredResource>
 
 /** URL to a task resource in the ArcGIS Server REST Services Directory.
  @since 1.0
@@ -45,6 +40,22 @@
  @since 1.0
  */
 @property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default this will be set to the global cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
+
+/** The cache policy that should be used for making the web request.
+ Default value is NSURLRequestUseProtocolCachePolicy
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSURLRequestCachePolicy requestCachePolicy;
+
+/** The timeout interval (in seconds) for this request. Default value is 60.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite) NSTimeInterval timeoutInterval;
 
 /** Initialize the task.
  @param url URL to a task resource in the ArcGIS Server REST Services Directory.
@@ -60,6 +71,5 @@
  @since 1.0
  */
 - (id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
-
 
 @end

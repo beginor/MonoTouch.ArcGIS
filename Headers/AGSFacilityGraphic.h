@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 @class AGSGraphic;
@@ -36,7 +36,7 @@
 /** An string representing the name of the facility.
  @since 1.8
  */
-@property (nonatomic, assign) NSString *name;
+@property (nonatomic, weak) NSString *name;
 
 /** Initialize a new @c AGSFacilityGraphic.
  @param pt The location of the facility.

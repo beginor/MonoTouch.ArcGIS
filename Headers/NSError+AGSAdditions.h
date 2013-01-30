@@ -16,12 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file NSError+AGSAdditions.h */ //Required for Globals API doc
 
-/** @brief Provides helper method to determine if an error is an authentication
- error.
+/** @brief A category on @c NSError to provide convenience methods
  
  This category provides a helper method to determine if a given <code>NSError</code>
  is an authentication error.
@@ -35,6 +32,6 @@
 /** Determines if the current error is an authentication error.
  @since 1.0
  */
--(BOOL)isAuthenticationError;
+-(BOOL)ags_isAuthenticationError;
 
 @end

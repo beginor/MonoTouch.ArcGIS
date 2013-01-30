@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <pthread.h>
-
 @class AGSGeometry;
 @class AGSPoint;
 @class AGSEnvelope;
@@ -39,24 +36,19 @@
  @since 1.0
  @see AGSMutableMultipoint for a mutable version.
  */
-@interface AGSMultipoint : AGSGeometry {
- @private
-    NSUInteger _numPoints;
-    AGSEnvelope *_envelope;
-    pthread_mutex_t _envelopeMutex;
-}
+@interface AGSMultipoint : AGSGeometry
 
 /** Number of points in collection.
  @since 1.0
 */
-@property (nonatomic, readonly) NSUInteger numPoints;
+@property (nonatomic, readonly) NSInteger numPoints;
 
 /** Return point from collection at @p index.
  @param index The index of a point in collection.
  @return Point in collection.
  @since 1.0
  */
-- (AGSPoint *)pointAtIndex:(NSUInteger)index;
+- (AGSPoint *)pointAtIndex:(NSInteger)index;
 
 /** Returns a value whether another multipoint is equal to this multipoint.
  @param other The other multipoint to compare to.
@@ -91,24 +83,24 @@
  @param index The index in which to add @p point.
  @since 1.0
  */
-- (void)insertPoint:(AGSPoint *)point atIndex:(NSUInteger)index;
+- (void)insertPoint:(AGSPoint *)point atIndex:(NSInteger)index;
 
 /** Remove point from specified @p index in the collection.
  @param index The index of the point to remove from the collection.
  @since 1.0
 */
-- (void)removePointAtIndex:(NSUInteger)index;
+- (void)removePointAtIndex:(NSInteger)index;
 
 /** Update a point at @p index with @p point.
  @param point The point to be placed at @p index.
  @param index The index of the point to be updated.
  @since 1.0
  */
-- (void)updatePoint:(AGSPoint *)point atIndex:(NSUInteger)index;
+- (void)updatePoint:(AGSPoint *)point atIndex:(NSInteger)index;
 
 /** Geometry's spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readwrite) AGSSpatialReference *spatialReference;
 
 @end

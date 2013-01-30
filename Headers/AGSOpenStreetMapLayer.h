@@ -16,63 +16,24 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
-@class AGSLayer;
-@class AGSTiledLayer;
-@class AGSSpatialReference;
-@class AGSEnvelope;
-@class AGSTileInfo;
+@class AGSTiledServiceLayer;
 
 /** @file AGSOpenStreetMapLayer.h */ //Required for Globals API doc
 
 /** @brief A layer based on OpenStreetMap.
-
- An instance of this class allows you display maps from Open Street Map. 
  
- In a Model-View-Controller architecture, this object represents the Model. The 
- corresponding View object, @c AGSTiledLayerView,  is created when this object 
- is added to the map. 
+ An instance of this class allows you display maps from Open Street Map. 
  
  @define{AGSOpenStreetMapLayer.h, ArcGIS}
  @since 1.0
  */
-@interface AGSOpenStreetMapLayer : AGSTiledLayer {
- @private
-	AGSSpatialReference *_spatialReference;
-	AGSEnvelope *_fullEnvelope;
-	AGSEnvelope *_initialEnvelope;
-	AGSTileInfo *_tileInfo;
-	NSURL *_URL;
+@interface AGSOpenStreetMapLayer : AGSTiledServiceLayer {
 }
 
-/** Spatial Reference used by OpenStreetMap.
+/** Returns an autoreleased, initialized layer
  @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
-
-/** Full extent of OpenStreetMap.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSEnvelope *fullEnvelope;
-
-/** Initial extent of OpenStreetMap.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSEnvelope *initialEnvelope;
-
-/** Tiling scheme used by OpenStreetMap.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSTileInfo *tileInfo;
-
-//## @cond
-@property (nonatomic, retain, readonly) NSURL *URL;
-//## @endcond
-
-/** Return an initialized, auto released, layer.
- @since 1.8
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
  */
 +(AGSOpenStreetMapLayer*)openStreetMapLayer;
-
 @end

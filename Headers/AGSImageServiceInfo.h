@@ -16,11 +16,10 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 
 @class AGSEnvelope;
+@class AGSTimeInfo;
 
 /** @file AGSImageServiceInfo.h */ //Required for Globals API doc
 
@@ -31,29 +30,7 @@
  @define{AGSImageServiceInfo.h, ArcGIS}
  @since 1.0
  */
-@interface AGSImageServiceInfo : NSObject <AGSCoding> {
- @private
-	NSString *_serviceDescription;
-	NSString *_name;
-	AGSEnvelope *_extent;
-	double _pixelSizeX;
-	double _pixelSizeY;	
-	NSInteger _bandCount;
-	NSString *_pixelType;
-	double _minPixelSize;
-	double _maxPixelSize;
-	NSString *_copyrightText;
-	NSString *_serviceDataType;
-	NSArray *_minValues;
-	NSArray *_maxValues;
-	NSArray *_meanValues;
-	NSArray *_stdvValues;
-	float _version;
-	
-	AGSTimeInfo *_timeInfo;
-	NSString *_objectIdField;
-	NSArray *_fields;
-}
+@interface AGSImageServiceInfo : NSObject <AGSCoding>
 
 /** The image service description.
  @since 1.0
@@ -68,7 +45,7 @@
 /** The extent of the image service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *extent;
+@property (nonatomic, strong, readonly) AGSEnvelope *extent;
 
 /** The pixel size along X-axis.
  @since 1.0
@@ -113,22 +90,22 @@
 /** Minumum value in each image band.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *minValues;
+@property (nonatomic, copy, readonly) NSArray *minValues;
 
 /** Maximum value in each image band.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *maxValues;
+@property (nonatomic, copy, readonly) NSArray *maxValues;
 
 /** Mean value in each image band.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *meanValues;
+@property (nonatomic, copy, readonly) NSArray *meanValues;
 
 /** Standard deviation value in each image band.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *stdvValues;
+@property (nonatomic, copy, readonly) NSArray *stdvValues;
 
 /** The version of ArcGIS Server the image service is published to, e.g. 9.3, 
  9.3.1, 10.
@@ -140,17 +117,17 @@
  null or not specified, then the layer does not support time-related operations.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSTimeInfo *timeInfo;
+@property (nonatomic, strong, readonly) AGSTimeInfo *timeInfo;
 
 /** The name of the object ID field.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSString *objectIdField;
+@property (nonatomic, copy, readonly) NSString *objectIdField;
 
 /** The fields of the image service as specified in the Service Directory.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *fields;
+@property (nonatomic, copy, readonly) NSArray *fields;
 
 
 

@@ -20,6 +20,7 @@
 
 @protocol AGSPopupsContainer;
 @protocol AGSPopupsContainerDelegate;
+
 @class AGSPopupViewController;
 @class AGSGeometry;
 @class AGSPopup;
@@ -42,64 +43,20 @@
  @see @sample{2ddb261648074b9aabb22240b6975918, Feature Layer Editing}
  @since 2.0
  */
-@interface AGSPopupsContainerViewController : UIViewController <UIScrollViewDelegate, AGSPopupsContainer, UIActionSheetDelegate>{
-@private    
-    UINavigationBar *_navBar;
-    UINavigationItem *_navItem;
-    UIScrollView *_scrollView;
-    UIPageControl *_pageControl;
-    UIView *_pageControlContainerView;
-    UIToolbar *_toolbar;
-    UIBarButtonItem *_editButton;
-	UIBarButtonItem *_deleteButton;
-    NSArray *_popups;
-    NSMutableArray *_popupVCs;
-    AGSPopupViewController *_currentPopupVC;
-    id<AGSPopupsContainerDelegate> _delegate;
-    NSUInteger _currentPage;
-    int _pageOnWhileRotating;
-    BOOL _pageControlUsed;
-	BOOL _usingNavigationStack;
-	UIView *_actionSheetContainerView;
-	UIViewController *_modalPresenter;
-    UIBarButtonItem *_defaultActionButton;
-    UIBarButtonItem *_defaultDoneButton;
-    UIBarButtonItem *_finishButton;
-    UIBarButtonItem *_cancelEditButton;
-    UIBarButtonItem *_doneButton;
-    UIBarButtonItem *_actionButton;
-    BOOL _inEditingMode;
-	AGSGeometry *_currentEditingGeometry;
-	AGSPopupsContainerStyle _style;
-	UIColor *_styleColor;
-	AGSPopupsContainerEditingStyle _editingStyle;
-	AGSPopupsContainerPagingStyle _pagingStyle;
-	AGSAttachmentCollectorViewController *_attachmentCollectorViewController;
-	UIPopoverController *_poc;
-	// this is so that we can keep a reference to the view around so that after
-	// viewDidUnload is called, we can remove observers correctly. Otherwise the
-	// view is nil when viewDidUnload is called.
-	UIView *_frameView;
-	BOOL _observingFrame;
-    
-    int _pageWhenDisappeared;
-    
-    UIDocumentInteractionController *_docController;
-    UIViewController *_docControllerFVC;
-}
+@interface AGSPopupsContainerViewController : UIViewController <UIScrollViewDelegate, AGSPopupsContainer, UIActionSheetDelegate>
 
 /** The delegate to be notified when a user interacts with the popups or
  edits graphics related to the popups. The delegate class
  must adopt the @c AGSPopupsContainerDelegate protocol.
  @since 2.0
  */
-@property (nonatomic, assign) id<AGSPopupsContainerDelegate> delegate;
+@property (nonatomic, weak) id<AGSPopupsContainerDelegate> delegate;
 
 /**
  The popups to be displayed.
  @since 2.0
  */
-@property (nonatomic, retain) NSArray *popups;
+@property (nonatomic, copy) NSArray *popups;
 
 /** Indicates whether the view controller is in the process of editing a feature.
  @since 2.0
@@ -115,19 +72,19 @@
  is set to @c AGSPopupsContainerStyleCustomColor.
  @since 2.0
  */
-@property (nonatomic, retain) UIColor *styleColor;
+@property (nonatomic, strong) UIColor *styleColor;
 
 /** When in edit mode and geometry editing is allowed, this property 
  returns a mutable geometry that you can edit and when editing is finished, it will 
  be set on the current popup's graphic.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) AGSGeometry *currentEditingGeometry;
+@property (nonatomic, strong, readonly) AGSGeometry *currentEditingGeometry;
 
 /** The current popup that is being viewed.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) AGSPopup *currentPopup;
+@property (nonatomic, strong, readonly) AGSPopup *currentPopup;
 
 /** The style that is used for editing.
  @since 2.0
@@ -142,36 +99,29 @@
 /** The UIView that will act as a container for any UIActionSheet.
  @since 2.0
  */
-@property (nonatomic, assign) UIView *actionSheetContainerView;
-
-/** You can replace the button that appears on the right side of the Navigation Bar
- with a custom button through this property.
- @since 2.0
- @deprecated Deprecated at 2.1. Please use @c #actionButton instead.
- */
-@property (nonatomic, retain) UIBarButtonItem *customActionButton __attribute__((deprecated));
+@property (nonatomic, weak) UIView *actionSheetContainerView;
 
 /** You can replace the button that appears on the left side of the Navigation Bar
  with a custom button through this property.
  @since 2.1
  */
-@property (nonatomic, retain, readwrite) UIBarButtonItem *doneButton;
+@property (nonatomic, strong, readwrite) UIBarButtonItem *doneButton;
 
 /** You can replace the button that appears on the right side of the Navigation Bar
  with a custom button through this property.
  @since 2.1
  */
-@property (nonatomic, retain, readwrite) UIBarButtonItem *actionButton;
+@property (nonatomic, strong, readwrite) UIBarButtonItem *actionButton;
 
 /** The default action button that is shown.
  @since 2.1
  */
-@property (nonatomic, retain, readonly) UIBarButtonItem *defaultActionButton;
+@property (nonatomic, strong, readonly) UIBarButtonItem *defaultActionButton;
 
 /** The default done button that is shown.
  @since 2.1
  */
-@property (nonatomic, retain, readonly) UIBarButtonItem *defaultDoneButton;
+@property (nonatomic, strong, readonly) UIBarButtonItem *defaultDoneButton;
 
 
 /** The UIViewController that should be used for presenting modal view controllers
@@ -179,7 +129,7 @@
  as a standalone object (for example, in a custom callout or a custom view)  and when it's not part of a view controller hierarchy.
  @since 2.0
  */
-@property (nonatomic, retain) UIViewController *modalPresenter;
+@property (nonatomic, strong) UIViewController *modalPresenter;
 
 
 /** Initializes an AGSPopupsContainerViewController.

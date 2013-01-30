@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+@class AGSGraphic;
 
 /** @file AGSPopupInfo.h */ //Required for Globals API doc
 
@@ -31,14 +31,7 @@
  
  @since 2.0
  */
-@interface AGSPopupInfo : NSObject <AGSCoding, NSCopying> {
-@private
-    NSString *_title;
-    NSString *_description;
-    NSArray *_fieldInfos;
-    NSArray *_mediaInfos;
-    BOOL _showAttachments;
-}
+@interface AGSPopupInfo : NSObject <AGSCoding, NSCopying>
 
 /** The title that is displayed for the graphic in the popup.
  This can contain a literal value, or a placeholder for value from the graphic's attribute. The placeholder needs to be of the form {field_name}
@@ -53,19 +46,19 @@
  where <i>field_name</i> is a key in the graphic's attributes.
  @since 2.0
  */
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *customDescription;
 
 /** The graphic's fields (as an array of @c AGSPopupFieldInfo objects) that are to be displayed in the popup.
  If description is not nil then the fieldInfos are not used 
  when viewing attributes. 
  @since 2.0
  */
-@property (nonatomic, retain) NSArray *fieldInfos;
+@property (nonatomic, copy) NSArray *fieldInfos;
 
 /** The media (as an array of @c AGSPopupMediaInfo objects) that is to be displayed in the popup.
  @since 2.0
  */
-@property (nonatomic, retain) NSArray *mediaInfos;
+@property (nonatomic, copy) NSArray *mediaInfos;
 
 /** Whether or not the popup should show attachments of the graphic.
  @since 2.0

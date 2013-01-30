@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 
 /** @file AGSEditFieldsInfo.h */ //Required for Globals API doc
@@ -26,7 +24,7 @@
  
  Instances of this class indicate which fields or attributes of a feature contain information
  about who created/edited the feature and when was it created/edited.
-  
+ 
  @define{AGSEditFieldsInfo.h, ArcGIS}
  @since 2.3
  */

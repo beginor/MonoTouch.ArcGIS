@@ -17,9 +17,12 @@
  */
 
 
-#import <Foundation/Foundation.h>
+
 @class AGSAttachment;
 @protocol AGSAttachmentManagerDelegate;
+@protocol AGSFeatureLayerEditingDelegate;
+@class AGSFeatureLayer;
+@class AGSRequestOperation;
 
 /** @file AGSAttachmentManager.h */ //Required for Globals API doc
 
@@ -36,34 +39,17 @@
  @see @sample{2ddb261648074b9aabb22240b6975918, Feature Layer Editing}
  @since 2.0
  */
-@interface AGSAttachmentManager : NSObject <AGSFeatureLayerEditingDelegate> {
-@private
-	NSMutableArray *_attachments;
-	AGSFeatureLayer *_featureLayer;
-	NSInteger _featureObjectId;
-	NSOperation *_queryInfosOperation;
-	NSError *_downloadAttachmentInfosError;
-	NSError *_downloadAttachmentDataError;
-	id<AGSAttachmentManagerDelegate> _delegate;
-	id<AGSAttachmentManagerDelegate> _internalDelegate;
-	NSMutableArray *_downloadDataOps;
-	AGSRequestOperation *_deleteAttachmentsOp;
-	NSMutableArray *_addAttachmentOps;
-	BOOL _postingLocalEdits;
-	NSInteger _nextNewAttachmentId;
-	NSMutableArray *_attachmentsBeingPosted;
-	pthread_mutex_t _attachmentsMutex;
-}
+@interface AGSAttachmentManager : NSObject <AGSFeatureLayerEditingDelegate> 
 
 /** The delegate that is notified when operations complete.
  @since 2.0
  */
-@property (nonatomic, assign, readwrite) id<AGSAttachmentManagerDelegate> delegate;
+@property (nonatomic, weak, readwrite) id<AGSAttachmentManagerDelegate> delegate;
 
 /** The feature layer that this attachment manager is associated with. 
  @since 2.0
  */
-@property (nonatomic, assign, readonly) AGSFeatureLayer *featureLayer;
+@property (nonatomic, weak, readonly) AGSFeatureLayer *featureLayer;
 
 /** The object id of the feature that this attachment manager is associated with. 
  @since 2.0
@@ -73,7 +59,7 @@
 /** The error, if any, that occurred when attempting to download attachment metadata.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) NSError *downloadAttachmentInfosError;
+@property (nonatomic, strong, readonly) NSError *downloadAttachmentInfosError;
 
 /** Indicates whether or not the attachment manager is currently posting local edits to the remote server. 
  @since 2.0
@@ -83,7 +69,7 @@
 /** The attachments belonging to the feature that this attachment manager is associated with.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) NSArray *attachments;
+@property (nonatomic, copy, readonly) NSArray *attachments;
 
 /** Finds the attachment for a particular attachment id. 
  @since 2.0
@@ -108,14 +94,16 @@
  @param name of the attachment
  @since 2.0
  */
--(AGSAttachment*)addAttachmentAsJpgWithImage:(UIImage*)image name:(NSString*)name;
+-(AGSAttachment*)addAttachmentAsJpgWithImage:(AGSImage*)image name:(NSString*)name;
 
+#if TARGET_OS_IPHONE
 /** Adds an attachment.
  Does not upload it to the server until @c #postLocalEditsToServer is called.
  @param info The dictionary provided by UIImagePickerController
  @since 2.0
  */
 -(AGSAttachment*)addAttachmentWithUIImagePickerControllerInfoDictionary:(NSDictionary*)info;
+#endif
 
 /** Adds an attachment.
  Does not upload it to the server until @c #postLocalEditsToServer is called.
@@ -139,6 +127,8 @@
  This operation can be cancelled with the @c #cancelDownloadAttachmentInfos method.
  The @c #delegate will be informed when this operation is completed.
  @since 2.0
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadAttachmentInfos: , method on delegate for success 
+ @see @c #downloadAttachmentInfosError for error
  */
 -(void)downloadAttachmentInfos;
 
@@ -147,6 +137,7 @@
  This operation can be cancelled with the @c #cancelDownloadDataForId: method. The @c #delegate will be informed when this operation is completed. 
  @param attachmentId ID of the attachment for which to download the data
  @since 2.0
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadDataForAttachment: , method on delegate for success or failure
  */
 -(void)downloadAttachmentDataForId:(NSInteger)attachmentId;
 
@@ -154,7 +145,8 @@
  This operation can be cancelled with the @c #cancelPostLocalEditsToServer method.
 The @c #delegate will be informed when this operation is completed.
  @since 2.0
- */
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didPostLocalEditsToServer: , method on delegate for success or failure
+  */
 -(void)postLocalEditsToServer;
 
 /** Cancels the operations that are posting local edits to the server. It is  possible that some operations may already be done, only the outstanding

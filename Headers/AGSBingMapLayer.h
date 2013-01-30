@@ -16,14 +16,10 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
-@class AGSLayer;
-@class AGSTiledLayer;
+@class AGSTiledServiceLayer;
 @class AGSSpatialReference;
 @class AGSEnvelope;
 @class AGSTileInfo;
-@class AGSBingMapLayerMetadata;
 
 /** @file AGSBingMapLayer.h */
 
@@ -40,45 +36,26 @@ typedef enum {
  
  An instance of this class allows you display maps from Bing Maps.
  
- In a Model-View-Controller architecture, this object represents the Model. The 
- corresponding View object, @c AGSTiledLayerView, is created when this layer is 
- added to an instance of @c AGSMapView.
- 
+
  @define{AGSBingMapLayer.h, ArcGIS}
  @since 1.0
  */
-@interface AGSBingMapLayer : AGSTiledLayer {
- @private
-	AGSSpatialReference *_spatialReference;
-	AGSEnvelope *_fullEnvelope;
-	AGSEnvelope *_initialEnvelope;
-	AGSTileInfo *_tileInfo;
-	NSURL *_URL;
-	NSString *_appID;
-	AGSBingMapLayerStyle _style;
-	AGSBingMapLayerMetadata *_metadata;
-	NSInteger _subDomainIterator;
-}
+@interface AGSBingMapLayer : AGSTiledServiceLayer
 
 /** Spatial Reference used by Bing Maps.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 /** Full extent of Bing Maps.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *fullEnvelope;
-
-/** Initial extent of Bing Maps.
- @since 1.0
- */
-@property (nonatomic, retain, readonly) AGSEnvelope *initialEnvelope;
+@property (nonatomic, strong, readonly) AGSEnvelope *fullEnvelope;
 
 /** Tiling scheme used by Bing Maps.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSTileInfo *tileInfo;
+@property (nonatomic, strong, readonly) AGSTileInfo *tileInfo;
 
 /** An AppID which has been authorized to use Bing Maps.
  @since 1.0
@@ -94,14 +71,13 @@ typedef enum {
  
  @since 1.0
  */
-
 @property (nonatomic, assign) AGSBingMapLayerStyle style;
 
 /** The locale to use for the Bing Map service.
  The default is the current locale of the device.
  @since 2.2
  */
-@property (nonatomic, retain) NSLocale *locale;
+@property (nonatomic, strong) NSLocale *locale;
 
 /** Initialize this layer with an AppID and a map style.
  @param appID The appID authorized to use Bing Maps.
@@ -109,6 +85,9 @@ typedef enum {
  @return A new Bing Maps layer object.
  @since 1.0
  @see AGSBingMapLayerStyle
+ @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+
  */
 -(id)initWithAppID: (NSString*) appID style:(AGSBingMapLayerStyle) style;
 

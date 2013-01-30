@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 @protocol AGSGeoprocessorDelegate;
 @class AGSTask;
 @class AGSSpatialReference;
@@ -58,16 +55,7 @@
  @see @sample{8b5c66b85084439789311bb2f543a731, Asynchronous GP}
  @since 1.0
  */
-@interface AGSGeoprocessor : AGSTask {
- @private
-    id<AGSGeoprocessorDelegate> _delegate;
-    AGSSpatialReference *_processSpatialReference;
-    AGSSpatialReference *_outputSpatialReference;
-	
-	AGSTimerContainer *_timerContainer;
-	NSTimeInterval _interval;
-	NSMutableArray *_jobIdArray;
-}
+@interface AGSGeoprocessor : AGSTask
 
 /** List of asynchronous gp task operation types.
  @since 1.0
@@ -84,7 +72,7 @@ typedef enum {
 /** Delegate to be notified when task completes successfully or encounters an error.
  @since 1.0
  */
-@property (nonatomic, assign) id<AGSGeoprocessorDelegate> delegate;
+@property (nonatomic, weak) id<AGSGeoprocessorDelegate> delegate;
 
 /** The intermediate spatial reference that the geoprocessing task will use to 
  perform geometric operations. If @p processSpatialReference is specified and  
@@ -92,7 +80,7 @@ typedef enum {
  in @p processSpatialReference.
  @since 1.0
  */
-@property (nonatomic, retain) AGSSpatialReference *processSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *processSpatialReference;
 
 /** The spatial reference of the result geometries. If not specified, the result 
  geometries are in the same spatial reference as the input geometries. If 
@@ -100,7 +88,7 @@ typedef enum {
  the result geometries will be returned in #processSpatialReference.
  @since 1.0
  */
-@property (nonatomic, retain) AGSSpatialReference *outputSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *outputSpatialReference;
 
 /** Interval at which to check the status of a geoprocessing task being executed. 
  Only applies to tasks which are executed in asynchronous mode.
@@ -144,6 +132,9 @@ typedef enum {
  property is set to @em esriGPParameterDirectionInput.
  @return <code>NSOperation</code> for current request.
  @since 1.0
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didExecuteWithResults:messages: , method on delegate for success
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailExecuteWithError: , method on delegate for error
+ 
  */
 - (NSOperation *)executeWithParameters:(NSArray *)params;
 
@@ -163,6 +154,10 @@ typedef enum {
  
  @return <code>NSOperation</code> for the current submit request.
  @since 1.0
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didSubmitJob: , method on delegate for when job is submitted successfully
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidSucceed: , method on delegate for when submitted job succeeds
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidFail: , method on delegate for when submitted job failed
+
  */
 - (NSOperation *)submitJobWithParameters:(NSArray *)params;
 
@@ -173,7 +168,9 @@ typedef enum {
  @param jobId The id of the job whose status is being requested.
  @return <code>NSOperation</code> for the current request.
  @since 1.0
- */
+ @see @c AGSGeoprocessorDelegate#geoprocessor:willCheckJobStatus: 
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didCheckJobStatus: 
+*/
 - (NSOperation *)checkStatusForJob:(NSString*)jobId;
 
 /** Fetch the results of the geoprocessing task. Only relevant for tasks which 
@@ -186,6 +183,7 @@ typedef enum {
  resource in Services Directory. Their @em Direction property is set
  to @em esriGPParameterDirectionOutput.
  @return <code>NSOperation</code> for current request.
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didQueryWithResult:forJob:
  @since 1.0
  */
 - (NSOperation*)queryResultData:(NSString *)jobId paramName:(NSString *)paramName;
@@ -203,6 +201,7 @@ typedef enum {
  @param imageParams Specifies the properties of the result image.
  @return <code>NSOperation</code> for current request.
  @since 1.0
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didQueryWithResultImage:forJob:
  */
 - (NSOperation*)queryResultImage:(NSString *)jobId paramName:(NSString *)paramName imageParams:(AGSImageParameters *)imageParams;
 
@@ -218,6 +217,7 @@ typedef enum {
  @em esriGPParameterDirectionOutput.
  @return <code>NSOperation</code> for current request.
  @since 1.0
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didQueryWithResultImageLayer:forJob:
  */
 - (NSOperation*)queryResultImageLayer:(NSString *)jobId paramName:(NSString *)paramName;
 
@@ -226,6 +226,9 @@ typedef enum {
  @return The operation associated with the request.
  @avail{10.1}
  @since 2.3
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didCancelJob: , method on delegate for when job cancelled
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailToCancelJob:withError:, method on delegate for when job not cancelled
+
  */
 - (NSOperation*)cancelJob:(NSString*)jobId;
 
@@ -294,13 +297,13 @@ typedef enum {
  image of the completed job.
  @param geoprocessor The geoprocessor object which executed the task.
  @param op <code>NSOperation</code> that performed the task.
- @param image A <code>UIImage</code> representing the resulting image 
+ @param image An <code>AGSImage</code> representing the resulting image 
  parameter requested. 
  @param jobId Id of the job which finished through 
  <code>queryResultImage:paramName:imageParams:</code>.
  @since 1.0
  */
-- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didQueryWithResultImage:(UIImage*)image forJob:(NSString*)jobId;
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didQueryWithResultImage:(AGSImage*)image forJob:(NSString*)jobId;
 
 /** Tells the delegate that @c AGSGeoprocessor successfully retrieved the result 
  image layer of the completed job.
@@ -380,278 +383,3 @@ typedef enum {
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailToCancelJob:(AGSGPJobInfo*)jobInfo withError:(NSError*)error;
 
 @end
-
-#pragma mark -
-
-/** Supported parameter types for the @c AGSGeoprocessor.
- @since 1.0
- */
-typedef enum {
-    AGSGPParameterTypeBoolean = 0,				/*!< Parameter must be of type @c NSValue					*/
-    AGSGPParameterTypeDouble,					/*!< Parameter must be of type @c NSNumber					*/
-    AGSGPParameterTypeLong,						/*!< Parameter must be of type @c NSNumber					*/
-    AGSGPParameterTypeString,					/*!< Parameter must be of type @c NSString					*/
-    AGSGPParameterTypeLinearUnit,				/*!< Parameter must be of type @c AGSGPLinearUnit */
-    AGSGPParameterTypeFeatureRecordSetLayer,	/*!< Parameter must be of type @c AGSFeatureSet				*/
-    AGSGPParameterTypeRecordSet,				/*!< Parameter must be of type @c AGSFeatureSet				*/
-    AGSGPParameterTypeDataFile,					/*!< Parameter must be of type @c NSURL						*/
-    AGSGPParameterTypeDate,						/*!< Parameter must be of type @c NSDate					*/
-    AGSGPParameterTypeRasterData,				/*!< Parameter must be of type @c AGSGPRasterData */
-    AGSGPParameterTypeRasterDataLayer,			/*!< Parameter must be of type @c AGSGPRasterData */
-	AGSGPParameterTypeMultiValue				/*!< Parameter must be of type @c NSArray					*/
-} AGSGPParameterType;
-
-#pragma mark -
-
-/** @brief An input/ouptut parameter of a geoprocessing task. 
- 
- Instances of this class respresent input/output parameters of a geoprocessing 
- task. 
- 
- @define{AGSGeoprocessor.h, ArcGIS}
- @since 1.0
- */
-@interface AGSGPParameterValue : NSObject <AGSCoding> {
- @private
-    AGSGPParameterType _type;
-    NSString *_name;
-    id _value;
-}
-
-/** Data type of the parameter. Possible types include
- 
- @li @c AGSGPParameterTypeBoolean
- @li @c AGSGPParameterTypeDouble 
- @li @c AGSGPParameterTypeLong 
- @li @c AGSGPParameterTypeString 
- @li @c AGSGPParameterTypeLinearUnit 
- @li @c AGSGPParameterTypeFeatureRecordSetLayer
- @li @c AGSGPParameterTypeRecordSet
- @li @c AGSGPParameterTypeDataFile 
- @li @c AGSGPParameterTypeDate 
- @li @c AGSGPParameterTypeRasterData 
- @li @c AGSGPParameterTypeRasterDataLayer
- @li @c AGSGPParameterTypeMultiValue
- 
- @since 1.0
- */
-@property (nonatomic, readonly) AGSGPParameterType type;
-
-/** Name of the parameter.
- @since 1.0
- */
-@property (nonatomic, copy, readonly) NSString *name;
-
-/** Value of the parameter. The data structure of this value depends on the #type.
- 
- <table style="border-width:2px; border-style:solid; border-color: #84B0C7">
- <tr><td class="indexkey">Type</td> <td class="indexkey">Value</td></tr>
- <tr><td>@li @c AGSGPParameterTypeBoolean </td><td>@c NSValue</td></tr>
- <tr><td>@li @c AGSGPParameterTypeDouble  </td><td>@c NSNumber</td></tr>
- <tr><td>@li @c AGSGPParameterTypeLong  </td><td>@c NSNumber</td></tr>
- <tr><td>@li @c AGSGPParameterTypeString  </td><td>@c NSString</td></tr>
- <tr><td>@li @c AGSGPParameterTypeLinearUnit  </td><td>@c AGSGPLinearUnit</td></tr>
- <tr><td>@li @c AGSGPParameterTypeFeatureRecordSetLayer </td><td>@c AGSFeatureSet</td></tr>
- <tr><td>@li @c AGSGPParameterTypeRecordSet </td><td>@c AGSFeatureSet</td></tr>
- <tr><td>@li @c AGSGPParameterTypeDataFile  </td><td>@c NSURL</td></tr>
- <tr><td>@li @c AGSGPParameterTypeDate  </td><td>@c NSDate</td></tr>
- <tr><td>@li @c AGSGPParameterTypeRasterData  </td><td>@c AGSGPRasterData</td></tr>
- <tr><td>@li @c AGSGPParameterTypeRasterDataLayer </td><td>@c AGSGPRasterData</td></tr>
- <tr><td>@li @c AGSGPParameterTypeMultiValue </td><td>@c NSArray</td></tr>
-</table>
- 
- */
-@property (nonatomic, retain, readonly) id value;
-
-/** Initialize an <code>AGSGPParameterValue</code> object.
- @param name The name of the parameter.
- @param type The type of the parameter.
- @param value The value of the parameter.
- @return A new geoprocessing parameter object.
- @since 1.0
- */
-- (id)initWithName:(NSString*)name type:(AGSGPParameterType)type value:(id)value;
-
-/** Initialize an <code>AGSGPParameterValue</code> object.
- @param name The name of the parameter.
- @param type The type of the parameter.
- @param value The value of the parameter.
- @return A new, autoreleased, geoprocessing parameter object.
- @since 1.0
- */
-+ (id)parameterWithName:(NSString*)name type:(AGSGPParameterType)type value:(id)value;
-
-@end
-
-#pragma mark -
-
-/** Supported message types for the @c AGSGeoprocessor.
- @since 1.0
- */
-typedef enum {
-	AGSGPMessageTypeInformative = 0,		/*!< */
-    AGSGPMessageTypeProcessDefinition,	/*!< */
-    AGSGPMessageTypeStart,				/*!< */
-    AGSGPMessageTypeStop,					/*!< */
-    AGSGPMessageTypeWarning,				/*!< */
-    AGSGPMessageTypeError,				/*!< */
-    AGSGPMessageTypeEmpty,				/*!< */
-    AGSGPMessageTypeAbort					/*!< */
-} AGSGPMessageType;
-
-#pragma mark -
-
-/** @brief A message generated by a geoprocessing task.
-
- Instances of this class represent messages generated during the execution of a 
- geoprocessing task. They include information such as when the task started, what 
- parameter values are being used, the progress of the task, warnings of 
- potential problems, and errors.
- 
- @define{AGSGeoprocessor.h, ArcGIS}
- @since 1.0
- */
-@interface AGSGPMessage : NSObject <AGSCoding> {
- @private
-    AGSGPMessageType _type;
-    NSString *_description;
-}
-
-/** The message type. Possible types include
- 
- @li @c AGSGPMessageTypeInformative
- @li @c AGSGPMessageTypeProcessDefinition
- @li @c AGSGPMessageTypeStart
- @li @c AGSGPMessageTypeStop
- @li @c AGSGPMessageTypeWarning
- @li @c AGSGPMessageTypeError
- @li @c AGSGPMessageTypeEmpty
- @li @c AGSGPMessageTypeAbort
-
- @since 1.0
- */
-@property (nonatomic, readonly) AGSGPMessageType type;
-
-/** A description of the geoprocessing message.
- @since 1.0
- */
-@property (nonatomic, copy, readonly) NSString *description;
-
-@end
-
-
-#pragma mark -
-
-/** @brief A data object containing a linear distance.
- 
- Instances of this class represent a linear distance and its measuring unit.
- @define{AGSGeoprocessor.h, ArcGIS}
- @since 1.0 
- */
-@interface AGSGPLinearUnit : NSObject <AGSCoding> {
- @private
-    AGSUnits _units;
-    double _distance;
-}
-
-/** The measuring unit. Possible types include
- 
- @li @c AGSUnitsCentimeters 
- @li @c AGSUnitsDecimalDegrees
- @li @c AGSUnitsDecimeters
- @li @c AGSUnitsFeet
- @li @c AGSUnitsInches
- @li @c AGSUnitsKilometers
- @li @c AGSUnitsMeters
- @li @c AGSUnitsMiles
- @li @c AGSUnitsMillimeters
- @li @c AGSUnitsNauticalMiles
- @li @c AGSUnitsPoints
- @li @c AGSUnitsUnknown
- @li @c AGSUnitsYards
- 
- @since 1.0
- */
-@property (nonatomic) AGSUnits units;
-
-/** The distance value.
- @since 1.0
- */
-@property (nonatomic) double distance;
-
-@end
-
-
-
-#pragma mark -
-
-/** @brief A data object containing a raster data source.
-
- Instances of this class represent a raster data source.
- 
- @define{AGSGeoprocessor.h, ArcGIS}
- @since 1.0 
- */
-@interface AGSGPRasterData : NSObject <AGSCoding> {
- @private
-    NSURL *_URL;
-    NSString *_format;
-}
-
-/** URL to the location of the raster data file.
- @since 1.0
- */
-@property (nonatomic, copy) NSURL *URL;
-
-/** Specifies the format of the raster data such as "jpg", "tif" etc.
- @since 1.0
- */
-@property (nonatomic, copy) NSString *format;
-
-@end
-
-#pragma mark -
-
-/** @brief An object containing information about an asynchronous GP task.
- 
- The instances of this class represent information pertaining to the execution 
- of an asynchronous geoprocessing task on the server. This class has no constructor.
- @define{AGSGeoprocessor.h, ArcGIS}
- @since 1.0
- @see AGSGeoprocessorDelegate
- */
-@interface AGSGPJobInfo : NSObject {
- @private
-	NSString *_jobId;
-	NSString *_jobStatus;
-	NSArray *_messages;
-}
-
-/** The unique identifier for the asynchronous GP task.
- @since 1.0
- */
-@property(nonatomic, copy, readonly) NSString *jobId;
-
-/** The current status of the job with id @p jobId. Possible values include -
- @li esriJobNew 
- @li esriJobSubmitted 
- @li esriJobWaiting 
- @li esriJobExecuting 
- @li esriJobSucceeded 
- @li esriJobFailed  
- @li esriJobTimedOut 
- @li esriJobCancelling 
- @li esriJobCancelled 
- @li esriJobDeleting 
- @li esriJobDeleted 
- @since 1.0
- */
-@property(nonatomic, copy, readonly) NSString *jobStatus;
-
-/** An array of @c AGSGPMessage objects related to the asynchronous GP task.
- @since 1.0
- */
-@property(nonatomic, retain, readonly) NSArray *messages;
-
-@end
-

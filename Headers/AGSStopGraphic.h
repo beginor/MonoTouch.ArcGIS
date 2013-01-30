@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 @class AGSGraphic;
@@ -29,7 +29,7 @@
  
  Apart from the properties declared on this class, a stop can have additional properties depending upon
  how the Route layer in the Network Analyst service is configured. These properties can 
- be set and accessed through the @c #attributes property.
+ be set and accessed through the graphic's attributes.
  
  @since 1.8
  */
@@ -55,12 +55,12 @@
  If you do not assign a routeName to any stops, all stops will be combined into a single route.
  @since 1.8
  */
-@property (nonatomic, assign) NSString *routeName;
+@property (nonatomic, weak) NSString *routeName;
 
 /** A user-friendly name of the stop.
  @since 1.8
  */
-@property (nonatomic, assign) NSString *name;
+@property (nonatomic, weak) NSString *name;
 
 /** The begining time of a permissible time window for the stop. This is only honored if the 
  <code>useTimeWindows</code> property of @c AGSRouteParameters is 
@@ -68,7 +68,7 @@
  the stop only within its time window, if possible.
  @since 1.8
  */
-@property (nonatomic, assign) NSDate *timeWindowStart;
+@property (nonatomic, weak) NSDate *timeWindowStart;
 
 /** TThe ending time of a permissible time window for the stop. This is only honored if the 
  <code>useTimeWindows</code> property of @c AGSRouteParameters is 
@@ -76,6 +76,6 @@
  the stop only within its time window, if possible. 
  @since 1.8
  */
-@property (nonatomic, assign) NSDate *timeWindowEnd;
+@property (nonatomic, weak) NSDate *timeWindowEnd;
 
 @end

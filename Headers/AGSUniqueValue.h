@@ -16,7 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
 
 @protocol AGSCoding;
 @class AGSSymbol;
@@ -32,33 +31,27 @@
  @define{AGSUniqueValue.h, ArcGIS}
  @since 1.0
  */
-@interface AGSUniqueValue : NSObject <AGSCoding> {
- @private
-	NSString *_value;
-	NSString *_label;
-	NSString *_description;
-	AGSSymbol *_symbol;
-}
+@interface AGSUniqueValue : NSObject <AGSCoding, NSCopying>
 
 /** The unique value.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *value;
+@property (nonatomic, copy, readonly) NSString *value;
 
 /** Label for the symbol used to draw the value.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *label;
+@property (nonatomic, copy, readonly) NSString *label;
 
 /** Label for the symbol used to draw the value.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSString *description;
+@property (nonatomic, copy, readonly) NSString *valueDescription;
 
 /** The symbol used to display the value.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSymbol *symbol;
+@property (nonatomic, strong, readonly) AGSSymbol *symbol;
 
 /** Initialize an autoreleased unique value.
  @param value The value to symbolize.

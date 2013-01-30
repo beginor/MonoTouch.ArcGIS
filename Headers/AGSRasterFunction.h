@@ -16,24 +16,7 @@
  email: contracts@esri.com
  */	
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSRasterFunction.h */
-
-/** Supported raster function types. These types correspond to the names of
- raster functions.
- @since 1.8
- */
-typedef enum {
-	AGSRasterFunctionTypeAspect = 0,		/*!<  */
-	AGSRasterFunctionTypeColormap,			/*!<  */
-	AGSRasterFunctionTypeHillshade,			/*!<  */
-	AGSRasterFunctionTypeNDVI,				/*!<  */
-	AGSRasterFunctionTypeShadedRelief,		/*!<  */
-	AGSRasterFunctionTypeSlope,				/*!<  */
-	AGSRasterFunctionTypeStatistics,		/*!<  */
-	AGSRasterFunctionTypeStretch,			/*!<  */
-} AGSRasterFunctionType;
 
 /** @brief The rendering rule to be used for an image service's export image
  operation.
@@ -42,11 +25,7 @@ typedef enum {
  @define{AGSRasterFunction.h, ArcGIS}
  @since 1.8
  */
-@interface AGSRasterFunction : NSObject <AGSCoding> {
- @private
-	AGSRasterFunctionType _type;
-	NSMutableDictionary *_arguments;
-}
+@interface AGSRasterFunction : NSObject <AGSCoding>
 
 /** The raster function type.
  @since 1.8
@@ -59,6 +38,6 @@ typedef enum {
  for the JSON syntax.
  @since 1.8
  */
-@property (nonatomic, retain) NSMutableDictionary *arguments;
+@property (nonatomic, strong) NSMutableDictionary *arguments;
 	
 @end

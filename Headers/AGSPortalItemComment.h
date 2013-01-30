@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSPortalItemComment.h */ //Required for Globals API doc
 
 /** @brief A comment for a portal's item
@@ -31,20 +29,20 @@
 /** The owner of the comment.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *owner;
+@property (nonatomic, copy, readonly) NSString *owner;
 
 /** The Id of the comment.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *commentId;
+@property (nonatomic, copy, readonly) NSString *commentId;
 
 /** The text of the comment.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *comment;
+@property (nonatomic, copy, readonly) NSString *comment;
 
 /** The date of creation of the comment.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDate *created;
+@property (nonatomic, strong, readonly) NSDate *created;
 @end

@@ -16,7 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
 @class AGSWebMapFeatureCollection;
 @class AGSPopupInfo;
 
@@ -28,45 +27,27 @@
  
  @since 2.2
  */
-@interface AGSWebMapLayerInfo : NSObject <AGSCoding> {
-@private
-	NSString *_layerId;
-    NSString *_itemId;
-	NSString *_title;
-	NSURL *_URL;
-	float _opacity;
-	NSString * _layerType;
-	BOOL _visibility;
-	AGSAuthenticationType _authType;
-	BOOL _isReference;
-	AGSWebMapFeatureCollection *_featureCollection;
-	NSInteger _mode;
-	AGSPopupInfo *_popupInfo;
-	NSArray *_layers;
-	NSArray *_visibleLayers;
-	NSDictionary *_layerDefinition;
-    BOOL _showLegend;
-}
+@interface AGSWebMapLayerInfo : NSObject <AGSCoding>
 
 /** The id of the layer in the webmap.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *layerId;
+@property (nonatomic, copy, readonly) NSString *layerId;
 
 /** The id of an item containing default information for the layer. The item resides on the same portal as the webmap.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *itemId;
+@property (nonatomic, copy, readonly) NSString *itemId;
 
 /** The title of the layer in the webmap.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *title;
+@property (nonatomic, copy, readonly) NSString *title;
 
 /** URL of the layer's backing service.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSURL *URL; 
+@property (nonatomic, strong, readonly) NSURL *URL; 
 
 /** If the value is 1, the layer is fully opaque. If 0, the layer is fully transparent.
  @since 2.2
@@ -76,7 +57,7 @@
 /** The type of the layer. For example, OpenStreetMap, BingMapsAerial, BingMapsRoad, BingMapsHybrid, WMS, CSV, etc
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSString *layerType;
+@property (nonatomic, copy, readonly) NSString *layerType;
 
 /** Whether the layer is visible or not.
  @since 2.2
@@ -92,7 +73,7 @@
 /** Only applicable if the layer is a feature collection. A feature collection is a representation of one or more feature layers, where each layer contains the definition of that layer and the features that belong to that layer.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSWebMapFeatureCollection *featureCollection;
+@property (nonatomic, strong, readonly) AGSWebMapFeatureCollection *featureCollection;
 
 /** Only applies if the layer is a feature layer. A value of 0 implies @c AGSFeatureLayerModeSnapshot, 1 implies @c AGSFeatureLayerModeOnDemand, and 2 implies @c AGSFeatureLayerModeSelection. 
  @since 2.2
@@ -102,23 +83,23 @@
 /** A popup definition for the layer.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) AGSPopupInfo *popupInfo;
+@property (nonatomic, strong, readonly) AGSPopupInfo *popupInfo;
 
 /** An array of @c AGSWebMapSubLayerInfo objects representing the sublayers of the layer. 
  For example, if the layer is based on an ArcGIS map service. Each sublayer will have an id and optionally a popup definition.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *layers;
+@property (nonatomic, copy, readonly) NSArray *layers;
 
 /** An array of sub-layer ids that should be visible
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *visibleLayers;
+@property (nonatomic, copy, readonly) NSArray *visibleLayers;
 
 /** Only applicable if the layer is a feature layer. This is the JSON returned by a Map or Feature Service for one of its layers, for example, http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/SanFrancisco/311Incidents/FeatureServer/0?f=pjson. 
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSDictionary *layerDefinition;
+@property (nonatomic, copy, readonly) NSDictionary *layerDefinition;
 
 /** A property indicating whether the web map should show the features from this service in the legend.
  @since 2.3
@@ -128,6 +109,24 @@
 /** Array of bandIds to override the image service layer's defaults.
  @since 2.3
  */
-@property (nonatomic, retain, readonly) NSArray *bandIds;
+@property (nonatomic, copy, readonly) NSArray *bandIds;
+
+/** The minimum scale at which this layer is visible. If the map is zoomed out
+ beyond this scale, the layer will not be visible.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readonly) double minScale;
+
+/** The maximum scale at which this layer is visible. If the map is zoomed in
+ beyond this scale, the layer will not be visible.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readonly) double maxScale;
+
+/** A property indicating whether the web map has disabled editing for the features in this layer
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readonly) BOOL isEditingDisabled;
+
 
 @end

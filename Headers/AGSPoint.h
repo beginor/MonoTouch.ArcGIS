@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
-
 @class AGSGeometry;
 @class AGSSpatialReference;
 @class AGSEnvelope;
@@ -39,8 +36,7 @@
  @since 1.0
  @see AGSMutablePoint for a mutable version.
  */
-@interface AGSPoint : AGSGeometry {
-}
+@interface AGSPoint : AGSGeometry 
 
 /** X coordinate for point in map units.
  @since 1.0
@@ -124,7 +120,7 @@
 /** Geometry's spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readwrite) AGSSpatialReference *spatialReference;
 
 @end
 

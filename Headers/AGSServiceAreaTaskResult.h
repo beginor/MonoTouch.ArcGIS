@@ -18,10 +18,6 @@
 
 /** @file AGSServiceAreaTaskResult.h */
 
-#import <Foundation/Foundation.h>
-
-#import "AGSEnumerations.h"
-
 @protocol AGSCoding;
 @class AGSNAMessage;
 
@@ -31,28 +27,19 @@
 
  @since 1.8
  */
-@interface AGSServiceAreaTaskResult : NSObject<AGSCoding> {
- @private
-	NSArray *_facilities;
-	NSArray *_messages;
-	NSArray *_pointBarriers;
-	NSArray *_polygonBarriers;
-	NSArray *_polylineBarriers;
-	NSArray *_serviceAreaPolygons;
-	NSArray *_serviceAreaPolylines;
-}
+@interface AGSServiceAreaTaskResult : NSObject<AGSCoding>
 
 /** The facilities (points) as an array of @c AGSGraphic objects. These are only returned if the <code>returnFacilities</code> property
  on @c AGSServiceAreaTaskParameters is set to <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *facilities;
+@property (nonatomic, copy, readonly) NSArray *facilities;
 
 /** Messages as an array of @c AGSNAMessage objects. These messages are received when solve is completed. If a service area cannot be solved, 
  the message returned by the server identifies the incident that could not be solved.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *messages;
+@property (nonatomic, copy, readonly) NSArray *messages;
 
 /** The point barriers as an array of @c AGSGraphic objects. They are returned only if 
  <code>returnPointBarriers</code> was set to <code>true</code> (which is not the 
@@ -61,7 +48,7 @@
  them back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *pointBarriers;
+@property (nonatomic, copy, readonly) NSArray *pointBarriers;
 
 /** The polygon barriers as an array of @c AGSGraphic objects. They are returned only if 
  <code>returnPolygonBarriers</code> was set to <code>true</code> (which is not 
@@ -70,7 +57,7 @@
  request them back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *polygonBarriers;
+@property (nonatomic, copy, readonly) NSArray *polygonBarriers;
 
 /** The polyline barriers as an array of @c AGSGraphic objects. They are returned only if 
  <code>returnPolylineBarriers</code> was set to <code>true</code> (which is not 
@@ -79,16 +66,16 @@
  request them back from the server.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *polylineBarriers;
+@property (nonatomic, copy, readonly) NSArray *polylineBarriers;
 
 /** The resulting service area polygons as an array of @c AGSGraphic objects.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *serviceAreaPolygons;
+@property (nonatomic, copy, readonly) NSArray *serviceAreaPolygons;
 
 /** The resulting service area polylines as an array of @c AGSGraphic objects.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *serviceAreaPolylines;
+@property (nonatomic, copy, readonly) NSArray *serviceAreaPolylines;
 
 @end

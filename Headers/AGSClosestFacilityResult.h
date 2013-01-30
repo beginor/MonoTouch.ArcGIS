@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSClosestFacilityResult.h */
 
@@ -29,24 +29,19 @@
  An array of @c AGSClosestFacilityResult objects will be returned within an @c AGSClosestFacilityTaskResult.
  @since 1.8
  */
-@interface AGSClosestFacilityResult : NSObject {
-@private
-	AGSDirectionSet *_directions;
-	AGSGraphic *_routeGraphic;
-	NSString *_routeName;
-}
+@interface AGSClosestFacilityResult : NSObject
 
 /** Route directions are returned if @c AGSClosestFacilityTaskParameters <code>returnDirections</code>
  property is set to <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSDirectionSet *directions;
+@property (nonatomic, strong, readonly) AGSDirectionSet *directions;
 
 /** The route graphic that is returned if @c AGSClosestFacilityTaskParameters 
  <code>returnRouteGraphics</code> property is <code>true</code>.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) AGSGraphic *routeGraphic;
+@property (nonatomic, strong, readonly) AGSGraphic *routeGraphic;
 
 /** The name of the route.
  @since 1.8

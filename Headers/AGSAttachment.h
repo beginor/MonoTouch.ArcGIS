@@ -16,7 +16,8 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+@class AGSAttachmentInfo;
+@class AGSEditResultError;
 
 /** @file AGSAttachment.h */
 
@@ -40,26 +41,18 @@ typedef enum {
  file is cleaned up when the @c AGSAttachmentManager that is managing this attachment is cleared.
  @since 2.0
  */
-@interface AGSAttachment : NSObject {
-@private
-	AGSAttachmentInfo *_attachmentInfo;
-	NSString *_filepath;
-	AGSAttachmentEditState _editState;
-	AGSEditResultError *_editResultError;
-	NSError *_networkError;
-	BOOL _isDownloading;
-}
+@interface AGSAttachment : NSObject 
 
 /** The attachment metadata  associated with this attachment.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) AGSAttachmentInfo *attachmentInfo;
+@property (nonatomic, strong, readonly) AGSAttachmentInfo *attachmentInfo;
 
 /** The path to the temporary file that has been downloaded or saved.
  This will be nil if the attachment data has not been downloaded yet.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) NSString *filepath;
+@property (nonatomic, copy, readonly) NSString *filepath;
 
 /** The edit state of this particular attachment.
  @since 2.0
@@ -70,13 +63,13 @@ typedef enum {
  attachment.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) AGSEditResultError *editResultError;
+@property (nonatomic, strong, readonly) AGSEditResultError *editResultError;
 
 /** Network error that occurred, if any, when the attachment manager attempted
  to download data for this attachment or post edits for this attachment.
  @since 2.0
  */
-@property (nonatomic, retain, readonly) NSError *networkError;
+@property (nonatomic, strong, readonly) NSError *networkError;
 
 /** Indicates whether or not the data for this this attachment is currently downloading.
  @since 2.0
@@ -102,7 +95,7 @@ typedef enum {
 /** Returns a thumbnail image the attachment. Only works with some types of attachments - mainly images and videos.
  @since 2.0
  */
--(UIImage*)thumbnail;
+-(AGSImage*)thumbnail;
 
 /** If the attachment data has been downloaded, it will be saved to a temporary file. This method
  pulls the actual NSData from that file and returns it to the caller.

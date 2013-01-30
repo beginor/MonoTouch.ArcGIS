@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#include "pthread.h"
-
 /** Represents the block signature for a request operation's completion handler.
  @since 2.3
  */
@@ -29,40 +26,34 @@ typedef void (^AGSIdBlock)(id obj);
  */
 typedef void (^AGSErrorBlock)(NSError *error);
 
+/** @file AGSRunLoopOperation.h */ //Required for Globals API doc
+
 /** @brief Base class for concurrent operations that should run on a run loop thread.
  @since 2.1
  */
-@interface AGSRunLoopOperation : NSOperation {
- @private
-    BOOL _executing;
-    BOOL _finished;
-    id _target;
-    NSThread *_runLoopThread;
-    SEL _action;
-    SEL _errorAction;
-    id _result;
-	BOOL _waitUntilActionSelectorIsDone;
-}
+@interface AGSRunLoopOperation : NSOperation 
 
 /** Target class to perform the operation from.
  @since 2.1
  */
-@property (nonatomic, assign) id target;
+@property (nonatomic, weak) id target;
 
-/** Selector to be called if the operation succeeds. The selector must represent a method that accepts 2 arguments of type NSOperation and NSDictionary respectively.
+/** Selector to be called if the operation succeeds.
  @since 2.1
  */
 @property (nonatomic, assign) SEL action;
 
-/** Selector to be called if the operation fails. The selector must represent a method that accepts 2 arguments of type NSOperation and NSError respectively.
+/** Selector to be called if the operation fails.
  @since 2.1
  */
 @property (nonatomic, assign) SEL errorAction;
 
 /** The thread that this concurrent operation should start it's work on.
+ This can only be set before the operation starts executing.
+ After that, setting it will be ignored.
  @since 2.1
  */
-@property (nonatomic, retain, readonly) NSThread *runLoopThread;
+@property (nonatomic, strong, readwrite) NSThread *runLoopThread;
 
 /** Defaults to <code>NO</code>, but it is helpful if this operation is a 
  dependency for another operation and the action selector processes some results 
@@ -74,7 +65,7 @@ typedef void (^AGSErrorBlock)(NSError *error);
 /** The results of an operation.
  @since 2.1
  */
-@property (nonatomic, retain, readonly ) id result;
+@property (nonatomic, strong, readonly ) id result;
 
 /** Completion handler that will be called when the operation is 
  completed successfully. This handler will only be called when a target is not

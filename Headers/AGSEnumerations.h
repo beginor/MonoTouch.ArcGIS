@@ -18,10 +18,146 @@
 
 /** @file AGSEnumerations.h */ 
 
-/** Possible spatial relationships.
+/**
+ Specifies the wrap around status of an AGSMapView.
+ @since 10.1.1
+ */
+typedef enum {
+    AGSMapViewWrapAroundStatusDisabled,             /*!<  */
+    AGSMapViewWrapAroundStatusUninitialized,        /*!<  */
+    AGSMapViewWrapAroundStatusUnsupported,          /*!<  */
+    AGSMapViewWrapAroundStatusEnabled               /*!<  */
+} AGSMapViewWrapAroundStatus;
+
+/** Specifies how a text symbol should be vertically aligned.
  @since 1.8
  */
 typedef enum {
+	AGSTextSymbolVAlignmentBottom = 0,		/*!<  */
+	AGSTextSymbolVAlignmentMiddle,			/*!<  */
+	AGSTextSymbolVAlignmentTop,				/*!<  */
+} AGSTextSymbolVAlignment;
+
+/** Specifies how a text symbol should be horizontally aligned.
+ @since 1.8
+ */
+typedef enum {
+	AGSTextSymbolHAlignmentLeft = 0,		/*!<  */
+	AGSTextSymbolHAlignmentCenter,			/*!<  */
+	AGSTextSymbolHAlignmentRight			/*!<  */
+} AGSTextSymbolHAlignment;
+
+
+/** Supported marker styles.
+ @since 1.0
+ */
+typedef enum {
+    AGSSimpleMarkerSymbolStyleCircle = 0,	/*!< */
+    AGSSimpleMarkerSymbolStyleCross,		/*!< */
+    AGSSimpleMarkerSymbolStyleDiamond,		/*!< */			
+    AGSSimpleMarkerSymbolStyleSquare,		/*!< */
+    AGSSimpleMarkerSymbolStyleX				/*!< */
+} AGSSimpleMarkerSymbolStyle;
+
+
+/** Supported interpolations.
+ @since 1.8
+ */
+typedef enum : NSUInteger {
+	AGSInterpolationBilinear = 0,                       /*!<  */
+	AGSInterpolationCubicConvolution,                   /*!<  */
+	AGSInterpolationMajority,                           /*!<  */
+	AGSInterpolationNearestNeighbor = NSUIntegerMax		/*!<  */
+} AGSInterpolation;
+
+
+/** Possible relationships between geometries.
+ @since 1.0
+ */
+typedef enum : NSUInteger {
+    AGSGeometryRelationCross = 0,				/*!<  */
+    AGSGeometryRelationDisjoint,				/*!<  */
+    AGSGeometryRelationIn,						/*!<  */
+    AGSGeometryRelationInteriorIntersection,	/*!<  */
+    AGSGeometryRelationIntersection,			/*!<  */
+    AGSGeometryRelationLineCoincidence,			/*!<  */
+    AGSGeometryRelationLineTouch,				/*!<  */
+    AGSGeometryRelationOverlap,					/*!<  */
+    AGSGeometryRelationPointTouch,				/*!<  */
+    AGSGeometryRelationTouch,					/*!<  */
+    AGSGeometryRelationWithin,					/*!<  */
+    AGSGeometryRelationRelation					/*!<  */
+} AGSGeometryRelation;
+
+/** Supported geometry types.
+ @since 1.0
+ */
+typedef enum  {
+    AGSGeometryTypeUndefined = -1,  /*!<  */
+    AGSGeometryTypePoint,           /*!<  */
+    AGSGeometryTypePolyline,        /*!<  */
+    AGSGeometryTypePolygon,         /*!<  */
+    AGSGeometryTypeMultipoint,      /*!<  */
+    AGSGeometryTypeEnvelope         /*!<  */
+} AGSGeometryType;
+
+/** Supported raster function types. These types correspond to the names of
+ raster functions.
+ @since 1.8
+ */
+typedef enum {
+	AGSRasterFunctionTypeAspect = 0,		/*!<  */
+	AGSRasterFunctionTypeColormap,			/*!<  */
+	AGSRasterFunctionTypeHillshade,			/*!<  */
+	AGSRasterFunctionTypeNDVI,				/*!<  */
+	AGSRasterFunctionTypeShadedRelief,		/*!<  */
+	AGSRasterFunctionTypeSlope,				/*!<  */
+	AGSRasterFunctionTypeStatistics,		/*!<  */
+	AGSRasterFunctionTypeStretch,			/*!<  */
+} AGSRasterFunctionType;
+	
+
+/** List of supported <code>%AGSFieldType</code>'s
+ @since 1.0
+ */
+typedef enum {
+    AGSFieldTypeInteger = 0,        /*!<  */
+    AGSFieldTypeSmallInteger,       /*!<  */
+	AGSFieldTypeDouble,             /*!<  */
+	AGSFieldTypeSingle,             /*!<  */
+	AGSFieldTypeString,             /*!<  */
+	AGSFieldTypeDate,               /*!<  */
+	AGSFieldTypeGeometry,           /*!<  */
+	AGSFieldTypeOID,                /*!<  */
+	AGSFieldTypeBlob,               /*!<  */
+	AGSFieldTypeGlobalID,           /*!<  */
+	AGSFieldTypeRaster,             /*!<  */
+	AGSFieldTypeGUID,               /*!<  */
+	AGSFieldTypeXML                 /*!<  */
+} AGSFieldType;
+
+
+/** Supported time interval units.
+ @since 1.0
+ */
+typedef enum {
+    AGSTimeIntervalUnitsMilliseconds = 0,	/*!< */
+    AGSTimeIntervalUnitsSeconds,		/*!< */
+    AGSTimeIntervalUnitsMinutes,		/*!< */
+    AGSTimeIntervalUnitsHours,			/*!< */
+    AGSTimeIntervalUnitsDays,           /*!< */
+    AGSTimeIntervalUnitsWeeks,          /*!< */
+    AGSTimeIntervalUnitsMonths,			/*!< */
+    AGSTimeIntervalUnitsYears,           /*!< */
+    AGSTimeIntervalUnitsDecades,		/*!< */
+    AGSTimeIntervalUnitsCenturies,	/*!< */
+    AGSTimeIntervalUnitsUnknown		/*!< */	
+} AGSTimeIntervalUnits;
+
+/** Possible spatial relationships.
+ @since 1.8
+ */
+typedef enum : NSUInteger {
     AGSSpatialRelationshipIntersects = 0,		/*!<  */
     AGSSpatialRelationshipContains,				/*!<  */
     AGSSpatialRelationshipCrosses,				/*!<  */
@@ -32,6 +168,124 @@ typedef enum {
     AGSSpatialRelationshipWithin,				/*!<  */
 	AGSSpatialRelationshipRelation				/*!<  */
 } AGSSpatialRelationship;
+
+/** Supported linear units.
+ @since 1.0
+ */
+typedef enum : NSUInteger {
+    AGSUnitsCentimeters = 0,	/*!<  */
+    AGSUnitsDecimalDegrees,		/*!<  */
+    AGSUnitsDecimeters,			/*!<  */
+    AGSUnitsFeet,				/*!<  */
+    AGSUnitsInches,				/*!<  */
+    AGSUnitsKilometers,			/*!<  */
+    AGSUnitsMeters,				/*!<  */
+    AGSUnitsMiles,				/*!<  */
+    AGSUnitsMillimeters,		/*!<  */	
+    AGSUnitsNauticalMiles,		/*!<  */
+    AGSUnitsPoints,				/*!<  */
+    AGSUnitsUnknown,			/*!<  */
+    AGSUnitsYards				/*!<  */
+} AGSUnits;
+
+/** Supported area units.
+ @since 1.0
+ */
+typedef enum : NSUInteger {
+    AGSAreaUnitsSquareInches = 0,		/*!<  */
+    AGSAreaUnitsSquareFeet,				/*!<  */
+    AGSAreaUnitsSquareYards,			/*!<  */
+    AGSAreaUnitsAcres,					/*!<  */
+    AGSAreaUnitsSquareMiles,			/*!<  */
+    AGSAreaUnitsSquareMillimeters,		/*!<  */
+    AGSAreaUnitsSquareCentimeters,		/*!<  */
+    AGSAreaUnitsSquareDecimeters,		/*!<  */
+    AGSAreaUnitsSquareMeters,			/*!<  */
+    AGSAreaUnitsAres,					/*!<  */
+    AGSAreaUnitsHectares,				/*!<  */
+    AGSAreaUnitsSquareKilometers		/*!<  */
+} AGSAreaUnits;
+
+/** Supported esriSRUnits.
+ @since 1.0
+ */
+typedef enum : NSUInteger {
+    AGSSRUnitMeter					= 9001,     /*!< International meter. */
+    AGSSRUnitGermanMeter			= 9031,     /*!< German legal meter. */
+    AGSSRUnitFoot					= 9002,     /*!< International foot. */
+    AGSSRUnitSurveyFoot				= 9003,     /*!< US survey foot. */
+    AGSSRUnitClarkeFoot				= 9005,     /*!< Clarke's foot. */
+    AGSSRUnitFathom					= 9014,     /*!< Fathom. */
+    AGSSRUnitNauticalMile			= 9030,     /*!< International nautical mile. */
+    AGSSRUnitSurveyChain			= 9033,     /*!< US survey chain. */
+    AGSSRUnitSurveyLink				= 9034,     /*!< US survey link. */
+    AGSSRUnitSurveyMile				= 9035,     /*!< US survey mile. */
+    AGSSRUnitKilometer				= 9036,     /*!< Kilometer. */
+    AGSSRUnitClarkeYard				= 9037,     /*!< Yard (Clarke's ratio). */
+    AGSSRUnitClarkeChain			= 9038,     /*!< Chain (Clarke's ratio). */
+    AGSSRUnitClarkeLink				= 9039,     /*!< Link (Clarke's ratio). */
+    AGSSRUnitSearsYard				= 9040,     /*!< Yard (Sears). */
+    AGSSRUnitSearsFoot				= 9041,     /*!< Sears' foot. */
+    AGSSRUnitSearsChain				= 9042,     /*!< Chain (Sears). */
+    AGSSRUnitSearsLink				= 9043,     /*!< Link (Sears). */
+    AGSSRUnitBenoit1895AYard		= 9050,     /*!< Yard (Benoit 1895 A). */
+    AGSSRUnitBenoit1895AFoot		= 9051,     /*!< Foot (Benoit 1895 A). */
+    AGSSRUnitBenoit1895AChain		= 9052,     /*!< Chain (Benoit 1895 A). */
+    AGSSRUnitBenoit1895ALink		= 9053,     /*!< Link (Benoit 1895 A). */
+    AGSSRUnitBenoit1895BYard		= 9060,     /*!< Yard (Benoit 1895 B). */
+    AGSSRUnitBenoit1895BFoot		= 9061,     /*!< Foot (Benoit 1895 B). */
+    AGSSRUnitBenoit1895BChain		= 9062,     /*!< Chain (Benoit 1895 B). */
+    AGSSRUnitBenoit1895BLink		= 9063,     /*!< Link (Benoit 1895 B). */
+    AGSSRUnitIndianFoot				= 9080,     /*!< Indian geodetic foot. */
+    AGSSRUnitIndian1937Foot			= 9081,     /*!< Indian foot (1937). */
+    AGSSRUnitIndian1962Foot			= 9082,     /*!< Indian foot (1962). */
+    AGSSRUnitIndian1975Foot			= 9083,     /*!< Indian foot (1975). */
+    AGSSRUnitIndianYard				= 9084,     /*!< Indian yard. */
+    AGSSRUnitIndian1937Yard			= 9085,     /*!< Indian yard (1937). */
+    AGSSRUnitIndian1962Yard			= 9086,     /*!< Indian yard (1962). */
+    AGSSRUnitIndian1975Yard			= 9087,     /*!< Indian yard (1975). */
+    AGSSRUnitFoot1865				= 9070,     /*!< Foot (1865). */
+    AGSSRUnitRadian					= 9101,     /*!< Radian. */
+    AGSSRUnitDegree					= 9102,     /*!< Degree. */
+    AGSSRUnitArcMinute				= 9103,     /*!< Arc-minute. */
+    AGSSRUnitArcSecond				= 9104,     /*!< Arc-second. */
+    AGSSRUnitGrad					= 9105,     /*!< Grad. */
+    AGSSRUnitGon					= 9106,     /*!< Gon. */
+    AGSSRUnitMicroradian			= 9109,     /*!< Microradian. */
+    AGSSRUnitArcMinuteCentesimal	= 9112,     /*!< Centesimal arc-minute. */
+    AGSSRUnitArcSecondCentesimal	= 9113,     /*!< Centesimal arc-second. */
+    AGSSRUnitMil6400				= 9114,     /*!< Mil. */
+    AGSSRUnitBritish1936Foot		= 9095,		/*!< British Foot (1936). */
+    AGSSRUnitGoldCoastFoot			= 9094,		/*!< Gold Coast Foot. */
+    AGSSRUnitInternationalChain		= 109003,	/*!< International Chain. */
+    AGSSRUnitInternationalLink		= 109004,	/*!< International Link. */
+    AGSSRUnitInternationalYard		= 109001,	/*!< International Yard. */
+    AGSSRUnitStatuteMile			= 9093,		/*!< Statute Mile. */
+    AGSSRUnitSurveyYard				= 109002,	/*!< US survey Yard. */
+    AGSSRUnit50KilometerLength		= 109030,	/*!< 50 Kilometer Length. */
+    AGSSRUnit150KilometerLength		= 109031,	/*!< 150 Kilometer Length. */
+    AGSSRUnitDecimeter				= 109005,	/*!< Decimeter. */
+    AGSSRUnitCentimeter				= 109006,	/*!< Centimeter. */
+    AGSSRUnitMillimeter				= 109007,	/*!< Millimeter. */
+    AGSSRUnitInternationalInch		= 109008,	/*!< International inch. */
+    AGSSRUnitUSsurveyInch			= 109009,	/*!< US survey inch. */
+    AGSSRUnitInternationalRod		= 109010,	/*!< International rod. */
+    AGSSRUnitUSsurveyRod			= 109011,	/*!< US survey rod. */
+    AGSSRUnitUSNauticalMile			= 109012,	/*!< US nautical mile (pre-1954). */
+    AGSSRUnitUKNauticalMile			= 109013	/*!< UK nautical mile (pre-1970). */
+} AGSSRUnit;
+
+/** Supported @p offsetHow types for the <code>AGSGeometryServiceTask</code>'s 
+ <code>offsetWithParameters:</code> operation.
+ @since 1.0
+ */
+typedef enum {
+	AGSGeometryOffsetTypeMitered = 0,   /*!<  */
+	AGSGeometryOffsetTypeBevelled,      /*!<  */
+	AGSGeometryOffsetTypeRounded,       /*!<  */
+	AGSGeometryOffsetTypeSquare         /** Only applicable with the AGSGeometryEngine */
+} AGSGeometryOffsetType;
+
 
 /** Specifies the way of timeOfDay property is used.
  @since 2.3
@@ -47,7 +301,7 @@ typedef enum {
  @avail{10.1}
  */
 typedef enum {
-    AGSNADirectionsOutputTypeStandard = 0,		/*!< Standard directions output – direction text instructions, geometry, time, length, ETA. Does not include events, new types*/
+    AGSNADirectionsOutputTypeStandard = 0,		/*!< Standard directions output ï¾– direction text instructions, geometry, time, length, ETA. Does not include events, new types*/
 	AGSNADirectionsOutputTypeComplete,      	/*!< Directions output that includes all directions properties.*/
     AGSNADirectionsOutputTypeCompleteNoEvents,  /*!< Directions output that includes all directions properties except events.*/
     AGSNADirectionsOutputTypeInstructionsOnly,  /*!< Directions output that includes text instructions, time, length and ETA. Does not include geometry.*/
@@ -55,20 +309,21 @@ typedef enum {
 } AGSNADirectionsOutputType;
 
 /** Specifies the type of lines generated by the network analyst solvers.
+ 
+ Note: <code>AGSNAOutputLineTrueShapeWithMeasure</code> is only available at 10.1 and beyond.
  @since 1.8
  */
-typedef enum {
+typedef enum : NSUInteger {
 	AGSNAOutputLineNone = 0,				/*!< No polylines are generated. */
 	AGSNAOutputLineStraight,				/*!< Straight polylines between the two endpoints are generated. */
 	AGSNAOutputLineTrueShape,				/*!< Polylines based on the true network feature geometry are generated. */
     AGSNAOutputLineTrueShapeWithMeasure     /*!< Polylines based on the true network feature geometry are generated, and measures are added whenever possible. */
 } AGSNAOutputLine;
 
-
 /** Constants representing how U-Turns are handled
  @since 1.8
  */
-typedef enum {
+typedef enum : NSUInteger {
 	AGSNAUTurnAllowBacktrack = 0,			/*!<  Allow U-turns anywhere.*/
 	AGSNAUTurnAtDeadEndsOnly,				/*!<  Allow U-turns only at dead ends only.*/
 	AGSNAUTurnNoBacktrack,					/*!<  Don't allow U-turns anywhere.*/
@@ -78,7 +333,7 @@ typedef enum {
 /** Constants representing directions length units for the @c AGSRouteTask.
  @since 1.8
  */
-typedef enum {
+typedef enum : NSUInteger {
 	AGSNAUnitCentimeters = 0,	/*!< */
 	AGSNAUnitDays,				/*!< */
 	AGSNAUnitDecimalDegrees,	/*!< */
@@ -96,7 +351,7 @@ typedef enum {
 	AGSNAUnitSeconds,			/*!< */
 	AGSNAUnitUnknown,			/*!< */
 	AGSNAUnitYards,				/*!< */
-} AGSNAUnit; 
+} AGSNAUnit;
 
 /** Constant representing the type of network layer.
  @since 1.8
@@ -110,7 +365,7 @@ typedef enum {
 /** Constants representing how the geometry is returned.
  @since 1.8
  */
-typedef enum {
+typedef enum : NSUInteger {
 	AGSNATravelDirectionFromFacility = 0,	/*!< Tavel to the facility. */
 	AGSNATravelDirectionToFacility,			/*!< Travel from the facility. */
 } AGSNATravelDirection;
@@ -196,21 +451,17 @@ typedef enum {
 /** Contstants representing how the geometry is returned.
  @since 1.8
  */
-typedef enum {
+typedef enum : NSUInteger {
 	AGSNAOutputPolygonDetailed = 0,			/*!< No polygons are generated. */	
 	AGSNAOutputPolygonNone,					/*!< Simplified polygons are generated. */
 	AGSNAOutputPolygonSimplified			/*!< Detailed polygons are generated. */
 } AGSNAOutputPolygon;
 
-//@todo doc/move
+/** Conversion mode for MGRS coordinates
+ @since 2.3
+ */
 typedef enum {
-    AGSConfFileTypeCDI = 0,               /*!<  */
-    AGSConfFileTypeXML,                   /*!<  */
-} AGSConfigFileType;
-
-// @todo doc
-typedef enum {
-    AGSMGRSConversionModeNewStyle = 0,
+    AGSMGRSConversionModeNewStyle = 0,      /*!<  */
 } AGSMGRSConversionMode;
 
 /** Constants representing error codes.
@@ -220,28 +471,29 @@ typedef enum {
 	AGSErrorCodeOperationNotSupported = 10000,          /*!<  */
     AGSErrorCodeNoDataTile = 10001,                     /*!<  */
     AGSErrorCodeSpatialReferenceNotSupported = 10002,   /*!<  */
-    AGSErrorCodeInvalidArgument = 10003                /*!<  */
+    AGSErrorCodeInvalidArgument = 10003                 /*!<  */
 } AGSErrorCode;
 
 
 
-/** Defines the drawing behavior for a dynamic layer when
- the map's gps is in a navigation mode.
- @since 2.1
- */
-typedef enum {
-	AGSDynamicLayerGPSAutoPanDrawingModeNormal = 0,	/*!< Dynamic layer draws normally. */
-    AGSDynamicLayerGPSAutoPanDrawingModeConservative, /*!< Dynamic layer draws only when it doesn't currently have a drawing operation in progress. 
-                                                       This lessens the load on the server.*/
-    AGSDynamicLayerGPSAutoPanDrawingModeNone /*!< Dynamic layer does not draw when the map is in navigation mode. */
-} AGSDynamicLayerGPSAutoPanDrawingMode;
+///** Defines the drawing behavior for a dynamic layer when
+// the map's location display is in an autopan mode other than off.
+// @since 2.1
+// */
+//typedef enum {
+//	AGSDynamicLayerAutoPanDrawingModeNormal = 0,	/*!< Dynamic layer draws normally. */
+//    AGSDynamicLayerAutoPanDrawingModeConservative, /*!< Dynamic layer draws only when it doesn't currently have a drawing operation in progress. 
+//                                                       This lessens the load on the server.*/
+//    AGSDynamicLayerAutoPanDrawingModeNone /*!< Dynamic layer does not draw when the map is in navigation mode. */
+//} AGSDynamicLayerAutoPanDrawingMode;
 
 
 /**
  @since 2.2
  */
-typedef enum {
-    AGSPortalItemTypeMapDocument = 0,               /*!< ArcMap Document (mxd) */
+typedef enum : NSUInteger {
+    AGSPortalItemTypeOther = 0,                          /*!< */
+    AGSPortalItemTypeMapDocument,               /*!< ArcMap Document (mxd) */
     AGSPortalItemTypeExplorerMap,                   /*!< ArcGIS Explorer Document (nmf) */
     AGSPortalItemTypeGlobeDocument,                 /*!< ArcGlobe Document (3dd) */
     AGSPortalItemTypeSceneDocument,                 /*!< ArcScene Document (sxd) */
@@ -283,9 +535,15 @@ typedef enum {
     AGSPortalItemTypeSymbolSet,                     /*!< Symbol Set*/
     AGSPortalItemTypeColorSet,                      /*!< Color Set */
     AGSPortalItemTypeCollectionDefinition,          /*!< The definition for a feature collection/web map feature layer */
-    AGSPortalItemTypeOther                          /*!< */
+    AGSPortalItemTypeOperationView,                 /*!< An Operation View */
+    AGSPortalItemTypeOperationsDashboardAddin,      /*!< An Operations Dashboard Addin */
+    AGSPortalItemTypeCityEngineWebScene,            /*!< A CityEngine Web Scene */
+    AGSPortalItemTypeWorkflowManagerPackage,        /*!< A Workflow Manager Package (wpk) */
+    AGSPortalItemTypeArcPadPackage,                 /*!< An ArcPad Package (appk) */
+    AGSPortalItemTypeShapefile,                     /*!< A shapefile */
+    AGSPortalItemTypeCSV,                           /*!< A text file of data values separated by commas or other delimiters */
+    AGSPortalItemTypeServiceDefinition              /*!< A Service Definition that can be published to create a geospatial web service */
 } AGSPortalItemType;
-
 
 /** Access types on Portal, Item, Group or User. 
  
@@ -320,14 +578,9 @@ typedef enum {
 typedef enum { 
     AGSPortalAccessPrivate = 0,                     /*!< Applicable for All  */
     AGSPortalAccessShared,                          /*!< Applicable for only Items  */
-    
     AGSPortalAccessOrganization,                    /*!< Applicable for Items, Groups and Users  */
-    
     AGSPortalAccessPublic                           /*!< Applicable for All  */
-    
 } AGSPortalAccess;
-
-extern AGSPortalAccess AGSPortalAccessForString(NSString *accessString);
 
 /** Indicates the oder of results of the portal query.  
  @since 2.2
@@ -346,6 +599,15 @@ typedef enum {
 	AGSPortalModeMultiTenant,			/*!< Multiple organizations*/
 } AGSPortalMode;
 
+/** Indicates the role of the portal user within an organization.
+ @since 10.1.1
+ */
+typedef enum {
+    AGSPortalUserRoleNone = 0,              /*!< The user does not belong to an organization */
+    AGSPortalUserRoleUser,                  /*!< Information worker */
+    AGSPortalUserRolePublisher,             /*!< Publisher */
+    AGSPortalUserRoleAdmin,                 /*!< Administrator */
+} AGSPortalUserRole;
 
 /**
  @since 2.3
@@ -360,6 +622,7 @@ typedef enum {
  @since 1.0
  */
 typedef enum {
+    AGSImageFormatUnknown = -1, /*!<  */
     AGSImageFormatPNG32 = 0,	/*!<  */
     AGSImageFormatPNG24,		/*!<  */
     AGSImageFormatPNG8,			/*!<  */
@@ -368,10 +631,68 @@ typedef enum {
     AGSImageFormatGIF,			/*!<  */
 	AGSImageFormatBMP,			/*!<  */
 	AGSImageFormatTIFF,			/*!<  */
-	AGSImageFormatJPGPNG		/*!<  */
+	AGSImageFormatJPGPNG,		/*!<  */
+    //For most layers JPEG should be treated the same as JPG using jpg for the files extension, however for some (only WMTS so far)
+    //the file extension used for JPEG needs to be jpeg.
+	AGSImageFormatJPEG          /*!<  */
 } AGSImageFormat;
 
+/** An enumeration that is used for defining the style of an AGSPopupsContainer.
+ @since 2.0
+ */
+typedef enum {
+	AGSPopupsContainerStyleDefault = 0, /*!<  */
+	AGSPopupsContainerStyleBlack,       /*!<  */
+	AGSPopupsContainerStyleCustomColor  /*!<  */
+} AGSPopupsContainerStyle;
+
+/** An enumeration that is used for defining the editing style of an AGSPopupsContainer.
+ @since 2.0
+ */
+typedef enum {
+	AGSPopupsContainerEditingStyleGeometryTool,     /*!< Shows a toolbar with a button for attachments and a button for collecting the geometry */
+	AGSPopupsContainerEditingStyleGeometryInline    /*!< has a view to switch between attributes and attachments,
+                                                     there is no button for the collecting the geometry, as this is assumed
+                                                     the user has access to the map while the popup is up (think ipad), or
+                                                     the user will not be collecting a geometry at all. */
+} AGSPopupsContainerEditingStyle;
+
+/** An enumeration that is used for defining the Paging style of an AGSPopupsContainer.
+ @since 2.0
+ */
+typedef enum {
+	AGSPopupsContainerPagingStylePageControl,   /*!<  */
+	AGSPopupsContainerPagingStyleToolbar        /*!<  */
+} AGSPopupsContainerPagingStyle;
+
+/** An enumeration that is used for defining statistic calculations in AGSOutStatistics.
+ @since 10.1.1
+ */
+typedef enum {
+    AGSQueryStatisticsTypeCount,            /*!<  */
+    AGSQueryStatisticsTypeSum,              /*!<  */
+    AGSQueryStatisticsTypeMin,              /*!<  */
+    AGSQueryStatisticsTypeMax,              /*!<  */
+    AGSQueryStatisticsTypeAvg,              /*!<  */
+    AGSQueryStatisticsTypeStdDev,           /*!<  */
+    AGSQueryStatisticsTypeVar,              /*!<  */
+} AGSQueryStatisticsType;
+
+/** Military symbology dictionary type
+ @since 10.1.1
+ */
+typedef enum {
+    AGSMPSymbolDictionaryTypeMil2525C,              /*!<  */
+    AGSMPSymbolDictionaryTypeApp6B,                 /*!<  */
+    AGSMPSymbolDictionaryTypeSimple                 /*!<  */
+} AGSMPSymbolDictionaryType;
+    
 /** Returns the image format as a string.
  @since 1.0
  */
-extern NSString *AGSFileFormatForImageFormat(AGSImageFormat imageFormat);
+AGS_EXTERN NSString *AGSFileFormatForImageFormat(AGSImageFormat imageFormat);
+    
+/** Returns the image format as a string.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *AGSFileFormatForImageFormatWithJPEGEqualToJPG(AGSImageFormat imageFormat, BOOL IsJPEGEqualToJPG);

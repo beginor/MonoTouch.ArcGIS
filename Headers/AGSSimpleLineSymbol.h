@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @class AGSSymbol;
 
@@ -53,13 +53,7 @@ typedef enum {
  @since 1.0
  */
 
-@interface AGSSimpleLineSymbol : AGSSymbol {
- @private
-    AGSSimpleLineSymbolStyle _style;
-    CGFloat _width;
-    CGLineJoin _lineJoin;
-    CGLineCap _lineCap;
-}
+@interface AGSSimpleLineSymbol : AGSSymbol
 
 /** The line style. Possible values include
  
@@ -76,20 +70,10 @@ typedef enum {
  */
 @property (nonatomic) AGSSimpleLineSymbolStyle style;
 
-/** Width of line symbol in pixels. Default is 1.0.
+/** Width of line symbol in points. Default is 1.0.
  @since 1.0
  */
 @property (nonatomic) CGFloat width;
-
-/** Specifies the line join.
- @since 2.2
- */
-@property (nonatomic, assign) CGLineJoin lineJoin;
-
-/** Specifies the line cap.
- @since 2.2
- */
-@property (nonatomic, assign) CGLineCap lineCap;
 
 /** Initialize autoreleased symbol with defaults.
  @return A new, autoreleased, simple line symbol object.
@@ -100,19 +84,19 @@ typedef enum {
 /**
  @since 1.8
  */
--(id)initWithColor:(UIColor*)color;
+-(id)initWithColor:(AGSColor*)color;
 
 /**
  @since 1.8
  */
--(id)initWithColor:(UIColor*)color width:(CGFloat)width;
+-(id)initWithColor:(AGSColor*)color width:(CGFloat)width;
 
 /** Initialize autoreleased symbol with specified properties.
  @param color A color for the line
  @return A new, autoreleased, simple line symbol object.
  @since 1.8
  */
-+(AGSSimpleLineSymbol*)simpleLineSymbolWithColor:(UIColor*)color;
++(AGSSimpleLineSymbol*)simpleLineSymbolWithColor:(AGSColor*)color;
 
 /** Initialize autoreleased symbol with specified properties.
  @param color A color for the line
@@ -120,15 +104,6 @@ typedef enum {
  @return A new, autoreleased, simple line symbol object.
  @since 1.8
  */
-+(AGSSimpleLineSymbol*)simpleLineSymbolWithColor:(UIColor *)color width:(CGFloat)width;
-
-
-//## @cond
-
-// This must be implemented by derived classes, don't implement drawGraphic:inContext:forEnvelope:withResolution,
-// implement this instead.
-- (void)applySymbolToContext:(CGContextRef)context withGraphic:(AGSGraphic*)graphic;
-
-//## @endcond
++(AGSSimpleLineSymbol*)simpleLineSymbolWithColor:(AGSColor *)color width:(CGFloat)width;
 
 @end

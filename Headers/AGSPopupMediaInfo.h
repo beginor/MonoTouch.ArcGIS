@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSPopupMediaInfo.h */ //Required for Globals API doc
 
@@ -36,23 +36,14 @@ typedef enum{
  Instances of this class represents media that is displayed in a popup for a graphic.
  @since 2.0
  */
-@interface AGSPopupMediaInfo : NSObject <AGSCoding> {
-@private
-    NSString *_caption;
-    NSString *_title;
-    AGSPopupMediaInfoType _type;
-    
-    //if type is chart, fields is array of fields (strings)
-    //if type is image, fields is URL and potentially link URL (both strings)
-    NSDictionary *_value;
-}
+@interface AGSPopupMediaInfo : NSObject <AGSCoding>
 
 /** The caption that is displayed for the media.
  This can contain a literal value, or a placeholder for value from the graphic's attribute for which the popup is displayed. The placeholder needs to be of the form {field_name}
  where <i>field_name</i> is a key in the graphic's attributes.
  @since 2.0
  */
-@property (nonatomic, retain) NSString *caption;
+@property (nonatomic, copy) NSString *caption;
 
 /** The title that is displayed for the media. 
  This can contain a literal value, or a placeholder for value from the graphic's attribute 
@@ -60,7 +51,7 @@ typedef enum{
  where <i>field_name</i> is a key in the graphic's attributes.
  @since 2.0
  */
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 /** The type of media. 
  @since 2.0
@@ -81,7 +72,7 @@ typedef enum{
  
  @since 2.0
  */
-@property (nonatomic, retain) NSDictionary *value;
+@property (nonatomic, copy) NSDictionary *value;
 
 /** Initializes an AGSPopupMediaInfo.
  @param title See #title

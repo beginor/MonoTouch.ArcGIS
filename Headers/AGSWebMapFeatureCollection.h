@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSWebMapFeatureCollection.h */ //Required for Globals API doc
 
@@ -25,17 +25,12 @@
  Instances of this class represent feature collections. A feature collection is a representation of one or more feature layers, where each layer contains the definition of that layer and the features that belong to that layer. In other words, the feaure layer contains all the information it needs to display map contents, and it does not rely on a backing map or feature service.
  @since 2.2
  */
-@interface AGSWebMapFeatureCollection : NSObject <AGSCoding> {
-@private
-	NSArray *_featureLayers;
-	NSArray *_layers;
-	BOOL _showLegend;
-}
+@interface AGSWebMapFeatureCollection : NSObject <AGSCoding>
 
 /** An array of @c AGSWebMapSubLayerInfo objects representing the individual feature layers in this feature collection.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *layers;
+@property (nonatomic, copy, readonly) NSArray *layers;
 
 /** Whether to show legend for the feature collection.
  @since 2.2

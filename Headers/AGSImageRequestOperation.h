@@ -16,9 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSRequestOperation;
+
+/** @file AGSImageRequestOperation.h */ //Required for Globals API doc
 
 /** @brief An operation to request an image from a resource.
  

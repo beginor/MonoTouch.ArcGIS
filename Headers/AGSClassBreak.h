@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @protocol AGSCoding;
 @class AGSSymbol;
 
@@ -32,12 +30,7 @@
  @define{AGSClassBreaksRenderer.h, ArcGIS}
  @since 1.0
  */
-@interface AGSClassBreak : NSObject <AGSCoding> {
- @private
-	NSString *_label;
-	NSString *_description;
-    double _maxValue;
-    AGSSymbol *_symbol;
+@interface AGSClassBreak : NSObject <AGSCoding, NSCopying> {
 }
 
 /** Label for the symbol used to draw the value.
@@ -48,7 +41,7 @@
 /** Description for the symbol used to draw the value.
  @since 1.0
  */
-@property (nonatomic, copy, readwrite) NSString *description;
+@property (nonatomic, copy, readwrite) NSString *breakDescription;
 
 /** The maximum value for this class break.
  @since 1.0
@@ -58,7 +51,7 @@
 /** Symbol to use for this class break.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSymbol *symbol;
+@property (nonatomic, strong, readwrite) AGSSymbol *symbol;
 
 /** Initialize an <code>AGSClassBreak</code>.
  @param label The label for the symbol used to draw the value.

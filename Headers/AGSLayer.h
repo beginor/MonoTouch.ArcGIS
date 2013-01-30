@@ -1,5 +1,5 @@
 /*
- COPYRIGHT 2009 ESRI
+ COPYRIGHT 2012 ESRI
  
  TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
  Unpublished material - all rights reserved under the
@@ -16,110 +16,50 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
-
-@protocol AGSLayerDelegate;
-@class AGSSpatialReference;
-@class AGSGeometry;
-@class AGSEnvelope;
-
 /** @file AGSLayer.h */ //Required for Globals API doc
 
-#pragma mark -
+@class AGSSpatialReference;
+@class AGSEnvelope;
+@protocol AGSLayerDelegate;
+
+/** Notification that indicates that an AGSLayer loaded successfully.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSLayerDidLoadNotification;
+
+/** Notification that indicates that an AGSLayer wasn't able to load successfully.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSLayerDidFailToLoadNotification;
+
+/** Notification that indicates that an AGSLayer initialized its spatial reference successfully.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSLayerDidInitializeSpatialReferenceStatusNotification;
 
 /** @brief A base class for all layers.
-
+ 
  A base class for all layers, tiled or dynamic. Sub-classes must provide 
- implementation for the #spatialReference, #fullEnvelope, #initialEnvelope, and 
- #units properties declared by this class. They must also update the #loaded 
- property and notify the #delegate when appropriate.
-
- Will fire notifications for LayerDidLoad and LayerFailedToLoad.
+ valid values for the #spatialReference, #fullEnvelope, and #initialEnvelope properties declared by this class.
+ 
+ 
+ <h3>Notifications</h3>
+ All layers post @c #AGSLayerDidLoadNotification , @c #AGSLayerDidFailToLoadNotification, and @c #AGSLayerDidInitializeSpatialReferenceStatusNotification 
  
  @see @concept{Overview/00pw0000001v000000/, Overview of Layers}
  @since 1.0
  */
-@interface AGSLayer : NSObject {
-//## @cond protected
- @protected
-	BOOL _timeAware;
-	UIView<AGSLayerDelegate> *_delegate;
-	BOOL _loaded;
-	NSString *_name;
-	BOOL _renderNativeResolution;
-//## @endcond protected
-	
- @private
-	NSError *_error;
-}
+@interface AGSLayer : NSObject
 
-/** A property indicating whether the layer is loaded and ready to be used.
- When the layer is loaded, the value becomes <code>YES</code>, and layer 
- properties can be accessed.
- @since 1.0
- @see AGSLayerDelegate
- */
-@property (nonatomic, readonly, getter=isLoaded) BOOL loaded;
-
-
-/** A property indicating whether the layer is time-aware.
+/** Indicates that this layer loaded successfully.
  @since 1.0
  */
-@property (nonatomic, readonly, getter=isTimeAware) BOOL timeAware;
-
-/** The spatial reference of the layer. 
- @since 1.0
- */
-@property (nonatomic, readonly) AGSSpatialReference *spatialReference;
-
-/** Full extent of the layer. 
- @since 1.0 
-*/
-@property (nonatomic, readonly) AGSEnvelope *fullEnvelope;
-
-/** Initial extent of the  layer. 
- @since 1.0
-*/
-@property (nonatomic, readonly) AGSEnvelope *initialEnvelope;
-
-/** Delegate to be notified when the layer is loaded or fails to load. When this 
- layer is loaded, a corresponding @c AGSLayerView object is automatically set as 
- the delegate. This delegate must not be replaced.
- @since 1.0
- */
-@property (nonatomic, assign) UIView<AGSLayerDelegate> *delegate;
+@property (nonatomic, assign, readonly) BOOL loaded;
 
 /** Information about the error associated with a layer.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSError *error;
-
-/** The units the layer is in. Possible values include
- 
- @li @c AGSUnitsCentimeters 
- @li @c AGSUnitsDecimalDegrees
- @li @c AGSUnitsDecimeters
- @li @c AGSUnitsFeet
- @li @c AGSUnitsInches
- @li @c AGSUnitsKilometers
- @li @c AGSUnitsMeters
- @li @c AGSUnitsMiles
- @li @c AGSUnitsMillimeters
- @li @c AGSUnitsNauticalMiles
- @li @c AGSUnitsPoints
- @li @c AGSUnitsUnknown
- @li @c AGSUnitsYards
- 
-@since 1.0
- */
-@property (nonatomic, assign) AGSUnits units;
-
-/** The name of the layer. This property will be set by the framework when the
- layer is added to the map.
- @since 1.8
- */
-@property (nonatomic, retain, readonly) NSString *name;
+@property (nonatomic, strong, readonly) NSError *error;
 
 /** Gets a value that determines if the layer renders at the native resolution.
  This property will not have any affect on iOS devices without a retina display. If using an iOS
@@ -129,27 +69,74 @@
  This property is not settable for every layer type.
  @since 2.1
  */
-@property (nonatomic, assign, readonly) BOOL renderNativeResolution;
+@property (nonatomic, assign, readwrite) BOOL renderNativeResolution;
 
-/** Method to notify the delegate that a layer successfully loaded. This method 
- will also post a "LayerDidLoad" notification that can be observed by the developer.
+/** The opacity of this layer as a value between 0(fully transparent) and 1(fully opaque)
+ @since 10.1.1
+ */
+@property (nonatomic, assign) CGFloat opacity;
+
+/** The name of this layer
+ @since 10.1.1
+ */
+@property (nonatomic, copy, readwrite) NSString *name;
+
+/** Delegate to be notified when the layer is loaded or fails to load.
  @since 1.0
  */
-- (void)layerDidLoad;
+@property (nonatomic, weak, readwrite) id<AGSLayerDelegate> delegate;
 
-/** Method to notify the delegate that a layer failed to load. This method will 
- also post a "LayerFailedToLoad" notification that can be observed by the developer.
- @param error Information regarding the cause of the layer failing to load.
+/** This property will be NO until the spatial reference status has been initialized.
+ See the layer:didInitializeSpatialReferenceStatus method on delegate for more information.
+ */
+@property (nonatomic, assign) BOOL spatialReferenceStatusValid;
+
+/** The spatial reference of the layer. 
  @since 1.0
  */
-- (void)layerDidFailToLoad:(NSError*)error;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
-/** This method tells the layer that the data has changed and it should be redrawn. 
+/** Full extent of the layer. 
+ @since 1.0 
+ */
+@property (nonatomic, strong, readonly) AGSEnvelope *fullEnvelope;
+
+/** Gets or sets the initial envelope of the layer.
  @since 1.0
  */
--(void)dataChanged;
+@property (nonatomic, strong) AGSEnvelope *initialEnvelope;
+
+/** The minimum scale at which this layer is visible. If the map is zoomed out 
+ beyond this scale, the layer will not be visible.
+ @since 1.0
+ */
+@property (nonatomic, readwrite) double minScale;
+
+/** The maximum scale at which this layer is visible. If the map is zoomed in 
+ beyond this scale, the layer will not be visible.
+ @since 1.0
+ */
+@property (nonatomic, readwrite) double maxScale;
+
+/** This method tells the layer that it should refresh its data and redraw.
+ @since 10.1.1
+ */
+-(void)refresh;
+
+/** A property indicating whether the layer is time-aware.
+ @since 1.0
+ */
+@property (nonatomic, readonly, getter=isTimeAware) BOOL timeAware;
+
+/**
+ Indicates whether this layer should be visible in the map.
+ @since 10.1.1
+ */
+@property (nonatomic, assign, readwrite, getter = isVisible) BOOL visible;
+
+/** Indicates whether the map's scale is within this layer's scale range (@c #minScale and @c #maxScale).
+ @since 10.1.1
+ */
+-(BOOL)isInScale;
 
 @end
-
-
-

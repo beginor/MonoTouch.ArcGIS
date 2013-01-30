@@ -16,9 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSCredential;
+
+/** @file AGSRequest.h */ //Required for Globals API doc
 
 /** @brief Wrapper class request for synchronous requests to URLs
  
@@ -28,8 +28,6 @@
  @since 1.0
  */
 @interface AGSRequest : NSObject
-
-//+ (NSURLRequest *)requestForURL:(NSURL *)url resource:(NSString *)operation queryParameters:(NSDictionary *)query doPOST:(BOOL)post;
 
 /** Creates a request object for a URL with the specified arguments
  @param url to request data from
@@ -41,6 +39,18 @@
  @since 1.0
  */
 + (NSURLRequest *)requestForURL:(NSURL *)url credential:(AGSCredential*)cred resource:(NSString *)operation queryParameters:(NSDictionary *)query doPOST:(BOOL)post;
+
+/** Creates a request object for a URL with the specified arguments
+ @param url to request data from
+ @param cred <code>AGSCredential</code> to be used if the resource is secured
+ @param operation The specific resource to access at @p url
+ @param queryParams parameters to submit to the @p url
+ @param post Boolean to determine whether to perform a <code>GET</code> or <code>POST</code>
+ @param cachePolicy The cache policy that the request will honor.
+ @param timeoutInterval The timeout interval (in seconds) of this request. Default is 60.
+ @since 10.1.1
+ */
++ (NSURLRequest *)requestForURL:(NSURL *)url credential:(AGSCredential*)cred resource:(NSString *)operation queryParameters:(NSDictionary *)queryParams doPOST:(BOOL)post cachePolicy:(NSURLRequestCachePolicy)cachePolicy timeoutInterval:(NSTimeInterval)timeoutInterval;
 
 /** Requests data synchronously from the url with the specified arguments
  @param url to request data from

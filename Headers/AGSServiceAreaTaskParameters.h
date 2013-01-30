@@ -16,14 +16,13 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 /** @file AGSServiceAreaTaskParameters.h */
 
-#import "AGSEnumerations.h"
-
 @protocol AGSCoding;
 @class AGSSpatialReference;
+@class AGSNALayerDefinition;
 
 /** @brief Input parameters for @c AGSServiceAreaTask.
  
@@ -46,7 +45,7 @@
  "Network Dataset -> Network Attributes" as "Usage Type: esriNAUTCost".
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *accumulateAttributeNames;
+@property (nonatomic, copy) NSArray *accumulateAttributeNames;
 
 /** An array of NSDictionary objects that describe the parameter values. Properties of
  this object are:
@@ -55,23 +54,23 @@
  (Number) value						- Parameter value.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *attributeParameterValues;
+@property (nonatomic, copy) NSArray *attributeParameterValues;
 
 /** An array of numbers defining the breaks. 
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *defaultBreaks;
+@property (nonatomic, copy) NSArray *defaultBreaks;
 
 /** An array of network source names to NOT use when generating polygons.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *excludeSourcesFromPolygons;
+@property (nonatomic, copy) NSArray *excludeSourcesFromPolygons;
 
 /** The set of facilities loaded as network locations during analysis. Can be 
  either an instance of @c AGSDataLayer or @c AGSFeatureSet.
  @since 1.8
  */
-@property (nonatomic, retain) id facilities;
+@property (nonatomic, strong) id facilities;
 
 /** The network attribute name to be used as the impedance attribute in analysis. 
   You can specify any attributes names listed in the Service 
@@ -84,6 +83,7 @@
 @property (nonatomic, copy) NSString *impedanceAttributeName;
 
 /** If <code>true</code>, similar ranges will be merged in the result polygons.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL mergeSimilarPolygonRanges;
@@ -115,14 +115,16 @@
  spatial reference of the service.
  @since 1.8
  */
-@property (nonatomic, retain) AGSSpatialReference *outSpatialReference;
+@property (nonatomic, strong) AGSSpatialReference *outSpatialReference;
 
-/** Indicates if the lines should overlap from multiple facilities. 
+/** Indicates if the lines should overlap from multiple facilities.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL overlapLines;
 
-/** Indicates if the polygons should overlap from multiple facilities. 
+/** Indicates if the polygons should overlap from multiple facilities.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL overlapPolygons;
@@ -131,19 +133,19 @@
  be either an instance of @c AGSDataLayer or @c AGSFeatureSet.
  @since 1.8
  */
-@property (nonatomic, retain) id pointBarriers;  // Object?
+@property (nonatomic, strong) id pointBarriers;  // Object?
 
 /** The set of polygons barriers loaded as network locations during analysis. 
  Can be either an instance of @c AGSDataLayer or @c AGSFeatureSet.
  @since 1.8
  */
-@property (nonatomic, retain) id polygonBarriers; // Object?
+@property (nonatomic, strong) id polygonBarriers; // Object?
 
 /** The set of polyline barriers loaded as network locations during analysis. 
  Can be either an instance of @c AGSDataLayer or @c AGSFeatureSet.
  @since 1.8
  */
-@property (nonatomic, retain) id polylineBarriers; // Object?
+@property (nonatomic, strong) id polylineBarriers; // Object?
 
 /** The list of network attribute names to be used as restrictions with the 
  analysis. Possible values are listed in the Service Directory 
@@ -152,7 +154,7 @@
  If you specify an empty array, it will default to the default of the service.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *restrictionAttributeNames;
+@property (nonatomic, copy) NSArray *restrictionAttributeNames;
 
 /** Specifies how U-Turns should be handled. U-turns can be allowed everywhere, 
  nowhere , only at dead ends, or only at intersections and dead ends.
@@ -188,11 +190,13 @@
 @property (nonatomic, assign) BOOL returnPolylineBarriers;
 
 /** If <code>true</code>, lines will be split at breaks.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL splitLinesAtBreaks;
 
 /** If <code>true</code>, polygons will be split at breaks.
+ Default is NO.
  @since 1.8
  */
 @property (nonatomic, assign) BOOL splitPolygonsAtBreaks;
@@ -228,9 +232,9 @@
  @avail{10.1}
  @since 2.3
  */
-@property (nonatomic, retain) NSDate *timeOfDay;
+@property (nonatomic, strong) NSDate *timeOfDay;
 
-/** If <code>true<code>, the hierarchy attribute for the network should be used in analysis. 
+/** If <code>true</code>, the hierarchy attribute for the network should be used in analysis. 
  The default is as defined in the network layer. This cannot be used in conjunction with @c #outputLines. 
  @avail{10.1}
  @since 2.3

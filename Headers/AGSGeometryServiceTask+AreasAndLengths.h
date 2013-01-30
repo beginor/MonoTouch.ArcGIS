@@ -16,6 +16,9 @@
  email: contracts@esri.com
  */
 
+@class AGSAreasAndLengthsParameters;
+@class AGSLengthsParameters;
+
 /** @file AGSGeometryServiceTask+AreasAndLengths.h  */ //Required for Globals API doc
 
 @interface AGSGeometryServiceTask (AreasAndLengths)

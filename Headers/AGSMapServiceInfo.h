@@ -16,11 +16,13 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
-@class AGSGeometry;
 @class AGSCredential;
+@class AGSGeometry;
+@class AGSEnvelope;
+@class AGSSpatialReference;
+@class AGSTileInfo;
 @class AGSTimeInfo;
+@protocol AGSSecuredResource;
 @protocol AGSMapServiceInfoDelegate;
 
 /** @file AGSMapServiceInfo.h */ //Required for Globals API doc
@@ -34,30 +36,7 @@
  @define{AGSMapServiceInfo.h, ArcGIS}
  @since 1.0
  */
-@interface AGSMapServiceInfo : NSObject <AGSCoding> {
- @private
-    NSURL *_URL;
-    NSString *_copyright;
-    NSString *_serviceDescription;
-    AGSUnits _units;
-    NSArray *_layerInfos;
-	
-    AGSSpatialReference *_spatialReference;
-    AGSEnvelope *_fullEnvelope;
-    AGSEnvelope *_initialEnvelope;
-	
-    AGSTileInfo *_tileInfo;
-	BOOL _singleFusedMapCache;
-	
-	AGSCredential *_credential;
-	
-	AGSTimeInfo *_timeInfo;
-	
-	float _version;
-	
-	id<AGSMapServiceInfoDelegate> _delegate;
-	NSArray *_tableInfos;
-}
+@interface AGSMapServiceInfo : NSObject <AGSCoding, AGSSecuredResource>
 
 /** URL of a map service resource in ArcGIS Server REST Services Directory.
  @since 1.0
@@ -77,7 +56,7 @@
 /** The version of the server.
  @since 1.8
  */
-@property (nonatomic, assign, readonly) float version;
+@property (nonatomic, assign, readonly) CGFloat version;
 
 /** The units the map service is in. Possible values include 
  
@@ -103,27 +82,27 @@
  @c AGSMapServiceLayerInfo objects.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSArray *layerInfos;
+@property (nonatomic, copy, readonly) NSArray *layerInfos;
 
 /** The spatial reference of the map service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 /** Full extent of the map service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *fullEnvelope;
+@property (nonatomic, strong, readonly) AGSEnvelope *fullEnvelope;
 
 /** Initial extent of the map service.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSEnvelope *initialEnvelope;
+@property (nonatomic, strong, readonly) AGSEnvelope *initialEnvelope;
 
 /** Tiling scheme of the map service. Only applicable if the map service is cached.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSTileInfo *tileInfo;
+@property (nonatomic, strong, readonly) AGSTileInfo *tileInfo;
 
 /** Indicates whether the map service is cached.
  @since 1.0
@@ -133,28 +112,46 @@
 /** Credential used to access a secured resource
  @since 1.0
  */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default this will be set to the global cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
 
 /** Time information for the layer, such as start time field, end time field, 
  track id field, layers time extent and the draw time interval. Only applicable 
  if the layer is time aware.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSTimeInfo *timeInfo;
+@property (nonatomic, strong, readonly) AGSTimeInfo *timeInfo;
 
 /** The delegate that is notified when asynchronous operations for this map service info complete.
  @since 1.8
  */
-@property (nonatomic, assign) id<AGSMapServiceInfoDelegate> delegate;
+@property (nonatomic, weak) id<AGSMapServiceInfoDelegate> delegate;
 
 /** Available tables in the map service as an array of 
  @c AGSMapServiceTableInfo objects.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSArray *tableInfos;
+@property (nonatomic, strong, readonly) NSArray *tableInfos;
+
+/** The minimum scale at which this layer is visible. If the map is zoomed out
+ beyond this scale, the layer will not be visible.
+ @since 10.1.1
+ */
+@property (nonatomic, readonly) double minScale;
+
+/** The maximum scale at which this layer is visible. If the map is zoomed in
+ beyond this scale, the layer will not be visible.
+ @since 10.1.1
+ */
+@property (nonatomic, readonly) double maxScale;
 
 /** Initialize with URL to an ArcGIS Server map service. This will synchronously 
  request the service info from the URL.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL pointing to a map service.
  @param error Information returned in the event the object could not be initialized.
  @return A new map service info object.
@@ -164,6 +161,7 @@
 
 /** Initialize autoreleased map service info with URL to an ArcGIS Server map service.
  This will synchronously request the service info from the URL.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL pointing to a map service.
  @param error Information returned in the event the object could not be initialized.
  @return A new, autoreleased, map service info object.
@@ -173,6 +171,7 @@
 
 /** Initialize with URL to an ArcGIS Server map service. This will synchronously request the 
  service info from the URL.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL pointing to a map service. 
  @param cred @c AGSCredential used to access secure service.
  @param error Information returned in the event the object could not be initialized.
@@ -183,6 +182,7 @@
 
 /** Initialize autoreleased map service info with URL to an ArcGIS Server map service.
  This will synchronously request the service info from the URL.
+ NOTE: The AGSCredentialCache can not be used with synchronous methods.
  @param url URL pointing to a map service.
  @param cred @c AGSCredential used to access secure service.
  @param error Information returned in the event the object could not be initialized.

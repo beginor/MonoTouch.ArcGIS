@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 @protocol AGSCoding;
 
@@ -29,16 +29,12 @@
 
  @since 1.8
  */
-@interface AGSNAMessage : NSObject <AGSCoding> {
- @private
-	NSString *_description;
-	AGSNAMessageType _type;
-}
+@interface AGSNAMessage : NSObject <AGSCoding>
 
 /** A description of the network analyst message.
  @since 1.8
  */
-@property (nonatomic, copy, readonly) NSString *description;
+@property (nonatomic, copy, readonly) NSString *messageDescription;
 
 /** The network analyst message type, see constants table for a list of values.
  @since 1.8

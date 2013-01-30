@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-#import "AGSSymbol.h"
+@class AGSSymbol;
 @class AGSSimpleLineSymbol;
 
 /** @file AGSFillSymbol.h */ //Required for Globals API doc
@@ -32,6 +32,6 @@
 /** This outline of the symbol.
  @since 2.2
  */
-@property (nonatomic, retain) AGSSimpleLineSymbol *outline;
+@property (nonatomic, strong) AGSSimpleLineSymbol *outline;
 
 @end

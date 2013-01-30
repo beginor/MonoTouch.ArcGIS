@@ -16,9 +16,8 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSGeometry;
+@class AGSSpatialReference;
 
 /** @file AGSFeatureSet.h */ //Required for Globals API doc
 
@@ -39,15 +38,7 @@
  @define{AGSFeatureSet.h, ArcGIS}
  @since 1.0
  */
-@interface AGSFeatureSet : NSObject <AGSCoding> {
- @private 
-    NSString *_displayFieldName;
-    NSArray *_features;
-    NSDictionary *_fieldAliases;
-    AGSGeometryType _geometryType;
-    AGSSpatialReference *_spatialReference;
-    NSArray *_fields;
-}
+@interface AGSFeatureSet : NSObject <AGSCoding>
 
 /** The name of the primary display field. 
  @since 1.0
@@ -57,22 +48,20 @@
 /** The features in the feature set as an array of @c AGSGraphic objects.
  @since 1.0
  */
-@property (nonatomic, retain) NSArray *features; //AGSGraphic[]
+@property (nonatomic, copy) NSArray *features; //AGSGraphic[]
 
 /** Set of key-value pairs of field-name and field-alias. Field aliases are 
  usually more user friendly than actual field names which may use underlying 
  datasource naming conventions. The feature attributes use actual field names.
- 
- Not applicable for services hosted on ArcGIS Server 10.1 or later. Refer to @c #fields instead. 
  @since 1.0
  */
-@property (nonatomic, retain, readonly) NSDictionary *fieldAliases;
+@property (nonatomic, copy, readonly) NSDictionary *fieldAliases;
 
 /** The spatial reference of features in the feature set. All features in the 
  feature set must have the same spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 /** The geometry type of features in the feature set. All features in the feature 
  set must have the same geometry type. Possible types include
@@ -87,11 +76,12 @@
  */
 @property (nonatomic, assign, readonly) AGSGeometryType geometryType;
 
-/** An array of @c AGSField objects providing metadata, such as type, alias, etc.  about the attributes of features in the feature set. Not applicable for services hosted on ArcGIS Server 10.0 or earlier. Refer to @c #fieldAliases instead.  
- @avail{10.1}
+/** An array of @c AGSField objects containing metadata about attributes of each feature in the
+ featureset.
  @since 2.3
+ @avail{10.1}
  */
-@property (nonatomic, retain, readonly) NSArray *fields;
+@property (nonatomic, copy, readonly) NSArray *fields;
 
 /** Initializes a new <code>%AGSFeatureSet</code>.
  @param displayFieldName The name of the primary display field.

@@ -16,9 +16,9 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 /** @file AGSMosaicRule.h */
+
+@class AGSPoint;
 
 /** Supported mosaic rule methods. 
  @since 1.8
@@ -59,18 +59,7 @@ typedef enum {
  @define{AGSMosaicRule.h, ArcGIS}
  @since 1.8
  */
-@interface AGSMosaicRule : NSObject <AGSCoding> {
- @private
-	BOOL _ascending;
-	NSArray *_lockRasterIds;
-	AGSMosaicMethod _method;
-	NSArray *_objectIds;
-	AGSMosaicOperationType _operation;
-	NSString *_sortField; 
-	NSString *_sortValue;
-	AGSPoint *_viewpoint;
-	NSString *_where;
-}
+@interface AGSMosaicRule : NSObject <AGSCoding>
 
 /** Indicates whether the sort should be ascending or not.
  @since 1.8
@@ -82,7 +71,7 @@ typedef enum {
  sizes regardless of the minimum and maximum pixel size range of the locked rasters.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *lockRasterIds;
+@property (nonatomic, copy) NSArray *lockRasterIds;
 
 /** The mosaic method determines how the selected rasters are ordered. See
  @c AGSMosaicMethod for a list of valid values.
@@ -94,7 +83,7 @@ typedef enum {
  mosaic methods.
  @since 1.8
  */
-@property (nonatomic, retain) NSArray *objectIds;
+@property (nonatomic, copy) NSArray *objectIds;
 
 /** Defines the mosaic operation used to resolve overlapping pixels. See @c
  AGSMosaicOperationType for a list of valid values.
@@ -106,24 +95,24 @@ typedef enum {
  to define the mosaicking order when the mosaic method is set to @p AGSMosaicMethodAttribute.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *sortField;
+@property (nonatomic, copy) NSString *sortField;
 
 /** A constant value defining a reference or base value for the sort field when the 
  mosaic method is set to @p AGSMosaicMethodAttribute.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *sortValue;
+@property (nonatomic, copy) NSString *sortValue;
 
 /** Defines the viewpoint location on which the ordering is defined based on the
  distance from the viewpoint and the nadir of rasters.
  @since 1.8
  */
-@property (nonatomic, retain) AGSPoint *viewpoint;
+@property (nonatomic, strong) AGSPoint *viewpoint;
 
 /** The where clause determines which rasters will participate in the mosaic. This
  property applies to all mosaic methods.
  @since 1.8
  */
-@property (nonatomic, retain) NSString *where;
+@property (nonatomic, copy) NSString *where;
 
 @end

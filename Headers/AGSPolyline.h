@@ -16,9 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-#import <pthread.h>
-
 @class AGSGeometry;
 @class AGSPoint;
 @class AGSEnvelope;
@@ -40,23 +37,24 @@
  @define{AGSPolyline.h, ArcGIS}
  @since 1.0
  */
-@interface AGSPolyline : AGSGeometry {
- @private
-    AGSEnvelope *_envelope;
-    pthread_mutex_t _envelopeMutex;
-}
+@interface AGSPolyline : AGSGeometry
 
 /** Number of paths in polyline.
  @since 1.0
  */
-@property (nonatomic, readonly) NSUInteger numPaths;
+@property (nonatomic, readonly) NSInteger numPaths;
 
 /** Get number of points in the specified @p path.
  @param path The index of the desired path.
  @return Number of points in path.
  @since 1.0
  */
-- (NSUInteger)numPointsInPath:(NSUInteger)path;
+- (NSInteger)numPointsInPath:(NSInteger)path;
+
+/** Returns the total number for points in the polyline.
+ @since 10.1.1
+ */
+- (NSInteger)numPoints;
 
 /** Get point from @p path at specified @p index.
  @param path The index of desired path.
@@ -64,7 +62,7 @@
  @return Point in @p path at @p index.
  @since 1.0
  */
-- (AGSPoint *)pointOnPath:(NSUInteger)path atIndex:(NSUInteger)index;
+- (AGSPoint *)pointOnPath:(NSInteger)path atIndex:(NSInteger)index;
 
 /** Initialize a new autoreleased polyline geometry.
  @param json The JSON representation for polyline. See <a href="http://services.arcgisonline.com/ArcGIS/SDK/REST/geometry.html">
@@ -104,7 +102,7 @@
 /** Inserts a path at a specific index.
  @since 1.8
  */
--(void)insertPathAtIndex:(int)pathIndex;
+-(void)insertPathAtIndex:(NSInteger)pathIndex;
 
 /** Add @p point to end of current path.
  @param point The point to be added.
@@ -117,7 +115,7 @@
  @param path The index of the path to add @p point to.
  @since 1.0
  */
-- (void)addPoint:(AGSPoint *)point toPath:(NSUInteger)path;
+- (void)addPoint:(AGSPoint *)point toPath:(NSInteger)path;
 
 /** Insert @p point into @p path at specific @p index.
  @param point The point to be added.
@@ -125,14 +123,14 @@
  @param index The index to add @p point at.
  @since 1.0
  */
-- (void)insertPoint:(AGSPoint *)point onPath:(NSUInteger)path atIndex:(NSUInteger)index;
+- (void)insertPoint:(AGSPoint *)point onPath:(NSInteger)path atIndex:(NSInteger)index;
 
 /** Remove point from specified @p path.
  @param path The index of the path to remove point from.
  @param index The index to remove point from.
  @since 1.0
  */
-- (void)removePointOnPath:(NSUInteger)path atIndex:(NSUInteger)index;
+- (void)removePointOnPath:(NSInteger)path atIndex:(NSInteger)index;
 
 /** Update point on specified path and index with @p point.
  @param point The point to update current point.
@@ -140,17 +138,17 @@
  @param ptIndex The index to update point at.
  @since 1.0
  */
-- (void)updatePoint:(AGSPoint *)point onPath:(NSUInteger)pathIndex atIndex:(NSUInteger)ptIndex;
+- (void)updatePoint:(AGSPoint *)point onPath:(NSInteger)pathIndex atIndex:(NSInteger)ptIndex;
 
 /** Remove path from polyline.
  @param index The index of the path to be removed.
  @since 1.0
  */
-- (void)removePathAtIndex:(NSUInteger)index;
+- (void)removePathAtIndex:(NSInteger)index;
 
 /** Geometry's spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readwrite) AGSSpatialReference *spatialReference;
 
 @end

@@ -16,8 +16,6 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSGeometry;
 @class AGSPoint;
 
@@ -38,18 +36,7 @@
  @since 1.0
  @see AGSMutableEnvelope for a mutable version.
  */
-@interface AGSEnvelope : AGSGeometry {
- @private
-    double _xmin;
-    double _ymin;
-    double _xmax;
-    double _ymax;
-    AGSPoint *_center;
-	double _width;
-	double _height;
-    
-    CGRect _cgRect;
-}
+@interface AGSEnvelope : AGSGeometry 
 
 /** X-coordinate of lower-left corner.
  @since 1.0
@@ -74,7 +61,7 @@
 /** Center point of envelope.
  @since 1.0
  */
-@property (nonatomic, retain, readonly) AGSPoint *center;
+@property (nonatomic, strong, readonly) AGSPoint *center;
 
 /** Width of the envelope.
  @since 1.0
@@ -245,6 +232,6 @@
 /** Geometry's spatial reference.
  @since 1.0
  */
-@property (nonatomic, retain, readwrite) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readwrite) AGSSpatialReference *spatialReference;
 
 @end

@@ -16,70 +16,69 @@
  email: contracts@esri.com
  */
 
+/** @file AGSSketchGraphicsLayer.h */ //Required for Globals API doc
+
 @class AGSGeometry;
 @class AGSGraphic;
 @class AGSCompositeSymbol;
 @class AGSMarkerSymbol;
+@class AGSGraphicsLayer;
+@class AGSPoint;
+@class AGSMapView;
+@protocol AGSMapViewTouchDelegate;
+
+/** Notification that indicates that the geometry of @c AGSSketchGraphicsLayer changed.
+ @since 10.1.1
+ */
+AGS_EXTERN NSString *const AGSSketchGraphicsLayerGeometryDidChangeNotification;
 
 /** @brief A layer that allows the user to sketch geometries on the map.
  
- A layer that allows the user to sketch geometries on the map.
+ A layer that allows the user to interactively sketch geometries on the map.
+ You can skech point, polygon, and polyline geometries from scratch,
+ modify existing geometries, insert and remove vertices, undo and redo changes, and so on.
+ 
+ <h3>Notifications</h3>
+ The layer posts @c #AGSSketchGraphicsLayerGeometryDidChangeNotification when its geometry changes.
  
  @see @concept{Sketch_Layer/00pw00000052000000/, Using a Sketch Layer}
  @see @sample{5106817cf79f44c99f8045e2d705f279, Sketch Layer}
  @since 1.8
  */
-@interface AGSSketchGraphicsLayer : AGSGraphicsLayer <AGSMapViewTouchDelegate> {
-@private
-	AGSGeometry *_geometry;
-	
-	AGSGraphic *_graphic;
-	AGSGraphic *_vertices;
-	AGSGraphic *_midVertices;
-	AGSGraphic *_selectedVertexGraphic;
-	
-	AGSCompositeSymbol *_mainSymbol;
-	AGSMarkerSymbol *_vertexSymbol;
-	AGSMarkerSymbol *_midVertexSymbol;
-	AGSMarkerSymbol *_selectedVertexSymbol;
-    
-    NSArray *_kvoArray;
-	
-	NSUndoManager *_undoManager;
-}
+@interface AGSSketchGraphicsLayer : AGSGraphicsLayer <AGSMapViewTouchDelegate>
 
 /** The geometry that is populated as the user sketches.
  Must be a mutable geometry because it will be modified by the layer
  while the user is sketching.
  @since 1.8
  */
-@property (nonatomic, retain) AGSGeometry *geometry;
+@property (nonatomic, strong) AGSGeometry *geometry;
 
 /** Composite symbol that contains the symbology for drawing the lines
  and fills for what the user sketches.
  @since 1.8
  */
-@property (nonatomic, retain, readwrite) AGSCompositeSymbol *mainSymbol;
+@property (nonatomic, strong, readwrite) AGSCompositeSymbol *mainSymbol;
 
 /** Symbol used to display the selected vertex.
  @since 1.8
  */
-@property (nonatomic, retain, readwrite) AGSMarkerSymbol *selectedVertexSymbol;
+@property (nonatomic, strong, readwrite) AGSMarkerSymbol *selectedVertexSymbol;
 
 /** Symbol used to display the vertices.
  @since 1.8
  */
-@property (nonatomic, retain, readwrite) AGSMarkerSymbol *vertexSymbol;
+@property (nonatomic, strong, readwrite) AGSMarkerSymbol *vertexSymbol;
 
 /** Symbol to display the mid vertices.
  @since 1.8
  */
-@property (nonatomic, retain, readwrite) AGSMarkerSymbol *midVertexSymbol;
+@property (nonatomic, strong, readwrite) AGSMarkerSymbol *midVertexSymbol;
 
 /** The undo manager.
  @since 1.8
  */
-@property (nonatomic, retain, readonly) NSUndoManager *undoManager;
+@property (nonatomic, strong, readonly) NSUndoManager *undoManager;
 
 /** Initializes an AGSSketchGraphicsLayer.
  @param geometry The geometry that will be modified as the user sketches. This geometry must be mutable.
@@ -98,7 +97,7 @@
  @param coordinateIndex The index of the coordinate to remove.
  @since 1.8
  */
--(void)removeVertexInPart:(int)partIndex atIndex:(int)coordinateIndex;
+-(void)removeVertexInPart:(NSInteger)partIndex atIndex:(NSInteger)coordinateIndex;
 
 /** Add a part to the geometry
  @since 1.8
@@ -109,7 +108,7 @@
  @param partIndex Index of the part to remove.
  @since 1.8
  */
--(void)removePartAtIndex:(int)partIndex;
+-(void)removePartAtIndex:(NSInteger)partIndex;
 
 /** Removes the selected part.
  @return Boolean value that specifies if the remove succeeded.
@@ -134,7 +133,7 @@
  @param coordinateIndex The index of the coordinate at which to insert the point.
  @since 1.8
  */
--(void)insertVertex:(AGSPoint*)point inPart:(int)partIndex atIndex:(int)coordinateIndex;
+-(void)insertVertex:(AGSPoint*)point inPart:(NSInteger)partIndex atIndex:(NSInteger)coordinateIndex;
 
 /** Moves a vertex to a specified location.
  @param partIndex The index of the part to insert the point.
@@ -142,7 +141,7 @@
  @param point The location to move the point to.
  @since 1.8
  */
--(void)moveVertexInPart:(int)partIndex atIndex:(int)coordinateIndex toPoint:(AGSPoint*)point;
+-(void)moveVertexInPart:(NSInteger)partIndex atIndex:(NSInteger)coordinateIndex toPoint:(AGSPoint*)point;
 
 /** Selects the last vertex in the geometry.
  @since 1.8

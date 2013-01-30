@@ -16,15 +16,10 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
-@protocol AGSCoding;
-
 @class AGSSymbol;
 @class AGSGraphic;
 @class AGSGraphicsLayer;
 @class AGSRenderer;
-@class AGSFeatureType;
 @class AGSTimeExtent;
 
 /** @file AGSRenderer.h */ //Required for Globals API doc
@@ -46,36 +41,36 @@ extern AGSRenderer *AGSRendererWithJSON(NSDictionary *json);
  @define{AGSRenderer.h, ArcGIS}
  @since 1.0
  */
-@interface AGSRenderer : NSObject <AGSCoding>
+@interface AGSRenderer : NSObject <AGSCoding, NSCopying>
 
 /** The graphics layer that this renderer belongs to, if any.
  @since 2.2
  */
-@property (nonatomic, assign, readonly) AGSGraphicsLayer *layer;
+@property (nonatomic, weak, readonly) AGSGraphicsLayer *layer;
 
 /** Return a symbol for the graphic based on the scheme used by this renderer.
  @param graphic The graphic to determine symbol.
  @param timeExtent The time extent to determine the symbol at.
- @return Symbol for graphic. 
+ @return Symbol for graphic.
  @since 1.8
  */
--(AGSSymbol *)symbolForGraphic:(AGSGraphic *)graphic timeExtent:(AGSTimeExtent*)timeExtent;
+-(AGSSymbol*)symbolForGraphic:(AGSGraphic*)graphic timeExtent:(AGSTimeExtent*)timeExtent;
 
 /** Returns an image that represents a swatch for a particular graphic. The graphic must have a valid geometry.
  @param graphic Graphic for which the swatch should be drawn. This is used to determine what symbol in the renderer is used.
  @param size Size of the output swatch.
- @return UIImage of the drawn swatch.
+ @return AGSImage of the drawn swatch.
  */
-- (UIImage *)swatchForGraphic:(AGSGraphic *)graphic size:(CGSize)size;
+- (AGSImage *)swatchForGraphic:(AGSGraphic *)graphic size:(CGSize)size;
 
 /** Returns an image that represents a swatch for a particular graphic. This method can be used when your graphic does not have a geometry
  but you know the geometry type.
  @param graphic Graphic for which the swatch should be drawn. This is used to determine what symbol in the renderer is used.
  @param geometryType The type of the geometry determines what kind of swatch is drawn.
  @param size Size of the output swatch.
- @return UIImage of the drawn swatch.
+ @return AGSImage of the drawn swatch.
  */
-- (UIImage *)swatchForGraphic:(AGSGraphic *)graphic geometryType:(AGSGeometryType)geometryType size:(CGSize)size;
+- (AGSImage *)swatchForGraphic:(AGSGraphic *)graphic geometryType:(AGSGeometryType)geometryType size:(CGSize)size;
 
 @end
 

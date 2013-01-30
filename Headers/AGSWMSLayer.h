@@ -16,13 +16,13 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
-
 @class AGSCredential;
 @class AGSLayer;
 @class AGSDynamicLayer;
 @class AGSWMSLayerInfo;
 @class AGSEnvelope;
+@class AGSSpatialReference;
+@protocol AGSSecuredResource;
 
 /** @file AGSWMSLayer.h */ //Required for Globals API doc
 
@@ -37,9 +37,6 @@
  For example, <a href=http://lasigpublic.nerc-lancaster.ac.uk/ArcGIS/services/Biodiversity/CSHedges/MapServer/WMSServer</a>.
  A dynamic map service generates map images on the fly.
  
- In a Model-View-Controller architecture, this object represents the Model. The 
- corresponding View object, @c AGSDynamicLayerView,  is created when this layer 
- is added to the map.
  
  @define{AGSWMSLayer.h,ArcGIS}
  @since 2.2
@@ -60,20 +57,25 @@
  must be a valid EPSG code.
  @since 2.2
 */
-@property (nonatomic, retain, readonly) AGSSpatialReference *spatialReference;
+@property (nonatomic, strong, readonly) AGSSpatialReference *spatialReference;
 
 
 /** A list of @c AGSWMSLayerInfo objects, which contain the name, title, and extent
  of each subLayer.
  @since 2.2
  */
-@property (nonatomic, retain, readonly) NSArray *layerInfos;
+@property (nonatomic, copy, readonly) NSArray *layerInfos;
 
 
 /** The credential to be used to access this layer's secured map service.
  @since 2.2
  */
-@property (nonatomic, copy, readonly) AGSCredential *credential;
+@property (nonatomic, copy, readwrite) AGSCredential *credential;
+
+/** The credential cache to be used for this resource. By default this will be set to the global cache.
+ @since 10.1.1
+ */
+@property (nonatomic, strong, readwrite) AGSCredentialCache *credentialCache;
 
 /** The image format of the map. Possible values include
  
@@ -104,7 +106,7 @@
  in the image.
  @since 2.2
  */
-@property (nonatomic, retain) NSArray *visibleLayers;
+@property (nonatomic, copy) NSArray *visibleLayers;
 
 
 /** Initialize this layer with a URL of a WMS Server dynamic map service.

@@ -16,12 +16,13 @@
  email: contracts@esri.com
  */
 
-#import <Foundation/Foundation.h>
+
 
 
 /** @file AGSRouteTask.h */
 
 @class AGSTask;
+@class AGSCredential;
 @class AGSRouteTaskParameters;
 @class AGSRouteTaskResult;
 @protocol AGSRouteTaskDelegate;
@@ -42,16 +43,13 @@
  @see @sample{e4fa8dafbe83475882ac9c0fd0a075c7, Routing}
  @since 1.8
  */
-@interface AGSRouteTask : AGSTask {
- @private	
-	id<AGSRouteTaskDelegate> _delegate;
-}
+@interface AGSRouteTask : AGSTask
 
 /** Delegate to be notified when the solve operation has completed or returned 
  an error.
  @since 1.8
  */
-@property (nonatomic, assign) id<AGSRouteTaskDelegate> delegate;
+@property (nonatomic, weak) id<AGSRouteTaskDelegate> delegate;
 
 /** Return an initialized, auto released, route task
  @param url URL to a REST resource that represents a Route layer in a Network Analyst service
@@ -72,12 +70,16 @@
  @param routeParams The input parameters for the solve operation.
  @return <code>NSOperation</code> for the current solve task.
  @since 1.8
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didSolveWithResult: , method on delegate for success
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didFailSolveWithError: , method on delegate for failure
  */
 - (NSOperation*)solveWithParameters:(AGSRouteTaskParameters*)routeParams;
 
 /** Retrieves the default route parameters. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didRetrieveDefaultRouteTaskParameters: , method on delegate for success
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didFailToRetrieveDefaultRouteTaskParametersWithError: , method on delegate for failure
  */
 - (NSOperation*)retrieveDefaultRouteTaskParameters;
 
