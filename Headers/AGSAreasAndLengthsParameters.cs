@@ -17,10 +17,10 @@ namespace MonoTouch.ArcGIS {
 		[Export("lengthUnit", ArgumentSemantic.Assign)]
 		AGSSRUnit LengthUnit { get; set; }
 
-		[Export("areaUnit"), ArgumentSemantic.Assign]
+		[Export("areaUnit", ArgumentSemantic.Assign)]
 		AGSAreaUnits AreaUnit { get; set; }
 
-		[Export("areasAndLengthsParameters", Static)]
+		[Export("areasAndLengthsParameters"), Static]
 		AGSAreasAndLengthsParameters AreasAndLengthsParameters();
 	}
 }
