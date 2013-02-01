@@ -1,26 +1,15 @@
-using System;
-using System.Collections;
-using System.Drawing;
+[BaseType(typeof(NSObject))]
+public interface AGSAreasAndLengthsParameters : AGSCoding {
 
-using MonoTouch.ObjCRuntime;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+	[Export("polygons", ArgumentSemantic.Copy)]
+	AGSPolygon[] Polygons { get; set; }
 
-namespace MonoTouch.ArcGIS {
+	[Export("lengthUnit", ArgumentSemantic.Assign)]
+	AGSSRUnit LengthUnit { get; set; }
 
-	[BaseType(typeof(NSObject))]
-	public interface AGSAreasAndLengthsParameters : AGSCoding {
+	[Export("areaUnit", ArgumentSemantic.Assign)]
+	AGSAreaUnits AreaUnit { get; set; }
 
-		[Export("polygons", ArgumentSemantic.Copy)]
-		AGSPolygon[] Polygons { get; set; }
-
-		[Export("lengthUnit", ArgumentSemantic.Assign)]
-		AGSSRUnit LengthUnit { get; set; }
-
-		[Export("areaUnit", ArgumentSemantic.Assign)]
-		AGSAreaUnits AreaUnit { get; set; }
-
-		[Export("areasAndLengthsParameters"), Static]
-		AGSAreasAndLengthsParameters AreasAndLengthsParameters();
-	}
+	[Export("areasAndLengthsParameters"), Static]
+	AGSAreasAndLengthsParameters AreasAndLengthsParameters();
 }

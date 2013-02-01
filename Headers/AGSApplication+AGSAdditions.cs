@@ -1,31 +1,20 @@
-using System;
-using System.Collections;
-using System.Drawing;
+[BaseType(typeof(UIApplication))]
+public interface AGSApplication {
 
-using MonoTouch.ObjCRuntime;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+	[Export("ags_setNetworkActivityDelegate:")]
+	void SetNetworkActivityDelegate(AGSNetworkActivityDelegate agsNetworkActivityDelegate);
 
-namespace MonoTouch.ArcGIS {
+	[Export("ags_showNetworkActivityIndicator:")]
+	void ShowNetworkActivityIndicator(bool show);
+}
 
-	[BaseType(typeof(UIApplication))]
-	public interface AGSApplication {
+[Model, BaseType(typeof(NSObject))]
+public interface AGSNetworkActivityDelegate {
 
-		[Export("ags_setNetworkActivityDelegate:")]
-		void SetNetworkActivityDelegate(AGSNetworkActivityDelegate agsNetworkActivityDelegate);
+	[Export("networkActivityInProgress")]
+	void NetworkActivityInProgress();
 
-		[Export("ags_showNetworkActivityIndicator:")]
-		void ShowNetworkActivityIndicator(bool show);
-	}
-
-	[Model, BaseType(typeof(NSObject))]
-	public interface AGSNetworkActivityDelegate {
-
-		[Export("networkActivityInProgress")]
-		void NetworkActivityInProgress();
-
-		[Export("networkActivityEnded")]
-		void NetworkActivityEnded();
-		
-	}
+	[Export("networkActivityEnded")]
+	void NetworkActivityEnded();
+	
 }

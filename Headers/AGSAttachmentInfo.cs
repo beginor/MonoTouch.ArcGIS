@@ -1,29 +1,18 @@
-using System;
-using System.Collections;
-using System.Drawing;
+[BaseType(typeof(NSObject))]
+public interface AGSAttachmentInfo : AGSCoding {
 
-using MonoTouch.ObjCRuntime;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+	[Export("attachmentId", ArgumentSemantic.Assign)]
+	int AttachmentId { get; }
 
-namespace MonoTouch.ArcGIS {
+	[Export("contentType", ArgumentSemantic.Copy)]
+	string ContentType { get; }
 
-	[BaseType(typeof(NSObject))]
-	public interface AGSAttachmentInfo : AGSCoding {
+	[Export("size", ArgumentSemantic.Assign)]
+	int Size { get; }
 
-		[Export("attachmentId", ArgumentSemantic.Assign)]
-		int AttachmentId { get; }
+	[Export("name", ArgumentSemantic.Copy)]
+	string Name { get; }
 
-		[Export("contentType", ArgumentSemantic.Copy)]
-		string ContentType { get; }
-
-		[Export("size", ArgumentSemantic.Assign)]
-		int Size { get; }
-
-		[Export("name", ArgumentSemantic.Copy)]
-		string Name { get; }
-
-		[Export("isEqualToAttachmentInfo:")]
-		bool IsEqualToAttachmentInfo(AGSAttachmentInfo other);
-	}
+	[Export("isEqualToAttachmentInfo:")]
+	bool IsEqualToAttachmentInfo(AGSAttachmentInfo other);
 }

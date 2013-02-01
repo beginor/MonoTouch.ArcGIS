@@ -1,29 +1,18 @@
-using System;
-using System.Collections;
-using System.Drawing;
+[BaseType(typeof(NSObject))]
+public interface AGSAddressCandidate : AGSCoding {
 
-using MonoTouch.ObjCRuntime;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+	[Export("addressString"), ArgumentSemantic.Copy]
+	string AddressString { get; }
 
-namespace MonoTouch.ArcGIS {
+	[Export("address", ArgumentSemantic.Copy)]
+	Dictionary Address { get; }
 
-	[BaseType(typeof(NSObject))]
-	public interface AGSAddressCandidate : AGSCoding {
+	[Export("attributes", ArgumentSemantic.Copy)]
+	Dictionary Attributes { get; }
 
-		[Export("addressString"), ArgumentSemantic.Copy]
-		string AddressString { get; }
+	[Export("location", ArgumentSemantic.Strong)]
+	AGSPoint Location { get; }
 
-		[Export("address", ArgumentSemantic.Copy)]
-		Dictionary Address { get; }
-
-		[Export("attributes", ArgumentSemantic.Copy)]
-		Dictionary Attributes { get; }
-
-		[Export("location", ArgumentSemantic.Strong)]
-		AGSPoint Location { get; }
-
-		[Export("score")]
-		double Score { get; }
-	}
+	[Export("score")]
+	double Score { get; }
 }

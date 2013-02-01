@@ -1,47 +1,36 @@
-using System;
-using System.Collections;
-using System.Drawing;
+[BaseType(typeof(NSObject))]
+public interface AGSAttachment {
 
-using MonoTouch.ObjCRuntime;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+	[Export("attachmentInfo", ArgumentSemantic.Strong)]
+	AGSAttachmentInfo AttachmentInfo { get; }
 
-namespace MonoTouch.ArcGIS {
+	[Export("filepath", ArgumentSemantic.Copy)]
+	string FilePath { get; set; }
 
-	[BaseType(typeof(NSObject))]
-	public interface AGSAttachment {
+	[Export("editState", ArgumentSemantic.Assign)]	
+	AGSAttachmentEditState EditState { get; }
 
-		[Export("attachmentInfo", ArgumentSemantic.Strong)]
-		AGSAttachmentInfo AttachmentInfo { get; }
+	[Export("editResultError", ArgumentSemantic.Strong)]
+	AGSEditResultError EditResultError { get; }
 
-		[Export("filepath", ArgumentSemantic.Copy)]
-		string FilePath { get; set; }
+	[Export("networkError", ArgumentSemantic.Strong)]
+	NSError NetworkError { get; }
 
-		[Export("editState", ArgumentSemantic.Assign)]	
-		AGSAttachmentEditState EditState { get; }
+	[Export("isDownloading", ArgumentSemantic.Assign)]
+	bool IsDownloading { get; }
 
-		[Export("editResultError", ArgumentSemantic.Strong)]
-		AGSEditResultError EditResultError { get; }
+	[Export("markForDeletion:")]
+	void MarkForDeletion(bool del);
 
-		[Export("networkError", ArgumentSemantic.Strong)]
-		NSError NetworkError { get; }
+	[Export("existsOnServer")]
+	bool ExistsOnServer();
 
-		[Export("isDownloading", ArgumentSemantic.Assign)]
-		bool IsDownloading { get; }
+	[Export("isLocal")]
+	bool IsLocal();
 
-		[Export("markForDeletion:")]
-		void MarkForDeletion(bool del);
+	[Export("thumbnail")]
+	AGSImage GetThumbnail();
 
-		[Export("existsOnServer")]
-		bool ExistsOnServer();
-
-		[Export("isLocal")]
-		bool IsLocal();
-
-		[Export("thumbnail")]
-		AGSImage GetThumbnail();
-
-		[Export("data")]
-		NSData GetData();
-	}
+	[Export("data")]
+	NSData GetData();
 }
