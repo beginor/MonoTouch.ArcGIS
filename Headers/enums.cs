@@ -20,3 +20,18 @@ public enum AGSCalloutLeaderPosition {
 	Right = 1UL << 3,
 	Any = Bottom | Top | Left | Right
 }
+
+public enum AGSAuthenticationType {
+	Unknown = 0,        
+	None,               
+	Token,              
+	HTTP,               
+	ClientCertificate,  
+}
+
+public enum AGSCredentialErrorType {
+	None = 0,
+	InvalidCredentials,
+	SSLRequired,
+	Unknown
+}
