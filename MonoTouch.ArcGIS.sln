@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binding", "Binding\Binding.csproj", "{677363EB-5B1F-4548-B055-B94538D646A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{FAB03DA0-5438-4523-946A-C2A64247F2B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{677363EB-5B1F-4548-B055-B94538D646A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677363EB-5B1F-4548-B055-B94538D646A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677363EB-5B1F-4548-B055-B94538D646A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677363EB-5B1F-4548-B055-B94538D646A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB03DA0-5438-4523-946A-C2A64247F2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB03DA0-5438-4523-946A-C2A64247F2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB03DA0-5438-4523-946A-C2A64247F2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB03DA0-5438-4523-946A-C2A64247F2B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Parser\Parser.csproj
+	EndGlobalSection
+EndGlobal
