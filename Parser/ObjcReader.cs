@@ -45,6 +45,8 @@ namespace Parser {
 					if (line.StartsWith("@interface")) {
 						this._state = ObjcReaderState.InterfaceDefineBlock;
 						// skip inter face fields?
+						var interfaceToken = new ObjcInterfaceToken(line);
+						objcTokens.Add(interfaceToken);
 						fileReader.ReadTo("}");
 					}
 				}
