@@ -14,13 +14,7 @@ namespace Parser {
 				IsInterface = true
 			};
 
-			foreach (var propertyToken in token.Properties) {
-				var propertyConverter = propertyToken.CreateConverter();
-				var property = (CodeTypeMember)propertyConverter.Convert();
-				result.Members.Add(property);
-			}
-
-			foreach (var methodToken in token.Methods) {
+			foreach (var methodToken in token.Members) {
 				var methodConverter = methodToken.CreateConverter();
 				var method = (CodeTypeMember)methodConverter.Convert();
 				result.Members.Add(method);

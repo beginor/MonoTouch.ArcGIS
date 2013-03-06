@@ -38,6 +38,7 @@
     <Compile Include="ObjcConverter.cs" />
     <Compile Include="ObjcInterfaceConverter.cs" />
     <Compile Include="ObjcInterfaceToken.cs" />
+    <Compile Include="ObjcMemberToken.cs" />
     <Compile Include="ObjcReader.cs" />
     <Compile Include="ObjcReaderState.cs" />
     <Compile Include="ObjcToken.cs" />

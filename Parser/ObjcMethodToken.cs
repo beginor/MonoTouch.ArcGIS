@@ -1,17 +1,16 @@
-using System;
+using System.CodeDom;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Parser {
 
-	public class ObjcMethodToken : ObjcToken {
+	public class ObjcMethodToken : ObjcMemberToken {
 
-		public string ReturnType {
+		public string Name {
 			get;
 			private set;
 		}
 
-		public string Name {
+		public string ReturnType {
 			get;
 			private set;
 		}
@@ -69,7 +68,7 @@ namespace Parser {
 			var namePartEndIndex = code.IndexOf(':') + 1;
 			this.Name += code.Substring(0, namePartEndIndex);
 
-			code = code.Substring(namePartEndIndex).Trim(new char[] { ' ', '\t' });
+			code = code.Substring(namePartEndIndex).Trim(new[] { ' ', '\t' });
 			var paramStartIndex = code.IndexOf('(') + 1;
 			var paramEndIndex = code.IndexOf(')');
 			var parameterType = code.Substring(paramStartIndex, paramEndIndex - paramStartIndex);
@@ -77,19 +76,13 @@ namespace Parser {
 				parameterType = parameterType.Substring(0, parameterType.Length - 1).Trim();
 			}
 
-			code = code.Substring(paramEndIndex + 1).Trim(new char[] { ' ', '\t' });
+			code = code.Substring(paramEndIndex + 1).Trim(new[] { ' ', '\t' });
 			var paramNameEndIndex = code.IndexOf(' ');
-			var paramName = string.Empty;
-			if (paramNameEndIndex > 0) {
-				paramName = code.Substring(0, paramNameEndIndex);
-			}
-			else {
-				paramName = code;
-			}
+			var paramName = paramNameEndIndex > 0 ? code.Substring(0, paramNameEndIndex) : code;
 
 			this.Parameters.Add(new KeyValuePair<string, string>(parameterType, paramName));
 
-			code = code.Substring(paramNameEndIndex + 1).Trim(new char[] { ' ', '*' });
+			code = code.Substring(paramNameEndIndex + 1).Trim(new[] { ' ', '*' });
 
 			if (code.IndexOf(':') > 0) {
 				this.GetMethodNameAndParameters(code);
@@ -100,6 +93,16 @@ namespace Parser {
 			throw new System.NotImplementedException();
 		}
 
+	}
+
+	public class ObjcMethodConverter : ObjcConverter {
+
+		public ObjcMethodConverter(ObjcToken token) : base(token) {
+		}
+
+		public override CodeObject Convert() {
+			return new CodeMemberMethod();
+		}
 	}
 }
 

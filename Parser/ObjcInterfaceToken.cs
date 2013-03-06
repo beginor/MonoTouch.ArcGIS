@@ -4,21 +4,19 @@ namespace Parser {
 
 	public class ObjcInterfaceToken : ObjcToken {
 
-		public IList<ObjcPropertyToken> Properties { get; private set; }
-
-		public IList<ObjcMethodToken> Methods { get; private set; }
+		public IList<ObjcMemberToken> Members { get; private set; }
 
 		public ObjcInterfaceToken(string code) : base(code) {
-			this.Properties = new List<ObjcPropertyToken>();
-			this.Methods = new List<ObjcMethodToken>();
+			this.Members = new List<ObjcMemberToken>();
 		}
 
-		public void AddProperty(string propertyDefineCode) {
-			this.Properties.Add(new ObjcPropertyToken(propertyDefineCode));
-		}
-
-		public void AddMethod(string methodDefineCode) {
-			this.Methods.Add(new ObjcMethodToken(methodDefineCode));
+		public void AddMember(string memberDefine) {
+			if (memberDefine.StartsWith("@property")) {
+				this.Members.Add(new ObjcPropertyToken(memberDefine));
+			}
+			else {
+				this.Members.Add(new ObjcMethodToken(memberDefine));
+			}
 		}
 
 		public override ObjcConverter CreateConverter() {

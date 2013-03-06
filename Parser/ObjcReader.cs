@@ -32,6 +32,7 @@ namespace Parser {
 					if (line.StartsWith("/*")) {
 						if (!line.Contains("*/"))
 						fileReader.ReadTo("*/");
+						continue;
 					}
 					if (line.StartsWith("@protocol") && line.EndsWith(";")) {
 						this._state = ObjcReaderState.ProtocolAlias;
@@ -48,11 +49,42 @@ namespace Parser {
 						var interfaceToken = new ObjcInterfaceToken(line);
 						objcTokens.Add(interfaceToken);
 						fileReader.ReadTo("}");
+						while ((line = fileReader.ReadLine().Trim(' ', '\t')) != "@end") {
+							if (line.StartsWith("//")) {
+								continue;
+							}
+							if (line.StartsWith("/*")) {
+								if (!line.Contains("*/"))
+								fileReader.ReadTo("*/");
+								continue;
+							}
+							if (string.IsNullOrEmpty(line)) {
+								continue;
+							}
+							interfaceToken.AddMember(line);
+						}
 					}
 				}
 			}
 
 			return objcTokens;
+		}
+
+		private static bool IsLineComment(string code) {
+			if (code.StartsWith("//")) {
+				return true;
+			}
+			if (code.StartsWith("/*") && code.Contains("*/")) {
+				return true;
+			}
+			return false;
+		}
+
+		private static bool IsCommentBlockStart(string code) {
+			if (code.StartsWith("/*") && !code.Contains("*/")) {
+				return true;
+			}
+			return false;
 		}
 
 		public override string ToString() {

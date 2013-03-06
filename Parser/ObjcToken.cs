@@ -9,7 +9,7 @@ namespace Parser {
 			private set;
 		}
 
-		public ObjcToken(string code) {
+		protected ObjcToken(string code) {
 			this.Code = code;
 		}
 

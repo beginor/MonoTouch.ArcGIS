@@ -1,11 +1,10 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
 namespace Parser {
 
-	public class ObjcPropertyToken : ObjcToken {
+	public class ObjcPropertyToken : ObjcMemberToken {
 
 		public string PropertyType {
 			get;
@@ -76,12 +75,12 @@ namespace Parser {
 				this.Attributes = new string[0];
 			} else {
 				var attrStr = code.Substring(attrStartIndex + 1, attrEndIndex - (attrStartIndex + 1));
-				var attrs = attrStr.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				var attrs = attrStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 				this.Attributes = attrs.Select(s => s.Trim()).ToArray();
 			}
 
 			var typeAndName = code.Substring(attrEndIndex + 1, code.Length - (attrEndIndex + 1) - 1).Trim()
-				.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+				.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 			if (typeAndName.Length != 2) {
 				throw new ObjcTokenException(string.Format("can not parse \"{0}\"", code));
 			}
