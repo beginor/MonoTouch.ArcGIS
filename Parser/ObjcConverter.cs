@@ -14,7 +14,7 @@ namespace Parser {
 			this.Token = token;
 		}
 
-		public abstract CodeObject Convert();
+		public abstract string Convert();
 
 	}
 }

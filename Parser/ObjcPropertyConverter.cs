@@ -1,5 +1,6 @@
 using System;
 using System.CodeDom;
+using System.Text;
 
 namespace Parser {
 
@@ -7,23 +8,29 @@ namespace Parser {
 
 		public ObjcPropertyConverter(ObjcPropertyToken token) : base(token) { }
 
-		public override CodeObject Convert() {
+		public override string Convert() {
 			var propToken = (ObjcPropertyToken)this.Token;
-			var property = new CodeMemberProperty {
-				Name = ToCsharpPropertyName(propToken.PropertyName),
-				Type = new CodeTypeReference(propToken.PropertyType),
-				HasGet = true,
-				HasSet = !propToken.IsReadOnly
-			};
 
-			var exportAttr = new CodeAttributeDeclaration("Export");
-			exportAttr.Arguments.Add(new CodeAttributeArgument(new CodePrimitiveExpression(propToken.PropertyName)));
-			exportAttr.Arguments.Add(new CodeAttributeArgument(new CodeSnippetExpression("ArgumentSemantic." + ToCsharpPropertyName(propToken.Semantic))));
-			property.CustomAttributes.Add(exportAttr);
-			// getter and setter export?
-			//property.GetStatements.Add()
-			property.Comments.Add(new CodeCommentStatement(propToken.Code));
-			return property;
+			var sb = new StringBuilder();
+			var comment = string.Format("/// <summary>{0}</summary>", propToken.Code);
+			sb.AppendLine(comment);
+			// export attr for prop
+			var expor = string.Format("[Export(\"{0}\"), ArgumentSemantic.{1}]", propToken.PropertyName, ToCsharpPropertyName(propToken.Semantic));
+			sb.AppendLine(expor);
+			sb.Append(propToken.PropertyType + " ");
+			sb.Append(" { ");
+			if (propToken.Getter.IsNotNullOrWhiteSpace()) {
+				sb.AppendFormat("[Export(\"{0}\")]", propToken.Getter);
+			}
+			sb.Append("get; ");
+			if (!propToken.IsReadOnly) {
+				if (propToken.Setter.IsNotNullOrWhiteSpace()) {
+					sb.AppendFormat("[Export(\"{0}\")]", propToken.Setter);
+				}
+				sb.Append("set; ");
+			}
+			sb.AppendLine(" } ");
+			return sb.ToString();
 		}
 
 		static string ToCsharpPropertyName(string objcPropName) {

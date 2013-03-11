@@ -1,4 +1,3 @@
-using System.CodeDom;
 using System.Collections.Generic;
 
 namespace Parser {
@@ -93,16 +92,6 @@ namespace Parser {
 			throw new System.NotImplementedException();
 		}
 
-	}
-
-	public class ObjcMethodConverter : ObjcConverter {
-
-		public ObjcMethodConverter(ObjcToken token) : base(token) {
-		}
-
-		public override CodeObject Convert() {
-			return new CodeMemberMethod();
-		}
 	}
 }
 

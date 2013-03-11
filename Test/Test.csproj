@@ -37,8 +37,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjcInterfaceTokenTest.cs" />
+    <Compile Include="ObjcPropertyTokenTest.cs" />
     <Compile Include="ObjcReaderTest.cs" />
-    <Compile Include="ObjcTokenTest.cs" />
+    <Compile Include="ObjcMethodTokenTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
