@@ -49,6 +49,12 @@
     <Compile Include="ObjcTokenException.cs" />
     <Compile Include="ObjcMethodToken.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="TypeMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="TypeMap.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

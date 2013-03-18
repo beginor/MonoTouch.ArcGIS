@@ -30,11 +30,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\GDEIC Project\ThirdPart Resource\nunit\v2.6\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="nunit.framework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ObjcInterfaceTokenTest.cs" />
@@ -48,5 +45,11 @@
       <Project>{A3CE5136-8039-48E7-A22C-4FC47F2D0A1B}</Project>
       <Name>Parser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Parser\TypeMap.conf">
+      <Link>TypeMap.conf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

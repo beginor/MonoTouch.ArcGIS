@@ -1,36 +1,36 @@
 using System;
-using System.CodeDom;
 using System.Text;
 
 namespace Parser {
 
 	public class ObjcPropertyConverter : ObjcConverter {
 
-		public ObjcPropertyConverter(ObjcPropertyToken token) : base(token) { }
+		public ObjcPropertyConverter(ObjcPropertyToken token) : base(token) {
+		}
 
 		public override string Convert() {
 			var propToken = (ObjcPropertyToken)this.Token;
 
-			var sb = new StringBuilder();
+			var csBuilder = new StringBuilder();
 			var comment = string.Format("/// <summary>{0}</summary>", propToken.Code);
-			sb.AppendLine(comment);
+			csBuilder.AppendLine(comment);
 			// export attr for prop
 			var expor = string.Format("[Export(\"{0}\"), ArgumentSemantic.{1}]", propToken.PropertyName, ToCsharpPropertyName(propToken.Semantic));
-			sb.AppendLine(expor);
-			sb.Append(propToken.PropertyType + " ");
-			sb.Append(" { ");
+			csBuilder.AppendLine(expor);
+			csBuilder.Append(TypeMap.GetTypeFor(propToken.PropertyType) + " ");
+			csBuilder.Append(" { ");
 			if (propToken.Getter.IsNotNullOrWhiteSpace()) {
-				sb.AppendFormat("[Export(\"{0}\")]", propToken.Getter);
+				csBuilder.AppendFormat("[Export(\"{0}\")]", propToken.Getter);
 			}
-			sb.Append("get; ");
+			csBuilder.Append("get; ");
 			if (!propToken.IsReadOnly) {
 				if (propToken.Setter.IsNotNullOrWhiteSpace()) {
-					sb.AppendFormat("[Export(\"{0}\")]", propToken.Setter);
+					csBuilder.AppendFormat("[Export(\"{0}\")]", propToken.Setter);
 				}
-				sb.Append("set; ");
+				csBuilder.Append("set; ");
 			}
-			sb.AppendLine(" } ");
-			return sb.ToString();
+			csBuilder.AppendLine(" } ");
+			return csBuilder.ToString();
 		}
 
 		static string ToCsharpPropertyName(string objcPropName) {
