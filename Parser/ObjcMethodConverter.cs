@@ -19,19 +19,19 @@ namespace Parser {
 			var export = string.Format("[Export(\"{0}\")]", token.Name);
 			// return type
 			cs.AppendFormat("{0} {1}", TypeMap.GetTypeFor(token.ReturnType), ToCsharpMethodName(token.Name));
-			cs.AppendLine();
-			cs.AppendLine();
+			cs.Append("(");
+			if (token.Parameters.Count > 0) {
+				var param = token.Parameters.Aggregate("", (curr, next) => curr + TypeMap.GetTypeFor(next.Key) + " " + next.Value + ",");
+				cs.Append(param.Substring(0, param.Length - 1));
+			}
+			cs.AppendLine(");");
 
 			return cs.ToString();
 		}
 
 		private static string ToCsharpMethodName(string ocMethodName) {
 			var parts = ocMethodName.Split(new [] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-			var name = "";
-			foreach (var part in parts) {
-				name += part.Substring(0, 1).ToUpperInvariant() + part.Substring(1);
-			}
-			return name;
+			return parts.Aggregate("", (current, part) => current + (part.Substring(0, 1).ToUpperInvariant() + part.Substring(1)));
 		}
 	}
 }

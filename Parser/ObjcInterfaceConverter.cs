@@ -14,7 +14,14 @@ namespace Parser {
 		public override string Convert() {
 			var result = new StringBuilder();
 			var token = (ObjcInterfaceToken)this.Token;
-			result.AppendFormat("");
+			var baseType = string.Format("[BaseType(typeof({0}))]", token.Parent);
+			result.AppendLine(baseType);
+			result.AppendFormat("public interface {0} ", token.Name);
+			if (token.Protocols.Length > 0) {
+				result.Append(": ");
+				result.Append(string.Join(", ", token.Protocols));
+			}
+			result.AppendLine(" {");
 			//result.Add(string.Format("public interface "));
 			//var result = new CodeTypeDeclaration {
 			//	IsInterface = true
@@ -26,6 +33,11 @@ namespace Parser {
 			//	result.Members.Add(method);
 			//}
 			//return result;
+			foreach (var member in token.Members) {
+				var memberCode = member.CreateConverter().Convert();
+				result.Append(memberCode);
+			}
+			result.AppendLine("}");
 			return result.ToString();
 		}
 	}

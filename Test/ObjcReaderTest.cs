@@ -15,6 +15,13 @@ namespace Test {
 		}
 
 		[Test]
+		public void TestReadSingleInterfaceFile() {
+			var objcReader = new ObjcReader(@"..\..\..\Headers\AGSAttachment.h");
+			var tokens = objcReader.ReadFile();
+			Assert.AreEqual(1, tokens.Count());
+		}
+
+		[Test]
 		public void TestTrim() {
 			var str = "	  sss ss  	";
 			str = str.Trim(' ', '\t');
