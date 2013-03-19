@@ -24,13 +24,13 @@ namespace Parser {
 
 		public string Semantic {
 			get {
-				if (this.Attributes.Contains("assign")) {
+				if (this.Attributes.Contains("assign") || this.Attributes.Contains("weak")) {
 					return "Assign";
 				}
 				if (this.Attributes.Contains("copy")) {
 					return "Copy";
 				}
-				if (this.Attributes.Contains("retain")) {
+				if (this.Attributes.Contains("retain") || this.Attributes.Contains("strong")) {
 					return "Retain";
 				}
 				return "None";

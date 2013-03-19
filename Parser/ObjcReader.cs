@@ -20,7 +20,7 @@ namespace Parser {
 		public IEnumerable<ObjcToken> ReadFile() {
 			var objcTokens = new List<ObjcToken>();
 
-			using (var fileReader = new StreamReader(this._path, true)) {
+			using(var fileReader = new StreamReader(this._path, true)) {
 				var line = string.Empty;
 				while ((line = fileReader.ReadLine()) != null) {
 					line = line.Trim(' ', '\t');
@@ -30,8 +30,9 @@ namespace Parser {
 						continue;
 					}
 					if (line.StartsWith("/*")) {
-						if (!line.Contains("*/"))
-						fileReader.ReadTo("*/");
+						if (!line.Contains("*/")) {
+							fileReader.ReadTo("*/");
+						}
 						continue;
 					}
 					if (line.StartsWith("@protocol") && line.EndsWith(";")) {
@@ -45,17 +46,20 @@ namespace Parser {
 					// 
 					if (line.StartsWith("@interface")) {
 						this._state = ObjcReaderState.InterfaceDefineBlock;
-						// skip inter face fields?
 						var interfaceToken = new ObjcInterfaceToken(line);
 						objcTokens.Add(interfaceToken);
-						fileReader.ReadTo("}");
+						// skip inter face fields?
+						if (line.EndsWith("{")) {
+							fileReader.ReadTo("}");
+						}
 						while ((line = fileReader.ReadLine().Trim(' ', '\t')) != "@end") {
 							if (line.StartsWith("//")) {
 								continue;
 							}
 							if (line.StartsWith("/*")) {
-								if (!line.Contains("*/"))
-								fileReader.ReadTo("*/");
+								if (!line.Contains("*/")) {
+									fileReader.ReadTo("*/");
+								}
 								continue;
 							}
 							if (string.IsNullOrEmpty(line)) {

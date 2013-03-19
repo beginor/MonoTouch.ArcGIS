@@ -89,7 +89,7 @@ namespace Parser {
 		}
 
 		public override ObjcConverter CreateConverter() {
-			throw new System.NotImplementedException();
+			return new ObjcMethodConverter(this);
 		}
 
 	}

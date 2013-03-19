@@ -14,10 +14,12 @@ namespace Parser {
 		public override string Convert() {
 			var result = new StringBuilder();
 			var token = (ObjcInterfaceToken)this.Token;
+			var summary = string.Format("///<summary>{0}</summary>", token.Code);
+			result.AppendLine(summary);
 			var baseType = string.Format("[BaseType(typeof({0}))]", token.Parent);
 			result.AppendLine(baseType);
 			result.AppendFormat("public interface {0} ", token.Name);
-			if (token.Protocols.Length > 0) {
+			if (token.Protocols != null && token.Protocols.Length > 0) {
 				result.Append(": ");
 				result.Append(string.Join(", ", token.Protocols));
 			}

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using Parser;
 
@@ -19,6 +20,10 @@ namespace Test {
 			var objcReader = new ObjcReader(@"..\..\..\Headers\AGSAttachment.h");
 			var tokens = objcReader.ReadFile();
 			Assert.AreEqual(1, tokens.Count());
+			var token = tokens.First() as ObjcInterfaceToken;
+			Assert.IsNotNull(token);
+			var csCode = token.CreateConverter().Convert();
+			Console.Write(csCode);
 		}
 
 		[Test]
