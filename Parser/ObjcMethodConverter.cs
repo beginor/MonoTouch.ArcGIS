@@ -17,6 +17,7 @@ namespace Parser {
 			var summary = string.Format("///<summary>{0}</summary>", token.Code);
 			cs.AppendLine(summary);
 			var export = string.Format("[Export(\"{0}\")]", token.Name);
+			cs.AppendLine(export);
 			// return type
 			cs.AppendFormat("{0} {1}", TypeMap.GetTypeFor(token.ReturnType), ToCsharpMethodName(token.Name));
 			cs.Append("(");

@@ -47,7 +47,11 @@ namespace Parser {
 			// return type
 			var startIndex = code.IndexOf('(') + 1;
 			var endIndex = code.IndexOf(')');
-			this.ReturnType = code.Substring(startIndex, endIndex - startIndex);
+			var returnType = code.Substring(startIndex, endIndex - startIndex).Trim();
+			if (returnType.EndsWith("*")) {
+				returnType = returnType.Substring(0, returnType.Length - 1).Trim();
+			}
+			this.ReturnType = returnType;
 
 			//method name and params
 			//closestFacilityTaskWithURL:(NSURL *)url credential:(AGSCredential*)cred;

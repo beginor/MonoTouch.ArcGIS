@@ -15,7 +15,7 @@ namespace Parser {
 			var comment = string.Format("/// <summary>{0}</summary>", propToken.Code);
 			csBuilder.AppendLine(comment);
 			// export attr for prop
-			var expor = string.Format("[Export(\"{0}\"), ArgumentSemantic.{1}]", propToken.PropertyName, propToken.Semantic);
+			var expor = string.Format("[Export(\"{0}\", ArgumentSemantic.{1})]", propToken.PropertyName, propToken.Semantic);
 			csBuilder.AppendLine(expor);
 			csBuilder.Append(TypeMap.GetTypeFor(propToken.PropertyType) + " " + ToCsharpPropertyName(propToken.PropertyName));
 			csBuilder.Append(" { ");
