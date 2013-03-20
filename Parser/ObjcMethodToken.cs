@@ -14,7 +14,7 @@ namespace Parser {
 			private set;
 		}
 
-		public IList<KeyValuePair<string,string>> Parameters {
+		public IList<KeyValuePair<string, string>> Parameters {
 			get;
 			private set;
 		}
@@ -24,13 +24,19 @@ namespace Parser {
 			private set;
 		}
 
+		public bool IsRequired {
+			get;
+			set;
+		}
+
 		public bool IsConstructor {
 			get {
 				return (!this.IsStatic) && this.ReturnType == "id" && this.Name.StartsWith("init");
 			}
 		}
 
-		public ObjcMethodToken(string code) : base(code) {
+		public ObjcMethodToken(string code)
+			: base(code) {
 			this.AnalysisCode();
 		}
 

@@ -41,6 +41,7 @@
     <Compile Include="ObjcInterfaceToken.cs" />
     <Compile Include="ObjcMemberToken.cs" />
     <Compile Include="ObjcMethodConverter.cs" />
+    <Compile Include="ObjcProtocolToken.cs" />
     <Compile Include="ObjcReader.cs" />
     <Compile Include="ObjcReaderState.cs" />
     <Compile Include="ObjcToken.cs" />

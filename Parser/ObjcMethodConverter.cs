@@ -18,8 +18,14 @@ namespace Parser {
 			cs.AppendLine(summary);
 			var export = string.Format("[Export(\"{0}\")]", token.Name);
 			cs.AppendLine(export);
+			if (token.IsStatic) {
+				cs.AppendLine("[Static]");
+			}
+			if (token.IsRequired) {
+				cs.AppendLine("[Abstract]");
+			}
 			// return type
-			cs.AppendFormat("{0} {1}", TypeMap.GetTypeFor(token.ReturnType), ToCsharpMethodName(token.Name));
+			cs.AppendFormat("{0} {1}", TypeMap.GetTypeFor(token.ReturnType), token.IsConstructor ? "Constructor" : ToCsharpMethodName(token.Name));
 			cs.Append("(");
 			if (token.Parameters.Count > 0) {
 				var param = token.Parameters.Aggregate("", (curr, next) => curr + TypeMap.GetTypeFor(next.Key) + " " + next.Value + ",");

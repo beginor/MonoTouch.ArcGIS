@@ -1,5 +1,3 @@
-using System;
-
 namespace Parser {
 
 	public abstract class ObjcToken {
@@ -18,6 +16,8 @@ namespace Parser {
 		public override string ToString() {
 			return string.Format("[ObjcToken: Code={0}]", Code);
 		}
+
 	}
+
 }
 

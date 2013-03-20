@@ -1,6 +1,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Parser {
@@ -21,7 +22,7 @@ namespace Parser {
 			result.AppendFormat("public interface {0} ", token.Name);
 			if (token.Protocols != null && token.Protocols.Length > 0) {
 				result.Append(": ");
-				result.Append(string.Join(", ", token.Protocols));
+				result.Append(string.Join(",", token.Protocols.Where(p => !string.IsNullOrEmpty(TypeMap.GetTypeFor(p)))));
 			}
 			result.AppendLine(" {");
 			//result.Add(string.Format("public interface "));

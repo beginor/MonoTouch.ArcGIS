@@ -27,6 +27,17 @@ namespace Test {
 		}
 
 		[Test]
+		public void TestReadSingleInterfaceFileWithConstructor() {
+			var objcReader = new ObjcReader(@"..\..\..\Headers\AGSClassBreak.h");
+			var tokens = objcReader.ReadFile();
+			Assert.AreEqual(1, tokens.Count());
+			var token = tokens.First() as ObjcInterfaceToken;
+			Assert.IsNotNull(token);
+			var csCode = token.CreateConverter().Convert();
+			Console.Write(csCode);
+		}
+
+		[Test]
 		public void TestTrim() {
 			var str = "	  sss ss  	";
 			str = str.TrimTabAndWhitespace();
