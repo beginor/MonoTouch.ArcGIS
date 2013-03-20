@@ -23,7 +23,7 @@ namespace Parser {
 			using(var fileReader = new StreamReader(this._path, true)) {
 				var line = string.Empty;
 				while ((line = fileReader.ReadLine()) != null) {
-					line = line.Trim(' ', '\t');
+					line = line.TrimTabAndWhitespace();
 
 					if (line.StartsWith("//")) {
 						this._state = ObjcReaderState.Comment;
@@ -52,7 +52,7 @@ namespace Parser {
 						if (line.EndsWith("{")) {
 							fileReader.ReadTo("}");
 						}
-						while ((line = fileReader.ReadLine().Trim(' ', '\t')) != "@end") {
+						while ((line = fileReader.ReadLine().TrimTabAndWhitespace()) != "@end") {
 							if (line.StartsWith("//")) {
 								continue;
 							}
@@ -102,7 +102,7 @@ namespace Parser {
 			string line;
 			var founded = false;
 			while ((line = reader.ReadLine()) != null) {
-				line = line.Trim(' ', '\t');
+				line = line.TrimTabAndWhitespace();
 				if (line != expected && !line.EndsWith(expected)) {
 					continue;
 				}

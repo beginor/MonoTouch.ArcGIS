@@ -60,7 +60,7 @@ namespace Parser {
 
 		private void AnalysisCode() {
 			// @property (nonatomic, assign, readonly) BOOL sslRequired;
-			var code = base.Code.Trim('\t', ' ');
+			var code = base.Code.TrimTabAndWhitespace();
 			if (!code.StartsWith("@property")) {
 				throw new ObjcTokenException("Objc property must be starts width @property!");
 			}

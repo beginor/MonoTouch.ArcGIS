@@ -36,7 +36,7 @@ namespace Parser {
 
 		private void AnalysisCode() {
 			//+ (id)closestFacilityTaskWithURL:(NSURL *)url credential:(AGSCredential*)cred;
-			var code = base.Code.Trim('\t', ' ');
+			var code = base.Code.TrimTabAndWhitespace();
 			if (!(code.StartsWith("+") || code.StartsWith("-")) && !code.EndsWith(";")) {
 				throw new ObjcTokenException("Invalid Method code " + code);
 			}
@@ -71,7 +71,7 @@ namespace Parser {
 			var namePartEndIndex = code.IndexOf(':') + 1;
 			this.Name += code.Substring(0, namePartEndIndex);
 
-			code = code.Substring(namePartEndIndex).Trim(new[] { ' ', '\t' });
+			code = code.Substring(namePartEndIndex).TrimTabAndWhitespace();
 			var paramStartIndex = code.IndexOf('(') + 1;
 			var paramEndIndex = code.IndexOf(')');
 			var parameterType = code.Substring(paramStartIndex, paramEndIndex - paramStartIndex);
@@ -79,13 +79,13 @@ namespace Parser {
 				parameterType = parameterType.Substring(0, parameterType.Length - 1).Trim();
 			}
 
-			code = code.Substring(paramEndIndex + 1).Trim(new[] { ' ', '\t' });
+			code = code.Substring(paramEndIndex + 1).TrimTabAndWhitespace();
 			var paramNameEndIndex = code.IndexOf(' ');
 			var paramName = paramNameEndIndex > 0 ? code.Substring(0, paramNameEndIndex) : code;
 
 			this.Parameters.Add(new KeyValuePair<string, string>(parameterType, paramName));
 
-			code = code.Substring(paramNameEndIndex + 1).Trim(new[] { ' ', '*' });
+			code = code.Substring(paramNameEndIndex + 1).TrimTabAndWhitespace();
 
 			if (code.IndexOf(':') > 0) {
 				this.GetMethodNameAndParameters(code);
