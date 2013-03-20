@@ -20,12 +20,12 @@ namespace Parser {
 			csBuilder.Append(TypeMap.GetTypeFor(propToken.PropertyType) + " " + ToCsharpPropertyName(propToken.PropertyName));
 			csBuilder.Append(" { ");
 			if (propToken.Getter.IsNotNullOrWhiteSpace()) {
-				csBuilder.AppendFormat("[Export(\"{0}\")]", propToken.Getter);
+				csBuilder.AppendFormat("[Bind(\"{0}\")]", propToken.Getter);
 			}
 			csBuilder.Append("get; ");
 			if (!propToken.IsReadOnly) {
 				if (propToken.Setter.IsNotNullOrWhiteSpace()) {
-					csBuilder.AppendFormat("[Export(\"{0}\")]", propToken.Setter);
+					csBuilder.AppendFormat("[Bind(\"{0}\")]", propToken.Setter);
 				}
 				csBuilder.Append("set; ");
 			}

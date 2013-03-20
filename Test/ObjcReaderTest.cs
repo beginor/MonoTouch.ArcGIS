@@ -29,7 +29,7 @@ namespace Test {
 		[Test]
 		public void TestTrim() {
 			var str = "	  sss ss  	";
-			str = str.Trim(' ', '\t');
+			str = str.TrimTabAndWhitespace();
 			Assert.AreEqual("sss ss", str);
 		}
 	}
