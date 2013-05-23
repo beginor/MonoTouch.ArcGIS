@@ -19,7 +19,7 @@ namespace Parser {
 			result.AppendLine(summary);
 			var baseType = string.Format("[BaseType(typeof({0}))]", token.Parent);
 			result.AppendLine(baseType);
-			result.AppendFormat("public interface {0} ", token.Name);
+			result.AppendFormat("public partial interface {0} ", token.Name);
 			if (token.Protocols != null && token.Protocols.Length > 0) {
 				result.Append(": ");
 				result.Append(string.Join(",", token.Protocols.Where(p => !string.IsNullOrEmpty(TypeMap.GetTypeFor(p)))));
