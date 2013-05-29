@@ -51,6 +51,8 @@
     <Compile Include="ObjcMethodToken.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="TypeMap.cs" />
+    <Compile Include="ObjcEnumToken.cs" />
+    <Compile Include="ObjcEnumConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
