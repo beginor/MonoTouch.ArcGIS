@@ -68,6 +68,28 @@ namespace Parser {
 							interfaceToken.AddMember(line);
 						}
 					}
+					// enum
+					if (line.StartsWith("typedef enum")) {
+						this._state = ObjcReaderState.EnumStart;
+						var enumToken = new ObjcEnumToken(line);
+						objcTokens.Add(enumToken);
+						while(!(line = fileReader.ReadLine().TrimTabAndWhitespace()).StartsWith("}")) {
+							if (line.StartsWith("//")) {
+								continue;
+							}
+							if (line.StartsWith("/*")) {
+								if (!line.Contains("*/")) {
+									fileReader.ReadTo("*/");
+								}
+								continue;
+							}
+							if (string.IsNullOrEmpty(line)) {
+								continue;
+							}
+							enumToken.AddField(line);
+						}
+						enumToken.Name = line;
+					}
 				}
 			}
 

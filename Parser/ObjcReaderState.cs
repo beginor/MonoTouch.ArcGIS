@@ -9,5 +9,7 @@ namespace Parser {
 		InterfaceDefineBlock,
 		PropertyDefine,
 		MethodDefine,
+		EnumStart,
+		EnumEnd
 	}
 }

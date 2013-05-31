@@ -19,10 +19,15 @@ namespace Test {
 		public void TestReadSingleInterfaceFile() {
 			var objcReader = new ObjcReader(@"..\..\..\Headers\AGSAttachment.h");
 			var tokens = objcReader.ReadFile();
-			Assert.AreEqual(1, tokens.Count());
-			var token = tokens.First() as ObjcInterfaceToken;
+			Assert.AreEqual(2, tokens.Count());
+			var token = tokens.Last() as ObjcInterfaceToken;
 			Assert.IsNotNull(token);
 			var csCode = token.CreateConverter().Convert();
+			Console.Write(csCode);
+
+			var enumToken = tokens.First() as ObjcEnumToken;
+			Assert.IsNotNull(enumToken);
+			csCode = enumToken.CreateConverter().Convert();
 			Console.Write(csCode);
 		}
 

@@ -38,6 +38,7 @@
     <Compile Include="ObjcPropertyTokenTest.cs" />
     <Compile Include="ObjcReaderTest.cs" />
     <Compile Include="ObjcMethodTokenTest.cs" />
+    <Compile Include="ObjcEnumTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
