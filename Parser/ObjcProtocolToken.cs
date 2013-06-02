@@ -20,34 +20,4 @@ namespace Parser {
 
 	}
 
-	public class ObjcProtocolMethodToken : ObjcMemberToken {
-
-		public ObjcProtocolMethodToken(string code) : base(code) {
-		}
-
-		public override ObjcConverter CreateConverter() {
-			throw new NotImplementedException();
-		}
-
-	}
-
-	public class ObjcProtocolMethodConverter : ObjcConverter {
-
-		public ObjcProtocolMethodConverter(ObjcToken token) : base(token) {
-		}
-
-		public override string Convert() {
-			throw new NotImplementedException();
-		}
-	}
-
-	public class ObjcProtocolConverter : ObjcConverter {
-
-		public ObjcProtocolConverter(ObjcToken token) : base(token) {
-		}
-
-		public override string Convert() {
-			throw new NotImplementedException();
-		}
-	}
 }

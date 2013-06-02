@@ -43,8 +43,8 @@ namespace Parser {
 						this._state = ObjcReaderState.ClassAlias;
 						continue;
 					}
-					// 
-					if (line.StartsWith("@interface")) {
+					// interface def
+					if (line.StartsWith("@interface") && !line.Contains("(")) {
 						this._state = ObjcReaderState.InterfaceDefineBlock;
 						var interfaceToken = new ObjcInterfaceToken(line);
 						objcTokens.Add(interfaceToken);
@@ -89,6 +89,14 @@ namespace Parser {
 							enumToken.AddField(line);
 						}
 						enumToken.Name = line;
+					}
+					// categori
+					if (line.StartsWith("@interface") && line.Contains("(") && line.Contains(")")) {
+
+					}
+					// protocol
+					if (line.StartsWith("@protocol") && !line.EndsWith(";")) {
+
 					}
 				}
 			}

@@ -53,6 +53,9 @@
     <Compile Include="TypeMap.cs" />
     <Compile Include="ObjcEnumToken.cs" />
     <Compile Include="ObjcEnumConverter.cs" />
+    <Compile Include="ObjcProtocolMethodToken.cs" />
+    <Compile Include="ObjcProtocolMethodConverter.cs" />
+    <Compile Include="ObjcProtocolConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
