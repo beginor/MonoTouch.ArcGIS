@@ -1,4 +1,3 @@
-
 using System.Drawing;
 using System;
 
@@ -16,8 +15,508 @@ namespace MonoTouch.ArcGIS {
 		[Export ("decodeWithJSON:")]
 		void DecodeWithJSON (NSDictionary json);
 
-		[Export ("encodeToJSON")]
-		NSDictionary EncodeToJSON();
+		[Export ("encodeToJSON"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCoding.h", Line = 50)]
+		NSDictionary EncodeToJSON { get; }
+	}
+
+	public enum AGSMapViewWrapAroundStatus : [unmapped: unexposed: Elaborated] {
+		Disabled,
+		Uninitialized,
+		Unsupported,
+		Enabled
+	}
+
+	public enum AGSTextSymbolVAlignment : [unmapped: unexposed: Elaborated] {
+		Bottom = 0,
+		Middle,
+		Top
+	}
+
+	public enum AGSTextSymbolHAlignment : [unmapped: unexposed: Elaborated] {
+		Left = 0,
+		Center,
+		Right
+	}
+
+	public enum AGSSimpleMarkerSymbolStyle : [unmapped: unexposed: Elaborated] {
+		Circle = 0,
+		Cross,
+		Diamond,
+		Square,
+		X
+	}
+
+	public enum AGSInterpolation : [unmapped: unexposed: Elaborated] {
+		Bilinear = 0,
+		CubicConvolution,
+		Majority,
+		NearestNeighbor = (2147483647L * 2UL + 1UL)
+	}
+
+	public enum AGSGeometryRelation : [unmapped: unexposed: Elaborated] {
+		Cross = 0,
+		Disjoint,
+		In,
+		InteriorIntersection,
+		Intersection,
+		LineCoincidence,
+		LineTouch,
+		Overlap,
+		PointTouch,
+		Touch,
+		Within,
+		Relation
+	}
+
+	public enum AGSGeometryType : [unmapped: unexposed: Elaborated] {
+		Undefined = -1,
+		Point,
+		Polyline,
+		Polygon,
+		Multipoint,
+		Envelope
+	}
+
+	public enum AGSRasterFunctionType : [unmapped: unexposed: Elaborated] {
+		Aspect = 0,
+		Colormap,
+		Hillshade,
+		NDVI,
+		ShadedRelief,
+		Slope,
+		Statistics,
+		Stretch
+	}
+
+	public enum AGSFieldType : [unmapped: unexposed: Elaborated] {
+		Integer = 0,
+		SmallInteger,
+		Double,
+		Single,
+		String,
+		Date,
+		Geometry,
+		OID,
+		Blob,
+		GlobalID,
+		Raster,
+		GUID,
+		XML
+	}
+
+	public enum AGSTimeIntervalUnits : [unmapped: unexposed: Elaborated] {
+		Milliseconds = 0,
+		Seconds,
+		Minutes,
+		Hours,
+		Days,
+		Weeks,
+		Months,
+		Years,
+		Decades,
+		Centuries,
+		Unknown
+	}
+
+	public enum AGSSpatialRelationship : [unmapped: unexposed: Elaborated] {
+		Intersects = 0,
+		Contains,
+		Crosses,
+		EnvelopeIntersects,
+		IndexIntersects,
+		Overlaps,
+		Touches,
+		Within,
+		Relation
+	}
+
+	public enum AGSUnits : [unmapped: unexposed: Elaborated] {
+		Centimeters = 0,
+		DecimalDegrees,
+		Decimeters,
+		Feet,
+		Inches,
+		Kilometers,
+		Meters,
+		Miles,
+		Millimeters,
+		NauticalMiles,
+		Points,
+		Unknown,
+		Yards
+	}
+
+	public enum AGSAreaUnits : [unmapped: unexposed: Elaborated] {
+		SquareInches = 0,
+		SquareFeet,
+		SquareYards,
+		Acres,
+		SquareMiles,
+		SquareMillimeters,
+		SquareCentimeters,
+		SquareDecimeters,
+		SquareMeters,
+		Ares,
+		Hectares,
+		SquareKilometers
+	}
+
+	public enum AGSSRUnit : [unmapped: unexposed: Elaborated] {
+		Meter = 9001,
+		GermanMeter = 9031,
+		Foot = 9002,
+		SurveyFoot = 9003,
+		ClarkeFoot = 9005,
+		Fathom = 9014,
+		NauticalMile = 9030,
+		SurveyChain = 9033,
+		SurveyLink = 9034,
+		SurveyMile = 9035,
+		Kilometer = 9036,
+		ClarkeYard = 9037,
+		ClarkeChain = 9038,
+		ClarkeLink = 9039,
+		SearsYard = 9040,
+		SearsFoot = 9041,
+		SearsChain = 9042,
+		SearsLink = 9043,
+		Benoit1895AYard = 9050,
+		Benoit1895AFoot = 9051,
+		Benoit1895AChain = 9052,
+		Benoit1895ALink = 9053,
+		Benoit1895BYard = 9060,
+		Benoit1895BFoot = 9061,
+		Benoit1895BChain = 9062,
+		Benoit1895BLink = 9063,
+		IndianFoot = 9080,
+		Indian1937Foot = 9081,
+		Indian1962Foot = 9082,
+		Indian1975Foot = 9083,
+		IndianYard = 9084,
+		Indian1937Yard = 9085,
+		Indian1962Yard = 9086,
+		Indian1975Yard = 9087,
+		Foot1865 = 9070,
+		Radian = 9101,
+		Degree = 9102,
+		ArcMinute = 9103,
+		ArcSecond = 9104,
+		Grad = 9105,
+		Gon = 9106,
+		Microradian = 9109,
+		ArcMinuteCentesimal = 9112,
+		ArcSecondCentesimal = 9113,
+		Mil6400 = 9114,
+		British1936Foot = 9095,
+		GoldCoastFoot = 9094,
+		InternationalChain = 109003,
+		InternationalLink = 109004,
+		InternationalYard = 109001,
+		StatuteMile = 9093,
+		SurveyYard = 109002,
+		50KilometerLength = 109030,
+		150KilometerLength = 109031,
+		Decimeter = 109005,
+		Centimeter = 109006,
+		Millimeter = 109007,
+		InternationalInch = 109008,
+		USsurveyInch = 109009,
+		InternationalRod = 109010,
+		USsurveyRod = 109011,
+		USNauticalMile = 109012,
+		UKNauticalMile = 109013
+	}
+
+	public enum AGSGeometryOffsetType : [unmapped: unexposed: Elaborated] {
+		Mitered = 0,
+		Bevelled,
+		Rounded,
+		Square
+	}
+
+	public enum AGSNATimeOfDayUse : [unmapped: unexposed: Elaborated] {
+		AsStartTime = 0,
+		AsEndTime
+	}
+
+	public enum AGSNADirectionsOutputType : [unmapped: unexposed: Elaborated] {
+		Standard = 0,
+		Complete,
+		CompleteNoEvents,
+		InstructionsOnly,
+		SummaryOnly
+	}
+
+	public enum AGSNAOutputLine : [unmapped: unexposed: Elaborated] {
+		None = 0,
+		Straight,
+		TrueShape,
+		TrueShapeWithMeasure
+	}
+
+	public enum AGSNAUTurn : [unmapped: unexposed: Elaborated] {
+		AllowBacktrack = 0,
+		AtDeadEndsOnly,
+		NoBacktrack,
+		AtDeadEndsAndIntersections
+	}
+
+	public enum AGSNAUnit : [unmapped: unexposed: Elaborated] {
+		Centimeters = 0,
+		Days,
+		DecimalDegrees,
+		Decimeters,
+		Feet,
+		Hours,
+		Inches,
+		Kilometers,
+		Meters,
+		Miles,
+		Millimeters,
+		Minutes,
+		NauticalMiles,
+		Points,
+		Seconds,
+		Unknown,
+		Yards
+	}
+
+	public enum AGSNALayerType : [unmapped: unexposed: Elaborated] {
+		Route = 0,
+		ServiceArea,
+		ClosestFacility
+	}
+
+	public enum AGSNATravelDirection : [unmapped: unexposed: Elaborated] {
+		FromFacility = 0,
+		ToFacility
+	}
+
+	public enum AGSNADirectionsManeuver : [unmapped: unexposed: Elaborated] {
+		Unknown = 0,
+		Stop,
+		Straight,
+		BearLeft,
+		BearRight,
+		TurnLeft,
+		TurnRight,
+		SharpLeft,
+		SharpRight,
+		UTurn,
+		Ferry,
+		Roundabout,
+		HighwayMerge,
+		HighwayExit,
+		HighwayChange,
+		ForkCenter,
+		ForkLeft,
+		ForkRight,
+		Depart,
+		TripItem,
+		EndOfFerry,
+		RampRight,
+		RampLeft,
+		TurnLeftRight,
+		TurnRightLeft,
+		TurnRightRight,
+		TurnLeftLeft,
+		PedestrianRamp,
+		Elevator,
+		Escalator,
+		Stairs,
+		DoorPassage
+	}
+
+	public enum AGSNADirectionsStringType : [unmapped: unexposed: Elaborated] {
+		General = 0,
+		Depart,
+		Arrive,
+		Length,
+		ime,
+		Summary,
+		imeWindow,
+		ViolationTime,
+		WaitTime,
+		ServiceTime,
+		EstimatedArrivalTime,
+		CumulativeLength,
+		StreetName,
+		AltName,
+		Branch,
+		oward,
+		CrossStreet,
+		Exit
+	}
+
+	public enum AGSNAMessageType : [unmapped: unexposed: Elaborated] {
+		Abort = 0,
+		Empty = 1,
+		Error = 2,
+		Informative = 3,
+		ProcessDefinition = 50,
+		ProcessStart = 100,
+		ProcessStop = 101,
+		Warning = 200
+	}
+
+	public enum AGSNAOutputPolygon : [unmapped: unexposed: Elaborated] {
+		Detailed = 0,
+		None,
+		Simplified
+	}
+
+	public enum AGSMGRSConversionMode : [unmapped: unexposed: Elaborated] {
+		NewStyle = 0
+	}
+
+	public enum AGSErrorCode : [unmapped: unexposed: Elaborated] {
+		OperationNotSupported = 10000,
+		NoDataTile = 10001,
+		SpatialReferenceNotSupported = 10002,
+		InvalidArgument = 10003
+	}
+
+	public enum AGSPortalItemType : [unmapped: unexposed: Elaborated] {
+		Other = 0,
+		MapDocument,
+		ExplorerMap,
+		GlobeDocument,
+		SceneDocument,
+		PublishedMap,
+		MapPackage,
+		GeoprocessingPackage,
+		LocatorPackage,
+		TilePackage,
+		WindowsMobilePackage,
+		DesktopApplicationTemplate,
+		MapTemplate,
+		CodeSample,
+		GeoprocessingSample,
+		Layer,
+		LayerPackage,
+		ExplorerLayer,
+		DesktopAddIn,
+		ExplorerAddIn,
+		MapService,
+		GeocodingService,
+		NetworkAnalysisService,
+		GlobeService,
+		GeoprocessingService,
+		GeodataService,
+		ImageService,
+		GeometryService,
+		FeatureService,
+		KML,
+		WMS,
+		WMTS,
+		WebMap,
+		WebMappingApplication,
+		MobileApplication,
+		CodeAttachment,
+		FeaturedItems,
+		FeatureCollection,
+		FeatureCollectionTemplate,
+		SymbolSet,
+		ColorSet,
+		CollectionDefinition,
+		OperationView,
+		OperationsDashboardAddin,
+		CityEngineWebScene,
+		WorkflowManagerPackage,
+		ArcPadPackage,
+		Shapefile,
+		CSV,
+		ServiceDefinition
+	}
+
+	public enum AGSPortalAccess : [unmapped: unexposed: Elaborated] {
+		Private = 0,
+		Shared,
+		Organization,
+		Public
+	}
+
+	public enum AGSPortalQuerySortOrder : [unmapped: unexposed: Elaborated] {
+		Ascending = 0,
+		Descending
+	}
+
+	public enum AGSPortalMode : [unmapped: unexposed: Elaborated] {
+		SingleTenant = 0,
+		MultiTenant
+	}
+
+	public enum AGSPortalUserRole : [unmapped: unexposed: Elaborated] {
+		None = 0,
+		User,
+		Publisher,
+		Admin
+	}
+
+	public enum AGSWMTSServiceMode : [unmapped: unexposed: Elaborated] {
+		RESTful = 0,
+		KVP
+	}
+
+	public enum AGSImageFormat : [unmapped: unexposed: Elaborated] {
+		Unknown = -1,
+		PNG32 = 0,
+		PNG24,
+		PNG8,
+		PNG,
+		JPG,
+		GIF,
+		BMP,
+		TIFF,
+		JPGPNG,
+		JPEG
+	}
+
+	public enum AGSPopupsContainerStyle : [unmapped: unexposed: Elaborated] {
+		Default = 0,
+		Black,
+		CustomColor
+	}
+
+	public enum AGSPopupsContainerEditingStyle : [unmapped: unexposed: Elaborated] {
+		GeometryTool,
+		GeometryInline
+	}
+
+	public enum AGSPopupsContainerPagingStyle : [unmapped: unexposed: Elaborated] {
+		PageControl,
+		Toolbar
+	}
+
+	public enum AGSQueryStatisticsType : [unmapped: unexposed: Elaborated] {
+		Count,
+		Sum,
+		Min,
+		Max,
+		Avg,
+		StdDev,
+		Var
+	}
+
+	public enum AGSMPSymbolDictionaryType : [unmapped: unexposed: Elaborated] {
+		Mil2525C,
+		App6B,
+		Simple
+	}
+
+	public enum AGSAuthenticationType : [unmapped: unexposed: Elaborated] {
+		Unknown = 0,
+		None,
+		Token,
+		HTTP,
+		ClientCertificate
+	}
+
+	public enum AGSCredentialErrorType : [unmapped: unexposed: Elaborated] {
+		None = 0,
+		InvalidCredentials,
+		SSLRequired,
+		Unknown
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -44,8 +543,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("sslRequired")]
 		bool SslRequired { get; }
 
-		[Export ("identity")]
-		SecIdentity Identity();
+		[Export ("identity"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCredential.h", Line = 101)]
+		SecIdentity Identity { get; }
 
 		[Export ("initWithUser:password:")]
 		IntPtr Constructor (string username, string password);
@@ -71,8 +570,8 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("isServiceSecured:error:")]
 		AGSAuthenticationType IsServiceSecured (NSUrl url, out NSError error);
 
-		[Static, Export ("identitiesForProtectionSpace:")]
-		SecIdentityRef [] IdentitiesForProtectionSpace (NSURLProtectionSpace protectionSpace);
+		[Static, Export ("identitiesForProtectionSpace:"), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCredential.h", Line = 179)]
+		NSObject [] IdentitiesForProtectionSpace (NSURLProtectionSpace protectionSpace);
 
 		[Static, Export ("importCertificateData:password:overwrite:error:")]
 		SecIdentity ImportCertificateData (NSData data, string password, bool overwrite, out NSError error);
@@ -80,8 +579,8 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("removeIdentityFromKeychain:")]
 		OSStatus RemoveIdentityFromKeychain (SecIdentity identityRef);
 
-		[Export ("authenticatingHost")]
-		string AuthenticatingHost();
+		[Export ("authenticatingHost"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCredential.h", Line = 204)]
+		string AuthenticatingHost { get; }
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -115,8 +614,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("removeCredential:")]
 		void RemoveCredential (AGSCredential credential);
 
-		[Static, Export ("defaultCache")]
-		AGSCredentialCache DefaultCache ();
+		[Static, Export ("defaultCache"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCredentialCache.h", Line = 85)]
+		AGSCredentialCache DefaultCache { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -135,25 +634,25 @@ namespace MonoTouch.ArcGIS {
 	[Category, BaseType (typeof (NSDictionary))]
 	public partial interface AGSAdditions_NSDictionary {
 
-		[Export ("ags_encodeQueryParams"), Target(typeof(NSDictionary))]
-		string EncodeQueryParams();
+		[Export ("ags_encodeQueryParams"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSDictionary+AGSAdditions.h", Line = 34)]
+		string Ags_encodeQueryParams { get; }
 
-		[Export ("ags_encodeJSON"), Target(typeof(NSDictionary))]
-		NSDictionary EncodeJSON();
+		[Export ("ags_encodeJSON"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSDictionary+AGSAdditions.h", Line = 39)]
+		NSDictionary Ags_encodeJSON { get; }
 
-		[Export ("ags_stringByApplyingTemplate:"), Target(typeof(NSDictionary))]
+		[Export ("ags_stringByApplyingTemplate:")]
 		string Ags_stringByApplyingTemplate (string templateString);
 
-		[Export ("ags_safeGetObjectForKey:"), Target(typeof(NSDictionary))]
+		[Export ("ags_safeGetObjectForKey:")]
 		NSObject Ags_safeGetObjectForKey (NSObject key);
 
-		[Export ("ags_safeValueForKey:"), Target(typeof(NSDictionary))]
+		[Export ("ags_safeValueForKey:")]
 		NSObject Ags_safeValueForKey (string key);
 
-		[Export ("ags_safeObjectForKey:"), Target(typeof(NSDictionary))]
+		[Export ("ags_safeObjectForKey:")]
 		NSObject Ags_safeObjectForKey (NSObject key);
 
-		[Export ("ags_URLForKey:"), Target(typeof(NSDictionary))]
+		[Export ("ags_URLForKey:")]
 		NSUrl Ags_URLForKey (NSObject key);
 	}
 
@@ -185,14 +684,14 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("dataForRequest:error:")]
 		NSData DataForRequest (NSURLRequest request, out NSError error);
 
-		[Static, Export ("setAdditionalUserAgentInfo:")]
-		string SetAdditionalUserAgentInfo(string userAgentInfo);
+		[Static, Export ("additionalUserAgentInfo"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRequest.h", Line = 90)]
+		string AdditionalUserAgentInfo { set; }
 
-		[Static]
-		string UserAgent { [Bind ("userAgent")]get; }
+		[Static, Export ("userAgent"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRequest.h", Line = 95)]
+		string UserAgent { get; }
 
-		[Static]
-		bool ForcePostForAllRequests { [Bind ("forcePostForAllRequests")]get; [Bind ("setForcePostForAllRequests")]set; }
+		[Static, Export ("forcePostForAllRequests"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRequest.h", Line = 100), Verify ("Backing setter method to ObjC property removed: setForcePostForAllRequests:", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRequest.h", Line = 105)]
+		bool ForcePostForAllRequests { get; set; }
 	}
 
 	[BaseType (typeof (NSOperation))]
@@ -289,8 +788,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithURL:resource:queryParameters:doPOST:")]
 		IntPtr Constructor (NSUrl url, string resource, NSDictionary query, bool post);
 
-		[Static]
-		NSOperationQueue SharedOperationQueue { [Export ("sharedOperationQueue")]get; }
+		[Static, Export ("sharedOperationQueue"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRequestOperation.h", Line = 172)]
+		NSOperationQueue SharedOperationQueue { get; }
 
 		[Export ("shouldProcessResultDataInBackground:")]
 		bool ShouldProcessResultDataInBackground (NSData data);
@@ -329,9 +828,11 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("spatialReferenceWithWKID:WKT:")]
 		NSObject SpatialReferenceWithWKID (uint wkid, string wkt);
 
-		bool IsAnyWebMercator { [Bind ("isAnyWebMercator")]get; }
+		[Export ("isAnyWebMercator"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 229)]
+		bool IsAnyWebMercator { get; }
 
-		bool IsWGS84 { [Bind ("isWGS84")]get; }
+		[Export ("isWGS84"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 234)]
+		bool IsWGS84 { get; }
 
 		[Export ("isEqualToSpatialReference:")]
 		bool IsEqualToSpatialReference (AGSSpatialReference sr);
@@ -342,13 +843,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("encodeToJSON:forKey:")]
 		void EncodeToJSON (NSMutableDictionary json, string key);
 
-		AGSSRUnit Unit { [Bind ("unit")]get; }
+		[Export ("unit"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 261)]
+		AGSSRUnit Unit { get; }
 
-		[Static]
-		AGSSpatialReference WebMercatorSpatialReference { [Bind ("webMercatorSpatialReference")]get; }
+		[Static, Export ("webMercatorSpatialReference"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 266)]
+		AGSSpatialReference WebMercatorSpatialReference { get; }
 
-		[Static]
-		AGSSpatialReference Wgs84SpatialReference { [Bind ("wgs84SpatialReference")]get; }
+		[Static, Export ("wgs84SpatialReference"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 271)]
+		AGSSpatialReference Wgs84SpatialReference { get; }
 
 		[Export ("convertValue:toUnit:")]
 		double ConvertValue (double val, AGSSRUnit unit);
@@ -356,7 +858,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("convertValue:fromUnit:")]
 		double ConvertValue (double val, AGSSRUnit fromUnit);
 
-		bool IsSupported { [Bind ("isSupported")]get; }
+		[Export ("isSupported"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSpatialReference.h", Line = 297)]
+		bool IsSupported { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -377,9 +880,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("intersectsWithEnvelope:")]
 		bool IntersectsWithEnvelope (AGSEnvelope envelope);
 
-		bool IsEmpty { [Bind ("isEmpty")]get; }
+		[Export ("isEmpty"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometry.h", Line = 71)]
+		bool IsEmpty { get; }
 
-		bool IsValid { [Bind ("isValid")]get; }
+		[Export ("isValid"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometry.h", Line = 76)]
+		bool IsValid { get; }
 	}
 
 	[BaseType (typeof (AGSGeometry))]
@@ -418,7 +923,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("containsEnvelope:")]
 		bool ContainsEnvelope (AGSEnvelope env);
 
-		string SimpleRepresentation { [Bind ("simpleRepresentation")]get; }
+		[Export ("simpleRepresentation"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSEnvelope.h", Line = 120)]
+		string SimpleRepresentation { get; }
 
 		[Export ("intersectsWithEnvelope:")]
 		bool IntersectsWithEnvelope (AGSEnvelope envelope);
@@ -426,7 +932,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("intersectionWithEnvelope:")]
 		AGSEnvelope IntersectionWithEnvelope (AGSEnvelope envelope);
 
-		bool IsEmpty { [Bind ("isEmpty")]get; }
+		[Export ("isEmpty"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSEnvelope.h", Line = 142)]
+		bool IsEmpty { get; }
 
 		[Export ("isEqualToEnvelope:")]
 		bool IsEqualToEnvelope (AGSEnvelope other);
@@ -551,7 +1058,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("numPointsInRing:")]
 		int NumPointsInRing (int ring);
 
-		int NumPoints { [Bind ("numPoints")]get; }
+		[Export ("numPoints"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPolygon.h", Line = 58)]
+		int NumPoints { get; }
 
 		[Export ("pointOnRing:atIndex:")]
 		AGSPoint PointOnRing (int ring, int index);
@@ -609,7 +1117,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("numPointsInPath:")]
 		int NumPointsInPath (int path);
 
-		int NumPoints { [Bind ("numPoints")]get; }
+		[Export ("numPoints"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPolyline.h", Line = 57)]
+		int NumPoints { get; }
 
 		[Export ("pointOnPath:atIndex:")]
 		AGSPoint PointOnPath (int path, int index);
@@ -676,17 +1185,17 @@ namespace MonoTouch.ArcGIS {
 		[Export ("simplifyGeometry:")]
 		AGSGeometry SimplifyGeometry (AGSGeometry geometry);
 
-		[Export ("cutGeometry:withCutter:")]
-		AGSGeometry [] CutGeometry (AGSGeometry geometry, AGSPolyline cutter);
+		[Export ("cutGeometry:withCutter:"), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryEngine.h", Line = 126)]
+		NSObject [] CutGeometry (AGSGeometry geometry, AGSPolyline cutter);
 
 		[Export ("bufferGeometry:byDistance:")]
 		AGSMutablePolygon BufferGeometry (AGSGeometry geometry, double distance);
 
 		[Export ("bufferGeometries:byDistance:")]
-		AGSMutablePolygon BufferGeometries (AGSGeometry [] geometries, double distance);
+		AGSMutablePolygon BufferGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryEngine.h", Line = 145)] NSObject [] geometries, double distance);
 
 		[Export ("unionGeometries:")]
-		AGSGeometry UnionGeometries (AGSGeometry [] geometries);
+		AGSGeometry UnionGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryEngine.h", Line = 153)] NSObject [] geometries);
 
 		[Export ("densifyGeometry:withMaxSegmentLength:")]
 		AGSGeometry DensifyGeometry (AGSGeometry geometry, double maxSegmentLength);
@@ -745,13 +1254,13 @@ namespace MonoTouch.ArcGIS {
 		[Export ("normalizeCentralMeridianOfGeometry:")]
 		AGSGeometry NormalizeCentralMeridianOfGeometry (AGSGeometry geometry);
 
-		[Static]
-		AGSGeometryEngine DefaultGeometryEngine { [Bind ("defaultGeometryEngine")]get; }
+		[Static, Export ("defaultGeometryEngine"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryEngine.h", Line = 311)]
+		AGSGeometryEngine DefaultGeometryEngine { get; }
 
 		[Export ("mgrsFromPoint:numDigits:rounding:addSpaces:")]
 		string MgrsFromPoint (AGSPoint pt, int digits, bool rounding, bool addSpaces);
 
-		[Export ("pointFromMGRS:")
+		[Export ("pointFromMGRS:")]
 		AGSPoint PointFromMGRS (string mgrs);
 	}
 
@@ -826,11 +1335,21 @@ namespace MonoTouch.ArcGIS {
 		[Export ("refresh")]
 		void Refresh ();
 
-		bool TimeAware { [Bind ("timeAware")]get; [Bind ("isTimeAware")]set;}
+		[Export ("timeAware")]
+		bool TimeAware { [Bind ("isTimeAware")] get; }
 
-		bool Visible { [Bind ("visible")]get; [Bind ("isVisible")]set; }
+		[Export ("visible")]
+		bool Visible { [Bind ("isVisible")] get; set; }
 
-		bool IsInScale { [Bind ("isInScale")]get; }
+		[Export ("isInScale"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLayer.h", Line = 140)]
+		bool IsInScale { get; }
+	}
+
+	public enum AGSMapUpdateType : [unmapped: unexposed: Elaborated] {
+		SpatialExtent,
+		TimeExtent,
+		LayerAdded,
+		LayerRemoved
 	}
 
 	[Category, BaseType (typeof (AGSLayer))]
@@ -839,7 +1358,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("error", ArgumentSemantic.Retain)]
 		NSError Error { get; set; }
 
-		int DefaultDpi { [Bind ("defaultDpi")]get; }
+		[Export ("defaultDpi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLayer+Subclass.h", Line = 67)]
+		int DefaultDpi { get; }
 
 		[Export ("layerDidLoad")]
 		void LayerDidLoad ();
@@ -869,8 +1389,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("tileSize")]
 		SizeF TileSize { get; }
 
-		[Export ("lods", ArgumentSemantic.Copy)]
-		AGSLOD [] Lods { get; }
+		[Export ("lods", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSTileInfo.h", Line = 57)]
+		NSObject [] Lods { get; }
 
 		[Export ("origin", ArgumentSemantic.Retain)]
 		AGSPoint Origin { get; }
@@ -1326,6 +1846,15 @@ namespace MonoTouch.ArcGIS {
 		NSOperation CancelJob (string jobId);
 	}
 
+	public enum AGSGPAsyncOperationType : [unmapped: unexposed: Elaborated] {
+		Submit = 0,
+		CheckStatus,
+		QueryResultData,
+		QueryResultImage,
+		QueryResultImageLayer,
+		Cancel
+	}
+
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSGeoprocessorDelegate {
 
@@ -1439,6 +1968,17 @@ namespace MonoTouch.ArcGIS {
 		double Distance { get; set; }
 	}
 
+	public enum AGSGPMessageType : [unmapped: unexposed: Elaborated] {
+		Informative = 0,
+		ProcessDefinition,
+		Start,
+		Stop,
+		Warning,
+		Error,
+		Empty,
+		Abort
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSGPMessage : AGSCoding {
 
@@ -1447,6 +1987,21 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("messageDescription", ArgumentSemantic.Copy)]
 		string MessageDescription { get; }
+	}
+
+	public enum AGSGPParameterType : [unmapped: unexposed: Elaborated] {
+		Boolean = 0,
+		Double,
+		Long,
+		String,
+		LinearUnit,
+		FeatureRecordSetLayer,
+		RecordSet,
+		DataFile,
+		Date,
+		RasterData,
+		RasterDataLayer,
+		MultiValue
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2181,6 +2736,26 @@ namespace MonoTouch.ArcGIS {
 		NSObject [] PolylineBarriers { get; }
 	}
 
+	public enum AGSMosaicMethod : [unmapped: unexposed: Elaborated] {
+		None = 0,
+		Center,
+		Nadir,
+		Viewpoint,
+		Attribute,
+		LockRaster,
+		Northwest,
+		Seamline
+	}
+
+	public enum AGSMosaicOperationType : [unmapped: unexposed: Elaborated] {
+		First = 0,
+		Last,
+		Min,
+		Max,
+		Mean,
+		Blend
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSMosaicRule : AGSCoding {
 
@@ -2465,6 +3040,12 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("subLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMSLayerInfo.h", Line = 55)]
 		NSObject [] SubLayers { get; }
+	}
+
+	public enum AGSBingMapLayerStyle : [unmapped: unexposed: Elaborated] {
+		Aerial,
+		AerialWithLabels,
+		Road
 	}
 
 	[BaseType (typeof (AGSTiledServiceLayer))]
@@ -3148,6 +3729,14 @@ namespace MonoTouch.ArcGIS {
 		UIView ScreenPoint (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
 	}
 
+	public enum AGSCalloutLeaderPosition : [unmapped: unexposed: Elaborated] {
+		Bottom = 1UL << 0,
+		Top = 1UL << 1,
+		Left = 1UL << 2,
+		Right = 1UL << 3,
+		Any = AGSCalloutLeaderPositionBottom | AGSCalloutLeaderPositionTop | AGSCalloutLeaderPositionLeft | AGSCalloutLeaderPositionRight
+	}
+
 	[BaseType (typeof (UIView))]
 	public partial interface AGSCallout {
 
@@ -3356,6 +3945,12 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("findTask:operation:didFailWithError:")]
 		void Operation (AGSFindTask findTask, NSOperation op, NSError error);
+	}
+
+	public enum AGSIdentifyParametersLayerOption : [unmapped: unexposed: Elaborated] {
+		Top = 0,
+		Visible,
+		All
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4139,6 +4734,28 @@ namespace MonoTouch.ArcGIS {
 		NSData Decode (string string);
 	}
 
+	public enum AGSDeviceMachineType : [unmapped: unexposed: Elaborated] {
+		Unknown = 0,
+		iPhoneSimulator,
+		iPhone,
+		iPhone3G,
+		iPhone3GS,
+		iPhone4,
+		iPhone5,
+		iPod1stGen,
+		iPod2ndGen,
+		iPod3rdGen,
+		iPod4thGen,
+		iPod5thGen,
+		iPad1stGen,
+		iPad2ndGen,
+		iPhone4S,
+		iPad3rdGen,
+		iPad4thGen,
+		iPadMini,
+		Mac
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSDevice {
 
@@ -4254,6 +4871,12 @@ namespace MonoTouch.ArcGIS {
 		string StringWithObject (NSObject value, out NSError error);
 	}
 
+	public enum AGSSBJsonStreamParserStatus : [unmapped: unexposed: Elaborated] {
+		Complete,
+		WaitingForData,
+		Error
+	}
+
 	[Model]
 	public partial interface AGSSBJsonStreamParserDelegate {
 
@@ -4308,6 +4931,12 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("parse:")]
 		AGSSBJsonStreamParserStatus Parse (NSData data);
+	}
+
+	public enum AGSSBJsonStreamParserAdapterType : [unmapped: unexposed: Elaborated] {
+		None,
+		Array,
+		Object
 	}
 
 	[Model]
@@ -4612,6 +5241,17 @@ namespace MonoTouch.ArcGIS {
 		SizeF Size { get; set; }
 	}
 
+	public enum AGSSimpleFillSymbolStyle : [unmapped: unexposed: Elaborated] {
+		BackwardDiagonal = 0,
+		Cross,
+		DiagonalCross,
+		ForwardDiagonal,
+		Horizontal,
+		Null,
+		Solid,
+		Vertical
+	}
+
 	[BaseType (typeof (AGSFillSymbol))]
 	public partial interface AGSSimpleFillSymbol {
 
@@ -4626,6 +5266,16 @@ namespace MonoTouch.ArcGIS {
 
 		[Static, Export ("simpleFillSymbolWithColor:outlineColor:")]
 		AGSSimpleFillSymbol SimpleFillSymbolWithColor (UIColor fillColor, UIColor outlineColor);
+	}
+
+	public enum AGSSimpleLineSymbolStyle : [unmapped: unexposed: Elaborated] {
+		Dash = 0,
+		Dot,
+		DashDot,
+		DashDotDot,
+		InsideFrame,
+		Null,
+		Solid
 	}
 
 	[BaseType (typeof (AGSSymbol))]
@@ -4896,6 +5546,18 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("editorField", ArgumentSemantic.Copy)]
 		string EditorField { get; }
+	}
+
+	public enum AGSFeatureLayerMode : [unmapped: unexposed: Elaborated] {
+		Snapshot = 0,
+		OnDemand,
+		Selection
+	}
+
+	public enum AGSFeatureLayerSelectionMethod : [unmapped: unexposed: Elaborated] {
+		Add = 0,
+		New,
+		Subtract
 	}
 
 	[BaseType (typeof (AGSGraphicsLayer))]
@@ -5252,6 +5914,13 @@ namespace MonoTouch.ArcGIS {
 		NSObject [] DeleteResults { get; }
 	}
 
+	public enum AGSAttachmentEditState : [unmapped: unexposed: Elaborated] {
+		Original = 0,
+		Added,
+		MarkedForDeletion,
+		DeletedFromServer
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSAttachment {
 
@@ -5412,6 +6081,34 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("domains", ArgumentSemantic.Copy)]
 		NSDictionary Domains { get; }
+	}
+
+	public enum AGSLabelPlacement : [unmapped: unexposed: Elaborated] {
+		PointAboveCenter = 0,
+		PointBelowCenter,
+		PointCenterCenter,
+		PointAboveLeft,
+		PointBelowLeft,
+		PointCenterLeft,
+		PointAboveRight,
+		PointBelowRight,
+		PointCenterRight,
+		LineAboveAfter,
+		LineAboveStart,
+		LineBelowAfter,
+		LineBelowStart,
+		LineCenterAfter,
+		LineCenterStart,
+		LineAboveAlong,
+		LineAboveEnd,
+		LineBelowAlong,
+		LineBelowEnd,
+		LineCenterAlong,
+		LineCenterEnd,
+		LineAboveBefore,
+		LineBelowBefore,
+		LineCenterBefore,
+		PolygonAlwaysHorizontal
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6396,6 +7093,20 @@ namespace MonoTouch.ArcGIS {
 		string StringForTemplatedString (string aString);
 	}
 
+	public enum AGSPopupFieldInfoDateFormat : [unmapped: unexposed: Elaborated] {
+		ShortDate = 0,
+		LongMonthDayYear,
+		ShortMonthYear,
+		DayShortMonthYear,
+		LongDate,
+		ShortDateShortTime,
+		ShortDateShortTime24,
+		LongMonthYear,
+		Year,
+		ShortDateLongTime,
+		ShortDateLongTime24
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSPopupFieldInfo : AGSCoding {
 
@@ -6446,6 +7157,14 @@ namespace MonoTouch.ArcGIS {
 		AGSPopupInfo PopupInfoForGraphic (AGSGraphic graphic);
 	}
 
+	public enum AGSPopupMediaInfoType : [unmapped: unexposed: Elaborated] {
+		Image = 0,
+		LineChart,
+		BarChart,
+		PieChart,
+		ColumnChart
+	}
+
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSPopupMediaInfo : AGSCoding {
 
@@ -6466,6 +7185,16 @@ namespace MonoTouch.ArcGIS {
 
 		[Static, Export ("popupMediaInfoWithTitle:caption:type:value:")]
 		AGSPopupMediaInfo PopupMediaInfoWithTitle (string title, string caption, AGSPopupMediaInfoType type, NSDictionary value);
+	}
+
+	public enum AGSPopupViewType : [unmapped: unexposed: Elaborated] {
+		Container = 0,
+		UIImagePicker,
+		FullMedia,
+		Web,
+		Attachments,
+		Movie,
+		Attribute
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -6669,6 +7398,13 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("error", ArgumentSemantic.Retain)]
 		NSError Error { get; }
+	}
+
+	public enum AGSLocationDisplayAutoPanMode : [unmapped: unexposed: Elaborated] {
+		Off = 0,
+		Default,
+		Navigation,
+		CompassNavigation
 	}
 
 	[BaseType (typeof (NSObject))]
