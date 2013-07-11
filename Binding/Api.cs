@@ -2333,8 +2333,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("objectIdField", ArgumentSemantic.Copy)]
 		string ObjectIdField { get; }
 
-		[Export ("fields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSImageServiceInfo.h", Line = 130)]
-		NSObject [] Fields { get; }
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
 	}
 
 	[BaseType (typeof (AGSDynamicLayer))]
@@ -2349,8 +2349,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("compressionQuality")]
 		uint CompressionQuality { get; set; }
 
-		[Export ("bandIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSImageServiceLayer.h", Line = 67)]
-		NSObject [] BandIds { get; set; }
+		[Export ("bandIds", ArgumentSemantic.Copy)]
+		int [] BandIds { get; set; }
 
 		[Export ("credential", ArgumentSemantic.Copy)]
 		AGSCredential Credential { get; set; }
@@ -2420,8 +2420,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("spatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference SpatialReference { get; }
 
-		[Export ("layerInfos", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMSLayer.h", Line = 67)]
-		NSObject [] LayerInfos { get; }
+		[Export ("layerInfos", ArgumentSemantic.Copy)]
+		AGSWMSLayerInfo [] LayerInfos { get; }
 
 		[Export ("credential", ArgumentSemantic.Copy)]
 		AGSCredential Credential { get; set; }
@@ -2435,8 +2435,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("transparent")]
 		bool Transparent { get; set; }
 
-		[Export ("visibleLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMSLayer.h", Line = 109)]
-		NSObject [] VisibleLayers { get; set; }
+		[Export ("visibleLayers", ArgumentSemantic.Copy)]
+		string [] VisibleLayers { get; set; }
 
 		[Export ("initWithURL:")]
 		IntPtr Constructor (NSUrl url);
@@ -2463,8 +2463,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("extent", ArgumentSemantic.Retain)]
 		AGSEnvelope Extent { get; }
 
-		[Export ("subLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMSLayerInfo.h", Line = 55)]
-		NSObject [] SubLayers { get; }
+		[Export ("subLayers", ArgumentSemantic.Copy)]
+		AGSWMSLayerInfo [] SubLayers { get; }
 	}
 
 	[BaseType (typeof (AGSTiledServiceLayer))]
@@ -2498,8 +2498,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("imageUri", ArgumentSemantic.Copy)]
 		string ImageUri { get; }
 
-		[Export ("subDomains", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSBingMapLayerMetadata.h", Line = 38)]
-		NSObject [] SubDomains { get; }
+		[Export ("subDomains", ArgumentSemantic.Copy)]
+		string [] SubDomains { get; }
 
 		[Export ("zoomRangeFrom")]
 		int ZoomRangeFrom { get; }
@@ -2520,8 +2520,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("renderNativeResolution")]
 		bool RenderNativeResolution { get; set; }
 
-		[Export ("layerInfos", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocalTiledLayer.h", Line = 66)]
-		NSObject [] LayerInfos { get; }
+		[Export ("layerInfos", ArgumentSemantic.Copy)]
+		AGSLayerInfo [] LayerInfos { get; }
 
 		[Export ("initWithName:")]
 		IntPtr Constructor (string name);
@@ -2668,8 +2668,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("calloutDelegate", ArgumentSemantic.Assign)]
 		AGSMapViewCalloutDelegate CalloutDelegate { get; set; }
 
-		[Export ("mapLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSMapViewBase_iOS.h", Line = 83)]
-		NSObject [] MapLayers { get; }
+		[Export ("mapLayers", ArgumentSemantic.Copy)]
+		AGSLayer [] MapLayers { get; }
 
 		[Export ("loaded")]
 		bool Loaded { get; }
@@ -2698,8 +2698,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("allowRotationByPinching")]
 		bool AllowRotationByPinching { get; set; }
 
-		[Export ("visibleArea"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSMapViewBase_iOS.h", Line = 146)]
-		AGSPolygon VisibleArea { get; }
+		AGSPolygon VisibleArea { [Bind("visibleArea")]get; }
 
 		[Export ("visibleAreaEnvelope", ArgumentSemantic.Copy)]
 		AGSEnvelope VisibleAreaEnvelope { get; }
@@ -2821,8 +2820,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("disableWrapAround")]
 		void DisableWrapAround ();
 
-		[Export ("wrapAroundStatus"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSMapViewBase_iOS.h", Line = 432)]
-		AGSMapViewWrapAroundStatus WrapAroundStatus { get; }
+		AGSMapViewWrapAroundStatus WrapAroundStatus { [Bind ("wrapAroundStatus")]get; }
 
 		[Export ("releaseHardwareResourcesWhenBackgrounded")]
 		bool ReleaseHardwareResourcesWhenBackgrounded { get; set; }
@@ -2905,8 +2903,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (AGSDomain))]
 	public partial interface AGSCodedValueDomain {
 
-		[Export ("codedValues", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCodedValueDomain.h", Line = 36)]
-		NSObject [] CodedValues { get; }
+		[Export ("codedValues", ArgumentSemantic.Copy)]
+		AGSCodedValue [] CodedValues { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2915,8 +2913,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("displayFieldName", ArgumentSemantic.Copy)]
 		string DisplayFieldName { get; }
 
-		[Export ("features", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 51)]
-		NSObject [] Features { get; set; }
+		[Export ("features", ArgumentSemantic.Copy)]
+		AGSGraphic [] Features { get; set; }
 
 		[Export ("fieldAliases", ArgumentSemantic.Copy)]
 		NSDictionary FieldAliases { get; }
@@ -2927,8 +2925,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geometryType")]
 		AGSGeometryType GeometryType { get; }
 
-		[Export ("fields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 84)]
-		NSObject [] Fields { get; }
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
 
 		[Export ("initWithDisplayFieldName:features:fieldAliases:spatialReference:geometryType:")]
 		IntPtr Constructor (string displayFieldName, NSObject [] features, NSDictionary fieldAliases, AGSSpatialReference spatialReference, AGSGeometryType geometryType);
@@ -2937,7 +2935,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (NSObject [] features);
 
 		[Static, Export ("featureSetWithFeatures:")]
-		NSObject FeatureSetWithFeatures ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 115)] NSObject [] features);
+		AGSFeatureSet FeatureSetWithFeatures ( AGSGraphic [] features);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2968,8 +2966,7 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSGraphic : AGSCoding {
 
-		[Export ("allAttributes"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 65), Verify ("Backing setter method to ObjC property removed: setAllAttributes:", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 74)]
-		NSDictionary AllAttributes { get; set; }
+		NSDictionary AllAttributes { [Bind ("allAttributes")]get; [Bind ("setAllAttributes:")]set; }
 
 		[Export ("hasAttributeForKey:")]
 		bool HasAttributeForKey (string key);
@@ -3013,8 +3010,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("setAttributeWithInteger:forKey:")]
 		void SetAttributeWithInteger (int value, string key);
 
-		[Export ("attributeToNullForKey"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 163)]
-		string AttributeToNullForKey { set; }
+		[Export ("setAttributeToNullForKey:")]
+		void SetAttributeToNullForKey (string key);
 
 		[Export ("attributeAsStringForKey:")]
 		string AttributeAsStringForKey (string key);
@@ -3083,8 +3080,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("maneuverType")]
 		AGSNADirectionsManeuver ManeuverType { get; }
 
-		[Export ("directionsStrings", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDirectionGraphic.h", Line = 64)]
-		NSObject [] DirectionsStrings { get; }
+		[Export ("directionsStrings", ArgumentSemantic.Copy)]
+		AGSNADirectionsStrings [] DirectionsStrings { get; }
 	}
 
 	[BaseType (typeof (AGSGraphic))]
