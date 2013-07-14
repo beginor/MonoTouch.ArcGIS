@@ -4164,35 +4164,34 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSScreen {
 
-		[Static, Export ("mainScreenScale"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 33)]
-		float MainScreenScale { get; }
+		[Static]
+		float MainScreenScale { [Bind ("mainScreenScale")]get; }
 
-		[Static, Export ("mainScreenPpi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 38)]
-		int MainScreenPpi { get; }
+		[Static]
+		int MainScreenPpi { [Bind ("mainScreenPpi")]get; }
 
-		[Static, Export ("basePpi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 42)]
-		int BasePpi { get; }
+		[Static]
+		int BasePpi { [Bind ("basePpi")]get; }
 	}
 
 	[Category, BaseType (typeof (NSError))]
 	public partial interface AGSAdditions_NSError {
 
-		[Export ("ags_isAuthenticationError"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSError+AGSAdditions.h", Line = 35)]
-		bool Ags_isAuthenticationError { get; }
+		bool IsAuthenticationError { [Bind ("ags_isAuthenticationError")]get; }
 	}
 
 	[Category, BaseType (typeof (NSURL))]
 	public partial interface AGSAdditions_NSURL {
 
 		[Static, Export ("ags_URLWithUnicodeString:")]
-		NSUrl Ags_URLWithUnicodeString (string urlString);
+		NSUrl URLWithUnicodeString (string urlString);
 	}
 
 	[Category, BaseType (typeof (NSURLConnection))]
 	public partial interface AGSAdditions_NSURLConnection {
 
-		[Static, Export ("ags_trustedHosts"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSURLConnection+AGSAdditions.h", Line = 33)]
-		NSMutableArray Ags_trustedHosts { get; }
+		[Static]
+		IList<string> TrustedHosts { [Bind ("ags_trustedHosts")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4302,7 +4301,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSSBJsonStreamParserAdapterDelegate {
 
 		[Export ("parser:foundArray:")]
-		void FoundArray (AGSSBJsonStreamParser parser, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamParserAdapter.h", Line = 55)] NSObject [] array);
+		void FoundArray (AGSSBJsonStreamParser parser, NSObject [] array);
 
 		[Export ("parser:foundObject:")]
 		void FoundObject (AGSSBJsonStreamParser parser, NSDictionary dict);
@@ -4321,15 +4320,14 @@ namespace MonoTouch.ArcGIS {
 	[Category, BaseType (typeof (NSObject))]
 	public partial interface AGSSBProxyForJson_NSObject {
 
-		[Export ("ags_proxyForJson"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 57)]
-		NSObject Ags_proxyForJson { get; }
+		NSObject Ags_proxyForJson { [Bind ("ags_proxyForJson")]get; }
 	}
 
 	[Model]
 	public partial interface AGSSBJsonStreamWriterDelegate {
 
 		[Export ("writer:appendBytes:length:")]
-		void AppendBytes (AGSSBJsonStreamWriter writer, [unmapped: pointer: Pointer] bytes, uint length);
+		void AppendBytes (AGSSBJsonStreamWriter writer, byte[] bytes, uint length);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4363,22 +4361,22 @@ namespace MonoTouch.ArcGIS {
 		bool WriteObject (NSDictionary dict);
 
 		[Export ("writeArray:")]
-		bool WriteArray ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 145)] NSObject [] array);
+		bool WriteArray (NSObject [] array);
 
-		[Export ("writeObjectOpen"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 151)]
-		bool WriteObjectOpen { get; }
+		[Export ("writeObjectOpen")]
+		bool WriteObjectOpen ();
 
-		[Export ("writeObjectClose"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 157)]
-		bool WriteObjectClose { get; }
+		[Export ("writeObjectClose")]
+		bool WriteObjectClose ();
 
-		[Export ("writeArrayOpen"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 162)]
-		bool WriteArrayOpen { get; }
+		[Export ("writeArrayOpen")]
+		bool WriteArrayOpen ();
 
-		[Export ("writeArrayClose"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 167)]
-		bool WriteArrayClose { get; }
+		[Export ("writeArrayClose")]
+		bool WriteArrayClose ();
 
-		[Export ("writeNull"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 172)]
-		bool WriteNull { get; }
+		[Export ("writeNull")]
+		bool WriteNull ();
 
 		[Export ("writeBool:")]
 		bool WriteBool (bool x);
@@ -4397,28 +4395,25 @@ namespace MonoTouch.ArcGIS {
 		bool WriteValue (NSObject v);
 
 		[Export ("appendBytes:length:")]
-		void AppendBytes ([unmapped: pointer: Pointer] bytes, uint length);
+		void AppendBytes (byte[] bytes, uint length);
 	}
 
 	[Category, BaseType (typeof (NSObject))]
 	public partial interface NSObject_AGSSBJsonWriting_NSObject {
 
-		[Export ("ags_JSONRepresentation"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 46)]
-		string Ags_JSONRepresentation { get; }
+		string JSONRepresentation { [Bind ("ags_JSONRepresentation")]get; }
 	}
 
 	[Category, BaseType (typeof (NSString))]
 	public partial interface NSString_AGSSBJsonParsing_NSString {
 
-		[Export ("ags_JSONValue"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 63)]
-		NSObject Ags_JSONValue { get; }
+		NSObject JSONValue { [[Bind ("ags_JSONValue")]]get; }
 	}
 
 	[Category, BaseType (typeof (NSData))]
 	public partial interface NSData_AGSSBJsonParsing_NSData {
 
-		[Export ("ags_JSONValue"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 77)]
-		NSObject Ags_JSONValue { get; }
+		NSObject Ags_JSONValue { [Bind ("ags_JSONValue")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4447,8 +4442,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithSpatialReference:")]
 		IntPtr Constructor (AGSSpatialReference sr);
 
-		[Export ("graphics", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 80)]
-		NSObject [] Graphics { get; }
+		[Export ("graphics", ArgumentSemantic.Copy)]
+		AGSGraphic [] Graphics { get; }
 
 		[Export ("graphicsCount")]
 		uint GraphicsCount { get; }
@@ -4468,14 +4463,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("timeOffsetUnits")]
 		AGSTimeIntervalUnits TimeOffsetUnits { get; set; }
 
-		[Static, Export ("graphicsLayer"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 124)]
-		NSObject GraphicsLayer { get; }
+		[Static, Export ("graphicsLayer")]
+		AGSGraphicsLayer GraphicsLayer ();
 
 		[Export ("addGraphic:")]
 		void AddGraphic (AGSGraphic graphic);
 
 		[Export ("addGraphics:")]
-		void AddGraphics ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 136)] NSObject [] graphics);
+		void AddGraphics (AGSGraphic [] graphics);
 
 		[Export ("removeGraphic:")]
 		void RemoveGraphic (AGSGraphic graphic);
@@ -4484,7 +4479,7 @@ namespace MonoTouch.ArcGIS {
 		void RemoveAllGraphics ();
 
 		[Export ("removeGraphics:")]
-		void RemoveGraphics ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 154)] NSObject [] objects);
+		void RemoveGraphics (AGSGraphic [] objects);
 
 		[Export ("selectionSymbol", ArgumentSemantic.Retain)]
 		AGSSymbol SelectionSymbol { get; set; }
@@ -4501,8 +4496,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("clearSelection")]
 		void ClearSelection ();
 
-		[Export ("selectedGraphics"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 193), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 193)]
-		NSObject [] SelectedGraphics { get; }
+		[Export ("selectedGraphics")]
+		AGSGraphic [] SelectedGraphics { get; }
 
 		[Export ("refresh")]
 		void Refresh ();
@@ -4606,8 +4601,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("style")]
 		AGSSimpleFillSymbolStyle Style { get; set; }
 
-		[Static, Export ("simpleFillSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleFillSymbol.h", Line = 82)]
-		NSObject SimpleFillSymbol { get; }
+		[Static, Export ("simpleFillSymbol")]
+		AGSSimpleFillSymbol ();
 
 		[Export ("initWithColor:outlineColor:")]
 		IntPtr Constructor (UIColor fillColor, UIColor outlineColor);
@@ -4625,8 +4620,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("width")]
 		float Width { get; set; }
 
-		[Static, Export ("simpleLineSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleLineSymbol.h", Line = 82)]
-		NSObject SimpleLineSymbol { get; }
+		[Static, Export ("simpleLineSymbol")]
+		AGSSimpleLineSymbol SimpleLineSymbol ();
 
 		[Export ("initWithColor:")]
 		IntPtr Constructor (UIColor color);
@@ -4650,14 +4645,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("outline", ArgumentSemantic.Retain)]
 		AGSSimpleLineSymbol Outline { get; set; }
 
-		[Static, Export ("simpleMarkerSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleMarkerSymbol.h", Line = 59)]
-		NSObject SimpleMarkerSymbol { get; }
+		[Static, Export ("simpleMarkerSymbol")]
+		AGSSimpleMarkerSymbol SimpleMarkerSymbol ();
 
 		[Export ("initWithColor:")]
 		IntPtr Constructor (UIColor color);
 
 		[Static, Export ("simpleMarkerSymbolWithColor:")]
-		NSObject SimpleMarkerSymbolWithColor (UIColor color);
+		AGSSimpleMarkerSymbol SimpleMarkerSymbolWithColor (UIColor color);
 	}
 
 	[BaseType (typeof (AGSMarkerSymbol))]
@@ -4669,20 +4664,20 @@ namespace MonoTouch.ArcGIS {
 		[Export ("error", ArgumentSemantic.Retain)]
 		NSError Error { get; }
 
-		[Export ("imageWithData"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 51)]
-		NSData ImageWithData { set; }
+		[Export ("setImageWithData:")]
+		void SetImageWithData (NSData data);
 
-		[Export ("imageWithName"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 57)]
-		string ImageWithName { set; }
+		[Export ("setImageWithName:")]
+		void SetImageWithName (string name);
 
-		[Export ("imageWithContentsOfFile"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 63)]
-		string ImageWithContentsOfFile { set; }
+		[Export ("setImageWithContentsOfFile:")]
+		void SetImageWithContentsOfFile (string path);
 
 		[Export ("initWithImage:")]
 		IntPtr Constructor (UIImage image);
 
 		[Static, Export ("pictureMarkerSymbolWithImage:")]
-		NSObject PictureMarkerSymbolWithImage (UIImage image);
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImage (UIImage image);
 
 		[Export ("initWithImageNamed:")]
 		IntPtr Constructor (string imageName);
@@ -4691,7 +4686,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (string imagePath);
 
 		[Static, Export ("pictureMarkerSymbolWithImageNamed:")]
-		NSObject PictureMarkerSymbolWithImageNamed (string imageName);
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImageNamed (string imageName);
 	}
 
 	[BaseType (typeof (AGSSymbol))]
