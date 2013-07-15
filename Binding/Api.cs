@@ -5182,41 +5182,41 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSFeatureLayerEditingDelegate {
 
 		[Export ("featureLayer:operation:didFeatureEditsWithResults:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureLayerEditResults editResults);
+		void DidFeatureEditsWithResults (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureLayerEditResults editResults);
 
 		[Export ("featureLayer:operation:didFailFeatureEditsWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailFeatureEditsWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didAttachmentEditsWithResults:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureLayerAttachmentResults attachmentResults);
+		void DidAttachmentEditsWithResults (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureLayerAttachmentResults attachmentResults);
 
 		[Export ("featureLayer:operation:didFailAttachmentEditsWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailAttachmentEditsWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didQueryAttachmentInfosWithResults:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 342)] NSObject [] attachmentInfos);
+		void DidQueryAttachmentInfosWithResults (AGSFeatureLayer featureLayer, NSOperation op, AGSAttachmentInfo [] attachmentInfos);
 
 		[Export ("featureLayer:operation:didFailQueryAttachmentInfosWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailQueryAttachmentInfosWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didRetrieveAttachmentWithData:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSData attachmentData);
+		void DidRetrieveAttachmentWithData (AGSFeatureLayer featureLayer, NSOperation op, NSData attachmentData);
 
 		[Export ("featureLayer:operation:didFailRetrieveAttachmentWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailRetrieveAttachmentWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSFeatureLayerEditResults {
 
-		[Export ("addResults", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayerEditResults.h", Line = 36)]
-		NSObject [] AddResults { get; }
+		[Export ("addResults", ArgumentSemantic.Copy)]
+		AGSEditResult [] AddResults { get; }
 
-		[Export ("updateResults", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayerEditResults.h", Line = 41)]
-		NSObject [] UpdateResults { get; }
+		[Export ("updateResults", ArgumentSemantic.Copy)]
+		AGSEditResult [] UpdateResults { get; }
 
-		[Export ("deleteResults", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayerEditResults.h", Line = 46)]
-		NSObject [] DeleteResults { get; }
+		[Export ("deleteResults", ArgumentSemantic.Copy)]
+		AGSEditResult [] DeleteResults { get; }
 
 		[Export ("deleteWithQuerySuccess")]
 		bool DeleteWithQuerySuccess { get; }
@@ -5231,8 +5231,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("updateResult", ArgumentSemantic.Retain)]
 		AGSEditResult UpdateResult { get; }
 
-		[Export ("deleteResults", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayerAttachmentResults.h", Line = 45)]
-		NSObject [] DeleteResults { get; }
+		[Export ("deleteResults", ArgumentSemantic.Copy)]
+		AGSEditResult [] DeleteResults { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5259,17 +5259,13 @@ namespace MonoTouch.ArcGIS {
 		[Export ("markForDeletion:")]
 		void MarkForDeletion (bool del);
 
-		[Export ("existsOnServer"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachment.h", Line = 88)]
-		bool ExistsOnServer { get; }
+		bool ExistsOnServer { [Bind ("existsOnServer")]get; }
 
-		[Export ("isLocal"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachment.h", Line = 93)]
-		bool IsLocal { get; }
+		bool IsLocal { [Bind ("isLocal")]get; }
 
-		[Export ("thumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachment.h", Line = 98)]
-		UIImage Thumbnail { get; }
+		UIImage Thumbnail { [Bind ("thumbnail")]get; }
 
-		[Export ("data"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachment.h", Line = 104)]
-		NSData Data { get; }
+		NSData Data { [Bind ("data")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5290,14 +5286,13 @@ namespace MonoTouch.ArcGIS {
 		[Export ("postingLocalEdits")]
 		bool PostingLocalEdits { get; }
 
-		[Export ("attachments", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachmentManager.h", Line = 72)]
-		NSObject [] Attachments { get; }
+		[Export ("attachments", ArgumentSemantic.Copy)]
+		AGSAttachment [] Attachments { get; }
 
 		[Export ("attachmentForId:")]
 		AGSAttachment AttachmentForId (int attachmentId);
 
-		[Export ("hasLocalEdits"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachmentManager.h", Line = 83)]
-		bool HasLocalEdits { get; }
+		bool HasLocalEdits { [Bind ("hasLocalEdits")]get; }
 
 		[Export ("cancelLocalEdits")]
 		void CancelLocalEdits ();
@@ -5340,13 +5335,13 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSAttachmentManagerDelegate {
 
 		[Export ("attachmentManager:didDownloadAttachmentInfos:")]
-		void DidDownloadAttachmentInfos (AGSAttachmentManager attachmentManager, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachmentManager.h", Line = 199)] NSObject [] attachmentInfos);
+		void DidDownloadAttachmentInfos (AGSAttachmentManager attachmentManager, AGSAttachmentInfo [] attachmentInfos);
 
 		[Export ("attachmentManager:didDownloadDataForAttachment:")]
 		void DidDownloadDataForAttachment (AGSAttachmentManager attachmentManager, AGSAttachment attachment);
 
 		[Export ("attachmentManager:didPostLocalEditsToServer:")]
-		void DidPostLocalEditsToServer (AGSAttachmentManager attachmentManager, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAttachmentManager.h", Line = 229)] NSObject [] attachmentsPosted);
+		void DidPostLocalEditsToServer (AGSAttachmentManager attachmentManager, AGSAttachment [] attachmentsPosted);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5390,8 +5385,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("name", ArgumentSemantic.Copy)]
 		string Name { get; }
 
-		[Export ("templates", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureType.h", Line = 45)]
-		NSObject [] Templates { get; }
+		[Export ("templates", ArgumentSemantic.Copy)]
+		AGSFeatureTemplate [] Templates { get; }
 
 		[Export ("domains", ArgumentSemantic.Copy)]
 		NSDictionary Domains { get; }
@@ -5463,8 +5458,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithGeometry:")]
 		IntPtr Constructor (AGSGeometry geometry);
 
-		[Export ("removeSelectedVertex"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 93)]
-		bool RemoveSelectedVertex { get; }
+		[Export ("removeSelectedVertex")]
+		bool RemoveSelectedVertex ();
 
 		[Export ("removeVertexInPart:atIndex:")]
 		void RemoveVertexInPart (int partIndex, int coordinateIndex);
@@ -5475,8 +5470,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("removePartAtIndex:")]
 		void RemovePartAtIndex (int partIndex);
 
-		[Export ("removeSelectedPart"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 117)]
-		bool RemoveSelectedPart { get; }
+		[Export ("removeSelectedPart")]
+		bool RemoveSelectedPart ();
 
 		[Export ("clear")]
 		void Clear ();
@@ -5499,17 +5494,17 @@ namespace MonoTouch.ArcGIS {
 		[Export ("mapView:didEndTapAndHoldAtPoint:mapPoint:graphics:")]
 		void MapView (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
 
-		[Static, Export ("defaultMainSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 164)]
-		AGSCompositeSymbol DefaultMainSymbol { get; }
+		[Static]
+		AGSCompositeSymbol DefaultMainSymbol { [Bind ("defaultMainSymbol")]get; }
 
-		[Static, Export ("defaultSelectedVertexSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 169)]
-		AGSMarkerSymbol DefaultSelectedVertexSymbol { get; }
+		[Static]
+		AGSMarkerSymbol DefaultSelectedVertexSymbol { [Bind ("defaultSelectedVertexSymbol")]get; }
 
-		[Static, Export ("defaultVertexSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 174)]
-		AGSMarkerSymbol DefaultVertexSymbol { get; }
+		[Static]
+		AGSMarkerSymbol DefaultVertexSymbol { [Bind ("defaultVertexSymbol")]get; }
 
-		[Static, Export ("defaultMidVertexSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSketchGraphicsLayer.h", Line = 179)]
-		AGSMarkerSymbol DefaultMidVertexSymbol { get; }
+		[Static]
+		AGSMarkerSymbol DefaultMidVertexSymbol { Bind ("defaultMidVertexSymbol")get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5611,8 +5606,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("thumbnailFileName", ArgumentSemantic.Copy)]
 		string ThumbnailFileName { get; }
 
-		[Export ("tags", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 80)]
-		NSObject [] Tags { get; }
+		[Export ("tags", ArgumentSemantic.Copy)]
+		string [] Tags { get; }
 
 		[Export ("created", ArgumentSemantic.Retain)]
 		NSDate Created { get; }
@@ -5629,33 +5624,33 @@ namespace MonoTouch.ArcGIS {
 		[Export ("thumbnail", ArgumentSemantic.Retain)]
 		UIImage Thumbnail { get; }
 
-		[Export ("users", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 113)]
-		NSObject [] Users { get; }
+		[Export ("users", ArgumentSemantic.Copy)]
+		string [] Users { get; }
 
-		[Export ("admins", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 118)]
-		NSObject [] Admins { get; }
+		[Export ("admins", ArgumentSemantic.Copy)]
+		string [] Admins { get; }
 
-		[Export ("fetchThumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 124)]
-		NSOperation FetchThumbnail { get; }
+		[Export ("fetchThumbnail")]
+		NSOperation FetchThumbnail ();
 
-		[Export ("fetchUsers"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 130)]
-		NSOperation FetchUsers { get; }
+		[Export ("fetchUsers")]
+		NSOperation FetchUsers ();
 	}
 
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSPortalGroupDelegate {
 
 		[Export ("portalGroup:operation:didFetchThumbnail:")]
-		void Operation (AGSPortalGroup portalGroup, NSOperation op, UIImage thumbnail);
+		void DidFetchThumbnail (AGSPortalGroup portalGroup, NSOperation op, UIImage thumbnail);
 
 		[Export ("portalGroup:operation:didFailToFetchThumbnailWithError:")]
-		void Operation (AGSPortalGroup portalGroup, NSOperation op, NSError error);
+		void DidFailToFetchThumbnailWithError (AGSPortalGroup portalGroup, NSOperation op, NSError error);
 
 		[Export ("portalGroup:operation:didFetchUsers:admins:")]
-		void Operation (AGSPortalGroup portalGroup, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 170)] NSObject [] users, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalGroup.h", Line = 170)] NSObject [] admins);
+		void DidFetchUsers (AGSPortalGroup portalGroup, NSOperation op, string [] users, string [] admins);
 
 		[Export ("portalGroup:operation:didFailToFetchUsersWithError:")]
-		void Operation (AGSPortalGroup portalGroup, NSOperation op, NSError error);
+		void DidFailToFetchUsersWithError (AGSPortalGroup portalGroup, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5706,8 +5701,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("homepageFeaturedContentGroupQuery", ArgumentSemantic.Copy)]
 		string HomepageFeaturedContentGroupQuery { get; }
 
-		[Export ("featuredGroupsQueries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalInfo.h", Line = 120)]
-		NSObject [] FeaturedGroupsQueries { get; }
+		[Export ("featuredGroupsQueries", ArgumentSemantic.Copy)]
+		string [] FeaturedGroupsQueries { get; }
 
 		[Export ("portalThumbnail", ArgumentSemantic.Retain)]
 		UIImage PortalThumbnail { get; }
@@ -5727,8 +5722,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("urlKey", ArgumentSemantic.Copy)]
 		string UrlKey { get; }
 
-		[Export ("geocodeServiceUrls", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalInfo.h", Line = 164)]
-		NSObject [] GeocodeServiceUrls { get; }
+		[Export ("geocodeServiceUrls", ArgumentSemantic.Copy)]
+		string [] GeocodeServiceUrls { get; }
 
 		[Export ("routeServiceUrl", ArgumentSemantic.Retain)]
 		NSUrl RouteServiceUrl { get; }
@@ -5739,11 +5734,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("printTaskUrl", ArgumentSemantic.Retain)]
 		NSUrl PrintTaskUrl { get; }
 
-		[Export ("fetchPortalThumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalInfo.h", Line = 185)]
-		NSOperation FetchPortalThumbnail { get; }
+		[Export ("fetchPortalThumbnail")]
+		NSOperation FetchPortalThumbnail ();
 
-		[Export ("fetchOrganizationThumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalInfo.h", Line = 190)]
-		NSOperation FetchOrganizationThumbnail { get; }
+		[Export ("fetchOrganizationThumbnail")]
+		NSOperation FetchOrganizationThumbnail ();
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -5801,8 +5796,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("locale", ArgumentSemantic.Retain)]
 		NSLocale Locale { get; }
 
-		[Export ("tags", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 104)]
-		NSObject [] Tags { get; }
+		[Export ("tags", ArgumentSemantic.Copy)]
+		string [] Tags { get; }
 
 		[Export ("created", ArgumentSemantic.Retain)]
 		NSDate Created { get; }
@@ -5837,48 +5832,48 @@ namespace MonoTouch.ArcGIS {
 		[Export ("thumbnail", ArgumentSemantic.Retain)]
 		UIImage Thumbnail { get; }
 
-		[Export ("comments", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 168)]
-		NSObject [] Comments { get; }
+		[Export ("comments", ArgumentSemantic.Copy)]
+		string [] Comments { get; }
 
 		[Export ("initWithPortal:itemId:")]
 		IntPtr Constructor (AGSPortal portal, string itemId);
 
-		[Export ("fetchData"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 180)]
-		NSOperation FetchData { get; }
+		[Export ("fetchData")]
+		NSOperation FetchData ();
 
-		[Export ("fetchThumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 185)]
-		NSOperation FetchThumbnail { get; }
+		[Export ("fetchThumbnail")]
+		NSOperation FetchThumbnail ();
 
-		[Export ("fetchComments"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 190)]
-		NSOperation FetchComments { get; }
+		[Export ("fetchComments")]
+		NSOperation FetchComments ();
 	}
 
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSPortalItemDelegate {
 
 		[Export ("portalItemDidLoad:")]
-		void  (AGSPortalItem portalItem);
+		void PortalItemDidLoad (AGSPortalItem portalItem);
 
 		[Export ("portalItem:didFailToLoadWithError:")]
 		void DidFailToLoadWithError (AGSPortalItem portalItem, NSError error);
 
 		[Export ("portalItem:operation:didFetchData:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, NSData data);
+		void DidFetchData (AGSPortalItem portalItem, NSOperation op, NSData data);
 
 		[Export ("portalItem:operation:didFailToFetchDataWithError:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, NSError error);
+		void DidFailToFetchDataWithError (AGSPortalItem portalItem, NSOperation op, NSError error);
 
 		[Export ("portalItem:operation:didFetchThumbnail:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, UIImage thumbnail);
+		void DidFetchThumbnail (AGSPortalItem portalItem, NSOperation op, UIImage thumbnail);
 
 		[Export ("portalItem:operation:didFailToFetchThumbnailWithError:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, NSError error);
+		void DidFailToFetchThumbnailWithError (AGSPortalItem portalItem, NSOperation op, NSError error);
 
 		[Export ("portalItem:operation:didFetchComments:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalItem.h", Line = 258)] NSObject [] comments);
+		void DidFetchComments (AGSPortalItem portalItem, NSOperation op, string [] comments);
 
 		[Export ("portalItem:operation:didFailToFetchCommentsWithError:")]
-		void Operation (AGSPortalItem portalItem, NSOperation op, NSError error);
+		void DidFailToFetchCommentsWithError (AGSPortalItem portalItem, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5958,7 +5953,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("totalResults")]
 		int TotalResults { get; }
 
-		[Export ("results", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalQueryResultSet.h", Line = 52)]
+		[Export ("results", ArgumentSemantic.Copy)]
 		NSObject [] Results { get; }
 	}
 
@@ -5989,11 +5984,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("thumbnailFileName", ArgumentSemantic.Copy)]
 		string ThumbnailFileName { get; }
 
-		[Export ("tags", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 85)]
-		NSObject [] Tags { get; }
+		[Export ("tags", ArgumentSemantic.Copy)]
+		string [] Tags { get; }
 
-		[Export ("groups", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 90)]
-		NSObject [] Groups { get; }
+		[Export ("groups", ArgumentSemantic.Copy)]
+		string [] Groups { get; }
 
 		[Export ("access")]
 		AGSPortalAccess Access { get; }
@@ -6010,14 +6005,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("role")]
 		AGSPortalUserRole Role { get; }
 
-		[Export ("fetchContent"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 123)]
-		NSOperation FetchContent { get; }
+		[Export ("fetchContent")]
+		NSOperation FetchContent ();
 
 		[Export ("fetchContentInFolder:")]
 		NSOperation FetchContentInFolder (string folderId);
 
-		[Export ("fetchThumbnail"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 134)]
-		NSOperation FetchThumbnail { get; }
+		[Export ("fetchThumbnail")]
+		NSOperation FetchThumbnail ();
 
 		[Export ("initWithPortal:username:")]
 		IntPtr Constructor (AGSPortal portal, string username);
@@ -6027,22 +6022,22 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSPortalUserDelegate {
 
 		[Export ("portalUserDidLoad:")]
-		void  (AGSPortalUser portalUser);
+		void PortalUserDidLoad (AGSPortalUser portalUser);
 
 		[Export ("portalUser:didFailToLoadWithError:")]
 		void DidFailToLoadWithError (AGSPortalUser portalUser, NSError error);
 
 		[Export ("portalUser:operation:didFetchContent:folders:inFolder:")]
-		void Operation (AGSPortalUser portalUser, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 178)] NSObject [] items, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPortalUser.h", Line = 178)] NSObject [] folders, string folderId);
+		void DidFetchContent (AGSPortalUser portalUser, NSOperation op, AGSPortalItem [] items, string [] folders, string folderId);
 
 		[Export ("portalUser:operation:didFailToFetchContentInFolder:withError:")]
-		void Operation (AGSPortalUser portalUser, NSOperation op, string folderId, NSError error);
+		void DidFailToFetchContentInFolder (AGSPortalUser portalUser, NSOperation op, string folderId, NSError error);
 
 		[Export ("portalUser:operation:didFetchThumbnail:")]
-		void Operation (AGSPortalUser portalUser, NSOperation op, UIImage thumbnail);
+		void DidFetchThumbnail (AGSPortalUser portalUser, NSOperation op, UIImage thumbnail);
 
 		[Export ("portalUser:operation:didFailToFetchThumbnailWithError:")]
-		void Operation (AGSPortalUser portalUser, NSOperation op, NSError error);
+		void DidFailToFetchThumbnailWithError (AGSPortalUser portalUser, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6093,8 +6088,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("zoomToDefaultExtentOnOpen")]
 		bool ZoomToDefaultExtentOnOpen { get; set; }
 
-		[Export ("bookmarks", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMap.h", Line = 211)]
-		NSObject [] Bookmarks { get; }
+		[Export ("bookmarks", ArgumentSemantic.Copy)]
+		AGSWebMapBookmark [] Bookmarks { get; }
 
 		[Export ("loaded")]
 		bool Loaded { [Bind ("isLoaded")] get; }
@@ -6102,8 +6097,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("version")]
 		float Version { get; }
 
-		[Export ("operationalLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMap.h", Line = 226)]
-		NSObject [] OperationalLayers { get; }
+		[Export ("operationalLayers", ArgumentSemantic.Copy)]
+		AGSWebMapLayerInfo [] OperationalLayers { get; }
 
 		[Export ("baseMap", ArgumentSemantic.Retain)]
 		AGSWebMapBaseMap BaseMap { get; }
@@ -6111,8 +6106,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("portalItem", ArgumentSemantic.Retain)]
 		AGSPortalItem PortalItem { get; }
 
-		[Export ("queries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMap.h", Line = 241)]
-		NSObject [] Queries { get; }
+		[Export ("queries", ArgumentSemantic.Copy)]
+		AGSWebMapQuery [] Queries { get; }
 
 		[Export ("openIntoMapView:")]
 		void OpenIntoMapView (AGSMapView mapView);
@@ -6172,11 +6167,10 @@ namespace MonoTouch.ArcGIS {
 		[Export ("webMap:didLoadLayer:")]
 		void DidLoadLayer (AGSWebMap webMap, AGSLayer layer);
 
-		[Export ("bingAppId"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMap.h", Line = 401)]
-		string BingAppId { get; }
+		string BingAppId { [Bind ("bingAppId")]get; }
 
 		[Export ("bingAppIdForWebMap:")]
-		string  (AGSWebMap webMap);
+		string BingAppIdForWebMap (AGSWebMap webMap);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6185,8 +6179,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("title", ArgumentSemantic.Copy)]
 		string Title { get; }
 
-		[Export ("baseMapLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapBaseMap.h", Line = 40)]
-		NSObject [] BaseMapLayers { get; }
+		[Export ("baseMapLayers", ArgumentSemantic.Copy)]
+		AGSWebMapLayerInfo [] BaseMapLayers { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6202,8 +6196,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSWebMapFeatureCollection : AGSCoding {
 
-		[Export ("layers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapFeatureCollection.h", Line = 33)]
-		NSObject [] Layers { get; }
+		[Export ("layers", ArgumentSemantic.Copy)]
+		AGSWebMapSubLayerInfo [] Layers { get; }
 
 		[Export ("showLegend")]
 		bool ShowLegend { get; }
@@ -6248,11 +6242,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("popupInfo", ArgumentSemantic.Retain)]
 		AGSPopupInfo PopupInfo { get; }
 
-		[Export ("layers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapLayerInfo.h", Line = 92)]
-		NSObject [] Layers { get; }
+		[Export ("layers", ArgumentSemantic.Copy)]
+		AGSWebMapSubLayerInfo [] Layers { get; }
 
-		[Export ("visibleLayers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapLayerInfo.h", Line = 97)]
-		NSObject [] VisibleLayers { get; }
+		[Export ("visibleLayers", ArgumentSemantic.Copy)]
+		int [] VisibleLayers { get; }
 
 		[Export ("layerDefinition", ArgumentSemantic.Copy)]
 		NSDictionary LayerDefinition { get; }
@@ -6260,8 +6254,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("showLegend")]
 		bool ShowLegend { get; }
 
-		[Export ("bandIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapLayerInfo.h", Line = 112)]
-		NSObject [] BandIds { get; }
+		[Export ("bandIds", ArgumentSemantic.Copy)]
+		string [] BandIds { get; }
 
 		[Export ("minScale")]
 		double MinScale { get; }
@@ -6288,11 +6282,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("whereClause", ArgumentSemantic.Copy)]
 		string WhereClause { get; }
 
-		[Export ("parameters", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapQuery.h", Line = 53)]
-		NSObject [] Parameters { get; }
+		[Export ("parameters", ArgumentSemantic.Copy)]
+		AGSWebMapQueryParameter [] Parameters { get; }
 
-		[Export ("visibleFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWebMapQuery.h", Line = 60)]
-		NSObject [] VisibleFields { get; }
+		[Export ("visibleFields", ArgumentSemantic.Copy)]
+		string [] VisibleFields { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6416,11 +6410,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("customDescription", ArgumentSemantic.Copy)]
 		string CustomDescription { get; set; }
 
-		[Export ("fieldInfos", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupInfo.h", Line = 56)]
-		NSObject [] FieldInfos { get; set; }
+		[Export ("fieldInfos", ArgumentSemantic.Copy)]
+		AGSPopupFieldInfo [] FieldInfos { get; set; }
 
-		[Export ("mediaInfos", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupInfo.h", Line = 61)]
-		NSObject [] MediaInfos { get; set; }
+		[Export ("mediaInfos", ArgumentSemantic.Copy)]
+		AGSPopupMediaInfo [] MediaInfos { get; set; }
 
 		[Export ("showAttachments")]
 		bool ShowAttachments { get; set; }
@@ -6457,8 +6451,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSPopupsContainerDelegate Delegate { get; set; }
 
-		[Export ("popups", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupsContainer.h", Line = 47)]
-		NSObject [] Popups { get; set; }
+		[Export ("popups", ArgumentSemantic.Copy)]
+		AGSPopup [] Popups { get; set; }
 
 		[Export ("inEditingMode")]
 		bool InEditingMode { get; }
@@ -6494,7 +6488,7 @@ namespace MonoTouch.ArcGIS {
 		UIViewController ModalPresenter { get; set; }
 
 		[Export ("showAdditionalPopups:")]
-		void ShowAdditionalPopups ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupsContainer.h", Line = 116)] NSObject [] popupInfos);
+		void ShowAdditionalPopups (NSObject [] popupInfos);
 
 		[Export ("startEditingCurrentPopup")]
 		void StartEditingCurrentPopup ();
@@ -6552,8 +6546,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSPopupsContainerDelegate Delegate { get; set; }
 
-		[Export ("popups", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupsContainerViewController.h", Line = 59)]
-		NSObject [] Popups { get; set; }
+		[Export ("popups", ArgumentSemantic.Copy)]
+		AGSPopup [] Popups { get; set; }
 
 		[Export ("inEditingMode")]
 		bool InEditingMode { get; }
@@ -6607,7 +6601,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (AGSWebMap webmap, AGSGraphic feature, bool usingNavigationControllerStack);
 
 		[Export ("showAdditionalPopups:")]
-		void ShowAdditionalPopups ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPopupsContainerViewController.h", Line = 177)] NSObject [] popupInfos);
+		void ShowAdditionalPopups (AGSPopup [] popupInfos);
 
 		[Export ("startEditingCurrentPopup")]
 		void StartEditingCurrentPopup ();
@@ -6684,8 +6678,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("interfaceOrientation")]
 		UIInterfaceOrientation InterfaceOrientation { get; set; }
 
-		[Export ("mapLocation"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocationDisplay.h", Line = 123)]
-		AGSPoint MapLocation { get; }
+		AGSPoint MapLocation { [Bind ("mapLocation")]get; }
 
 		[Export ("startDataSource")]
 		void StartDataSource ();
@@ -6738,11 +6731,11 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSSimulatedLocationDisplayDataSource : AGSLocationDisplayDataSource {
 
-		[Export ("locations", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimulatedLocationDisplayDataSource.h", Line = 40)]
-		NSObject [] Locations { get; set; }
+		[Export ("locations", ArgumentSemantic.Copy)]
+		AGSLocation [] Locations { get; set; }
 
-		[Export ("locationsFromPolyline"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimulatedLocationDisplayDataSource.h", Line = 47)]
-		AGSPolyline LocationsFromPolyline { set; }
+		[Export ("setLocationsFromPolyline:")]
+		void SetLocationsFromPolyline (AGSPolyline polyline);
 	}
 
 	[BaseType (typeof (AGSSimulatedLocationDisplayDataSource))]
@@ -6811,14 +6804,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("tileMatrixSet", ArgumentSemantic.Copy)]
 		string TileMatrixSet { get; set; }
 
-		[Export ("tileMatrixSetIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMTSLayerInfo.h", Line = 61)]
-		NSObject [] TileMatrixSetIds { get; }
+		[Export ("tileMatrixSetIds", ArgumentSemantic.Copy)]
+		string [] TileMatrixSetIds { get; }
 
 		[Export ("style", ArgumentSemantic.Retain)]
 		AGSWMTSStyle Style { get; set; }
 
-		[Export ("styles", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMTSLayerInfo.h", Line = 71)]
-		NSObject [] Styles { get; }
+		[Export ("styles", ArgumentSemantic.Copy)]
+		AGSWMTSStyle [] Styles { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6827,8 +6820,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSWMTSInfoDelegate Delegate { get; set; }
 
-		[Export ("layerInfos", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSWMTSInfo.h", Line = 53)]
-		NSObject [] LayerInfos { get; }
+		[Export ("layerInfos", ArgumentSemantic.Copy)]
+		AGSWMTSLayerInfo [] LayerInfos { get; }
 
 		[Export ("credential", ArgumentSemantic.Copy)]
 		AGSCredential Credential { get; set; }
@@ -6884,8 +6877,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (AGSLayer))]
 	public partial interface AGSGroupLayer {
 
-		[Export ("layers", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGroupLayer.h", Line = 39)]
-		NSObject [] Layers { get; }
+		[Export ("layers", ArgumentSemantic.Copy)]
+		AGSLayers [] Layers { get; }
 
 		[Export ("layerAtIndex:")]
 		AGSLayer LayerAtIndex (uint index);
@@ -6979,13 +6972,13 @@ namespace MonoTouch.ArcGIS {
 		AGSMPMessage Mil2525CRemoveMessageWithId (string messageId, string messageType);
 
 		[Static, Export ("mil2525CUpdateMessageWithId:messageType:controlPoints:properties:")]
-		AGSMPMessage Mil2525CUpdateMessageWithId (string messageId, string messageType, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSMPMessageHelper.h", Line = 52)] NSObject [] controlPoints, NSDictionary properties);
+		AGSMPMessage Mil2525CUpdateMessageWithId (string messageId, string messageType, AGSPoint [] controlPoints, NSDictionary properties);
 
 		[Static, Export ("mil2525CUpdateMessageWithId:properties:")]
 		AGSMPMessage Mil2525CUpdateMessageWithId (string messageId, NSDictionary properties);
 
 		[Static, Export ("mil2525CUpdateMessageWithId:messageType:controlPoints:properties:spatialReference:")]
-		AGSMPMessage Mil2525CUpdateMessageWithId (string messageId, string messageType, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSMPMessageHelper.h", Line = 77)] NSObject [] controlPoints, NSDictionary properties, AGSSpatialReference spatialReference);
+		AGSMPMessage Mil2525CUpdateMessageWithId (string messageId, string messageType, AGSPoint [] controlPoints, NSDictionary properties, AGSSpatialReference spatialReference);
 	}
 
 	[BaseType (typeof (NSObject))]
