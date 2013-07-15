@@ -2913,7 +2913,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("displayFieldName", ArgumentSemantic.Copy)]
 		string DisplayFieldName { get; }
 
-		[Export ("features", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 51)]
+		[Export ("features", ArgumentSemantic.Copy)]
 		AGSGraphic [] Features { get; set; }
 
 		[Export ("fieldAliases", ArgumentSemantic.Copy)]
@@ -2925,8 +2925,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geometryType")]
 		AGSGeometryType GeometryType { get; }
 
-		[Export ("fields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 84)]
-		NSObject [] Fields { get; }
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
 
 		[Export ("initWithDisplayFieldName:features:fieldAliases:spatialReference:geometryType:")]
 		IntPtr Constructor (string displayFieldName, NSObject [] features, NSDictionary fieldAliases, AGSSpatialReference spatialReference, AGSGeometryType geometryType);
@@ -2935,7 +2935,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (NSObject [] features);
 
 		[Static, Export ("featureSetWithFeatures:")]
-		NSObject FeatureSetWithFeatures ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureSet.h", Line = 115)] NSObject [] features);
+		AGSFeatureSet FeatureSetWithFeatures ( AGSGraphic [] features);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2966,8 +2966,7 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSGraphic : AGSCoding {
 
-		[Export ("allAttributes"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 65), Verify ("Backing setter method to ObjC property removed: setAllAttributes:", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 74)]
-		NSDictionary AllAttributes { get; set; }
+		NSDictionary AllAttributes { [Bind ("allAttributes")]get; [Bind ("setAllAttributes:")]set; }
 
 		[Export ("hasAttributeForKey:")]
 		bool HasAttributeForKey (string key);
@@ -3011,8 +3010,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("setAttributeWithInteger:forKey:")]
 		void SetAttributeWithInteger (int value, string key);
 
-		[Export ("attributeToNullForKey"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphic.h", Line = 163)]
-		string AttributeToNullForKey { set; }
+		[Export ("setAttributeToNullForKey:")]
+		void SetAttributeToNullForKey (string key);
 
 		[Export ("attributeAsStringForKey:")]
 		string AttributeAsStringForKey (string key);
@@ -3081,8 +3080,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("maneuverType")]
 		AGSNADirectionsManeuver ManeuverType { get; }
 
-		[Export ("directionsStrings", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDirectionGraphic.h", Line = 64)]
-		NSObject [] DirectionsStrings { get; }
+		[Export ("directionsStrings", ArgumentSemantic.Copy)]
+		AGSNADirectionsStrings [] DirectionsStrings { get; }
 	}
 
 	[BaseType (typeof (AGSGraphic))]
@@ -3289,8 +3288,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("contains")]
 		bool Contains { get; set; }
 
-		[Export ("layerIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFindParameters.h", Line = 46)]
-		NSObject [] LayerIds { get; set; }
+		[Export ("layerIds", ArgumentSemantic.Copy)]
+		int [] LayerIds { get; set; }
 
 		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference OutSpatialReference { get; set; }
@@ -3298,14 +3297,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("returnGeometry")]
 		bool ReturnGeometry { get; set; }
 
-		[Export ("searchFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFindParameters.h", Line = 65)]
-		NSObject [] SearchFields { get; set; }
+		[Export ("searchFields", ArgumentSemantic.Copy)]
+		string [] SearchFields { get; set; }
 
 		[Export ("searchText", ArgumentSemantic.Copy)]
 		string SearchText { get; set; }
 
-		[Export ("layerDefinitions", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFindParameters.h", Line = 78)]
-		NSObject [] LayerDefinitions { get; set; }
+		[Export ("layerDefinitions", ArgumentSemantic.Copy)]
+		AGSLayerDefinition [] LayerDefinitions { get; set; }
 
 		[Export ("maxAllowableOffset")]
 		double MaxAllowableOffset { get; set; }
@@ -3350,10 +3349,10 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSFindTaskDelegate {
 
 		[Export ("findTask:operation:didExecuteWithFindResults:")]
-		void Operation (AGSFindTask findTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFindTask.h", Line = 111)] NSObject [] results);
+		void DidExecuteWithFindResults (AGSFindTask findTask, NSOperation op, AGSFindResult [] results);
 
 		[Export ("findTask:operation:didFailWithError:")]
-		void Operation (AGSFindTask findTask, NSOperation op, NSError error);
+		void DidFailWithError (AGSFindTask findTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3377,8 +3376,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geometry", ArgumentSemantic.Retain)]
 		AGSGeometry Geometry { get; set; }
 
-		[Export ("layerIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSIdentifyParameters.h", Line = 103)]
-		NSObject [] LayerIds { get; set; }
+		[Export ("layerIds", ArgumentSemantic.Copy)]
+		int [] LayerIds { get; set; }
 
 		[Export ("mapEnvelope", ArgumentSemantic.Retain)]
 		AGSEnvelope MapEnvelope { get; set; }
@@ -3386,20 +3385,20 @@ namespace MonoTouch.ArcGIS {
 		[Export ("spatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference SpatialReference { get; set; }
 
-		[Export ("layerDefinitions", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSIdentifyParameters.h", Line = 125)]
-		NSObject [] LayerDefinitions { get; set; }
+		[Export ("layerDefinitions", ArgumentSemantic.Copy)]
+		AGSLayerDefinition [] LayerDefinitions { get; set; }
 
 		[Export ("maxAllowableOffset")]
 		double MaxAllowableOffset { get; set; }
 
-		[Export ("layerTimeOptions", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSIdentifyParameters.h", Line = 143)]
-		NSObject [] LayerTimeOptions { get; set; }
+		[Export ("layerTimeOptions", ArgumentSemantic.Copy)]
+		AGSLayerTimeOptions [] LayerTimeOptions { get; set; }
 
 		[Export ("timeExtent", ArgumentSemantic.Retain)]
 		AGSTimeExtent TimeExtent { get; set; }
 
-		[Static, Export ("identifyParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSIdentifyParameters.h", Line = 156)]
-		NSObject IdentifyParameters { get; }
+		[Static]
+		NSObject IdentifyParameters { [Bind ("identifyParameters")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3438,10 +3437,10 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSIdentifyTaskDelegate {
 
 		[Export ("identifyTask:operation:didExecuteWithIdentifyResults:")]
-		void Operation (AGSIdentifyTask identifyTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSIdentifyTask.h", Line = 113)] NSObject [] results);
+		void DidExecuteWithIdentifyResults (AGSIdentifyTask identifyTask, NSOperation op, AGSIdentifyResult [] results);
 
 		[Export ("identifyTask:operation:didFailWithError:")]
-		void Operation (AGSIdentifyTask identifyTask, NSOperation op, NSError error);
+		void DidFailWithError (AGSIdentifyTask identifyTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (AGSTask))]
@@ -3450,14 +3449,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSLocatorDelegate Delegate { get; set; }
 
-		[Static, Export ("locator"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocator.h", Line = 61)]
-		NSObject Locator { get; }
+		[Static]
+		AGSLocator Locator { [Bind ("locator")]get; }
 
 		[Static, Export ("locatorWithURL:")]
-		NSObject LocatorWithURL (NSUrl url);
+		AGSLocator LocatorWithURL (NSUrl url);
 
 		[Static, Export ("locatorWithURL:credential:")]
-		NSObject LocatorWithURL (NSUrl url, AGSCredential cred);
+		AGSLocator LocatorWithURL (NSUrl url, AGSCredential cred);
 
 		[Export ("addressForLocation:maxSearchDistance:")]
 		NSOperation AddressForLocation (AGSPoint location, double distance);
@@ -3466,10 +3465,10 @@ namespace MonoTouch.ArcGIS {
 		NSOperation AddressForLocation (AGSPoint location, double distance, AGSSpatialReference sr);
 
 		[Export ("locationsForAddress:returnFields:")]
-		NSOperation LocationsForAddress (NSDictionary address, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocator.h", Line = 142)] NSObject [] outFields);
+		NSOperation LocationsForAddress (NSDictionary address, string [] outFields);
 
 		[Export ("locationsForAddress:returnFields:outSpatialReference:")]
-		NSOperation LocationsForAddress (NSDictionary address, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocator.h", Line = 169)] NSObject [] outFields, AGSSpatialReference sr);
+		NSOperation LocationsForAddress (NSDictionary address, string [] outFields, AGSSpatialReference sr);
 
 		[Export ("locationsForAddressWithParameters:")]
 		NSOperation LocationsForAddressWithParameters (AGSLocationsForAddressParameters params);
@@ -3482,7 +3481,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSLocatorDelegate {
 
 		[Export ("locator:operation:didFindLocationsForAddress:")]
-		void Operation (AGSLocator locator, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocator.h", Line = 231)] NSObject [] candidates);
+		void DidFindLocationsForAddress (AGSLocator locator, NSOperation op, AGSAddressCandidate [] candidates);
 
 		[Export ("locator:operation:didFailLocationsForAddress:")]
 		void Operation (AGSLocator locator, NSOperation op, NSError error);
@@ -3494,7 +3493,7 @@ namespace MonoTouch.ArcGIS {
 		void Operation (AGSLocator locator, NSOperation op, NSError error);
 
 		[Export ("locator:operation:didFind:")]
-		void Operation (AGSLocator locator, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocator.h", Line = 266)] NSObject [] results);
+		void Operation (AGSLocator locator, NSOperation op, AGSLocatorFindResult [] results);
 
 		[Export ("locator:operation:didFailToFindWithError:")]
 		void Operation (AGSLocator locator, NSOperation op, NSError error);
@@ -3515,8 +3514,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference OutSpatialReference { get; set; }
 
-		[Export ("outFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocationsForAddressParameters.h", Line = 81)]
-		NSObject [] OutFields { get; set; }
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
 
 		[Export ("location", ArgumentSemantic.Retain)]
 		AGSPoint Location { get; set; }
@@ -3524,8 +3523,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("distance")]
 		float Distance { get; set; }
 
-		[Export ("encodeToJSON"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocationsForAddressParameters.h", Line = 109)]
-		NSDictionary EncodeToJSON { get; }
+		[Export ("encodeToJSON")]
+		NSDictionary EncodeToJSON ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3543,8 +3542,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference OutSpatialReference { get; set; }
 
-		[Export ("outFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLocatorFindParameters.h", Line = 74)]
-		NSObject [] OutFields { get; set; }
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
 
 		[Export ("maxLocations")]
 		uint MaxLocations { get; set; }
@@ -3575,8 +3574,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geometry", ArgumentSemantic.Retain)]
 		AGSGeometry Geometry { get; set; }
 
-		[Export ("outFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 60)]
-		NSObject [] OutFields { get; set; }
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
 
 		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference OutSpatialReference { get; set; }
@@ -3593,8 +3592,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("where", ArgumentSemantic.Copy)]
 		string Where { get; set; }
 
-		[Export ("objectIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 119)]
-		NSObject [] ObjectIds { get; set; }
+		[Export ("objectIds", ArgumentSemantic.Copy)]
+		int [] ObjectIds { get; set; }
 
 		[Export ("relationParam", ArgumentSemantic.Copy)]
 		string RelationParam { get; set; }
@@ -3605,17 +3604,17 @@ namespace MonoTouch.ArcGIS {
 		[Export ("maxAllowableOffset")]
 		double MaxAllowableOffset { get; set; }
 
-		[Export ("outStatistics", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 212)]
-		NSObject [] OutStatistics { get; set; }
+		[Export ("outStatistics", ArgumentSemantic.Copy)]
+		AGSOutStatistic [] OutStatistics { get; set; }
 
-		[Export ("groupByFieldsForStatistics", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 218)]
-		NSObject [] GroupByFieldsForStatistics { get; set; }
+		[Export ("groupByFieldsForStatistics", ArgumentSemantic.Copy)]
+		string [] GroupByFieldsForStatistics { get; set; }
 
-		[Export ("orderByFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 224)]
-		NSObject [] OrderByFields { get; set; }
+		[Export ("orderByFields", ArgumentSemantic.Copy)]
+		string [] OrderByFields { get; set; }
 
-		[Static, Export ("query"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQuery.h", Line = 230)]
-		NSObject Query { get; }
+		[Static, Export ("query")]
+		AGSQuery Query ();
 	}
 
 	[BaseType (typeof (AGSTask))]
@@ -3625,10 +3624,10 @@ namespace MonoTouch.ArcGIS {
 		AGSQueryTaskDelegate Delegate { get; set; }
 
 		[Static, Export ("queryTaskWithURL:")]
-		NSObject QueryTaskWithURL (NSUrl url);
+		AGSQueryTask QueryTaskWithURL (NSUrl url);
 
 		[Static, Export ("queryTaskWithURL:credential:")]
-		NSObject QueryTaskWithURL (NSUrl url, AGSCredential cred);
+		AGSQueryTask QueryTaskWithURL (NSUrl url, AGSCredential cred);
 
 		[Export ("executeWithQuery:")]
 		NSOperation ExecuteWithQuery (AGSQuery query);
@@ -3647,28 +3646,28 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSQueryTaskDelegate {
 
 		[Export ("queryTask:operation:didExecuteWithFeatureSetResult:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, AGSFeatureSet featureSet);
+		void DidExecuteWithFeatureSetResult (AGSQueryTask queryTask, NSOperation op, AGSFeatureSet featureSet);
 
 		[Export ("queryTask:operation:didFailWithError:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, NSError error);
+		void DidFailWithError (AGSQueryTask queryTask, NSOperation op, NSError error);
 
 		[Export ("queryTask:operation:didExecuteWithObjectIds:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSQueryTask.h", Line = 190)] NSObject [] objectIds);
+		void DidFailWithError (AGSQueryTask queryTask, NSOperation op, int [] objectIds);
 
 		[Export ("queryTask:operation:didFailQueryForIdsWithError:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, NSError error);
+		void DidFailQueryForIdsWithError (AGSQueryTask queryTask, NSOperation op, NSError error);
 
 		[Export ("queryTask:operation:didExecuteWithRelatedFeatures:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, NSDictionary relatedFeatures);
+		void DidExecuteWithRelatedFeatures (AGSQueryTask queryTask, NSOperation op, NSDictionary relatedFeatures);
 
 		[Export ("queryTask:operation:didFailRelationshipQueryWithError:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, NSError error);
+		void DidFailRelationshipQueryWithError (AGSQueryTask queryTask, NSOperation op, NSError error);
 
 		[Export ("queryTask:operation:didExecuteWithFeatureCount:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, int count);
+		void DidExecuteWithFeatureCount (AGSQueryTask queryTask, NSOperation op, int count);
 
 		[Export ("queryTask:operation:didFailQueryFeatureCountWithError:")]
-		void Operation (AGSQueryTask queryTask, NSOperation op, NSError error);
+		void DidFailQueryFeatureCountWithError (AGSQueryTask queryTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3677,14 +3676,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("relationshipId")]
 		int RelationshipId { get; set; }
 
-		[Export ("objectIds", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationshipQuery.h", Line = 47)]
-		NSObject [] ObjectIds { get; set; }
+		[Export ("objectIds", ArgumentSemantic.Copy)]
+		int [] ObjectIds { get; set; }
 
 		[Export ("definitionExpression", ArgumentSemantic.Copy)]
 		string DefinitionExpression { get; set; }
 
-		[Export ("outFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationshipQuery.h", Line = 67)]
-		NSObject [] OutFields { get; set; }
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
 
 		[Export ("returnGeometry")]
 		bool ReturnGeometry { get; set; }
@@ -3695,8 +3694,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("maxAllowableOffset")]
 		double MaxAllowableOffset { get; set; }
 
-		[Static, Export ("relationshipQuery"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationshipQuery.h", Line = 99)]
-		NSObject RelationshipQuery { get; }
+		[Static, Export ("relationshipQuery")]
+		NSObject RelationshipQuery ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3715,8 +3714,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSAreasAndLengthsParameters : AGSCoding {
 
-		[Export ("polygons", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAreasAndLengthsParameters.h", Line = 36)]
-		NSObject [] Polygons { get; set; }
+		[Export ("polygons", ArgumentSemantic.Copy)]
+		AGSPolygon [] Polygons { get; set; }
 
 		[Export ("lengthUnit")]
 		AGSSRUnit LengthUnit { get; set; }
@@ -3724,8 +3723,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("areaUnit")]
 		AGSAreaUnits AreaUnit { get; set; }
 
-		[Static, Export ("areasAndLengthsParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSAreasAndLengthsParameters.h", Line = 76)]
-		NSObject AreasAndLengthsParameters { get; }
+		[Static, Export ("areasAndLengthsParameters")]
+		AGSAreasAndLengthsParameters AreasAndLengthsParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3734,11 +3733,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("bufferSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference BufferSpatialReference { get; set; }
 
-		[Export ("distances", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSBufferParameters.h", Line = 46)]
-		NSObject [] Distances { get; set; }
+		[Export ("distances", ArgumentSemantic.Copy)]
+		double [] Distances { get; set; }
 
-		[Export ("geometries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSBufferParameters.h", Line = 51)]
-		NSObject [] Geometries { get; set; }
+		[Export ("geometries", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries { get; set; }
 
 		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference OutSpatialReference { get; set; }
@@ -3749,15 +3748,15 @@ namespace MonoTouch.ArcGIS {
 		[Export ("unit")]
 		AGSSRUnit Unit { get; set; }
 
-		[Static, Export ("bufferParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSBufferParameters.h", Line = 81)]
-		NSObject BufferParameters { get; }
+		[Static, Export ("bufferParameters")]
+		AGSBufferParameters BufferParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSDensifyParameters : AGSCoding {
 
-		[Export ("geometries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDensifyParameters.h", Line = 36)]
-		NSObject [] Geometries { get; set; }
+		[Export ("geometries", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries { get; set; }
 
 		[Export ("maxSegmentLength")]
 		uint MaxSegmentLength { get; set; }
@@ -3768,8 +3767,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geodesic")]
 		bool Geodesic { get; set; }
 
-		[Static, Export ("densifyParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDensifyParameters.h", Line = 59)]
-		NSObject DensifyParameters { get; }
+		[Static, Export ("densifyParameters")]
+		AGSDensifyParameters DensifyParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3787,8 +3786,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("geodesic")]
 		bool Geodesic { get; set; }
 
-		[Static, Export ("distanceParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDistanceParameters.h", Line = 65)]
-		NSObject DistanceParameters { get; }
+		[Static, Export ("distanceParameters")]
+		AGSDistanceParameters DistanceParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3800,11 +3799,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("deviationUnit")]
 		AGSSRUnit DeviationUnit { get; set; }
 
-		[Export ("geometries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeneralizeParameters.h", Line = 50)]
-		NSObject [] Geometries { get; set; }
+		[Export ("geometries", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries { get; set; }
 
-		[Static, Export ("generalizeParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeneralizeParameters.h", Line = 55)]
-		NSObject GeneralizeParameters { get; }
+		[Static, Export ("generalizeParameters")]
+		AGSGeneralizeParameters GeneralizeParameters { get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3839,131 +3838,131 @@ namespace MonoTouch.ArcGIS {
 		NSOperation DistanceWithParameters (AGSDistanceParameters distanceParams);
 
 		[Export ("unionGeometries:")]
-		NSOperation UnionGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 116)] NSObject [] geometries);
+		NSOperation UnionGeometries (AGSGeometry [] geometries);
 
 		[Export ("reshapeGeometry:withReshaper:")]
 		NSOperation ReshapeGeometry (AGSGeometry geometry, AGSPolyline reshaper);
 
 		[Export ("convexHullGeometries:")]
-		NSOperation ConvexHullGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 140)] NSObject [] geometries);
+		NSOperation ConvexHullGeometries (AGSGeometry [] geometries);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSGeometryServiceTaskDelegate {
 
 		[Export ("geometryServiceTask:operation:didReturnBufferedGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 170)] NSObject [] bufferedGeometries);
+		void DidReturnBufferedGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] bufferedGeometries);
 
 		[Export ("geometryServiceTask:operation:didFailBufferWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailBufferWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnProjectedGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 187)] NSObject [] projectedGeometries);
+		void DidReturnProjectedGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] projectedGeometries);
 
 		[Export ("geometryServiceTask:operation:didFailProjectWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailProjectWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnSimplifiedGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 204)] NSObject [] simplifiedGeometries);
+		void DidReturnSimplifiedGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] simplifiedGeometries);
 
 		[Export ("geometryServiceTask:operation:didFailSimplifyWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailSimplifyWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnAreas:andLengths:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 223)] NSObject [] areas, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 223)] NSObject [] lengths);
+		void DidReturnAreasAndLengths (AGSGeometryServiceTask geometryServiceTask, NSOperation op, double [] areas, double [] lengths);
 
 		[Export ("geometryServiceTask:operation:didFailAreasAndLengthsWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailAreasAndLengthsWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnLabelPoints:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 241)] NSObject [] labelPoints);
+		void DidReturnLabelPoints (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGraphic [] labelPoints);
 
 		[Export ("geometryServiceTask:operation:didFailLabelPointsWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailLabelPointsWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnLengths:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 259)] NSObject [] lengths);
+		void DidReturnLengths (AGSGeometryServiceTask geometryServiceTask, NSOperation op, double [] lengths);
 
 		[Export ("geometryServiceTask:operation:didFailLengthsWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailLengthsWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnRelations:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 278)] NSObject [] relations);
+		void DidReturnRelations (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometryRelationship [] relations);
 
 		[Export ("geometryServiceTask:operation:didFailRelationWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailRelationWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnDistance:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, double distance);
+		void DidReturnDistance (AGSGeometryServiceTask geometryServiceTask, NSOperation op, double distance);
 
 		[Export ("geometryServiceTask:operation:didFailDistanceWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailDistanceWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnDensifiedGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 311)] NSObject [] geometries);
+		void DidReturnDensifiedGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailDensifyWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailDensifyWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnGeneralizedGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 328)] NSObject [] geometries);
+		void DidReturnGeneralizedGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailGeneralizeWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailGeneralizeWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnUnionedGeometry:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
+		void DidReturnUnionedGeometry (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
 
 		[Export ("geometryServiceTask:operation:didFailUnionWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailUnionWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnReshapedGeometry:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
+		void DidReturnReshapedGeometry (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
 
 		[Export ("geometryServiceTask:operation:didFailReshapeWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailReshapeWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnIntersectingGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 380)] NSObject [] geometries);
+		void DidReturnIntersectingGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailIntersectWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailIntersectWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnDifferenceGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 401)] NSObject [] geometries);
+		void DidReturnDifferenceGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailDifferenceWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailDifferenceWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnCutGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 419)] NSObject [] geometries);
+		void DidReturnCutGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailCutWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailCutWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnAutoCompletedPolygons:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 437)] NSObject [] polygons);
+		void DidReturnAutoCompletedPolygons (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] polygons);
 
 		[Export ("geometryServiceTask:operation:didFailAutoCompleteWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailAutoCompleteWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnConvexHullGeometry:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
+		void DidReturnConvexHullGeometry (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry geometry);
 
 		[Export ("geometryServiceTask:operation:didFailConvexHullWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailConvexHullWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnOffsetGeometries:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 474)] NSObject [] geometries);
+		void DidReturnOffsetGeometries (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] geometries);
 
 		[Export ("geometryServiceTask:operation:didFailOffsetWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailOffsetWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 
 		[Export ("geometryServiceTask:operation:didReturnTrimExtendPolylines:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask.h", Line = 493)] NSObject [] polylines);
+		void DidReturnTrimExtendPolylines (AGSGeometryServiceTask geometryServiceTask, NSOperation op, AGSGeometry [] polylines);
 
 		[Export ("geometryServiceTask:operation:didFailTrimExtendWithError:")]
-		void Operation (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
+		void DidFailTrimExtendWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 	}
 
 	[Category, BaseType (typeof (AGSGeometryServiceTask))]
@@ -3973,13 +3972,13 @@ namespace MonoTouch.ArcGIS {
 		NSOperation BufferWithParameters (AGSBufferParameters params);
 
 		[Export ("projectGeometries:toSpatialReference:")]
-		NSOperation ProjectGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 49)] NSObject [] geometries, AGSSpatialReference spatialReference);
+		NSOperation ProjectGeometries (AGSGeometry [] geometries, AGSSpatialReference spatialReference);
 
 		[Export ("simplifyGeometries:")]
-		NSOperation SimplifyGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 59)] NSObject [] geometries);
+		NSOperation SimplifyGeometries (AGSGeometry [] geometries);
 
 		[Export ("labelPointsForPolygons:")]
-		NSOperation LabelPointsForPolygons ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 70)] NSObject [] polygons);
+		NSOperation LabelPointsForPolygons (AGSGeometry [] polygons);
 
 		[Export ("densifyWithParameters:")]
 		NSOperation DensifyWithParameters (AGSDensifyParameters densifyParams);
@@ -3988,16 +3987,16 @@ namespace MonoTouch.ArcGIS {
 		NSOperation GeneralizeWithParameters (AGSGeneralizeParameters generalizeParams);
 
 		[Export ("intersectGeometries:withGeometry:")]
-		NSOperation IntersectGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 107)] NSObject [] geometries, AGSGeometry intersectGeometry);
+		NSOperation IntersectGeometries (AGSGeometry [] geometries, AGSGeometry intersectGeometry);
 
 		[Export ("differenceGeometries:withGeometry:")]
-		NSOperation DifferenceGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 121)] NSObject [] geometries, AGSGeometry differenceGeometry);
+		NSOperation DifferenceGeometries (AGSGeometry [] geometries, AGSGeometry differenceGeometry);
 
 		[Export ("cutGeometries:withGeometry:")]
-		NSOperation CutGeometries ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 134)] NSObject [] geometries, AGSPolyline cutterGeometry);
+		NSOperation CutGeometries (AGSGeometry [] geometries, AGSPolyline cutterGeometry);
 
 		[Export ("autoCompletePolygons:withPolylines:")]
-		NSOperation AutoCompletePolygons ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 149)] NSObject [] polygons, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGeometryServiceTask+AGSGeometryArray.h", Line = 149)] NSObject [] polylines);
+		NSOperation AutoCompletePolygons (AGSGeometry [] polygons, AGSGeometry [] polylines);
 
 		[Export ("offsetWithParameters:")]
 		NSOperation OffsetWithParameters (AGSOffsetParameters offsetParams);
@@ -4019,8 +4018,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSLengthsParameters : AGSCoding {
 
-		[Export ("polylines", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLengthsParameters.h", Line = 38)]
-		NSObject [] Polylines { get; set; }
+		[Export ("polylines", ArgumentSemantic.Copy)]
+		AGSPolyline [] Polylines { get; set; }
 
 		[Export ("geodesic")]
 		bool Geodesic { get; set; }
@@ -4031,11 +4030,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithPolyline:")]
 		IntPtr Constructor (AGSPolyline polyline);
 
-		[Static, Export ("lengthParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSLengthsParameters.h", Line = 64)]
-		NSObject LengthParameters { get; }
+		[Static, Export ("lengthParameters")]
+		AGSLengthsParameters LengthParameters ();
 
 		[Static, Export ("lengthParametersWithPolyline:")]
-		NSObject LengthParametersWithPolyline (AGSPolyline polyline);
+		AGSLengthsParameters LengthParametersWithPolyline (AGSPolyline polyline);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4056,21 +4055,21 @@ namespace MonoTouch.ArcGIS {
 		[Export ("simplifyResult")]
 		bool SimplifyResult { get; set; }
 
-		[Export ("geometries", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSOffsetParameters.h", Line = 77)]
-		NSObject [] Geometries { get; set; }
+		[Export ("geometries", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries { get; set; }
 
-		[Static, Export ("offsetParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSOffsetParameters.h", Line = 82)]
-		NSObject OffsetParameters { get; }
+		[Static, Export ("offsetParameters")]
+		AGSOffsetParameters OffsetParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSRelationParameters : AGSCoding {
 
-		[Export ("geometries1", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationParameters.h", Line = 37)]
-		NSObject [] Geometries1 { get; set; }
+		[Export ("geometries1", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries1 { get; set; }
 
-		[Export ("geometries2", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationParameters.h", Line = 43)]
-		NSObject [] Geometries2 { get; set; }
+		[Export ("geometries2", ArgumentSemantic.Copy)]
+		AGSGeometry [] Geometries2 { get; set; }
 
 		[Export ("relation")]
 		AGSGeometryRelation Relation { get; set; }
@@ -4078,15 +4077,15 @@ namespace MonoTouch.ArcGIS {
 		[Export ("relationParam", ArgumentSemantic.Copy)]
 		string RelationParam { get; set; }
 
-		[Static, Export ("relationParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSRelationParameters.h", Line = 78)]
-		NSObject RelationParameters { get; }
+		[Static, Export ("relationParameters")]
+		AGSRelationParameters RelationParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSTrimExtendParameters : AGSCoding {
 
-		[Export ("polylines", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSTrimExtendParameters.h", Line = 38)]
-		NSObject [] Polylines { get; set; }
+		[Export ("polylines", ArgumentSemantic.Copy)]
+		AGSPolyline [] Polylines { get; set; }
 
 		[Export ("trimExtendTo", ArgumentSemantic.Retain)]
 		AGSPolyline TrimExtendTo { get; set; }
@@ -4094,18 +4093,18 @@ namespace MonoTouch.ArcGIS {
 		[Export ("extendHow")]
 		uint ExtendHow { get; set; }
 
-		[Static, Export ("trimExtendParameters"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSTrimExtendParameters.h", Line = 69)]
-		NSObject TrimExtendParameters { get; }
+		[Static, Export ("trimExtendParameters")]
+		AGSTrimExtendParameters TrimExtendParameters ();
 	}
 
 	[Category, BaseType (typeof (UIApplication))]
 	public partial interface AGSAdditions_UIApplication {
 
 		[Static, Export ("ags_setNetworkActivityDelegate:")]
-		void Ags_setNetworkActivityDelegate (AGSNetworkActivityDelegate delegate);
+		void SetNetworkActivityDelegate (AGSNetworkActivityDelegate delegate);
 
 		[Static, Export ("ags_showNetworkActivityIndicator:")]
-		void Ags_showNetworkActivityIndicator (bool show);
+		void AShowNetworkActivityIndicator (bool show);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -4140,69 +4139,59 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSDevice {
 
-		[Static, Export ("currentDevice"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 78)]
-		AGSDevice CurrentDevice { get; }
+		[Static]
+		AGSDevice CurrentDevice { [Bind ("currentDevice")]get; }
 
-		[Export ("systemVersion"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 83)]
-		string SystemVersion { get; }
+		string SystemVersion { [Bind ("systemVersion")]get; }
 
-		[Export ("machine"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 88)]
-		string Machine { get; }
+		string Machine { [Bind ("machine")]get; }
 
-		[Export ("machineType"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 93)]
-		AGSDeviceMachineType MachineType { get; }
+		AGSDeviceMachineType MachineType { [Bind ("machineType")]get; }
 
-		[Export ("isIPad"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 98)]
-		bool IsIPad { get; }
+		bool IsIPad { [Bind ("isIPad")]get; }
 
-		[Export ("isAtLeastiOS4"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 103)]
-		bool IsAtLeastiOS4 { get; }
+		bool IsAtLeastiOS4 { [Bind ("isAtLeastiOS4")]get; }
 
-		[Export ("isAtLeastiOS5"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 108)]
-		bool IsAtLeastiOS5 { get; }
+		bool IsAtLeastiOS5 { [Bind ("isAtLeastiOS5")]get; }
 
-		[Export ("isAtLeastiOS6"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 113)]
-		bool IsAtLeastiOS6 { get; }
+		bool IsAtLeastiOS6 { [Bind ("isAtLeastiOS6")]get; }
 
-		[Export ("isMac"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 118)]
-		bool IsMac { get; }
+		bool IsMac { [Bind ("isMac")]get; }
 
-		[Export ("ppi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSDevice.h", Line = 123)]
-		int Ppi { get; }
+		int Ppi { [Bind ("ppi")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSScreen {
 
-		[Static, Export ("mainScreenScale"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 33)]
-		float MainScreenScale { get; }
+		[Static]
+		float MainScreenScale { [Bind ("mainScreenScale")]get; }
 
-		[Static, Export ("mainScreenPpi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 38)]
-		int MainScreenPpi { get; }
+		[Static]
+		int MainScreenPpi { [Bind ("mainScreenPpi")]get; }
 
-		[Static, Export ("basePpi"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSScreen.h", Line = 42)]
-		int BasePpi { get; }
+		[Static]
+		int BasePpi { [Bind ("basePpi")]get; }
 	}
 
 	[Category, BaseType (typeof (NSError))]
 	public partial interface AGSAdditions_NSError {
 
-		[Export ("ags_isAuthenticationError"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSError+AGSAdditions.h", Line = 35)]
-		bool Ags_isAuthenticationError { get; }
+		bool IsAuthenticationError { [Bind ("ags_isAuthenticationError")]get; }
 	}
 
 	[Category, BaseType (typeof (NSURL))]
 	public partial interface AGSAdditions_NSURL {
 
 		[Static, Export ("ags_URLWithUnicodeString:")]
-		NSUrl Ags_URLWithUnicodeString (string urlString);
+		NSUrl URLWithUnicodeString (string urlString);
 	}
 
 	[Category, BaseType (typeof (NSURLConnection))]
 	public partial interface AGSAdditions_NSURLConnection {
 
-		[Static, Export ("ags_trustedHosts"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSURLConnection+AGSAdditions.h", Line = 33)]
-		NSMutableArray Ags_trustedHosts { get; }
+		[Static]
+		IList<string> TrustedHosts { [Bind ("ags_trustedHosts")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4312,7 +4301,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSSBJsonStreamParserAdapterDelegate {
 
 		[Export ("parser:foundArray:")]
-		void FoundArray (AGSSBJsonStreamParser parser, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamParserAdapter.h", Line = 55)] NSObject [] array);
+		void FoundArray (AGSSBJsonStreamParser parser, NSObject [] array);
 
 		[Export ("parser:foundObject:")]
 		void FoundObject (AGSSBJsonStreamParser parser, NSDictionary dict);
@@ -4331,15 +4320,14 @@ namespace MonoTouch.ArcGIS {
 	[Category, BaseType (typeof (NSObject))]
 	public partial interface AGSSBProxyForJson_NSObject {
 
-		[Export ("ags_proxyForJson"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 57)]
-		NSObject Ags_proxyForJson { get; }
+		NSObject Ags_proxyForJson { [Bind ("ags_proxyForJson")]get; }
 	}
 
 	[Model]
 	public partial interface AGSSBJsonStreamWriterDelegate {
 
 		[Export ("writer:appendBytes:length:")]
-		void AppendBytes (AGSSBJsonStreamWriter writer, [unmapped: pointer: Pointer] bytes, uint length);
+		void AppendBytes (AGSSBJsonStreamWriter writer, byte[] bytes, uint length);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4373,22 +4361,22 @@ namespace MonoTouch.ArcGIS {
 		bool WriteObject (NSDictionary dict);
 
 		[Export ("writeArray:")]
-		bool WriteArray ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 145)] NSObject [] array);
+		bool WriteArray (NSObject [] array);
 
-		[Export ("writeObjectOpen"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 151)]
-		bool WriteObjectOpen { get; }
+		[Export ("writeObjectOpen")]
+		bool WriteObjectOpen ();
 
-		[Export ("writeObjectClose"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 157)]
-		bool WriteObjectClose { get; }
+		[Export ("writeObjectClose")]
+		bool WriteObjectClose ();
 
-		[Export ("writeArrayOpen"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 162)]
-		bool WriteArrayOpen { get; }
+		[Export ("writeArrayOpen")]
+		bool WriteArrayOpen ();
 
-		[Export ("writeArrayClose"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 167)]
-		bool WriteArrayClose { get; }
+		[Export ("writeArrayClose")]
+		bool WriteArrayClose ();
 
-		[Export ("writeNull"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSBJsonStreamWriter.h", Line = 172)]
-		bool WriteNull { get; }
+		[Export ("writeNull")]
+		bool WriteNull ();
 
 		[Export ("writeBool:")]
 		bool WriteBool (bool x);
@@ -4407,28 +4395,25 @@ namespace MonoTouch.ArcGIS {
 		bool WriteValue (NSObject v);
 
 		[Export ("appendBytes:length:")]
-		void AppendBytes ([unmapped: pointer: Pointer] bytes, uint length);
+		void AppendBytes (byte[] bytes, uint length);
 	}
 
 	[Category, BaseType (typeof (NSObject))]
 	public partial interface NSObject_AGSSBJsonWriting_NSObject {
 
-		[Export ("ags_JSONRepresentation"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 46)]
-		string Ags_JSONRepresentation { get; }
+		string JSONRepresentation { [Bind ("ags_JSONRepresentation")]get; }
 	}
 
 	[Category, BaseType (typeof (NSString))]
 	public partial interface NSString_AGSSBJsonParsing_NSString {
 
-		[Export ("ags_JSONValue"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 63)]
-		NSObject Ags_JSONValue { get; }
+		NSObject JSONValue { [[Bind ("ags_JSONValue")]]get; }
 	}
 
 	[Category, BaseType (typeof (NSData))]
 	public partial interface NSData_AGSSBJsonParsing_NSData {
 
-		[Export ("ags_JSONValue"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/NSObject+AGSSBJson.h", Line = 77)]
-		NSObject Ags_JSONValue { get; }
+		NSObject Ags_JSONValue { [Bind ("ags_JSONValue")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4457,8 +4442,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithSpatialReference:")]
 		IntPtr Constructor (AGSSpatialReference sr);
 
-		[Export ("graphics", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 80)]
-		NSObject [] Graphics { get; }
+		[Export ("graphics", ArgumentSemantic.Copy)]
+		AGSGraphic [] Graphics { get; }
 
 		[Export ("graphicsCount")]
 		uint GraphicsCount { get; }
@@ -4478,14 +4463,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("timeOffsetUnits")]
 		AGSTimeIntervalUnits TimeOffsetUnits { get; set; }
 
-		[Static, Export ("graphicsLayer"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 124)]
-		NSObject GraphicsLayer { get; }
+		[Static, Export ("graphicsLayer")]
+		AGSGraphicsLayer GraphicsLayer ();
 
 		[Export ("addGraphic:")]
 		void AddGraphic (AGSGraphic graphic);
 
 		[Export ("addGraphics:")]
-		void AddGraphics ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 136)] NSObject [] graphics);
+		void AddGraphics (AGSGraphic [] graphics);
 
 		[Export ("removeGraphic:")]
 		void RemoveGraphic (AGSGraphic graphic);
@@ -4494,7 +4479,7 @@ namespace MonoTouch.ArcGIS {
 		void RemoveAllGraphics ();
 
 		[Export ("removeGraphics:")]
-		void RemoveGraphics ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 154)] NSObject [] objects);
+		void RemoveGraphics (AGSGraphic [] objects);
 
 		[Export ("selectionSymbol", ArgumentSemantic.Retain)]
 		AGSSymbol SelectionSymbol { get; set; }
@@ -4511,8 +4496,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("clearSelection")]
 		void ClearSelection ();
 
-		[Export ("selectedGraphics"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 193), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSGraphicsLayer.h", Line = 193)]
-		NSObject [] SelectedGraphics { get; }
+		[Export ("selectedGraphics")]
+		AGSGraphic [] SelectedGraphics { get; }
 
 		[Export ("refresh")]
 		void Refresh ();
@@ -4616,8 +4601,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("style")]
 		AGSSimpleFillSymbolStyle Style { get; set; }
 
-		[Static, Export ("simpleFillSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleFillSymbol.h", Line = 82)]
-		NSObject SimpleFillSymbol { get; }
+		[Static, Export ("simpleFillSymbol")]
+		AGSSimpleFillSymbol ();
 
 		[Export ("initWithColor:outlineColor:")]
 		IntPtr Constructor (UIColor fillColor, UIColor outlineColor);
@@ -4635,8 +4620,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("width")]
 		float Width { get; set; }
 
-		[Static, Export ("simpleLineSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleLineSymbol.h", Line = 82)]
-		NSObject SimpleLineSymbol { get; }
+		[Static, Export ("simpleLineSymbol")]
+		AGSSimpleLineSymbol SimpleLineSymbol ();
 
 		[Export ("initWithColor:")]
 		IntPtr Constructor (UIColor color);
@@ -4660,14 +4645,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("outline", ArgumentSemantic.Retain)]
 		AGSSimpleLineSymbol Outline { get; set; }
 
-		[Static, Export ("simpleMarkerSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSSimpleMarkerSymbol.h", Line = 59)]
-		NSObject SimpleMarkerSymbol { get; }
+		[Static, Export ("simpleMarkerSymbol")]
+		AGSSimpleMarkerSymbol SimpleMarkerSymbol ();
 
 		[Export ("initWithColor:")]
 		IntPtr Constructor (UIColor color);
 
 		[Static, Export ("simpleMarkerSymbolWithColor:")]
-		NSObject SimpleMarkerSymbolWithColor (UIColor color);
+		AGSSimpleMarkerSymbol SimpleMarkerSymbolWithColor (UIColor color);
 	}
 
 	[BaseType (typeof (AGSMarkerSymbol))]
@@ -4679,20 +4664,20 @@ namespace MonoTouch.ArcGIS {
 		[Export ("error", ArgumentSemantic.Retain)]
 		NSError Error { get; }
 
-		[Export ("imageWithData"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 51)]
-		NSData ImageWithData { set; }
+		[Export ("setImageWithData:")]
+		void SetImageWithData (NSData data);
 
-		[Export ("imageWithName"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 57)]
-		string ImageWithName { set; }
+		[Export ("setImageWithName:")]
+		void SetImageWithName (string name);
 
-		[Export ("imageWithContentsOfFile"), Verify ("ObjC method massaged into setter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSPictureMarkerSymbol.h", Line = 63)]
-		string ImageWithContentsOfFile { set; }
+		[Export ("setImageWithContentsOfFile:")]
+		void SetImageWithContentsOfFile (string path);
 
 		[Export ("initWithImage:")]
 		IntPtr Constructor (UIImage image);
 
 		[Static, Export ("pictureMarkerSymbolWithImage:")]
-		NSObject PictureMarkerSymbolWithImage (UIImage image);
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImage (UIImage image);
 
 		[Export ("initWithImageNamed:")]
 		IntPtr Constructor (string imageName);
@@ -4701,23 +4686,23 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (string imagePath);
 
 		[Static, Export ("pictureMarkerSymbolWithImageNamed:")]
-		NSObject PictureMarkerSymbolWithImageNamed (string imageName);
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImageNamed (string imageName);
 	}
 
 	[BaseType (typeof (AGSSymbol))]
 	public partial interface AGSCompositeSymbol {
 
-		[Export ("symbols", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCompositeSymbol.h", Line = 46)]
-		NSObject [] Symbols { get; }
+		[Export ("symbols", ArgumentSemantic.Copy)]
+		AGSSymbol [] Symbols { get; }
 
-		[Static, Export ("compositeSymbol"), Verify ("ObjC method massaged into getter property", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCompositeSymbol.h", Line = 52)]
-		NSObject CompositeSymbol { get; }
+		[Static, Export ("compositeSymbol")]
+		NSObject CompositeSymbol ();
 
 		[Export ("addSymbol:")]
 		void AddSymbol (AGSSymbol symbol);
 
 		[Export ("addSymbols:")]
-		void AddSymbols ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSCompositeSymbol.h", Line = 66)] NSObject [] symbols);
+		void AddSymbols (AGSSymbol [] symbols);
 
 		[Export ("removeSymbol:")]
 		void RemoveSymbol (AGSSymbol symbol);
@@ -4800,8 +4785,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("defaultSymbol", ArgumentSemantic.Retain)]
 		AGSSymbol DefaultSymbol { get; set; }
 
-		[Export ("fields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSUniqueValueRenderer.h", Line = 58)]
-		NSObject [] Fields { get; set; }
+		[Export ("fields", ArgumentSemantic.Copy)]
+		string [] Fields { get; set; }
 
 		[Export ("fieldDelimiter", ArgumentSemantic.Copy)]
 		string FieldDelimiter { get; set; }
@@ -4809,8 +4794,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("defaultLabel", ArgumentSemantic.Copy)]
 		string DefaultLabel { get; set; }
 
-		[Export ("uniqueValues", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSUniqueValueRenderer.h", Line = 73)]
-		NSObject [] UniqueValues { get; set; }
+		[Export ("uniqueValues", ArgumentSemantic.Copy)]
+		AGSUniqueValue [] UniqueValues { get; set; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4844,8 +4829,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("field", ArgumentSemantic.Copy)]
 		string Field { get; set; }
 
-		[Export ("classBreaks", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSClassBreaksRenderer.h", Line = 59)]
-		NSObject [] ClassBreaks { get; set; }
+		[Export ("classBreaks", ArgumentSemantic.Copy)]
+		AGSClassBreak [] ClassBreaks { get; set; }
 
 		[Export ("minValue")]
 		double MinValue { get; set; }
@@ -4935,8 +4920,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("displayField", ArgumentSemantic.Copy)]
 		string DisplayField { get; }
 
-		[Export ("fields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 228)]
-		NSObject [] Fields { get; }
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
 
 		[Export ("objectIdField", ArgumentSemantic.Copy)]
 		string ObjectIdField { get; }
@@ -4947,14 +4932,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("defaultDefinitionExpression", ArgumentSemantic.Copy)]
 		string DefaultDefinitionExpression { get; }
 
-		[Export ("types", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 254)]
-		NSObject [] Types { get; }
+		[Export ("types", ArgumentSemantic.Copy)]
+		AGSFeatureType [] Types { get; }
 
-		[Export ("templates", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 262)]
-		NSObject [] Templates { get; }
+		[Export ("templates", ArgumentSemantic.Copy)]
+		AGSFeatureTemplate [] Templates { get; }
 
-		[Export ("relationships", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 269)]
-		NSObject [] Relationships { get; }
+		[Export ("relationships", ArgumentSemantic.Copy)]
+		AGSRelationship [] Relationships { get; }
 
 		[Export ("timeInfo", ArgumentSemantic.Retain)]
 		AGSTimeInfo TimeInfo { get; }
@@ -4971,8 +4956,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("queryDelegate", ArgumentSemantic.Assign)]
 		AGSFeatureLayerQueryDelegate QueryDelegate { get; set; }
 
-		[Export ("outFields", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 317)]
-		NSObject [] OutFields { get; set; }
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
 
 		[Export ("maxAllowableOffset")]
 		double MaxAllowableOffset { get; set; }
@@ -5001,8 +4986,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("serviceFullEnvelope", ArgumentSemantic.Retain)]
 		AGSEnvelope ServiceFullEnvelope { get; }
 
-		[Export ("labelingInfo", ArgumentSemantic.Copy), Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 394)]
-		NSObject [] LabelingInfo { get; }
+		[Export ("labelingInfo", ArgumentSemantic.Copy)]
+		AGSLabelClass [] LabelingInfo { get; }
 
 		[Export ("timeDefinition", ArgumentSemantic.Retain)]
 		AGSTimeExtent TimeDefinition { get; set; }
@@ -5111,34 +5096,34 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSFeatureLayerQueryDelegate {
 
 		[Export ("featureLayer:operation:didQueryFeaturesWithFeatureSet:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
+		void DidQueryFeaturesWithFeatureSet (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
 
 		[Export ("featureLayer:operation:didFailQueryFeaturesWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailQueryFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didQueryObjectIdsWithResults:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer.h", Line = 765)] NSObject [] objectIds);
+		void DidQueryObjectIdsWithResults (AGSFeatureLayer featureLayer, NSOperation op, int [] objectIds);
 
 		[Export ("featureLayer:operation:didFailQueryObjectIdsWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailQueryObjectIdsWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didQueryFeatureCountWithResult:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, int count);
+		void DidQueryFeatureCountWithResult (AGSFeatureLayer featureLayer, NSOperation op, int count);
 
 		[Export ("featureLayer:operation:didFailQueryFeatureCountWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailQueryFeatureCountWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didQueryRelatedFeaturesWithResults:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSDictionary relatedFeatures);
+		void DidQueryRelatedFeaturesWithResults (AGSFeatureLayer featureLayer, NSOperation op, NSDictionary relatedFeatures);
 
 		[Export ("featureLayer:operation:didFailQueryRelatedFeaturesWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailQueryRelatedFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 
 		[Export ("featureLayer:operation:didSelectFeaturesWithFeatureSet:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
+		void DidSelectFeaturesWithFeatureSet (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
 
 		[Export ("featureLayer:operation:didFailSelectFeaturesWithError:")]
-		void Operation (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+		void DidFailSelectFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 	}
 
 	[Category, BaseType (typeof (AGSFeatureLayer))]
@@ -5151,19 +5136,19 @@ namespace MonoTouch.ArcGIS {
 		AGSGraphic FeatureWithType (AGSFeatureType featureType);
 
 		[Export ("addFeatures:")]
-		NSOperation AddFeatures ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 82)] NSObject [] features);
+		NSOperation AddFeatures (AGSGraphic [] features);
 
 		[Export ("updateFeatures:")]
-		NSOperation UpdateFeatures ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 95)] NSObject [] features);
+		NSOperation UpdateFeatures (AGSGraphic [] features);
 
 		[Export ("deleteFeaturesWithObjectIds:")]
-		NSOperation DeleteFeaturesWithObjectIds ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 107)] NSObject [] objectIds);
+		NSOperation DeleteFeaturesWithObjectIds (int [] objectIds);
 
 		[Export ("deleteFeaturesWithWhereClause:geometry:spatialRelation:")]
 		NSOperation DeleteFeaturesWithWhereClause (string where, AGSGeometry geometry, AGSSpatialRelationship spatialRelation);
 
 		[Export ("applyEditsWithFeaturesToAdd:toUpdate:toDelete:")]
-		NSOperation ApplyEditsWithFeaturesToAdd ([Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 139)] NSObject [] addFeatures, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 139)] NSObject [] updateFeatures, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 139)] NSObject [] objectIds);
+		NSOperation ApplyEditsWithFeaturesToAdd (AGSGraphic [] addFeatures, AGSGraphic [] updateFeatures, int [] objectIds);
 
 		[Export ("addAttachment:data:filename:contentType:")]
 		NSOperation AddAttachment (uint objectId, NSData data, string filename, string contentType);
@@ -5184,7 +5169,7 @@ namespace MonoTouch.ArcGIS {
 		NSOperation UpdateAttachment (uint objectId, NSData data, string filename, int attachmentId);
 
 		[Export ("deleteAttachmentsForObjectId:attachmentIds:")]
-		NSOperation DeleteAttachmentsForObjectId (uint objectId, [Verify ("NSArray may be reliably typed, check the documentation", "/Volumes/Projects/MonoTouch.ArcGIS/Headers/AGSFeatureLayer+Editing.h", Line = 249)] NSObject [] attachmentIds);
+		NSOperation DeleteAttachmentsForObjectId (uint objectId, int [] attachmentIds);
 
 		[Export ("queryAttachmentInfosForObjectId:")]
 		NSOperation QueryAttachmentInfosForObjectId (uint objectId);
