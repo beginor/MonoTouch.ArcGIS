@@ -1,9 +1,14 @@
-
-using System.Drawing;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 using MonoTouch.ObjCRuntime;
 using MonoTouch.Foundation;
+using MonoTouch.UIKit;
+using MonoTouch.CoreLocation;
+using MonoTouch.Security;
+
+using OSStatus = System.Int32;
 
 namespace MonoTouch.ArcGIS {
 
@@ -62,8 +67,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithIdentityRef:")]
 		IntPtr Constructor (SecIdentity identityRef);
 
-		[Export ("initWithToken:referer:")]
-		IntPtr Constructor (string token, string referer);
+		//[Export ("initWithToken:referer:")]
+		//IntPtr Constructor (string token, string referer);
 
 		[Static, Export ("getTokenServiceUrl:error:")]
 		NSUrl GetTokenServiceUrl (NSUrl url, out NSError error);
@@ -72,7 +77,7 @@ namespace MonoTouch.ArcGIS {
 		AGSAuthenticationType IsServiceSecured (NSUrl url, out NSError error);
 
 		[Static, Export ("identitiesForProtectionSpace:")]
-		SecIdentityRef [] IdentitiesForProtectionSpace (NSURLProtectionSpace protectionSpace);
+		IntPtr [] IdentitiesForProtectionSpace (NSUrlProtectionSpace protectionSpace);
 
 		[Static, Export ("importCertificateData:password:overwrite:error:")]
 		SecIdentity ImportCertificateData (NSData data, string password, bool overwrite, out NSError error);
@@ -171,10 +176,10 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSRequest {
 
 		[Static, Export ("requestForURL:credential:resource:queryParameters:doPOST:")]
-		NSURLRequest RequestForURL (NSUrl url, AGSCredential cred, string operation, NSDictionary query, bool post);
+		NSUrlRequest RequestForURL (NSUrl url, AGSCredential cred, string operation, NSDictionary query, bool post);
 
 		[Static, Export ("requestForURL:credential:resource:queryParameters:doPOST:cachePolicy:timeoutInterval:")]
-		NSURLRequest RequestForURL (NSUrl url, AGSCredential cred, string operation, NSDictionary queryParams, bool post, NSURLRequestCachePolicy cachePolicy, double timeoutInterval);
+		NSUrlRequest RequestForURL (NSUrl url, AGSCredential cred, string operation, NSDictionary queryParams, bool post, NSUrlRequestCachePolicy cachePolicy, double timeoutInterval);
 
 		[Static, Export ("dataForURL:resource:queryParameters:doPOST:error:")]
 		NSData DataForURL (NSUrl url, string operation, NSDictionary query, bool post, out NSError error);
@@ -183,7 +188,7 @@ namespace MonoTouch.ArcGIS {
 		NSData DataForURL (NSUrl url, AGSCredential cred, string operation, NSDictionary query, bool post, out NSError error);
 
 		[Static, Export ("dataForRequest:error:")]
-		NSData DataForRequest (NSURLRequest request, out NSError error);
+		NSData DataForRequest (NSUrlRequest request, out NSError error);
 
 		[Static, Export ("setAdditionalUserAgentInfo:")]
 		string SetAdditionalUserAgentInfo(string userAgentInfo);
@@ -248,7 +253,7 @@ namespace MonoTouch.ArcGIS {
 		bool Post { get; }
 
 		[Export ("request", ArgumentSemantic.Retain)]
-		NSURLRequest Request { get; }
+		NSUrlRequest Request { get; }
 
 		[Export ("state", ArgumentSemantic.Retain)]
 		NSMutableDictionary State { get; }
@@ -263,19 +268,19 @@ namespace MonoTouch.ArcGIS {
 		AGSSecuredResource SecuredResource { get; set; }
 
 		[Export ("response", ArgumentSemantic.Retain)]
-		NSURLResponse Response { get; }
+		NSUrlResponse Response { get; }
 
 		[Export ("shouldCacheResponse")]
 		bool ShouldCacheResponse { get; set; }
 
 		[Export ("requestCachePolicy")]
-		NSURLRequestCachePolicy RequestCachePolicy { get; set; }
+		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
 
 		[Export ("timeoutInterval")]
 		double TimeoutInterval { get; set; }
 
 		[Export ("initWithRequest:")]
-		IntPtr Constructor (NSURLRequest req);
+		IntPtr Constructor (NSUrlRequest req);
 
 		[Export ("initWithURL:")]
 		IntPtr Constructor (NSUrl url);
@@ -351,16 +356,16 @@ namespace MonoTouch.ArcGIS {
 		AGSSpatialReference Wgs84SpatialReference { [Bind ("wgs84SpatialReference")]get; }
 
 		[Export ("convertValue:toUnit:")]
-		double ConvertValue (double val, AGSSRUnit unit);
+		double ConvertValueToUnit (double val, AGSSRUnit unit);
 
 		[Export ("convertValue:fromUnit:")]
-		double ConvertValue (double val, AGSSRUnit fromUnit);
+		double ConvertValueFromUnit (double val, AGSSRUnit fromUnit);
 
 		bool IsSupported { [Bind ("isSupported")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
-	public partial interface AGSGeometry : AGSCoding, NSMutableCopying {
+	public partial interface AGSGeometry : AGSCoding {
 
 		[Export ("spatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference SpatialReference { get; }
@@ -719,22 +724,22 @@ namespace MonoTouch.ArcGIS {
 		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:crossesGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool CrossesGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:withinGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool WithinGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:disjointToGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool DisjointToGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:touchesGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool TouchesGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:containsGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool ContainsGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("geometry:overlapsGeometry:")]
-		bool Geometry (AGSGeometry geometry1, AGSGeometry geometry2);
+		bool OverlapsGeometry (AGSGeometry geometry1, AGSGeometry geometry2);
 
 		[Export ("nearestVertexInGeometry:toPoint:")]
 		AGSProximityResult NearestVertexInGeometry (AGSGeometry geometry, AGSPoint point);
@@ -1271,7 +1276,7 @@ namespace MonoTouch.ArcGIS {
 		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("requestCachePolicy")]
-		NSURLRequestCachePolicy RequestCachePolicy { get; set; }
+		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
 
 		[Export ("timeoutInterval")]
 		double TimeoutInterval { get; set; }
@@ -1330,43 +1335,43 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSGeoprocessorDelegate {
 
 		[Export ("geoprocessor:operation:didExecuteWithResults:messages:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPParameterValue [] results, AGSGPMessage [] messages);
+		void DidExecuteWithResults (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPParameterValue [] results, AGSGPMessage [] messages);
 
 		[Export ("geoprocessor:operation:didFailExecuteWithError:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, NSError error);
+		void DidFailExecuteWithError (AGSGeoprocessor geoprocessor, NSOperation op, NSError error);
 
 		[Export ("geoprocessor:operation:jobDidSucceed:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
+		void JobDidSucceed (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:operation:didQueryWithResult:forJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPParameterValue result, string jobId);
+		void DidQueryWithResult (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPParameterValue result, string jobId);
 
 		[Export ("geoprocessor:operation:didQueryWithResultImage:forJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, UIImage image, string jobId);
+		void DidQueryWithResultImage (AGSGeoprocessor geoprocessor, NSOperation op, UIImage image, string jobId);
 
 		[Export ("geoprocessor:operation:didQueryWithResultImageLayer:forJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPResultLayer lyr, string jobId);
+		void DidQueryWithResultImageLayer (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPResultLayer lyr, string jobId);
 
 		[Export ("geoprocessor:operation:ofType:didFailWithError:forJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPAsyncOperationType opType, NSError error, string jobId);
+		void DidFailWithError (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPAsyncOperationType opType, NSError error, string jobId);
 
 		[Export ("geoprocessor:operation:didSubmitJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
+		void DidSubmitJob (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:willCheckJobStatus:")]
 		void WillCheckJobStatus (AGSGeoprocessor geoprocessor, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:operation:didCheckJobStatus:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
+		void DidCheckJobStatus (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:operation:jobDidFail:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
+		void JobDidFail (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:operation:didCancelJob:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
+		void DidCancelJob (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo);
 
 		[Export ("geoprocessor:operation:didFailToCancelJob:withError:")]
-		void Operation (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo, NSError error);
+		void DidFailToCancelJob (AGSGeoprocessor geoprocessor, NSOperation op, AGSGPJobInfo jobInfo, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -1759,16 +1764,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSRouteTaskDelegate {
 
 		[Export ("routeTask:operation:didSolveWithResult:")]
-		void Operation (AGSRouteTask routeTask, NSOperation op, AGSRouteTaskResult routeTaskResult);
+		void DidSolveWithResult (AGSRouteTask routeTask, NSOperation op, AGSRouteTaskResult routeTaskResult);
 
 		[Export ("routeTask:operation:didFailSolveWithError:")]
-		void Operation (AGSRouteTask routeTask, NSOperation op, NSError error);
+		void DidFailSolveWithError (AGSRouteTask routeTask, NSOperation op, NSError error);
 
 		[Export ("routeTask:operation:didRetrieveDefaultRouteTaskParameters:")]
-		void Operation (AGSRouteTask routeTask, NSOperation op, AGSRouteTaskParameters routeParams);
+		void DidRetrieveDefaultRouteTaskParameters (AGSRouteTask routeTask, NSOperation op, AGSRouteTaskParameters routeParams);
 
 		[Export ("routeTask:operation:didFailToRetrieveDefaultRouteTaskParametersWithError:")]
-		void Operation (AGSRouteTask routeTask, NSOperation op, NSError error);
+		void DidFailToRetrieveDefaultRouteTaskParametersWithError (AGSRouteTask routeTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -1953,16 +1958,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSServiceAreaTaskDelegate {
 
 		[Export ("serviceAreaTask:operation:didSolveServiceAreaWithResult:")]
-		void Operation (AGSServiceAreaTask serviceAreaTask, NSOperation op, AGSServiceAreaTaskResult serviceAreaTaskResult);
+		void DidSolveServiceAreaWithResult (AGSServiceAreaTask serviceAreaTask, NSOperation op, AGSServiceAreaTaskResult serviceAreaTaskResult);
 
 		[Export ("serviceAreaTask:operation:didFailSolveWithError:")]
-		void Operation (AGSServiceAreaTask serviceAreaTask, NSOperation op, NSError error);
+		void DidFailSolveWithError (AGSServiceAreaTask serviceAreaTask, NSOperation op, NSError error);
 
 		[Export ("serviceAreaTask:operation:didRetrieveDefaultServiceAreaTaskParameters:")]
-		void Operation (AGSServiceAreaTask serviceAreaTask, NSOperation op, AGSServiceAreaTaskParameters serviceAreaParams);
+		void DidRetrieveDefaultServiceAreaTaskParameters (AGSServiceAreaTask serviceAreaTask, NSOperation op, AGSServiceAreaTaskParameters serviceAreaParams);
 
 		[Export ("serviceAreaTask:operation:didFailToRetrieveDefaultServiceAreaTaskParametersWithError:")]
-		void Operation (AGSServiceAreaTask serviceAreaTask, NSOperation op, NSError error);
+		void DidFailToRetrieveDefaultServiceAreaTaskParametersWithError (AGSServiceAreaTask serviceAreaTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2144,16 +2149,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSClosestFacilityTaskDelegate {
 
 		[Export ("closestFacilityTask:operation:didSolveClosestFacilityWithResult:")]
-		void Operation (AGSClosestFacilityTask closestFacilityTask, NSOperation op, AGSClosestFacilityTaskResult closestFacilityTaskResult);
+		void DidSolveClosestFacilityWithResult (AGSClosestFacilityTask closestFacilityTask, NSOperation op, AGSClosestFacilityTaskResult closestFacilityTaskResult);
 
 		[Export ("closestFacilityTask:operation:didFailSolveWithError:")]
-		void Operation (AGSClosestFacilityTask closestFacilityTask, NSOperation op, NSError error);
+		void DidFailSolveWithError (AGSClosestFacilityTask closestFacilityTask, NSOperation op, NSError error);
 
 		[Export ("closestFacilityTask:operation:didRetrieveDefaultClosestFacilityTaskParameters:")]
-		void Operation (AGSClosestFacilityTask closestFacilityTask, NSOperation op, AGSClosestFacilityTaskParameters closestFacilityParams);
+		void DidRetrieveDefaultClosestFacilityTaskParameters (AGSClosestFacilityTask closestFacilityTask, NSOperation op, AGSClosestFacilityTaskParameters closestFacilityParams);
 
 		[Export ("closestFacilityTask:operation:didFailToRetrieveDefaultClosestFacilityTaskParametersWithError:")]
-		void Operation (AGSClosestFacilityTask closestFacilityTask, NSOperation op, NSError error);
+		void DidFailToRetrieveDefaultClosestFacilityTaskParametersWithError (AGSClosestFacilityTask closestFacilityTask, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -2529,11 +2534,11 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("localTiledLayerWithName:")]
 		AGSLocalTiledLayer LocalTiledLayerWithName (string name);
 
-		[Export ("initWithPath:")]
-		IntPtr Constructor (string fullPath);
+		//[Export ("initWithPath:")]
+		//IntPtr Constructor (string fullPath);
 
-		[Static, Export ("localTiledLayerWithPath:")]
-		AGSLocalTiledLayer LocalTiledLayerWithPath (string fullPath);
+		//[Static, Export ("localTiledLayerWithPath:")]
+		//AGSLocalTiledLayer LocalTiledLayerWithPath (string fullPath);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3020,25 +3025,25 @@ namespace MonoTouch.ArcGIS {
 		NSDate AttributeAsDateForKey (string key);
 
 		[Export ("attributeAsDoubleForKey:exists:")]
-		double AttributeAsDoubleForKey (string key, [unmapped: pointer: Pointer] exists);
+		double AttributeAsDoubleForKey (string key, ref bool exists);
 
 		[Export ("attributeAsIntForKey:exists:")]
-		int AttributeAsIntForKey (string key, [unmapped: pointer: Pointer] exists);
+		int AttributeAsIntForKey (string key, ref bool exists);
 
 		[Export ("attributeAsUnsignedIntForKey:exists:")]
-		uint AttributeAsUnsignedIntForKey (string key, [unmapped: pointer: Pointer] exists);
+		uint AttributeAsUnsignedIntForKey (string key, ref bool exists);
 
 		[Export ("attributeAsFloatForKey:exists:")]
-		float AttributeAsFloatForKey (string key, [unmapped: pointer: Pointer] exists);
+		float AttributeAsFloatForKey (string key, ref bool exists);
 
 		[Export ("attributeAsBoolForKey:exists:")]
-		bool AttributeAsBoolForKey (string key, [unmapped: pointer: Pointer] exists);
+		bool AttributeAsBoolForKey (string key, ref bool exists);
 
 		[Export ("attributeAsLongForKey:exists:")]
-		int AttributeAsLongForKey (string key, [unmapped: pointer: Pointer] exists);
+		int AttributeAsLongForKey (string key, ref bool exists);
 
 		[Export ("attributeAsIntegerForKey:exists:")]
-		int AttributeAsIntegerForKey (string key, [unmapped: pointer: Pointer] exists);
+		int AttributeAsIntegerForKey (string key, ref bool exists);
 
 		[Export ("geometry", ArgumentSemantic.Copy)]
 		AGSGeometry Geometry { get; set; }
@@ -3133,16 +3138,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSInfoTemplateDelegate {
 
 		[Export ("titleForGraphic:screenPoint:mapPoint:")]
-		string ScreenPoint (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+		string TitleForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
 
 		[Export ("detailForGraphic:screenPoint:mapPoint:")]
-		string ScreenPoint (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+		string DetailForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
 
 		[Export ("imageForGraphic:screenPoint:mapPoint:")]
-		UIImage ScreenPoint (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+		UIImage ImageForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
 
 		[Export ("customViewForGraphic:screenPoint:mapPoint:")]
-		UIView ScreenPoint (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+		UIView CustomViewForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
 	}
 
 	[BaseType (typeof (UIView))]
@@ -3240,7 +3245,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSCalloutDelegate {
 
 		[Export ("didClickAccessoryButtonForCallout:")]
-		void  (AGSCallout callout);
+		void DidClickAccessoryButtonForCallout (AGSCallout callout);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3342,7 +3347,7 @@ namespace MonoTouch.ArcGIS {
 		NSObject FindTaskWithURL (NSUrl url, AGSCredential cred);
 
 		[Export ("executeWithParameters:")]
-		NSOperation ExecuteWithParameters (AGSFindParameters params);
+		NSOperation ExecuteWithParameters (AGSFindParameters parameters);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -3430,7 +3435,7 @@ namespace MonoTouch.ArcGIS {
 		NSObject IdentifyTaskWithURL (NSUrl url, AGSCredential cred);
 
 		[Export ("executeWithParameters:")]
-		NSOperation ExecuteWithParameters (AGSIdentifyParameters params);
+		NSOperation ExecuteWithParameters (AGSIdentifyParameters parameters);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -3471,7 +3476,7 @@ namespace MonoTouch.ArcGIS {
 		NSOperation LocationsForAddress (NSDictionary address, string [] outFields, AGSSpatialReference sr);
 
 		[Export ("locationsForAddressWithParameters:")]
-		NSOperation LocationsForAddressWithParameters (AGSLocationsForAddressParameters params);
+		NSOperation LocationsForAddressWithParameters (AGSLocationsForAddressParameters parameters);
 
 		[Export ("findWithParameters:")]
 		NSOperation FindWithParameters (AGSLocatorFindParameters findParams);
@@ -3484,19 +3489,19 @@ namespace MonoTouch.ArcGIS {
 		void DidFindLocationsForAddress (AGSLocator locator, NSOperation op, AGSAddressCandidate [] candidates);
 
 		[Export ("locator:operation:didFailLocationsForAddress:")]
-		void Operation (AGSLocator locator, NSOperation op, NSError error);
+		void DidFailLocationsForAddress (AGSLocator locator, NSOperation op, NSError error);
 
 		[Export ("locator:operation:didFindAddressForLocation:")]
-		void Operation (AGSLocator locator, NSOperation op, AGSAddressCandidate candidate);
+		void DidFindAddressForLocation (AGSLocator locator, NSOperation op, AGSAddressCandidate candidate);
 
 		[Export ("locator:operation:didFailAddressForLocation:")]
-		void Operation (AGSLocator locator, NSOperation op, NSError error);
+		void DidFailAddressForLocation (AGSLocator locator, NSOperation op, NSError error);
 
 		[Export ("locator:operation:didFind:")]
-		void Operation (AGSLocator locator, NSOperation op, AGSLocatorFindResult [] results);
+		void DidFind (AGSLocator locator, NSOperation op, AGSLocatorFindResult [] results);
 
 		[Export ("locator:operation:didFailToFindWithError:")]
-		void Operation (AGSLocator locator, NSOperation op, NSError error);
+		void DidFailToFindWithError (AGSLocator locator, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3969,7 +3974,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSGeometryArray_AGSGeometryServiceTask {
 
 		[Export ("bufferWithParameters:")]
-		NSOperation BufferWithParameters (AGSBufferParameters params);
+		NSOperation BufferWithParameters (AGSBufferParameters parameters);
 
 		[Export ("projectGeometries:toSpatialReference:")]
 		NSOperation ProjectGeometries (AGSGeometry [] geometries, AGSSpatialReference spatialReference);
@@ -4101,7 +4106,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSAdditions_UIApplication {
 
 		[Static, Export ("ags_setNetworkActivityDelegate:")]
-		void SetNetworkActivityDelegate (AGSNetworkActivityDelegate delegate);
+		void SetNetworkActivityDelegate (AGSNetworkActivityDelegate networkActivityDelegate);
 
 		[Static, Export ("ags_showNetworkActivityIndicator:")]
 		void AShowNetworkActivityIndicator (bool show);
@@ -4124,16 +4129,16 @@ namespace MonoTouch.ArcGIS {
 		void Initialize ();
 
 		[Static, Export ("encode:length:")]
-		string Encode ([unmapped: pointer: Pointer] input, int length);
+		string Encode (byte[] input, int length);
 
 		[Static, Export ("encode:")]
 		string Encode (NSData rawBytes);
 
 		[Static, Export ("decode:length:")]
-		NSData Decode ([unmapped: pointer: Pointer] string, int inputLength);
+		NSData Decode (string str, int inputLength);
 
 		[Static, Export ("decode:")]
-		NSData Decode (string string);
+		NSData Decode (string str);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4180,14 +4185,14 @@ namespace MonoTouch.ArcGIS {
 		bool IsAuthenticationError { [Bind ("ags_isAuthenticationError")]get; }
 	}
 
-	[Category, BaseType (typeof (NSURL))]
+	[Category, BaseType (typeof (NSUrl))]
 	public partial interface AGSAdditions_NSURL {
 
 		[Static, Export ("ags_URLWithUnicodeString:")]
 		NSUrl URLWithUnicodeString (string urlString);
 	}
 
-	[Category, BaseType (typeof (NSURLConnection))]
+	[Category, BaseType (typeof (NSUrlConnection))]
 	public partial interface AGSAdditions_NSURLConnection {
 
 		[Static]
@@ -4245,31 +4250,31 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSSBJsonStreamParserDelegate {
 
 		[Export ("parserFoundObjectStart:")]
-		void  (AGSSBJsonStreamParser parser);
+		void ParserFoundObjectStart (AGSSBJsonStreamParser parser);
 
 		[Export ("parser:foundObjectKey:")]
 		void FoundObjectKey (AGSSBJsonStreamParser parser, string key);
 
 		[Export ("parserFoundObjectEnd:")]
-		void  (AGSSBJsonStreamParser parser);
+		void ParserFoundObjectEnd (AGSSBJsonStreamParser parser);
 
 		[Export ("parserFoundArrayStart:")]
-		void  (AGSSBJsonStreamParser parser);
+		void ParserFoundArrayStart (AGSSBJsonStreamParser parser);
 
 		[Export ("parserFoundArrayEnd:")]
-		void  (AGSSBJsonStreamParser parser);
+		void ParserFoundArrayEnd (AGSSBJsonStreamParser parser);
 
 		[Export ("parser:foundBoolean:")]
 		void FoundBoolean (AGSSBJsonStreamParser parser, bool x);
 
 		[Export ("parserFoundNull:")]
-		void  (AGSSBJsonStreamParser parser);
+		void ParserFoundNull (AGSSBJsonStreamParser parser);
 
 		[Export ("parser:foundNumber:")]
 		void FoundNumber (AGSSBJsonStreamParser parser, NSNumber num);
 
 		[Export ("parser:foundString:")]
-		void FoundString (AGSSBJsonStreamParser parser, string string);
+		void FoundString (AGSSBJsonStreamParser parser, string str);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4333,8 +4338,8 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSSBJsonStreamWriter {
 
-		[Export ("state", ArgumentSemantic.Assign)]
-		AGSSBJsonStreamWriterState State { get; set; }
+		//[Export ("state", ArgumentSemantic.Assign)]
+		//AGSSBJsonStreamWriterState State { get; set; }
 
 		[Export ("stateStack", ArgumentSemantic.Retain)]
 		NSMutableArray StateStack { get; }
@@ -4407,7 +4412,7 @@ namespace MonoTouch.ArcGIS {
 	[Category, BaseType (typeof (NSString))]
 	public partial interface NSString_AGSSBJsonParsing_NSString {
 
-		NSObject JSONValue { [[Bind ("ags_JSONValue")]]get; }
+		NSObject JSONValue { [Bind ("ags_JSONValue")]get; }
 	}
 
 	[Category, BaseType (typeof (NSData))]
@@ -4575,8 +4580,8 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("pictureFillSymbolWithImageNamed:")]
 		NSObject PictureFillSymbolWithImageNamed (string imageName);
 
-		[Export ("initWithContentsOfFile:")]
-		IntPtr Constructor (string imagePath);
+		//[Export ("initWithContentsOfFile:")]
+		//IntPtr Constructor (string imagePath);
 	}
 
 	[BaseType (typeof (AGSSymbol))]
@@ -4602,7 +4607,7 @@ namespace MonoTouch.ArcGIS {
 		AGSSimpleFillSymbolStyle Style { get; set; }
 
 		[Static, Export ("simpleFillSymbol")]
-		AGSSimpleFillSymbol ();
+		AGSSimpleFillSymbol SimpleFillSymbol ();
 
 		[Export ("initWithColor:outlineColor:")]
 		IntPtr Constructor (UIColor fillColor, UIColor outlineColor);
@@ -4682,8 +4687,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithImageNamed:")]
 		IntPtr Constructor (string imageName);
 
-		[Export ("initWithContentsOfFile:")]
-		IntPtr Constructor (string imagePath);
+		//[Export ("initWithContentsOfFile:")]
+		//IntPtr Constructor (string imagePath);
 
 		[Static, Export ("pictureMarkerSymbolWithImageNamed:")]
 		AGSPictureMarkerSymbol PictureMarkerSymbolWithImageNamed (string imageName);
@@ -4897,7 +4902,7 @@ namespace MonoTouch.ArcGIS {
 		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("requestCachePolicy")]
-		NSURLRequestCachePolicy RequestCachePolicy { get; set; }
+		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
 
 		[Export ("timeoutInterval")]
 		double TimeoutInterval { get; set; }
@@ -5489,10 +5494,10 @@ namespace MonoTouch.ArcGIS {
 		void SelectLastVertex ();
 
 		[Export ("mapView:didClickAtPoint:mapPoint:graphics:")]
-		void MapView (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+		void DidClickAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
 
 		[Export ("mapView:didEndTapAndHoldAtPoint:mapPoint:graphics:")]
-		void MapView (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+		void DidEndTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
 
 		[Static]
 		AGSCompositeSymbol DefaultMainSymbol { [Bind ("defaultMainSymbol")]get; }
@@ -5504,7 +5509,7 @@ namespace MonoTouch.ArcGIS {
 		AGSMarkerSymbol DefaultVertexSymbol { [Bind ("defaultVertexSymbol")]get; }
 
 		[Static]
-		AGSMarkerSymbol DefaultMidVertexSymbol { Bind ("defaultMidVertexSymbol")get; }
+		AGSMarkerSymbol DefaultMidVertexSymbol { [Bind ("defaultMidVertexSymbol")]get; }
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5548,22 +5553,22 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSPortalDelegate {
 
 		[Export ("portalDidLoad:")]
-		void  (AGSPortal portal);
+		void PortalDidLoad (AGSPortal portal);
 
 		[Export ("portal:didFailToLoadWithError:")]
 		void DidFailToLoadWithError (AGSPortal portal, NSError error);
 
 		[Export ("portal:operation:didFindItems:")]
-		void Operation (AGSPortal portal, NSOperation op, AGSPortalQueryResultSet resultSet);
+		void DidFindItems (AGSPortal portal, NSOperation op, AGSPortalQueryResultSet resultSet);
 
 		[Export ("portal:operation:didFailToFindItemsForQueryParams:withError:")]
-		void Operation (AGSPortal portal, NSOperation op, AGSPortalQueryParams queryParams, NSError error);
+		void DidFailToFindItemsForQueryParams (AGSPortal portal, NSOperation op, AGSPortalQueryParams queryParams, NSError error);
 
 		[Export ("portal:operation:didFindGroups:")]
-		void Operation (AGSPortal portal, NSOperation op, AGSPortalQueryResultSet resultSet);
+		void DidFindGroups (AGSPortal portal, NSOperation op, AGSPortalQueryResultSet resultSet);
 
 		[Export ("portal:operation:didFailToFindGroupsForQueryParams:withError:")]
-		void Operation (AGSPortal portal, NSOperation op, AGSPortalQueryParams queryParams, NSError error);
+		void DidFailToFindGroupsForQueryParams (AGSPortal portal, NSOperation op, AGSPortalQueryParams queryParams, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5745,16 +5750,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSPortalInfoDelegate {
 
 		[Export ("portalInfo:operation:didFetchPortalThumbnail:")]
-		void Operation (AGSPortalInfo portalInfo, NSOperation op, UIImage thumbnail);
+		void DidFetchPortalThumbnail (AGSPortalInfo portalInfo, NSOperation op, UIImage thumbnail);
 
 		[Export ("portalInfo:operation:didFailToFetchPortalThumbnailWithError:")]
-		void Operation (AGSPortalInfo portalInfo, NSOperation op, NSError error);
+		void DidFailToFetchPortalThumbnailWithError (AGSPortalInfo portalInfo, NSOperation op, NSError error);
 
 		[Export ("portalInfo:operation:didFetchOrganizationThumbnail:")]
-		void Operation (AGSPortalInfo portalInfo, NSOperation op, UIImage thumbnail);
+		void DidFetchOrganizationThumbnail (AGSPortalInfo portalInfo, NSOperation op, UIImage thumbnail);
 
 		[Export ("portalInfo:operation:didFailToFetchOrganizationThumbnailWithError:")]
-		void Operation (AGSPortalInfo portalInfo, NSOperation op, NSError error);
+		void DidFailToFetchOrganizationThumbnailWithError (AGSPortalInfo portalInfo, NSOperation op, NSError error);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5932,7 +5937,7 @@ namespace MonoTouch.ArcGIS {
 		AGSPortalQueryParams QueryParamsForItemsOfType (AGSPortalItemType type, string groupId, string searchString);
 
 		[Static, Export ("queryParamsForItemsOfType:inGroup:")]
-		AGSPortalQueryParams QueryParamsForItemsOfType (AGSPortalItemType type, string groupId);
+		AGSPortalQueryParams QueryParamsForItemsOfTypeInGroup (AGSPortalItemType type, string groupId);
 
 		[Static, Export ("queryParamsForItemsInGroup:")]
 		AGSPortalQueryParams QueryParamsForItemsInGroup (string groupId);
@@ -6147,7 +6152,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSWebMapDelegate {
 
 		[Export ("webMapDidLoad:")]
-		void  (AGSWebMap webMap);
+		void WebMapDidLoad (AGSWebMap webMap);
 
 		[Export ("webMap:didFailToLoadWithError:")]
 		void DidFailToLoadWithError (AGSWebMap webMap, NSError error);
@@ -6162,7 +6167,7 @@ namespace MonoTouch.ArcGIS {
 		void DidFailToLoadLayer (AGSWebMap webMap, AGSWebMapLayerInfo layerInfo, bool baseLayer, bool federated, NSError error);
 
 		[Export ("didLoadLayer:")]
-		void  (AGSLayer layer);
+		void DidLoadLayer (AGSLayer layer);
 
 		[Export ("webMap:didLoadLayer:")]
 		void DidLoadLayer (AGSWebMap webMap, AGSLayer layer);
@@ -6519,7 +6524,7 @@ namespace MonoTouch.ArcGIS {
 		void WantsToDeleteGraphicForPopup (AGSPopupsContainer popupsContainer, AGSPopup popup);
 
 		[Export ("popupsContainerDidFinishViewingPopups:")]
-		void  (AGSPopupsContainer popupsContainer);
+		void DidFinishViewingPopups (AGSPopupsContainer popupsContainer);
 
 		[Export ("popupsContainer:wantsToShowViewController:ofType:fromViewController:atRect:")]
 		void WantsToShowViewController (AGSPopupsContainer popupsContainer, UIViewController svc, AGSPopupViewType viewType, UIViewController fvc, RectangleF rect);
@@ -6623,10 +6628,10 @@ namespace MonoTouch.ArcGIS {
 		void DidFailWithError (AGSLocationDisplayDataSource dataSource, NSError error);
 
 		[Export ("locationDisplayDataSourceStopped:")]
-		void  (AGSLocationDisplayDataSource dataSource);
+		void DataSourceStopped (AGSLocationDisplayDataSource dataSource);
 
 		[Export ("locationDisplayDataSourceStarted:")]
-		void  (AGSLocationDisplayDataSource dataSource);
+		void DataSourceStarted (AGSLocationDisplayDataSource dataSource);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -6697,16 +6702,16 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSLocationDisplayInfoTemplateDelegate {
 
 		[Export ("titleForLocationDisplay:screenPoint:")]
-		string ScreenPoint (AGSLocationDisplay ld, PointF screen);
+		string TitleForLocationDisplay (AGSLocationDisplay ld, PointF screen);
 
 		[Export ("detailForLocationDisplay:screenPoint:")]
-		string ScreenPoint (AGSLocationDisplay ld, PointF screen);
+		string DetailForLocationDisplay (AGSLocationDisplay ld, PointF screen);
 
 		[Export ("imageForLocationDisplay:screenPoint:")]
-		UIImage ScreenPoint (AGSLocationDisplay ld, PointF screen);
+		UIImage ImageForLocationDisplay (AGSLocationDisplay ld, PointF screen);
 
 		[Export ("customViewForLocationDisplay:screenPoint:")]
-		UIView ScreenPoint (AGSLocationDisplay ld, PointF screen);
+		UIView CustomViewForLocationDisplay (AGSLocationDisplay ld, PointF screen);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6852,7 +6857,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSWMTSInfoDelegate {
 
 		[Export ("wmtsInfoDidLoad:")]
-		void  (AGSWMTSInfo wmtsInfo);
+		void DidLoad (AGSWMTSInfo wmtsInfo);
 
 		[Export ("wmtsInfo:DidFailToLoad:")]
 		void DidFailToLoad (AGSWMTSInfo wmtsInfo, NSError error);
@@ -6878,7 +6883,7 @@ namespace MonoTouch.ArcGIS {
 	public partial interface AGSGroupLayer {
 
 		[Export ("layers", ArgumentSemantic.Copy)]
-		AGSLayers [] Layers { get; }
+		AGSLayer [] Layers { get; }
 
 		[Export ("layerAtIndex:")]
 		AGSLayer LayerAtIndex (uint index);
@@ -7051,5 +7056,9 @@ namespace MonoTouch.ArcGIS {
 
 		[Static, Export ("filterWithValue:forName:")]
 		NSObject FilterWithValue (string value, string name);
+	}
+
+	[BaseType (typeof(UIView))]
+	public partial interface AGSMapView {
 	}
 }
