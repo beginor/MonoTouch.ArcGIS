@@ -137,39 +137,39 @@ namespace MonoTouch.ArcGIS {
 		string GetStringFromDictionary (NSDictionary json, string key);
 	}
 
-	[Category, BaseType (typeof (NSDictionary))]
+	//[Category, BaseType (typeof (NSDictionary))]
 	public partial interface AGSAdditions_NSDictionary {
 
-		[Export ("ags_encodeQueryParams"), Target(typeof(NSDictionary))]
-		string EncodeQueryParams();
+		[Export ("ags_encodeQueryParams")]
+		string EncodeQueryParams([Target]NSDictionary dict);
 
-		[Export ("ags_encodeJSON"), Target(typeof(NSDictionary))]
-		NSDictionary EncodeJSON();
+		[Export ("ags_encodeJSON")]
+		NSDictionary EncodeJSON([Target]NSDictionary dict);
 
-		[Export ("ags_stringByApplyingTemplate:"), Target(typeof(NSDictionary))]
-		string Ags_stringByApplyingTemplate (string templateString);
+		[Export ("ags_stringByApplyingTemplate:")]
+		string Ags_stringByApplyingTemplate ([Target]NSDictionary dict, string templateString);
 
-		[Export ("ags_safeGetObjectForKey:"), Target(typeof(NSDictionary))]
-		NSObject Ags_safeGetObjectForKey (NSObject key);
+		[Export ("ags_safeGetObjectForKey:")]
+		NSObject Ags_safeGetObjectForKey ([Target]NSDictionary dict, NSObject key);
 
-		[Export ("ags_safeValueForKey:"), Target(typeof(NSDictionary))]
-		NSObject Ags_safeValueForKey (string key);
+		[Export ("ags_safeValueForKey:")]
+		NSObject Ags_safeValueForKey ([Target]NSDictionary dict, string key);
 
-		[Export ("ags_safeObjectForKey:"), Target(typeof(NSDictionary))]
-		NSObject Ags_safeObjectForKey (NSObject key);
+		[Export ("ags_safeObjectForKey:")]
+		NSObject Ags_safeObjectForKey ([Target]NSDictionary dict, NSObject key);
 
-		[Export ("ags_URLForKey:"), Target(typeof(NSDictionary))]
-		NSUrl Ags_URLForKey (NSObject key);
+		[Export ("ags_URLForKey:")]
+		NSUrl Ags_URLForKey ([Target]NSDictionary dict, NSObject key);
 	}
 
-	[Category, BaseType (typeof (NSMutableDictionary))]
+	//[Category, BaseType (typeof (NSMutableDictionary))]
 	public partial interface AGSAdditions_NSMutableDictionary {
 
 		[Export ("ags_safeSetObject:forKey:")]
-		void Ags_safeSetObject (NSObject obj, string key);
+		void Ags_safeSetObject ([Target]NSMutableDictionary dict, NSObject obj, string key);
 
 		[Export ("ags_safeSetObject:forKey:useNSNull:")]
-		void Ags_safeSetObject (NSObject obj, string key, bool useNSNull);
+		void Ags_safeSetObject ([Target]NSMutableDictionary dict, NSObject obj, string key, bool useNSNull);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -776,7 +776,7 @@ namespace MonoTouch.ArcGIS {
 		double Distance { get; }
 	}
 
-	[Model, BaseType (typeof (NSObject))]
+	/*[Model]
 	public partial interface AGSLayerDelegate {
 
 		[Notification, Field ("AGSLayerDidLoadNotification")]
@@ -787,7 +787,7 @@ namespace MonoTouch.ArcGIS {
 
 		[Notification, Field ("AGSLayerDidInitializeSpatialReferenceStatusNotification")]
 		NSString AGSLayerDidInitializeSpatialReferenceStatusNotification { get; }
-	}
+	}*/
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSLayer {
@@ -838,28 +838,40 @@ namespace MonoTouch.ArcGIS {
 		bool IsInScale { [Bind ("isInScale")]get; }
 	}
 
-	[Category, BaseType (typeof (AGSLayer))]
+	//[Category, BaseType (typeof (AGSLayer))]
 	public partial interface ForSubclassEyesOnly_AGSLayer {
 
-		[Export ("error", ArgumentSemantic.Retain)]
-		NSError Error { get; set; }
+		//[Export ("error", ArgumentSemantic.Retain)]
+		//NSError Error { get; set; }
 
-		int DefaultDpi { [Bind ("defaultDpi")]get; }
+		[Export("getError")]
+		NSError GetError ([Target]AGSLayer layer);
+
+		[Export("setError:")]
+		void SetError ([Target]AGSLayer layer, NSError error);
+
+		[Export ("defaultDpi")]
+		int DefaultDpi ([Target]AGSLayer layer);
 
 		[Export ("layerDidLoad")]
-		void LayerDidLoad ();
+		void LayerDidLoad ([Target]AGSLayer layer);
 
 		[Export ("layerDidFailToLoad:")]
-		void LayerDidFailToLoad (NSError error);
+		void LayerDidFailToLoad ([Target]AGSLayer layer, NSError error);
 
 		[Export ("spatialReferenceStatusInitialized")]
-		void SpatialReferenceStatusInitialized ();
+		void SpatialReferenceStatusInitialized ([Target]AGSLayer layer);
 
 		[Export ("mapDidUpdate:")]
-		void MapDidUpdate (AGSMapUpdateType updateType);
+		void MapDidUpdate ([Target]AGSLayer layer, AGSMapUpdateType updateType);
 
-		[Export ("mapView", ArgumentSemantic.Assign)]
-		AGSMapView MapView { get; set; }
+		//[Export ("mapView", ArgumentSemantic.Assign)]
+		//AGSMapView MapView { get; set; }
+		[Export("getMapView")]
+		AGSMapView GetMapView([Target]AGSLayer layer);
+
+		[Export("setMapView:")]
+		void SetMapView ([Target]AGSLayer layer, AGSMapView mapView);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -931,24 +943,28 @@ namespace MonoTouch.ArcGIS {
 		double ConvertedResolutionForLodResolution (double lodResolution);
 	}
 
-	[Category, BaseType (typeof (AGSTiledLayer))]
+	[BaseType (typeof (AGSTiledLayer))]
+	public partial interface AGSTiledServiceLayer {
+	}
+
+	//[Category, BaseType (typeof (AGSTiledLayer))]
 	public partial interface ForSubclassEyesOnly_AGSTiledLayer {
 
 		[Export ("requestTileForKey:")]
-		void RequestTileForKey (AGSTileKey key);
+		void RequestTileForKey ([Target]AGSTiledLayer layer, AGSTileKey key);
 
 		[Export ("cancelRequestForKey:")]
-		void CancelRequestForKey (AGSTileKey key);
+		void CancelRequestForKey ([Target]AGSTiledLayer layer, AGSTileKey key);
 
 		[Export ("setTileData:forKey:")]
-		void SetTileData (NSData data, AGSTileKey tilekey);
+		void SetTileData ([Target]AGSTiledLayer layer, NSData data, AGSTileKey tilekey);
 	}
 
-	[Category, BaseType (typeof (AGSTiledServiceLayer))]
+	//[Category, BaseType (typeof (AGSTiledServiceLayer))]
 	public partial interface ForSubclassEyesOnly_AGSTiledServiceLayer {
 
 		[Export ("urlForTileKey:")]
-		NSUrl UrlForTileKey (AGSTileKey key);
+		NSUrl UrlForTileKey ([Target]AGSTiledServiceLayer layer, AGSTileKey key);
 	}
 
 	[BaseType (typeof (AGSTiledServiceLayer))]
@@ -3086,7 +3102,7 @@ namespace MonoTouch.ArcGIS {
 		AGSNADirectionsManeuver ManeuverType { get; }
 
 		[Export ("directionsStrings", ArgumentSemantic.Copy)]
-		AGSNADirectionsStrings [] DirectionsStrings { get; }
+		AGSNADirectionsStringType [] DirectionsStrings { get; }
 	}
 
 	[BaseType (typeof (AGSGraphic))]
@@ -4280,11 +4296,11 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSSBJsonStreamParser {
 
-		[Export ("state", ArgumentSemantic.Assign)]
-		AGSSBJsonStreamParserState State { get; set; }
+		//[Export ("state", ArgumentSemantic.Assign)]
+		//AGSSBJsonStreamParserState State { get; set; }
 
-		[Export ("stateStack", ArgumentSemantic.Retain)]
-		NSMutableArray StateStack { get; }
+		//[Export ("stateStack", ArgumentSemantic.Retain)]
+		//NSMutableArray StateStack { get; }
 
 		[Export ("supportMultipleDocuments")]
 		bool SupportMultipleDocuments { get; set; }
@@ -6546,7 +6562,7 @@ namespace MonoTouch.ArcGIS {
 	}
 
 	[BaseType (typeof (UIViewController))]
-	public partial interface AGSPopupsContainerViewController : UIScrollViewDelegate, AGSPopupsContainer, UIActionSheetDelegate {
+	public partial interface AGSPopupsContainerViewController : /*UIScrollViewDelegate, */AGSPopupsContainer/*, UIActionSheetDelegate*/ {
 
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSPopupsContainerDelegate Delegate { get; set; }

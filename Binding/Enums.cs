@@ -1,6 +1,11 @@
 using System;
+using MonoTouch.Foundation;
 
 namespace MonoTouch.ArcGIS {
+
+	public delegate void AGSErrorBlock(NSError error);
+
+	public delegate void AGSIdBlock(object id);
 
 	public enum AGSMapViewWrapAroundStatus {
 		Disabled,
@@ -29,7 +34,7 @@ namespace MonoTouch.ArcGIS {
 		X
 	}
 
-	public enum AGSInterpolation {
+	public enum AGSInterpolation : ulong {
 		Bilinear = 0,
 		CubicConvolution,
 		Majority,
@@ -570,12 +575,12 @@ namespace MonoTouch.ArcGIS {
 		Road
 	}
 
-	public enum AGSCalloutLeaderPosition {
+	public enum AGSCalloutLeaderPosition : ulong {
 		Bottom = 1UL << 0,
 		Top = 1UL << 1,
 		Left = 1UL << 2,
 		Right = 1UL << 3,
-		Any = AGSCalloutLeaderPositionBottom | AGSCalloutLeaderPositionTop | AGSCalloutLeaderPositionLeft | AGSCalloutLeaderPositionRight
+		Any = Bottom | Top | Left | Right
 	}
 
 	public enum AGSIdentifyParametersLayerOption {
