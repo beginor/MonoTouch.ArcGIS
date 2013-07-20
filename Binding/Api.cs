@@ -49,8 +49,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("sslRequired")]
 		bool SslRequired { get; }
 
-		[Export ("identity")]
-		SecIdentity Identity();
+		//[Export ("identity")]
+		//SecIdentity Identity();
 
 		[Export ("initWithUser:password:")]
 		IntPtr Constructor (string username, string password);
@@ -64,8 +64,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithToken:")]
 		IntPtr Constructor (string token);
 
-		[Export ("initWithIdentityRef:")]
-		IntPtr Constructor (SecIdentity identityRef);
+		//[Export ("initWithIdentityRef:")]
+		//IntPtr Constructor (SecIdentity identityRef);
 
 		//[Export ("initWithToken:referer:")]
 		//IntPtr Constructor (string token, string referer);
@@ -76,14 +76,14 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("isServiceSecured:error:")]
 		AGSAuthenticationType IsServiceSecured (NSUrl url, out NSError error);
 
-		[Static, Export ("identitiesForProtectionSpace:")]
-		IntPtr [] IdentitiesForProtectionSpace (NSUrlProtectionSpace protectionSpace);
+		//[Static, Export ("identitiesForProtectionSpace:")]
+		//SecIdentityRef [] IdentitiesForProtectionSpace (NSUrlProtectionSpace protectionSpace);
 
-		[Static, Export ("importCertificateData:password:overwrite:error:")]
-		SecIdentity ImportCertificateData (NSData data, string password, bool overwrite, out NSError error);
+		//[Static, Export ("importCertificateData:password:overwrite:error:")]
+		//SecIdentity ImportCertificateData (NSData data, string password, bool overwrite, out NSError error);
 
-		[Static, Export ("removeIdentityFromKeychain:")]
-		OSStatus RemoveIdentityFromKeychain (SecIdentity identityRef);
+		//[Static, Export ("removeIdentityFromKeychain:")]
+		//OSStatus RemoveIdentityFromKeychain (SecIdentity identityRef);
 
 		[Export ("authenticatingHost")]
 		string AuthenticatingHost();
@@ -193,11 +193,14 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("setAdditionalUserAgentInfo:")]
 		string SetAdditionalUserAgentInfo(string userAgentInfo);
 
-		[Static]
-		string UserAgent { [Bind ("userAgent")]get; }
+		[Static, Export ("userAgent")]
+		string UserAgent ();
 
-		[Static]
-		bool ForcePostForAllRequests { [Bind ("forcePostForAllRequests")]get; [Bind ("setForcePostForAllRequests")]set; }
+		[Static, Export ("forcePostForAllRequests")]
+		bool ForcePostForAllRequests ();
+
+		[Static, Export ("setForcePostForAllRequests:")]
+		void SetForcePostForAllRequests(bool force);
 	}
 
 	[BaseType (typeof (NSOperation))]
@@ -236,6 +239,10 @@ namespace MonoTouch.ArcGIS {
 		[Export ("operationWillFinish")]
 		void OperationWillFinish ();
 	}
+
+	public delegate void AGSErrorBlock(NSError error);
+
+	public delegate void AGSIdBlock(IntPtr id);
 
 	[BaseType (typeof (AGSRunLoopOperation))]
 	public partial interface AGSRequestOperation {
@@ -294,8 +301,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithURL:resource:queryParameters:doPOST:")]
 		IntPtr Constructor (NSUrl url, string resource, NSDictionary query, bool post);
 
-		[Static]
-		NSOperationQueue SharedOperationQueue { [Export ("sharedOperationQueue")]get; }
+		[Static, Export ("sharedOperationQueue")]
+		NSOperationQueue SharedOperationQueue ();
 
 		[Export ("shouldProcessResultDataInBackground:")]
 		bool ShouldProcessResultDataInBackground (NSData data);
@@ -334,9 +341,11 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("spatialReferenceWithWKID:WKT:")]
 		NSObject SpatialReferenceWithWKID (uint wkid, string wkt);
 
-		bool IsAnyWebMercator { [Bind ("isAnyWebMercator")]get; }
+		[Export ("isAnyWebMercator")]
+		bool IsAnyWebMercator ();
 
-		bool IsWGS84 { [Bind ("isWGS84")]get; }
+		[Export ("isWGS84")]
+		bool IsWGS84 ();
 
 		[Export ("isEqualToSpatialReference:")]
 		bool IsEqualToSpatialReference (AGSSpatialReference sr);
@@ -347,13 +356,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("encodeToJSON:forKey:")]
 		void EncodeToJSON (NSMutableDictionary json, string key);
 
-		AGSSRUnit Unit { [Bind ("unit")]get; }
+		[Export ("unit")]
+		AGSSRUnit Unit ();
 
-		[Static]
-		AGSSpatialReference WebMercatorSpatialReference { [Bind ("webMercatorSpatialReference")]get; }
+		[Static, Export ("webMercatorSpatialReference")]
+		AGSSpatialReference WebMercatorSpatialReference ();
 
-		[Static]
-		AGSSpatialReference Wgs84SpatialReference { [Bind ("wgs84SpatialReference")]get; }
+		[Static, Export ("wgs84SpatialReference")]
+		AGSSpatialReference Wgs84SpatialReference ();
 
 		[Export ("convertValue:toUnit:")]
 		double ConvertValueToUnit (double val, AGSSRUnit unit);
@@ -361,7 +371,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("convertValue:fromUnit:")]
 		double ConvertValueFromUnit (double val, AGSSRUnit fromUnit);
 
-		bool IsSupported { [Bind ("isSupported")]get; }
+		[Export ("isSupported")]
+		bool IsSupported ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -382,9 +393,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("intersectsWithEnvelope:")]
 		bool IntersectsWithEnvelope (AGSEnvelope envelope);
 
-		bool IsEmpty { [Bind ("isEmpty")]get; }
+		[Export ("isEmpty")]
+		bool IsEmpty ();
 
-		bool IsValid { [Bind ("isValid")]get; }
+		[Export ("isValid")]
+		bool IsValid ();
 	}
 
 	[BaseType (typeof (AGSGeometry))]
@@ -423,7 +436,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("containsEnvelope:")]
 		bool ContainsEnvelope (AGSEnvelope env);
 
-		string SimpleRepresentation { [Bind ("simpleRepresentation")]get; }
+		[Export ("simpleRepresentation")]
+		string SimpleRepresentation ();
 
 		[Export ("intersectsWithEnvelope:")]
 		bool IntersectsWithEnvelope (AGSEnvelope envelope);
@@ -431,7 +445,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("intersectionWithEnvelope:")]
 		AGSEnvelope IntersectionWithEnvelope (AGSEnvelope envelope);
 
-		bool IsEmpty { [Bind ("isEmpty")]get; }
+		[Export ("isEmpty")]
+		bool IsEmpty ();
 
 		[Export ("isEqualToEnvelope:")]
 		bool IsEqualToEnvelope (AGSEnvelope other);
@@ -556,7 +571,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("numPointsInRing:")]
 		int NumPointsInRing (int ring);
 
-		int NumPoints { [Bind ("numPoints")]get; }
+		[Export ("numPoints")]
+		int NumPoints ();
 
 		[Export ("pointOnRing:atIndex:")]
 		AGSPoint PointOnRing (int ring, int index);
@@ -580,8 +596,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("insertRingAtIndex:")]
 		void InsertRingAtIndex (int ringIndex);
 
-		[Export ("addPointToRing:")]
-		void AddPointToRing (AGSPoint point);
+		//[Export ("addPointToRing:")]
+		//void AddPoint (AGSPoint point);
 
 		[Export ("addPoint:toRing:")]
 		void AddPoint (AGSPoint point, int ring);
@@ -614,13 +630,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("numPointsInPath:")]
 		int NumPointsInPath (int path);
 
-		int NumPoints { [Bind ("numPoints")]get; }
+		[Export ("numPoints")]
+		int NumPoints ();
 
 		[Export ("pointOnPath:atIndex:")]
 		AGSPoint PointOnPath (int path, int index);
 
 		[Static, Export ("polylineWithJSON:")]
-		NSObject PolylineWithJSON (NSDictionary json);
+		AGSPolyline PolylineWithJSON (NSDictionary json);
 
 		[Export ("isEqualToPolyline:")]
 		bool IsEqualToPolyline (AGSPolyline other);
@@ -635,8 +652,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("insertPathAtIndex:")]
 		void InsertPathAtIndex (int pathIndex);
 
-		[Export ("addPointToPath:")]
-		void AddPointToPath (AGSPoint point);
+		//[Export ("addPointToPath:")]
+		//void AddPoint (AGSPoint point);
 
 		[Export ("addPoint:toPath:")]
 		void AddPoint (AGSPoint point, int path);
@@ -750,8 +767,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("normalizeCentralMeridianOfGeometry:")]
 		AGSGeometry NormalizeCentralMeridianOfGeometry (AGSGeometry geometry);
 
-		[Static]
-		AGSGeometryEngine DefaultGeometryEngine { [Bind ("defaultGeometryEngine")]get; }
+		[Static, Bind ("defaultGeometryEngine")]
+		AGSGeometryEngine DefaultGeometryEngine ();
 
 		[Export ("mgrsFromPoint:numDigits:rounding:addSpaces:")]
 		string MgrsFromPoint (AGSPoint pt, int digits, bool rounding, bool addSpaces);
@@ -831,11 +848,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("refresh")]
 		void Refresh ();
 
-		bool TimeAware { [Bind ("timeAware")]get; [Bind ("isTimeAware")]set;}
+		[Export ("timeAware")]
+		bool TimeAware { [Bind ("isTimeAware")]get; set;}
 
-		bool Visible { [Bind ("visible")]get; [Bind ("isVisible")]set; }
+		[Export ("visible")]
+		bool Visible { [Bind ("isVisible")]get; set; }
 
-		bool IsInScale { [Bind ("isInScale")]get; }
+		[Export ("isInScale")]
+		bool IsInScale ();
 	}
 
 	//[Category, BaseType (typeof (AGSLayer))]
@@ -976,11 +996,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("mapServiceInfo", ArgumentSemantic.Retain)]
 		AGSMapServiceInfo MapServiceInfo { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
 
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("renderNativeResolution")]
 		bool RenderNativeResolution { get; set; }
@@ -1030,20 +1050,27 @@ namespace MonoTouch.ArcGIS {
 		double AutoRefreshInterval { get; set; }
 	}
 
-	[Category, BaseType (typeof (AGSDynamicLayer))]
+	//[Category, BaseType (typeof (AGSDynamicLayer))]
 	public partial interface ForSubclassEyesOnly_AGSDynamicLayer {
 
 		[Export ("requestImageWithWidth:height:envelope:timeExtent:")]
-		void RequestImageWithWidth (int width, int height, AGSEnvelope env, AGSTimeExtent timeExtent);
+		void RequestImageWithWidth ([Target]AGSDynamicLayer layer, int width, int height, AGSEnvelope env, AGSTimeExtent timeExtent);
 
 		[Export ("setImageData:forEnvelope:")]
-		void SetImageData (NSData data, AGSEnvelope env);
+		void SetImageData ([Target]AGSDynamicLayer layer, NSData data, AGSEnvelope env);
 
-		[Export ("queue", ArgumentSemantic.Retain)]
-		NSOperationQueue Queue { get; }
+		//[Export ("queue", ArgumentSemantic.Retain)]
+		//NSOperationQueue Queue { get; }
+		[Export("getQueue")]
+		NSOperationQueue GetQueue([Target]AGSDynamicLayer layer);
 
-		[Export ("wrapAroundSupported")]
-		bool WrapAroundSupported { get; set; }
+		//[Export ("wrapAroundSupported")]
+		//bool WrapAroundSupported { get; set; }
+		[Export("getWrapAroundSupported")]
+		bool GetWrapAroundSupported ([Target]AGSDynamicLayer layer);
+
+		[Export("setWrapAroundSupported:")]
+		void SetWrapAroundSupported([Target]AGSDynamicLayer layer, bool supported);
 	}
 
 	[BaseType (typeof (AGSDynamicLayer))]
@@ -1055,11 +1082,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("mapServiceInfo", ArgumentSemantic.Retain)]
 		AGSMapServiceInfo MapServiceInfo { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("dpi")]
 		uint Dpi { get; set; }
@@ -1119,14 +1146,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("definition", ArgumentSemantic.Copy)]
 		string Definition { get; set; }
 
-		[Export ("init")]
-		IntPtr Constructor ();
+		//[Export ("init")]
+		//IntPtr Constructor ();
 
 		[Export ("initWithLayerId:definition:")]
 		IntPtr Constructor (int layerId, string definition);
 
 		[Static, Export ("layerDefinitionWithLayerId:definition:")]
-		NSObject LayerDefinitionWithLayerId (int layerId, string definition);
+		AGSLayerDefinition LayerDefinitionWithLayerId (int layerId, string definition);
 
 		[Static, Export ("encodeToJSON:")]
 		NSDictionary EncodeToJSON (AGSLayerDefinition [] array);
@@ -1184,11 +1211,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("singleFusedMapCache")]
 		bool SingleFusedMapCache { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("timeInfo", ArgumentSemantic.Retain)]
 		AGSTimeInfo TimeInfo { get; }
@@ -1285,11 +1312,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("URL", ArgumentSemantic.Copy)]
 		NSUrl URL { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("requestCachePolicy")]
 		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
@@ -1495,11 +1522,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("URL", ArgumentSemantic.Copy)]
 		NSUrl URL { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("dpi")]
 		uint Dpi { get; set; }
@@ -2373,11 +2400,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("bandIds", ArgumentSemantic.Copy)]
 		int [] BandIds { get; set; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("renderingRule", ArgumentSemantic.Retain)]
 		AGSRasterFunction RenderingRule { get; set; }
@@ -2444,11 +2471,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("layerInfos", ArgumentSemantic.Copy)]
 		AGSWMSLayerInfo [] LayerInfos { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("imageFormat")]
 		AGSImageFormat ImageFormat { get; set; }
@@ -2667,7 +2694,8 @@ namespace MonoTouch.ArcGIS {
 		bool RespectsDaylightSaving { get; set; }
 	}
 
-	[Model, BaseType (typeof (NSObject))]
+/*
+	[Model]
 	public partial interface AGSMapViewTouchDelegate {
 
 		[Notification, Field ("AGSMapViewDidEndZoomingNotification")]
@@ -2676,7 +2704,7 @@ namespace MonoTouch.ArcGIS {
 		[Notification, Field ("AGSMapViewDidEndPanningNotification")]
 		NSString AGSMapViewDidEndPanningNotification { get; }
 	}
-
+*/
 	[BaseType (typeof (UIView))]
 	public partial interface AGSMapViewBase {
 
@@ -2719,7 +2747,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("allowRotationByPinching")]
 		bool AllowRotationByPinching { get; set; }
 
-		AGSPolygon VisibleArea { [Bind ("visibleArea")]get; }
+		[Export ("visibleArea")]
+		AGSPolygon VisibleArea ();
 
 		[Export ("visibleAreaEnvelope", ArgumentSemantic.Copy)]
 		AGSEnvelope VisibleAreaEnvelope { get; }
@@ -2841,7 +2870,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("disableWrapAround")]
 		void DisableWrapAround ();
 
-		AGSMapViewWrapAroundStatus WrapAroundStatus { [Bind ("wrapAroundStatus")]get; }
+		[Export ("wrapAroundStatus")]
+		AGSMapViewWrapAroundStatus WrapAroundStatus ();
 
 		[Export ("releaseHardwareResourcesWhenBackgrounded")]
 		bool ReleaseHardwareResourcesWhenBackgrounded { get; set; }
@@ -2917,8 +2947,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("name", ArgumentSemantic.Copy)]
 		string Name { get; }
 
-		[Export ("code", ArgumentSemantic.Retain)]
-		NSObject Code { get; }
+		//[Export ("code", ArgumentSemantic.Retain)]
+		//IntPtr Code { get; }
 	}
 
 	[BaseType (typeof (AGSDomain))]
@@ -2987,7 +3017,11 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSGraphic : AGSCoding {
 
-		NSDictionary AllAttributes { [Bind ("allAttributes")]get; [Bind ("setAllAttributes:")]set; }
+		[Export ("allAttributes")]
+		NSDictionary AllAttributes ();
+
+		[Bind ("setAllAttributes:")]
+		void SetAllAttributes (NSDictionary attrs);
 
 		[Export ("hasAttributeForKey:")]
 		bool HasAttributeForKey (string key);
@@ -3080,7 +3114,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (AGSGeometry geometry, AGSSymbol symbol, NSDictionary attributes, AGSInfoTemplateDelegate infoTemplateDelegate);
 
 		[Static, Export ("graphicWithGeometry:symbol:attributes:infoTemplateDelegate:")]
-		NSObject GraphicWithGeometry (AGSGeometry geometry, AGSSymbol symbol, NSDictionary attributes, AGSInfoTemplateDelegate infoTemplateDelegate);
+		AGSGraphic GraphicWithGeometry (AGSGeometry geometry, AGSSymbol symbol, NSDictionary attributes, AGSInfoTemplateDelegate infoTemplateDelegate);
 	}
 
 	[BaseType (typeof (AGSGraphic))]
@@ -3418,8 +3452,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("timeExtent", ArgumentSemantic.Retain)]
 		AGSTimeExtent TimeExtent { get; set; }
 
-		[Static]
-		NSObject IdentifyParameters { [Bind ("identifyParameters")]get; }
+		[Static, Bind ("identifyParameters")]
+		NSObject IdentifyParameters ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -3470,8 +3504,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSLocatorDelegate Delegate { get; set; }
 
-		[Static]
-		AGSLocator Locator { [Bind ("locator")]get; }
+		[Static, Export ("locator")]
+		AGSLocator Locator ();
 
 		[Static, Export ("locatorWithURL:")]
 		AGSLocator LocatorWithURL (NSUrl url);
@@ -3986,54 +4020,54 @@ namespace MonoTouch.ArcGIS {
 		void DidFailTrimExtendWithError (AGSGeometryServiceTask geometryServiceTask, NSOperation op, NSError error);
 	}
 
-	[Category, BaseType (typeof (AGSGeometryServiceTask))]
+	//[Category, BaseType (typeof (AGSGeometryServiceTask))]
 	public partial interface AGSGeometryArray_AGSGeometryServiceTask {
 
 		[Export ("bufferWithParameters:")]
-		NSOperation BufferWithParameters (AGSBufferParameters parameters);
+		NSOperation BufferWithParameters ([Target]AGSGeometryServiceTask task, AGSBufferParameters parameters);
 
 		[Export ("projectGeometries:toSpatialReference:")]
-		NSOperation ProjectGeometries (AGSGeometry [] geometries, AGSSpatialReference spatialReference);
+		NSOperation ProjectGeometries ([Target]AGSGeometryServiceTask task, AGSGeometry [] geometries, AGSSpatialReference spatialReference);
 
 		[Export ("simplifyGeometries:")]
-		NSOperation SimplifyGeometries (AGSGeometry [] geometries);
+		NSOperation SimplifyGeometries ([Target]AGSGeometryServiceTask task, AGSGeometry [] geometries);
 
 		[Export ("labelPointsForPolygons:")]
-		NSOperation LabelPointsForPolygons (AGSGeometry [] polygons);
+		NSOperation LabelPointsForPolygons ([Target]AGSGeometryServiceTask task, AGSGeometry [] polygons);
 
 		[Export ("densifyWithParameters:")]
-		NSOperation DensifyWithParameters (AGSDensifyParameters densifyParams);
+		NSOperation DensifyWithParameters ([Target]AGSGeometryServiceTask task, AGSDensifyParameters densifyParams);
 
 		[Export ("generalizeWithParameters:")]
-		NSOperation GeneralizeWithParameters (AGSGeneralizeParameters generalizeParams);
+		NSOperation GeneralizeWithParameters ([Target]AGSGeometryServiceTask task, AGSGeneralizeParameters generalizeParams);
 
 		[Export ("intersectGeometries:withGeometry:")]
-		NSOperation IntersectGeometries (AGSGeometry [] geometries, AGSGeometry intersectGeometry);
+		NSOperation IntersectGeometries ([Target]AGSGeometryServiceTask task, AGSGeometry [] geometries, AGSGeometry intersectGeometry);
 
 		[Export ("differenceGeometries:withGeometry:")]
-		NSOperation DifferenceGeometries (AGSGeometry [] geometries, AGSGeometry differenceGeometry);
+		NSOperation DifferenceGeometries ([Target]AGSGeometryServiceTask task, AGSGeometry [] geometries, AGSGeometry differenceGeometry);
 
 		[Export ("cutGeometries:withGeometry:")]
-		NSOperation CutGeometries (AGSGeometry [] geometries, AGSPolyline cutterGeometry);
+		NSOperation CutGeometries ([Target]AGSGeometryServiceTask task, AGSGeometry [] geometries, AGSPolyline cutterGeometry);
 
 		[Export ("autoCompletePolygons:withPolylines:")]
-		NSOperation AutoCompletePolygons (AGSGeometry [] polygons, AGSGeometry [] polylines);
+		NSOperation AutoCompletePolygons ([Target]AGSGeometryServiceTask task, AGSGeometry [] polygons, AGSGeometry [] polylines);
 
 		[Export ("offsetWithParameters:")]
-		NSOperation OffsetWithParameters (AGSOffsetParameters offsetParams);
+		NSOperation OffsetWithParameters ([Target]AGSGeometryServiceTask task, AGSOffsetParameters offsetParams);
 
 		[Export ("trimExtendWithParameters:")]
-		NSOperation TrimExtendWithParameters (AGSTrimExtendParameters trimExtendParams);
+		NSOperation TrimExtendWithParameters ([Target]AGSGeometryServiceTask task, AGSTrimExtendParameters trimExtendParams);
 	}
 
-	[Category, BaseType (typeof (AGSGeometryServiceTask))]
+	//[Category, BaseType (typeof (AGSGeometryServiceTask))]
 	public partial interface AreasAndLengths_AGSGeometryServiceTask {
 
 		[Export ("areasAndLengthsWithParameters:")]
-		NSOperation AreasAndLengthsWithParameters (AGSAreasAndLengthsParameters areasAndLengthsParams);
+		NSOperation AreasAndLengthsWithParameters ([Target]AGSGeometryServiceTask task, AGSAreasAndLengthsParameters areasAndLengthsParams);
 
 		[Export ("lengthsWithParameters:")]
-		NSOperation LengthsWithParameters (AGSLengthsParameters lengthsParams);
+		NSOperation LengthsWithParameters ([Target]AGSGeometryServiceTask task, AGSLengthsParameters lengthsParams);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4118,14 +4152,14 @@ namespace MonoTouch.ArcGIS {
 		AGSTrimExtendParameters TrimExtendParameters ();
 	}
 
-	[Category, BaseType (typeof (UIApplication))]
+	//[Category, BaseType (typeof (UIApplication))]
 	public partial interface AGSAdditions_UIApplication {
 
 		[Static, Export ("ags_setNetworkActivityDelegate:")]
-		void SetNetworkActivityDelegate (AGSNetworkActivityDelegate networkActivityDelegate);
+		void SetNetworkActivityDelegate ([Target]UIApplication app, AGSNetworkActivityDelegate networkActivityDelegate);
 
 		[Static, Export ("ags_showNetworkActivityIndicator:")]
-		void AShowNetworkActivityIndicator (bool show);
+		void AShowNetworkActivityIndicator ([Target]UIApplication app, bool show);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -4160,59 +4194,69 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSDevice {
 
-		[Static]
-		AGSDevice CurrentDevice { [Bind ("currentDevice")]get; }
+		[Static, Export ("currentDevice")]
+		AGSDevice CurrentDevice ();
 
-		string SystemVersion { [Bind ("systemVersion")]get; }
+		[Export ("systemVersion")]
+		string SystemVersion ();
 
-		string Machine { [Bind ("machine")]get; }
+		[Export ("machine")]
+		string Machine ();
 
-		AGSDeviceMachineType MachineType { [Bind ("machineType")]get; }
+		[Export ("machineType")]
+		AGSDeviceMachineType MachineType ();
 
-		bool IsIPad { [Bind ("isIPad")]get; }
+		[Export ("isIPad")]
+		bool IsIPad ();
 
-		bool IsAtLeastiOS4 { [Bind ("isAtLeastiOS4")]get; }
+		[Export ("isAtLeastiOS4")]
+		bool IsAtLeastiOS4 ();
 
-		bool IsAtLeastiOS5 { [Bind ("isAtLeastiOS5")]get; }
+		[Export ("isAtLeastiOS5")]
+		bool IsAtLeastiOS5 ();
 
-		bool IsAtLeastiOS6 { [Bind ("isAtLeastiOS6")]get; }
+		[Export ("isAtLeastiOS6")]
+		bool IsAtLeastiOS6 ();
 
-		bool IsMac { [Bind ("isMac")]get; }
+		[Export ("isMac")]
+		bool IsMac ();
 
-		int Ppi { [Bind ("ppi")]get; }
+		[Export ("ppi")]
+		int Ppi ();
 	}
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSScreen {
 
-		[Static]
-		float MainScreenScale { [Bind ("mainScreenScale")]get; }
+		[Static, Export ("mainScreenScale")]
+		float MainScreenScale ();
 
-		[Static]
-		int MainScreenPpi { [Bind ("mainScreenPpi")]get; }
+		[Static, Export ("mainScreenPpi")]
+		int MainScreenPpi ();
 
-		[Static]
-		int BasePpi { [Bind ("basePpi")]get; }
+		[Static, Export ("basePpi")]
+		int BasePpi ();
 	}
 
-	[Category, BaseType (typeof (NSError))]
+	//[Category, BaseType (typeof (NSError))]
 	public partial interface AGSAdditions_NSError {
 
-		bool IsAuthenticationError { [Bind ("ags_isAuthenticationError")]get; }
+		[Export ("ags_isAuthenticationError")]
+		bool IsAuthenticationError ([Target]NSError err);
 	}
 
-	[Category, BaseType (typeof (NSUrl))]
+	//[Category, BaseType (typeof (NSUrl))]
 	public partial interface AGSAdditions_NSURL {
 
 		[Static, Export ("ags_URLWithUnicodeString:")]
-		NSUrl URLWithUnicodeString (string urlString);
+		NSUrl URLWithUnicodeString ([Target]NSUrl url, string urlString);
 	}
 
-	[Category, BaseType (typeof (NSUrlConnection))]
+	//[Category, BaseType (typeof (NSUrlConnection))]
 	public partial interface AGSAdditions_NSURLConnection {
 
-		[Static]
-		IList<string> TrustedHosts { [Bind ("ags_trustedHosts")]get; }
+		[Static, Export ("ags_trustedHosts")]
+		IList<string> TrustedHosts ([Target]NSUrlConnection conn);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -4262,7 +4306,7 @@ namespace MonoTouch.ArcGIS {
 		string StringWithObject (NSObject value, out NSError error);
 	}
 
-	[Model]
+	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSSBJsonStreamParserDelegate {
 
 		[Export ("parserFoundObjectStart:")]
@@ -4318,7 +4362,7 @@ namespace MonoTouch.ArcGIS {
 		AGSSBJsonStreamParserStatus Parse (NSData data);
 	}
 
-	[Model]
+	[Model, BaseType(typeof(NSObject))]
 	public partial interface AGSSBJsonStreamParserAdapterDelegate {
 
 		[Export ("parser:foundArray:")]
@@ -4338,13 +4382,14 @@ namespace MonoTouch.ArcGIS {
 		AGSSBJsonStreamParserAdapterDelegate Delegate { get; set; }
 	}
 
-	[Category, BaseType (typeof (NSObject))]
+	//[Category, BaseType (typeof (NSObject))]
 	public partial interface AGSSBProxyForJson_NSObject {
 
-		NSObject Ags_proxyForJson { [Bind ("ags_proxyForJson")]get; }
+		[Export ("ags_proxyForJson")]
+		NSObject Ags_proxyForJson ([Target]NSObject obj);
 	}
 
-	[Model]
+	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSSBJsonStreamWriterDelegate {
 
 		[Export ("writer:appendBytes:length:")]
@@ -4409,40 +4454,45 @@ namespace MonoTouch.ArcGIS {
 		bool WriteString (string s);
 	}
 
-	[Category, BaseType (typeof (AGSSBJsonStreamWriter))]
+	//[Category, BaseType (typeof (AGSSBJsonStreamWriter))]
 	public partial interface AGSPrivate_AGSSBJsonStreamWriter {
 
 		[Export ("writeValue:")]
-		bool WriteValue (NSObject v);
+		bool WriteValue ([Target]AGSSBJsonStreamWriter writer, NSObject v);
 
 		[Export ("appendBytes:length:")]
-		void AppendBytes (byte[] bytes, uint length);
+		void AppendBytes ([Target]AGSSBJsonStreamWriter writer, byte[] bytes, uint length);
 	}
 
-	[Category, BaseType (typeof (NSObject))]
+	//[Category, BaseType (typeof (NSObject))]
 	public partial interface NSObject_AGSSBJsonWriting_NSObject {
 
-		string JSONRepresentation { [Bind ("ags_JSONRepresentation")]get; }
+		[Export ("ags_JSONRepresentation")]
+		string JSONRepresentation ([Target]NSObject obj);
 	}
 
-	[Category, BaseType (typeof (NSString))]
+	//[Category, BaseType (typeof (NSString))]
 	public partial interface NSString_AGSSBJsonParsing_NSString {
 
-		NSObject JSONValue { [Bind ("ags_JSONValue")]get; }
+		[Export ("ags_JSONValue")]
+		NSObject JSONValue ([Target]NSString str);
 	}
 
-	[Category, BaseType (typeof (NSData))]
+	//[Category, BaseType (typeof (NSData))]
 	public partial interface NSData_AGSSBJsonParsing_NSData {
 
-		NSObject Ags_JSONValue { [Bind ("ags_JSONValue")]get; }
+		[Export ("ags_JSONValue")]
+		NSObject JSONValue ([Target]NSData data);
 	}
 
+/*
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSGraphic : AGSCoding {
 
 		[Notification, Field ("AGSSymbolReadyToDrawNotification")]
 		NSString AGSSymbolReadyToDrawNotification { get; }
 	}
+*/
 
 	[BaseType (typeof (NSObject))]
 	public partial interface AGSSymbol : AGSCoding {
@@ -4911,11 +4961,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("mode")]
 		AGSFeatureLayerMode Mode { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("requestCachePolicy")]
 		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
@@ -5147,56 +5197,56 @@ namespace MonoTouch.ArcGIS {
 		void DidFailSelectFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
 	}
 
-	[Category, BaseType (typeof (AGSFeatureLayer))]
+	//[Category, BaseType (typeof (AGSFeatureLayer))]
 	public partial interface Editing_AGSFeatureLayer {
 
 		[Export ("featureWithTemplate:")]
-		AGSGraphic FeatureWithTemplate (AGSFeatureTemplate featureTemplate);
+		AGSGraphic FeatureWithTemplate ([Target]AGSFeatureLayer layer, AGSFeatureTemplate featureTemplate);
 
 		[Export ("featureWithType:")]
-		AGSGraphic FeatureWithType (AGSFeatureType featureType);
+		AGSGraphic FeatureWithType ([Target]AGSFeatureLayer layer, AGSFeatureType featureType);
 
 		[Export ("addFeatures:")]
-		NSOperation AddFeatures (AGSGraphic [] features);
+		NSOperation AddFeatures ([Target]AGSFeatureLayer layer, AGSGraphic [] features);
 
 		[Export ("updateFeatures:")]
-		NSOperation UpdateFeatures (AGSGraphic [] features);
+		NSOperation UpdateFeatures ([Target]AGSFeatureLayer layer, AGSGraphic [] features);
 
 		[Export ("deleteFeaturesWithObjectIds:")]
-		NSOperation DeleteFeaturesWithObjectIds (int [] objectIds);
+		NSOperation DeleteFeaturesWithObjectIds ([Target]AGSFeatureLayer layer, int [] objectIds);
 
 		[Export ("deleteFeaturesWithWhereClause:geometry:spatialRelation:")]
-		NSOperation DeleteFeaturesWithWhereClause (string where, AGSGeometry geometry, AGSSpatialRelationship spatialRelation);
+		NSOperation DeleteFeaturesWithWhereClause ([Target]AGSFeatureLayer layer, string where, AGSGeometry geometry, AGSSpatialRelationship spatialRelation);
 
 		[Export ("applyEditsWithFeaturesToAdd:toUpdate:toDelete:")]
-		NSOperation ApplyEditsWithFeaturesToAdd (AGSGraphic [] addFeatures, AGSGraphic [] updateFeatures, int [] objectIds);
+		NSOperation ApplyEditsWithFeaturesToAdd ([Target]AGSFeatureLayer layer, AGSGraphic [] addFeatures, AGSGraphic [] updateFeatures, int [] objectIds);
 
 		[Export ("addAttachment:data:filename:contentType:")]
-		NSOperation AddAttachment (uint objectId, NSData data, string filename, string contentType);
+		NSOperation AddAttachment ([Target]AGSFeatureLayer layer, uint objectId, NSData data, string filename, string contentType);
 
 		[Export ("addAttachment:data:filename:")]
-		NSOperation AddAttachment (uint objectId, NSData data, string filename);
+		NSOperation AddAttachment ([Target]AGSFeatureLayer layer, uint objectId, NSData data, string filename);
 
 		[Export ("addAttachment:filepath:contentType:")]
-		NSOperation AddAttachment (uint objectId, string filepath, string contentType);
+		NSOperation AddAttachment ([Target]AGSFeatureLayer layer, uint objectId, string filepath, string contentType);
 
 		[Export ("addAttachment:filepath:")]
-		NSOperation AddAttachment (uint objectId, string filepath);
+		NSOperation AddAttachment ([Target]AGSFeatureLayer layer, uint objectId, string filepath);
 
 		[Export ("updateAttachment:data:filename:contentType:attachmentId:")]
-		NSOperation UpdateAttachment (uint objectId, NSData data, string filename, string contentType, int attachmentId);
+		NSOperation UpdateAttachment ([Target]AGSFeatureLayer layer, uint objectId, NSData data, string filename, string contentType, int attachmentId);
 
 		[Export ("updateAttachment:data:filename:attachmentId:")]
-		NSOperation UpdateAttachment (uint objectId, NSData data, string filename, int attachmentId);
+		NSOperation UpdateAttachment ([Target]AGSFeatureLayer layer, uint objectId, NSData data, string filename, int attachmentId);
 
 		[Export ("deleteAttachmentsForObjectId:attachmentIds:")]
-		NSOperation DeleteAttachmentsForObjectId (uint objectId, int [] attachmentIds);
+		NSOperation DeleteAttachmentsForObjectId ([Target]AGSFeatureLayer layer, uint objectId, int [] attachmentIds);
 
 		[Export ("queryAttachmentInfosForObjectId:")]
-		NSOperation QueryAttachmentInfosForObjectId (uint objectId);
+		NSOperation QueryAttachmentInfosForObjectId ([Target]AGSFeatureLayer layer, uint objectId);
 
 		[Export ("retrieveAttachmentForObjectId:attachmentId:")]
-		NSOperation RetrieveAttachmentForObjectId (uint objectId, int attachmentId);
+		NSOperation RetrieveAttachmentForObjectId ([Target]AGSFeatureLayer layer, uint objectId, int attachmentId);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -5280,13 +5330,17 @@ namespace MonoTouch.ArcGIS {
 		[Export ("markForDeletion:")]
 		void MarkForDeletion (bool del);
 
-		bool ExistsOnServer { [Bind ("existsOnServer")]get; }
+		[Export ("existsOnServer")]
+		bool ExistsOnServer ();
 
-		bool IsLocal { [Bind ("isLocal")]get; }
+		[Export ("isLocal")]
+		bool IsLocal ();
 
-		UIImage Thumbnail { [Bind ("thumbnail")]get; }
+		[Export ("thumbnail")]
+		UIImage Thumbnail ();
 
-		NSData Data { [Bind ("data")]get; }
+		[Export ("data")]
+		NSData Data ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5313,7 +5367,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("attachmentForId:")]
 		AGSAttachment AttachmentForId (int attachmentId);
 
-		bool HasLocalEdits { [Bind ("hasLocalEdits")]get; }
+		[Export ("hasLocalEdits")]
+		bool HasLocalEdits ();
 
 		[Export ("cancelLocalEdits")]
 		void CancelLocalEdits ();
@@ -5352,7 +5407,7 @@ namespace MonoTouch.ArcGIS {
 		void CancelDownloadAttachmentInfos ();
 	}
 
-	[Model]
+	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSAttachmentManagerDelegate {
 
 		[Export ("attachmentManager:didDownloadAttachmentInfos:")]
@@ -5448,13 +5503,14 @@ namespace MonoTouch.ArcGIS {
 		int RelatedTableId { get; }
 	}
 
+/*
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSMapViewTouchDelegate {
 
 		[Notification, Field ("AGSSketchGraphicsLayerGeometryDidChangeNotification")]
 		NSString AGSSketchGraphicsLayerGeometryDidChangeNotification { get; }
 	}
-
+*/
 	[BaseType (typeof (AGSGraphicsLayer))]
 	public partial interface AGSSketchGraphicsLayer : AGSMapViewTouchDelegate {
 
@@ -5509,23 +5565,23 @@ namespace MonoTouch.ArcGIS {
 		[Export ("selectLastVertex")]
 		void SelectLastVertex ();
 
-		[Export ("mapView:didClickAtPoint:mapPoint:graphics:")]
-		void DidClickAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+		//[Export ("mapView:didClickAtPoint:mapPoint:graphics:")]
+		//void DidClickAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
 
-		[Export ("mapView:didEndTapAndHoldAtPoint:mapPoint:graphics:")]
-		void DidEndTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+		//[Export ("mapView:didEndTapAndHoldAtPoint:mapPoint:graphics:")]
+		//void DidEndTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
 
-		[Static]
-		AGSCompositeSymbol DefaultMainSymbol { [Bind ("defaultMainSymbol")]get; }
+		[Static, Export ("defaultMainSymbol")]
+		AGSCompositeSymbol DefaultMainSymbol ();
 
-		[Static]
-		AGSMarkerSymbol DefaultSelectedVertexSymbol { [Bind ("defaultSelectedVertexSymbol")]get; }
+		[Static, Export ("defaultSelectedVertexSymbol")]
+		AGSMarkerSymbol DefaultSelectedVertexSymbol ();
 
-		[Static]
-		AGSMarkerSymbol DefaultVertexSymbol { [Bind ("defaultVertexSymbol")]get; }
+		[Static, Export ("defaultVertexSymbol")]
+		AGSMarkerSymbol DefaultVertexSymbol ();
 
-		[Static]
-		AGSMarkerSymbol DefaultMidVertexSymbol { [Bind ("defaultMidVertexSymbol")]get; }
+		[Static, Export ("defaultMidVertexSymbol")]
+		AGSMarkerSymbol DefaultMidVertexSymbol ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -5534,11 +5590,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("URL", ArgumentSemantic.Retain)]
 		NSUrl URL { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSPortalDelegate Delegate { get; set; }
@@ -6097,11 +6153,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("URL", ArgumentSemantic.Copy)]
 		NSUrl URL { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("delegate", ArgumentSemantic.Assign)]
 		AGSWebMapDelegate Delegate { get; set; }
@@ -6188,7 +6244,7 @@ namespace MonoTouch.ArcGIS {
 		[Export ("webMap:didLoadLayer:")]
 		void DidLoadLayer (AGSWebMap webMap, AGSLayer layer);
 
-		string BingAppId { [Bind ("bingAppId")]get; }
+		//string BingAppId { [Bind ("bingAppId")]get; }
 
 		[Export ("bingAppIdForWebMap:")]
 		string BingAppIdForWebMap (AGSWebMap webMap);
@@ -6224,7 +6280,7 @@ namespace MonoTouch.ArcGIS {
 		bool ShowLegend { get; }
 
 		[Export ("initWithJSON:")]
-		IntPtr Constructor (NSDictionary json);
+		new IntPtr Constructor (NSDictionary json);
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -6564,29 +6620,29 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (UIViewController))]
 	public partial interface AGSPopupsContainerViewController : /*UIScrollViewDelegate, */AGSPopupsContainer/*, UIActionSheetDelegate*/ {
 
-		[Export ("delegate", ArgumentSemantic.Assign)]
-		AGSPopupsContainerDelegate Delegate { get; set; }
+		//[Export ("delegate", ArgumentSemantic.Assign)]
+		//AGSPopupsContainerDelegate Delegate { get; set; }
 
-		[Export ("popups", ArgumentSemantic.Copy)]
-		AGSPopup [] Popups { get; set; }
+		//[Export ("popups", ArgumentSemantic.Copy)]
+		//AGSPopup [] Popups { get; set; }
 
-		[Export ("inEditingMode")]
-		bool InEditingMode { get; }
+		//[Export ("inEditingMode")]
+		//bool InEditingMode { get; }
 
-		[Export ("style")]
-		AGSPopupsContainerStyle Style { get; set; }
+		//[Export ("style")]
+		//AGSPopupsContainerStyle Style { get; set; }
 
-		[Export ("styleColor", ArgumentSemantic.Retain)]
-		UIColor StyleColor { get; set; }
+		//[Export ("styleColor", ArgumentSemantic.Retain)]
+		//UIColor StyleColor { get; set; }
 
-		[Export ("currentEditingGeometry", ArgumentSemantic.Retain)]
-		AGSGeometry CurrentEditingGeometry { get; }
+		//[Export ("currentEditingGeometry", ArgumentSemantic.Retain)]
+		//AGSGeometry CurrentEditingGeometry { get; }
 
-		[Export ("currentPopup", ArgumentSemantic.Retain)]
-		AGSPopup CurrentPopup { get; }
+		//[Export ("currentPopup", ArgumentSemantic.Retain)]
+		//AGSPopup CurrentPopup { get; }
 
-		[Export ("editingStyle")]
-		AGSPopupsContainerEditingStyle EditingStyle { get; set; }
+		//[Export ("editingStyle")]
+		//AGSPopupsContainerEditingStyle EditingStyle { get; set; }
 
 		[Export ("pagingStyle")]
 		AGSPopupsContainerPagingStyle PagingStyle { get; set; }
@@ -6594,20 +6650,20 @@ namespace MonoTouch.ArcGIS {
 		[Export ("actionSheetContainerView", ArgumentSemantic.Assign)]
 		UIView ActionSheetContainerView { get; set; }
 
-		[Export ("doneButton", ArgumentSemantic.Retain)]
-		UIBarButtonItem DoneButton { get; set; }
+		//[Export ("doneButton", ArgumentSemantic.Retain)]
+		//UIBarButtonItem DoneButton { get; set; }
 
-		[Export ("actionButton", ArgumentSemantic.Retain)]
-		UIBarButtonItem ActionButton { get; set; }
+		//[Export ("actionButton", ArgumentSemantic.Retain)]
+		//UIBarButtonItem ActionButton { get; set; }
 
-		[Export ("defaultActionButton", ArgumentSemantic.Retain)]
-		UIBarButtonItem DefaultActionButton { get; }
+		//[Export ("defaultActionButton", ArgumentSemantic.Retain)]
+		//UIBarButtonItem DefaultActionButton { get; }
 
-		[Export ("defaultDoneButton", ArgumentSemantic.Retain)]
-		UIBarButtonItem DefaultDoneButton { get; }
+		//[Export ("defaultDoneButton", ArgumentSemantic.Retain)]
+		//UIBarButtonItem DefaultDoneButton { get; }
 
-		[Export ("modalPresenter", ArgumentSemantic.Retain)]
-		UIViewController ModalPresenter { get; set; }
+		//[Export ("modalPresenter", ArgumentSemantic.Retain)]
+		//UIViewController ModalPresenter { get; set; }
 
 		[Export ("initWithPopups:")]
 		IntPtr Constructor (NSObject [] popups);
@@ -6624,11 +6680,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("showAdditionalPopups:")]
 		void ShowAdditionalPopups (AGSPopup [] popupInfos);
 
-		[Export ("startEditingCurrentPopup")]
-		void StartEditingCurrentPopup ();
+		//[Export ("startEditingCurrentPopup")]
+		//void StartEditingCurrentPopup ();
 
-		[Export ("clearAllPopups")]
-		void ClearAllPopups ();
+		//[Export ("clearAllPopups")]
+		//void ClearAllPopups ();
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -6693,13 +6749,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("zoomScale")]
 		double ZoomScale { get; set; }
 
-		[Export ("dataSourceStarted")]
-		bool DataSourceStarted { [Bind ("isDataSourceStarted")] get; }
+		//[Export ("dataSourceStarted")]
+		//bool DataSourceStarted { [Bind ("isDataSourceStarted")] get; }
 
 		[Export ("interfaceOrientation")]
 		UIInterfaceOrientation InterfaceOrientation { get; set; }
 
-		AGSPoint MapLocation { [Bind ("mapLocation")]get; }
+		[Export ("mapLocation")]
+		AGSPoint MapLocation ();
 
 		[Export ("startDataSource")]
 		void StartDataSource ();
@@ -6794,11 +6851,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("spatialReference", ArgumentSemantic.Retain)]
 		AGSSpatialReference SpatialReference { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("imageFormat")]
 		AGSImageFormat ImageFormat { get; set; }
@@ -6844,11 +6901,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("layerInfos", ArgumentSemantic.Copy)]
 		AGSWMTSLayerInfo [] LayerInfos { get; }
 
-		[Export ("credential", ArgumentSemantic.Copy)]
-		AGSCredential Credential { get; set; }
-
-		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		AGSCredentialCache CredentialCache { get; set; }
+//		[Export ("credential", ArgumentSemantic.Copy)]
+//		AGSCredential Credential { get; set; }
+//
+//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+//		AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("URL", ArgumentSemantic.Copy)]
 		NSUrl URL { get; }
