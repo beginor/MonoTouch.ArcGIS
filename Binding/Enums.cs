@@ -3,10 +3,6 @@ using MonoTouch.Foundation;
 
 namespace MonoTouch.ArcGIS {
 
-	public delegate void AGSErrorBlock(NSError error);
-
-	public delegate void AGSIdBlock(object id);
-
 	public enum AGSMapViewWrapAroundStatus {
 		Disabled,
 		Uninitialized,
