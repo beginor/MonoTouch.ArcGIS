@@ -11,7 +11,7 @@ using MonoTouch.Security;
 using OSStatus = System.Int32;
 
 namespace MonoTouch.ArcGIS {
-
+	
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSCoding {
 
@@ -250,5 +250,62 @@ namespace MonoTouch.ArcGIS {
 		bool IsInScale ();
 
 	}
-	
+
+	[BaseType (typeof (AGSLayer))]
+	public partial interface AGSDynamicLayer {
+
+		[Export ("autoRefreshInterval")]
+		double AutoRefreshInterval { get; set; }
+	}
+
+	[/*Category, */BaseType (typeof (AGSDynamicLayer))]
+	public partial interface ForSubclassEyesOnly_AGSDynamicLayer {
+
+		[Export ("requestImageWithWidth:height:envelope:timeExtent:")]
+		void RequestImageWithWidth ([Target]AGSDynamicLayer layer, int width, int height, AGSEnvelope env, AGSTimeExtent timeExtent);
+
+		[Export ("setImageData:forEnvelope:")]
+		void SetImageData ([Target]AGSDynamicLayer layer, NSData data, AGSEnvelope env);
+
+		//[Export ("queue", ArgumentSemantic.Retain)]
+		//NSOperationQueue Queue { get; }
+		[Export("getQueue")]
+		NSOperationQueue GetQueue([Target]AGSDynamicLayer layer);
+
+		//[Export ("wrapAroundSupported")]
+		//bool WrapAroundSupported { get; set; }
+		[Export("getWrapAroundSupported")]
+		bool GetWrapAroundSupported ([Target]AGSDynamicLayer layer);
+
+		[Export("setWrapAroundSupported:")]
+		void SetWrapAroundSupported([Target]AGSDynamicLayer layer, bool supported);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSTimeExtent {
+
+		[Export ("start", ArgumentSemantic.Copy)]
+		NSDate Start { get; }
+
+		[Export ("end", ArgumentSemantic.Copy)]
+		NSDate End { get; }
+
+		[Export ("initWithStart:end:")]
+		IntPtr Constructor (NSDate start, NSDate end);
+
+		[Export ("isEqualToTimeExtent:")]
+		bool IsEqualToTimeExtent (AGSTimeExtent timeExtent);
+
+		[Export ("timeExtentByOffset:units:")]
+		AGSTimeExtent TimeExtentByOffset (int offsetValue, AGSTimeIntervalUnits units);
+
+		[Static, Export ("intersectionOfTimeExtent:andTimeExtent:")]
+		AGSTimeExtent IntersectionOfTimeExtent (AGSTimeExtent timeExtent1, AGSTimeExtent timeExtent2);
+
+		[Static, Export ("timeExtentWithStart:end:")]
+		AGSTimeExtent TimeExtentWithStart (NSDate start, NSDate end);
+
+		[Static, Export ("dateByOffsettingDate:offset:units:")]
+		NSDate DateByOffsettingDate (NSDate date, int offsetValue, AGSTimeIntervalUnits units);
+	}
 }
