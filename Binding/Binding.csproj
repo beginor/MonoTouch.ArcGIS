@@ -40,9 +40,6 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingApiDefinition Include="Api.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ObjcBindingCoreSource Include="Enums.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Xamarin.ObjcBinding.CSharp.targets" />
@@ -53,5 +50,8 @@
     <Compile Include="libArcGIS.linkwith.cs">
       <DependentUpon>libArcGIS.a</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="Api_new.cs" />
   </ItemGroup>
 </Project>
