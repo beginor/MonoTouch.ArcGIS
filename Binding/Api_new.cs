@@ -308,4 +308,79 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("dateByOffsettingDate:offset:units:")]
 		NSDate DateByOffsettingDate (NSDate date, int offsetValue, AGSTimeIntervalUnits units);
 	}
+
+	[BaseType (typeof (AGSLayer))]
+	public partial interface AGSTiledLayer {
+
+		[Export ("tileInfo", ArgumentSemantic.Retain)]
+		AGSTileInfo TileInfo { get; }
+
+		[Export ("convertedScaleForLodScale:")]
+		double ConvertedScaleForLodScale (double lodScale);
+
+		[Export ("convertedResolutionForLodResolution:")]
+		double ConvertedResolutionForLodResolution (double lodResolution);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSTileInfo : AGSCoding {
+
+		[Export ("dpi")]
+		uint Dpi { get; }
+
+		[Export ("format", ArgumentSemantic.Copy)]
+		string Format { get; }
+
+		[Export ("tileSize")]
+		SizeF TileSize { get; }
+
+		[Export ("lods", ArgumentSemantic.Copy)]
+		AGSLOD [] Lods { get; }
+
+		[Export ("origin", ArgumentSemantic.Retain)]
+		AGSPoint Origin { get; }
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; }
+
+		[Export ("computeTileBounds:")]
+		void ComputeTileBounds (AGSEnvelope envelope);
+
+		[Export ("envelopeForTileAtLevel:row:column:")]
+		AGSEnvelope EnvelopeForTileAtLevel (int level, int row, int column);
+
+		[Export ("envelopeForTileAtLOD:row:column:")]
+		AGSEnvelope EnvelopeForTileAtLOD (AGSLOD lod, int row, int col);
+
+		[Export ("initWithDpi:format:lods:origin:spatialReference:tileSize:")]
+		IntPtr Constructor (uint dpi, string format, AGSLOD [] lods, AGSPoint origin, AGSSpatialReference spatialReference, SizeF tileSize);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSLOD : AGSCoding {
+
+		[Export ("level")]
+		uint Level { get; }
+
+		[Export ("resolution")]
+		double Resolution { get; }
+
+		[Export ("scale")]
+		double Scale { get; }
+
+		[Export ("startTileRow")]
+		uint StartTileRow { get; set; }
+
+		[Export ("endTileRow")]
+		uint EndTileRow { get; set; }
+
+		[Export ("startTileColumn")]
+		uint StartTileColumn { get; set; }
+
+		[Export ("endTileColumn")]
+		uint EndTileColumn { get; set; }
+
+		[Export ("initWithLevel:resolution:scale:")]
+		IntPtr Constructor (uint level, double resolution, double scale);
+	}
 }
