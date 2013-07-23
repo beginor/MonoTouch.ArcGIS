@@ -436,4 +436,68 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("checkCurrentScaleVisibilityForSubLayer:")]
 		//bool CheckCurrentScaleVisibilityForSubLayer (AGSMapServiceLayerInfo msli);
 	}
+
+	[BaseType (typeof (AGSDynamicLayer))]
+	public partial interface AGSDynamicMapServiceLayer : AGSCoding/*, AGSSecuredResource*/ {
+
+		[Export ("URL", ArgumentSemantic.Copy)]
+		NSUrl URL { get; }
+
+		//[Export ("mapServiceInfo", ArgumentSemantic.Retain)]
+		//AGSMapServiceInfo MapServiceInfo { get; }
+
+		//[Export ("credential", ArgumentSemantic.Copy)]
+		//AGSCredential Credential { get; set; }
+		//
+		//[Export ("credentialCache", ArgumentSemantic.Retain)]
+		//AGSCredentialCache CredentialCache { get; set; }
+
+		[Export ("dpi")]
+		uint Dpi { get; set; }
+
+		[Export ("imageFormat")]
+		AGSImageFormat ImageFormat { get; set; }
+
+		[Export ("transparent")]
+		bool Transparent { get; set; }
+
+		//[Export ("layerDefinitions", ArgumentSemantic.Copy)]
+		//AGSLayerDefinition [] LayerDefinitions { get; set; }
+
+		//[Export ("visibleLayers", ArgumentSemantic.Copy)]
+		//AGSMapServiceLayerInfo [] VisibleLayers { get; set; }
+
+		//[Export ("layerTimeOptions", ArgumentSemantic.Copy)]
+		//AGSLayerTimeOptions [] LayerTimeOptions { get; set; }
+
+		[Export ("initWithURL:")]
+		IntPtr Constructor (NSUrl url);
+
+		//[Export ("initWithURL:credential:")]
+		//IntPtr Constructor (NSUrl url, AGSCredential cred);
+
+		//[Export ("initWithMapServiceInfo:")]
+		//IntPtr Constructor (AGSMapServiceInfo info);
+
+		[Static, Export ("dynamicMapServiceLayerWithURL:")]
+		AGSDynamicMapServiceLayer DynamicMapServiceLayerWithURL (NSUrl url);
+
+		//[Static, Export ("dynamicMapServiceLayerWithURL:credential:")]
+		//AGSDynamicMapServiceLayer DynamicMapServiceLayerWithURL (NSUrl url, AGSCredential cred);
+
+		//[Static, Export ("dynamicMapServiceLayerWithMapServiceInfo:")]
+		//AGSDynamicMapServiceLayer DynamicMapServiceLayerWithMapServiceInfo (AGSMapServiceInfo info);
+
+		//[Export ("initWithJSON:URL:credential:")]
+		//IntPtr Constructor (NSDictionary json, NSUrl url, AGSCredential cred);
+
+		//[Export ("resubmit")]
+		//void Resubmit ();
+
+		//[Export ("resubmitWithURL:credential:")]
+		//void ResubmitWithURL (NSUrl url, AGSCredential cred);
+
+		//[Export ("checkCurrentScaleVisibilityForSubLayer:")]
+		//bool CheckCurrentScaleVisibilityForSubLayer (AGSMapServiceLayerInfo msli);
+	}
 }
