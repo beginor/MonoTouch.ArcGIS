@@ -383,4 +383,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithLevel:resolution:scale:")]
 		IntPtr Constructor (uint level, double resolution, double scale);
 	}
+
+	[BaseType (typeof (AGSTiledLayer))]
+	public partial interface AGSTiledServiceLayer {
+	}
 }
