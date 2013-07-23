@@ -7131,7 +7131,7 @@ namespace MonoTouch.ArcGIS {
 		NSObject FilterWithValue (string value, string name);
 	}
 
-	[BaseType (typeof(UIView))]
+	[BaseType (typeof(AGSMapViewBase))]
 	public partial interface AGSMapView {
 	}
 }

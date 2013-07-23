@@ -500,4 +500,259 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("checkCurrentScaleVisibilityForSubLayer:")]
 		//bool CheckCurrentScaleVisibilityForSubLayer (AGSMapServiceLayerInfo msli);
 	}
+
+	[BaseType (typeof (UIView))]
+	public partial interface AGSMapViewBase {
+
+		[Export ("layerDelegate", ArgumentSemantic.Assign)]
+		AGSMapViewLayerDelegate LayerDelegate { get; set; }
+
+		[Export ("touchDelegate", ArgumentSemantic.Assign)]
+		AGSMapViewTouchDelegate TouchDelegate { get; set; }
+
+		[Export ("calloutDelegate", ArgumentSemantic.Assign)]
+		AGSMapViewCalloutDelegate CalloutDelegate { get; set; }
+
+		[Export ("mapLayers", ArgumentSemantic.Copy)]
+		AGSLayer [] MapLayers { get; }
+
+		[Export ("loaded")]
+		bool Loaded { get; }
+
+		[Export ("resolution")]
+		double Resolution { get; }
+
+		[Export ("mapScale")]
+		double MapScale { get; }
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; }
+
+		[Export ("timeExtent", ArgumentSemantic.Retain)]
+		AGSTimeExtent TimeExtent { get; set; }
+
+		[Export ("showMagnifierOnTapAndHold")]
+		bool ShowMagnifierOnTapAndHold { get; set; }
+
+		[Export ("allowMagnifierToPanMap")]
+		bool AllowMagnifierToPanMap { get; set; }
+
+		[Export ("rotationAngle")]
+		double RotationAngle { get; set; }
+
+		[Export ("allowRotationByPinching")]
+		bool AllowRotationByPinching { get; set; }
+
+		[Export ("visibleArea")]
+		AGSPolygon VisibleArea ();
+
+		[Export ("visibleAreaEnvelope", ArgumentSemantic.Copy)]
+		AGSEnvelope VisibleAreaEnvelope { get; }
+
+		[Export ("mapAnchor", ArgumentSemantic.Copy)]
+		AGSPoint MapAnchor { get; }
+
+		[Export ("maxEnvelope", ArgumentSemantic.Retain)]
+		AGSEnvelope MaxEnvelope { get; set; }
+
+		//[Export ("locationDisplay", ArgumentSemantic.Retain)]
+		//AGSLocationDisplay LocationDisplay { get; }
+
+		//[Export ("callout", ArgumentSemantic.Retain)]
+		//AGSCallout Callout { get; }
+
+		[Export ("baseLayer", ArgumentSemantic.Retain)]
+		AGSLayer BaseLayer { get; }
+
+		[Export ("backgroundColor", ArgumentSemantic.Retain)]
+		UIColor BackgroundColor { get; set; }
+
+		[Export ("gridSize")]
+		float GridSize { get; set; }
+
+		[Export ("gridLineWidth")]
+		float GridLineWidth { get; set; }
+
+		[Export ("gridLineColor", ArgumentSemantic.Retain)]
+		UIColor GridLineColor { get; set; }
+
+		[Export ("interacting")]
+		bool Interacting { get; }
+
+		[Export ("animating")]
+		bool Animating { get; }
+
+		[Export ("lastChangeFromInteraction")]
+		bool LastChangeFromInteraction { get; }
+
+		[Export ("toMapPoint:")]
+		AGSPoint ToMapPoint (PointF point);
+
+		[Export ("toScreenPoint:")]
+		PointF ToScreenPoint (AGSPoint point);
+
+		[Export ("toScreenRect:")]
+		RectangleF ToScreenRect (AGSEnvelope envelope);
+
+		[Export ("toMapEnvelope:")]
+		AGSEnvelope ToMapEnvelope (RectangleF rect);
+
+		[Export ("zoomToEnvelope:animated:")]
+		void ZoomToEnvelope (AGSEnvelope envelope, bool animated);
+
+		[Export ("zoomWithFactor:atAnchorPoint:animated:")]
+		void ZoomWithFactor (double factor, PointF anchorPoint, bool animated);
+
+		[Export ("zoomIn:")]
+		void ZoomIn (bool animated);
+
+		[Export ("zoomOut:")]
+		void ZoomOut (bool animated);
+
+		[Export ("centerAtPoint:animated:")]
+		void CenterAtPoint (AGSPoint point, bool animated);
+
+		[Export ("zoomToGeometry:withPadding:animated:")]
+		void ZoomToGeometry (AGSGeometry geometry, float padding, bool animated);
+
+		[Export ("zoomToResolution:withCenterPoint:animated:")]
+		void ZoomToResolution (double res, AGSPoint centerPoint, bool animated);
+
+		[Export ("zoomToScale:withCenterPoint:animated:")]
+		void ZoomToScale (double scale, AGSPoint centerPoint, bool animated);
+
+		[Export ("zoomToResolution:animated:")]
+		void ZoomToResolution (double res, bool animated);
+
+		[Export ("zoomToScale:animated:")]
+		void ZoomToScale (double scale, bool animated);
+
+		[Export ("reset")]
+		void Reset ();
+
+		[Export ("setRotationAngle:animated:")]
+		void SetRotationAngle (double angle, bool animated);
+
+		[Export ("setRotationAngle:aroundScreenPoint:animated:")]
+		void SetRotationAngle (double angle, PointF screenPoint, bool animated);
+
+		[Export ("setRotationAngle:aroundMapPoint:animated:")]
+		void SetRotationAngle (double angle, AGSPoint mapPoint, bool animated);
+
+		[Export ("addMapLayer:withName:")]
+		void AddMapLayer (AGSLayer mapLayer, string name);
+
+		[Export ("removeMapLayerWithName:")]
+		void RemoveMapLayerWithName (string name);
+
+		[Export ("insertMapLayer:withName:atIndex:")]
+		void InsertMapLayer (AGSLayer mapLayer, string name, uint index);
+
+		[Export ("addMapLayer:")]
+		void AddMapLayer (AGSLayer lyr);
+
+		[Export ("insertMapLayer:atIndex:")]
+		void InsertMapLayer (AGSLayer lyr, int index);
+
+		[Export ("removeMapLayer:")]
+		void RemoveMapLayer (AGSLayer lyr);
+
+		[Export ("mapLayerForName:")]
+		AGSLayer MapLayerForName (string name);
+
+		[Export ("enableWrapAround")]
+		void EnableWrapAround ();
+
+		[Export ("disableWrapAround")]
+		void DisableWrapAround ();
+
+		[Export ("wrapAroundStatus")]
+		AGSMapViewWrapAroundStatus WrapAroundStatus ();
+
+		[Export ("releaseHardwareResourcesWhenBackgrounded")]
+		bool ReleaseHardwareResourcesWhenBackgrounded { get; set; }
+	}
+
+	[BaseType (typeof(AGSMapViewBase))]
+	public partial interface AGSMapView {
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSMapViewLayerDelegate {
+
+		[Export ("mapViewDidLoad:")]
+		void MapViewDidLoad (AGSMapView mapView);
+
+		//[Export ("mapView:shouldFindGraphicsInLayer:atPoint:mapPoint:")]
+		//bool ShouldFindGraphicsInLayer (AGSMapView mapView, AGSGraphicsLayer graphicsLayer, PointF screen, AGSPoint mappoint);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSMapViewCalloutDelegate {
+
+		//[Export ("mapView:shouldShowCalloutForLocationDisplay:")]
+		//bool ShouldShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
+
+		//[Export ("mapView:didShowCalloutForLocationDisplay:")]
+		//void DidShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
+
+		//[Export ("mapView:shouldShowCalloutForGraphic:")]
+		//bool ShouldShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
+
+		//[Export ("mapView:didShowCalloutForGraphic:")]
+		//void DidShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
+
+		[Export ("mapViewWillDismissCallout:")]
+		void WillDismissCallout (AGSMapView mapView);
+
+		[Export ("mapViewDidDismissCallout:")]
+		void DidDismissCallout (AGSMapView mapView);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSMapViewTouchDelegate {
+
+		[Export ("mapView:shouldProcessClickAtPoint:mapPoint:")]
+		bool ShouldProcessClickAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint);
+
+		[Export ("mapView:didClickAtPoint:mapPoint:graphics:")]
+		void DidClickAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+
+		[Export ("mapView:didTapAndHoldAtPoint:mapPoint:graphics:")]
+		void DidTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+
+		[Export ("mapView:didMoveTapAndHoldAtPoint:mapPoint:graphics:")]
+		void DidMoveTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+
+		[Export ("mapView:didEndTapAndHoldAtPoint:mapPoint:graphics:")]
+		void DidEndTapAndHoldAtPoint (AGSMapView mapView, PointF screen, AGSPoint mappoint, NSDictionary graphics);
+
+		[Export ("mapViewDidCancelTapAndHold:")]
+		void DidCancelTapAndHold (AGSMapView mapView);
+	}
+
+	[BaseType (typeof (AGSGeometry))]
+	public partial interface AGSPolygon {
+
+		[Export ("numRings")]
+		int NumRings { get; }
+
+		[Export ("numPointsInRing:")]
+		int NumPointsInRing (int ring);
+
+		[Export ("numPoints")]
+		int NumPoints ();
+
+		[Export ("pointOnRing:atIndex:")]
+		AGSPoint PointOnRing (int ring, int index);
+
+		[Static, Export ("polygonWithJSON:")]
+		NSObject PolygonWithJSON (NSDictionary json);
+
+		[Export ("containsPoint:")]
+		bool ContainsPoint (AGSPoint point);
+
+		[Export ("isEqualToPolygon:")]
+		bool IsEqualToPolygon (AGSPolygon other);
+	}
 }
