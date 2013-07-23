@@ -387,4 +387,53 @@ namespace MonoTouch.ArcGIS {
 	[BaseType (typeof (AGSTiledLayer))]
 	public partial interface AGSTiledServiceLayer {
 	}
+
+	[BaseType (typeof (AGSTiledServiceLayer))]
+	public partial interface AGSTiledMapServiceLayer : AGSCoding/*, AGSSecuredResource*/ {
+
+		[Export ("URL", ArgumentSemantic.Copy)]
+		NSUrl URL { get; }
+
+		//[Export ("mapServiceInfo", ArgumentSemantic.Retain)]
+		//AGSMapServiceInfo MapServiceInfo { get; }
+
+		//		[Export ("credential", ArgumentSemantic.Copy)]
+		//		AGSCredential Credential { get; set; }
+
+		//		[Export ("credentialCache", ArgumentSemantic.Retain)]
+		//		AGSCredentialCache CredentialCache { get; set; }
+
+		[Export ("renderNativeResolution")]
+		bool RenderNativeResolution { get; set; }
+
+		[Export ("initWithURL:")]
+		IntPtr Constructor (NSUrl url);
+
+		//[Export ("initWithURL:credential:")]
+		//IntPtr Constructor (NSUrl url, AGSCredential cred);
+
+		//[Export ("initWithMapServiceInfo:")]
+		//IntPtr Constructor (AGSMapServiceInfo info);
+
+		[Static, Export ("tiledMapServiceLayerWithURL:")]
+		NSObject TiledMapServiceLayerWithURL (NSUrl url);
+
+		//[Static, Export ("tiledMapServiceLayerWithURL:credential:")]
+		//AGSTiledMapServiceLayer TiledMapServiceLayerWithURL (NSUrl url, AGSCredential cred);
+
+		//[Static, Export ("tiledMapServiceLayerWithMapServiceInfo:")]
+		//AGSTiledMapServiceLayer TiledMapServiceLayerWithMapServiceInfo (AGSMapServiceInfo info);
+
+		//[Export ("initWithJSON:URL:credential:")]
+		//IntPtr Constructor (NSDictionary json, NSUrl url, AGSCredential cred);
+
+		//[Export ("resubmit")]
+		//void Resubmit ();
+
+		//[Export ("resubmitWithURL:credential:")]
+		//void ResubmitWithURL (NSUrl url, AGSCredential cred);
+
+		//[Export ("checkCurrentScaleVisibilityForSubLayer:")]
+		//bool CheckCurrentScaleVisibilityForSubLayer (AGSMapServiceLayerInfo msli);
+	}
 }
