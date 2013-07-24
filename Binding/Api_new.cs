@@ -416,7 +416,7 @@ namespace MonoTouch.ArcGIS {
 		//IntPtr Constructor (AGSMapServiceInfo info);
 
 		[Static, Export ("tiledMapServiceLayerWithURL:")]
-		NSObject TiledMapServiceLayerWithURL (NSUrl url);
+		AGSTiledMapServiceLayer TiledMapServiceLayerWithURL (NSUrl url);
 
 		//[Static, Export ("tiledMapServiceLayerWithURL:credential:")]
 		//AGSTiledMapServiceLayer TiledMapServiceLayerWithURL (NSUrl url, AGSCredential cred);
