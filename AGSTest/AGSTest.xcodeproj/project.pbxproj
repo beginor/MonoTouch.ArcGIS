@@ -1,0 +1,370 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		525FE6CF16DC77BA0008991A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6CE16DC77BA0008991A /* UIKit.framework */; };
+		525FE6D116DC77BA0008991A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6D016DC77BA0008991A /* Foundation.framework */; };
+		525FE6D316DC77BA0008991A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6D216DC77BA0008991A /* CoreGraphics.framework */; };
+		525FE6D916DC77BA0008991A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 525FE6D716DC77BA0008991A /* InfoPlist.strings */; };
+		525FE6DB16DC77BA0008991A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 525FE6DA16DC77BA0008991A /* main.m */; };
+		525FE6DF16DC77BA0008991A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 525FE6DE16DC77BA0008991A /* AppDelegate.m */; };
+		525FE6E116DC77BA0008991A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 525FE6E016DC77BA0008991A /* Default.png */; };
+		525FE6E316DC77BA0008991A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 525FE6E216DC77BA0008991A /* Default@2x.png */; };
+		525FE6E516DC77BA0008991A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 525FE6E416DC77BA0008991A /* Default-568h@2x.png */; };
+		525FE71D16DC7A7E0008991A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71416DC7A7E0008991A /* CoreLocation.framework */; };
+		525FE71E16DC7A7E0008991A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71516DC7A7E0008991A /* CoreText.framework */; };
+		525FE71F16DC7A7E0008991A /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71616DC7A7E0008991A /* libc++.dylib */; };
+		525FE72016DC7A7E0008991A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71716DC7A7E0008991A /* libz.dylib */; };
+		525FE72116DC7A7E0008991A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71816DC7A7E0008991A /* MediaPlayer.framework */; };
+		525FE72216DC7A7E0008991A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71916DC7A7E0008991A /* MobileCoreServices.framework */; };
+		525FE72316DC7A7E0008991A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71A16DC7A7E0008991A /* OpenGLES.framework */; };
+		525FE72416DC7A7E0008991A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71B16DC7A7E0008991A /* QuartzCore.framework */; };
+		525FE72516DC7A7E0008991A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE71C16DC7A7E0008991A /* Security.framework */; };
+		525FE72716DC7D3C0008991A /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 525FE72616DC7D3C0008991A /* ArcGIS.bundle */; };
+		52950CE2179FA7FA00764DDC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52950CE0179FA7FA00764DDC /* MainViewController.m */; };
+		52950CE3179FA7FA00764DDC /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52950CE1179FA7FA00764DDC /* MainViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		525FE6CB16DC77BA0008991A /* AGSTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGSTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		525FE6CE16DC77BA0008991A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		525FE6D016DC77BA0008991A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		525FE6D216DC77BA0008991A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		525FE6D616DC77BA0008991A /* AGSTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AGSTest-Info.plist"; sourceTree = "<group>"; };
+		525FE6D816DC77BA0008991A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		525FE6DA16DC77BA0008991A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		525FE6DC16DC77BA0008991A /* AGSTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AGSTest-Prefix.pch"; sourceTree = "<group>"; };
+		525FE6DD16DC77BA0008991A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		525FE6DE16DC77BA0008991A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		525FE6E016DC77BA0008991A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		525FE6E216DC77BA0008991A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		525FE6E416DC77BA0008991A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		525FE71416DC7A7E0008991A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		525FE71516DC7A7E0008991A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		525FE71616DC7A7E0008991A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		525FE71716DC7A7E0008991A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		525FE71816DC7A7E0008991A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		525FE71916DC7A7E0008991A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		525FE71A16DC7A7E0008991A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		525FE71B16DC7A7E0008991A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		525FE71C16DC7A7E0008991A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		525FE72616DC7D3C0008991A /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ArcGIS.bundle; sourceTree = "<group>"; };
+		52950CDF179FA7FA00764DDC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		52950CE0179FA7FA00764DDC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		52950CE1179FA7FA00764DDC /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		525FE6C816DC77BA0008991A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525FE71D16DC7A7E0008991A /* CoreLocation.framework in Frameworks */,
+				525FE71E16DC7A7E0008991A /* CoreText.framework in Frameworks */,
+				525FE71F16DC7A7E0008991A /* libc++.dylib in Frameworks */,
+				525FE72016DC7A7E0008991A /* libz.dylib in Frameworks */,
+				525FE72116DC7A7E0008991A /* MediaPlayer.framework in Frameworks */,
+				525FE72216DC7A7E0008991A /* MobileCoreServices.framework in Frameworks */,
+				525FE72316DC7A7E0008991A /* OpenGLES.framework in Frameworks */,
+				525FE72416DC7A7E0008991A /* QuartzCore.framework in Frameworks */,
+				525FE72516DC7A7E0008991A /* Security.framework in Frameworks */,
+				525FE6D116DC77BA0008991A /* Foundation.framework in Frameworks */,
+				525FE6D316DC77BA0008991A /* CoreGraphics.framework in Frameworks */,
+				525FE6CF16DC77BA0008991A /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		525FE6C216DC77BA0008991A = {
+			isa = PBXGroup;
+			children = (
+				525FE6D416DC77BA0008991A /* AGSTest */,
+				525FE6CD16DC77BA0008991A /* Frameworks */,
+				525FE6CC16DC77BA0008991A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		525FE6CC16DC77BA0008991A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				525FE6CB16DC77BA0008991A /* AGSTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		525FE6CD16DC77BA0008991A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				525FE71416DC7A7E0008991A /* CoreLocation.framework */,
+				525FE71516DC7A7E0008991A /* CoreText.framework */,
+				525FE71616DC7A7E0008991A /* libc++.dylib */,
+				525FE71716DC7A7E0008991A /* libz.dylib */,
+				525FE71816DC7A7E0008991A /* MediaPlayer.framework */,
+				525FE71916DC7A7E0008991A /* MobileCoreServices.framework */,
+				525FE71A16DC7A7E0008991A /* OpenGLES.framework */,
+				525FE71B16DC7A7E0008991A /* QuartzCore.framework */,
+				525FE71C16DC7A7E0008991A /* Security.framework */,
+				525FE6CE16DC77BA0008991A /* UIKit.framework */,
+				525FE6D016DC77BA0008991A /* Foundation.framework */,
+				525FE6D216DC77BA0008991A /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		525FE6D416DC77BA0008991A /* AGSTest */ = {
+			isa = PBXGroup;
+			children = (
+				525FE6DD16DC77BA0008991A /* AppDelegate.h */,
+				525FE6DE16DC77BA0008991A /* AppDelegate.m */,
+				525FE6D516DC77BA0008991A /* Supporting Files */,
+				52950CDF179FA7FA00764DDC /* MainViewController.h */,
+				52950CE0179FA7FA00764DDC /* MainViewController.m */,
+				52950CE1179FA7FA00764DDC /* MainViewController.xib */,
+			);
+			path = AGSTest;
+			sourceTree = "<group>";
+		};
+		525FE6D516DC77BA0008991A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				525FE72616DC7D3C0008991A /* ArcGIS.bundle */,
+				525FE6D616DC77BA0008991A /* AGSTest-Info.plist */,
+				525FE6D716DC77BA0008991A /* InfoPlist.strings */,
+				525FE6DA16DC77BA0008991A /* main.m */,
+				525FE6DC16DC77BA0008991A /* AGSTest-Prefix.pch */,
+				525FE6E016DC77BA0008991A /* Default.png */,
+				525FE6E216DC77BA0008991A /* Default@2x.png */,
+				525FE6E416DC77BA0008991A /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		525FE6CA16DC77BA0008991A /* AGSTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 525FE6E816DC77BA0008991A /* Build configuration list for PBXNativeTarget "AGSTest" */;
+			buildPhases = (
+				525FE6C716DC77BA0008991A /* Sources */,
+				525FE6C816DC77BA0008991A /* Frameworks */,
+				525FE6C916DC77BA0008991A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AGSTest;
+			productName = AGSTest;
+			productReference = 525FE6CB16DC77BA0008991A /* AGSTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		525FE6C316DC77BA0008991A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = gdeic;
+			};
+			buildConfigurationList = 525FE6C616DC77BA0008991A /* Build configuration list for PBXProject "AGSTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 525FE6C216DC77BA0008991A;
+			productRefGroup = 525FE6CC16DC77BA0008991A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				525FE6CA16DC77BA0008991A /* AGSTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		525FE6C916DC77BA0008991A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525FE6D916DC77BA0008991A /* InfoPlist.strings in Resources */,
+				525FE6E116DC77BA0008991A /* Default.png in Resources */,
+				525FE6E316DC77BA0008991A /* Default@2x.png in Resources */,
+				525FE6E516DC77BA0008991A /* Default-568h@2x.png in Resources */,
+				525FE72716DC7D3C0008991A /* ArcGIS.bundle in Resources */,
+				52950CE3179FA7FA00764DDC /* MainViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		525FE6C716DC77BA0008991A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525FE6DB16DC77BA0008991A /* main.m in Sources */,
+				525FE6DF16DC77BA0008991A /* AppDelegate.m in Sources */,
+				52950CE2179FA7FA00764DDC /* MainViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		525FE6D716DC77BA0008991A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				525FE6D816DC77BA0008991A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		525FE6E616DC77BA0008991A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = (
+				);
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "${HOME}/Library/SDKs/ArcGIS/**";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${HOME}/Library/SDKs\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-framework",
+					ArcGIS,
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		525FE6E716DC77BA0008991A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = (
+				);
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "${HOME}/Library/SDKs/ArcGIS/**";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${HOME}/Library/SDKs\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-framework",
+					ArcGIS,
+				);
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		525FE6E916DC77BA0008991A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AGSTest/AGSTest-Prefix.pch";
+				INFOPLIST_FILE = "AGSTest/AGSTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				"VALID_ARCHS[sdk=*]" = armv7;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		525FE6EA16DC77BA0008991A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AGSTest/AGSTest-Prefix.pch";
+				INFOPLIST_FILE = "AGSTest/AGSTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = armv7;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		525FE6C616DC77BA0008991A /* Build configuration list for PBXProject "AGSTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				525FE6E616DC77BA0008991A /* Debug */,
+				525FE6E716DC77BA0008991A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		525FE6E816DC77BA0008991A /* Build configuration list for PBXNativeTarget "AGSTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				525FE6E916DC77BA0008991A /* Debug */,
+				525FE6EA16DC77BA0008991A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 525FE6C316DC77BA0008991A /* Project object */;
+}
