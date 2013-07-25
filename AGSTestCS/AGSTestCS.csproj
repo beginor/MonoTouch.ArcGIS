@@ -25,6 +25,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
+    <MtouchSdkVersion>6.1</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -111,5 +112,12 @@
       <Project>{677363EB-5B1F-4548-B055-B94538D646A3}</Project>
       <Name>Binding</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-all-target-headers.hmap" />
+    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-generated-files.hmap" />
+    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-own-target-headers.hmap" />
+    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-project-headers.hmap" />
+    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS.hmap" />
   </ItemGroup>
 </Project>

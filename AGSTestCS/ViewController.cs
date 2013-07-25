@@ -22,16 +22,14 @@ namespace AGSTestCS {
 			base.ViewDidLoad();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			var mapView = new AGSMapView();
-			mapView.Frame = this.View.Frame;
-			this.View.AddSubview(mapView);
 
-			var layer = AGSTiledMapServiceLayer.TiledMapServiceLayerWithURL(NSUrl.FromString("http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer"));
-			mapView.AddMapLayer(layer, "Tiled Layer");
+			var url = NSUrl.FromString("http://agserver.gdepb.gov.cn/arcgis/rest/services/BaseMap/MRoad/MapServer");
+			var layer = AGSTiledMapServiceLayer.TiledMapServiceLayerWithURL(url);
+			this.MapView.AddMapLayer(layer, "Tiled Layer");
 
-			var envelop = AGSEnvelope.EnvelopeWithXmin(-124, 30, -113, 44, AGSSpatialReference.Wgs84SpatialReference());
+			var envelop = AGSEnvelope.EnvelopeWith(12178333, 2973103, 13088239, 2255207, AGSSpatialReference.WebMercatorSpatialReference());
 
-			mapView.ZoomToEnvelope(envelop, false);
+			this.MapView.ZoomToEnvelope(envelop, false);
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations() {
