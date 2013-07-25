@@ -41,16 +41,16 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (string wkt);
 
 		[Static, Export ("spatialReferenceWithWKID:")]
-		NSObject SpatialReferenceWithWKID (uint wkid);
+		AGSSpatialReference SpatialReference (uint wkid);
 
 		[Static, Export ("spatialReferenceWithWKT:")]
-		NSObject SpatialReferenceWithWKT (string wkt);
+		AGSSpatialReference SpatialReference (string wkt);
 
 		[Export ("initWithWKID:WKT:")]
 		IntPtr Constructor (uint wkid, string wkt);
 
 		[Static, Export ("spatialReferenceWithWKID:WKT:")]
-		NSObject SpatialReferenceWithWKID (uint wkid, string wkt);
+		AGSSpatialReference SpatialReference (uint wkid, string wkt);
 
 		[Export ("isAnyWebMercator")]
 		bool IsAnyWebMercator ();
@@ -176,7 +176,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (double x, double y, AGSSpatialReference spatialReference);
 
 		[Static, Export ("pointWithX:y:spatialReference:")]
-		NSObject PointWithX (double x, double y, AGSSpatialReference spatialReference);
+		AGSPoint PointWith (double x, double y, AGSSpatialReference spatialReference);
 
 		[Export ("isEqualToPoint:")]
 		bool IsEqualToPoint (AGSPoint other);
@@ -303,7 +303,7 @@ namespace MonoTouch.ArcGIS {
 		AGSTimeExtent IntersectionOfTimeExtent (AGSTimeExtent timeExtent1, AGSTimeExtent timeExtent2);
 
 		[Static, Export ("timeExtentWithStart:end:")]
-		AGSTimeExtent TimeExtentWithStart (NSDate start, NSDate end);
+		AGSTimeExtent TimeExtentWith (NSDate start, NSDate end);
 
 		[Static, Export ("dateByOffsettingDate:offset:units:")]
 		NSDate DateByOffsettingDate (NSDate date, int offsetValue, AGSTimeIntervalUnits units);
@@ -397,11 +397,11 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("mapServiceInfo", ArgumentSemantic.Retain)]
 		//AGSMapServiceInfo MapServiceInfo { get; }
 
-		//		[Export ("credential", ArgumentSemantic.Copy)]
-		//		AGSCredential Credential { get; set; }
+		//[Export ("credential", ArgumentSemantic.Copy)]
+		//AGSCredential Credential { get; set; }
 
-		//		[Export ("credentialCache", ArgumentSemantic.Retain)]
-		//		AGSCredentialCache CredentialCache { get; set; }
+		//[Export ("credentialCache", ArgumentSemantic.Retain)]
+		//AGSCredentialCache CredentialCache { get; set; }
 
 		[Export ("renderNativeResolution")]
 		bool RenderNativeResolution { get; set; }
@@ -747,7 +747,7 @@ namespace MonoTouch.ArcGIS {
 		AGSPoint PointOnRing (int ring, int index);
 
 		[Static, Export ("polygonWithJSON:")]
-		NSObject PolygonWithJSON (NSDictionary json);
+		AGSPolygon PolygonWithJSON (NSDictionary json);
 
 		[Export ("containsPoint:")]
 		bool ContainsPoint (AGSPoint point);
