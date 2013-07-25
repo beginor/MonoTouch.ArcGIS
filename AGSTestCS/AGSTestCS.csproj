@@ -113,11 +113,4 @@
       <Name>Binding</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-all-target-headers.hmap" />
-    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-generated-files.hmap" />
-    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-own-target-headers.hmap" />
-    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS-project-headers.hmap" />
-    <BundleResource Include="build\AGSTestCS.build\MonoTouch-iphonesimulator\AGSTestCS.build\AGSTestCS.hmap" />
-  </ItemGroup>
 </Project>
