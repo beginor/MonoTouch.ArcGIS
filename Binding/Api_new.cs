@@ -139,7 +139,7 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (double xmin, double ymin, double xmax, double ymax, AGSSpatialReference spatialReference);
 
 		[Static, Export ("envelopeWithXmin:ymin:xmax:ymax:spatialReference:")]
-		AGSEnvelope EnvelopeWithXmin (double xmin, double ymin, double xmax, double ymax, AGSSpatialReference spatialReference);
+		AGSEnvelope EnvelopeWith (double xmin, double ymin, double xmax, double ymax, AGSSpatialReference spatialReference);
 
 		[Export ("containsPoint:")]
 		bool ContainsPoint (AGSPoint point);
