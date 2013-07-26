@@ -11,10 +11,13 @@ This project is very early state， only support a few features following:
 
 Other features need to be added, please wait or add them by yourself.
 
-## Build the Binding project
+## Build the Binding project and run test
 
 1. Login to ESRI Online, download and install ArcGIS Runtime SDK **v10.1.1**.
-2. Clone this repository to local
+2. Clone this repository to local, for example `~/Projects/MonoTouch.ArcGIS`
+3. Copy file `~/Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/ArcGIS` to Binding project folder, and rename it to `libArcGIS.a`
+4. Rebuild the Binding project first, if no errors occured, then build the AGSTestCS Project.
+5. Run the AGSTestCS
 
 ## Usage and Tutorial
 
