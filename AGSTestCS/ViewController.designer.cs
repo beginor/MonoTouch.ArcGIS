@@ -13,13 +13,29 @@ namespace AGSTestCS
 	partial class ViewController
 	{
 		[Outlet]
+		MonoTouch.UIKit.UISegmentedControl BaseLayerSegment { get; set; }
+
+		[Outlet]
 		MonoTouch.ArcGIS.AGSMapView MapView { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIToolbar Toolbar { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
 			if (MapView != null) {
 				MapView.Dispose ();
 				MapView = null;
+			}
+
+			if (Toolbar != null) {
+				Toolbar.Dispose ();
+				Toolbar = null;
+			}
+
+			if (BaseLayerSegment != null) {
+				BaseLayerSegment.Dispose ();
+				BaseLayerSegment = null;
 			}
 		}
 	}
