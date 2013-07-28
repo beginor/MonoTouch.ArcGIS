@@ -427,8 +427,8 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("initWithJSON:URL:credential:")]
 		//IntPtr Constructor (NSDictionary json, NSUrl url, AGSCredential cred);
 
-		//[Export ("resubmit")]
-		//void Resubmit ();
+		[Export ("resubmit")]
+		void Resubmit ();
 
 		//[Export ("resubmitWithURL:credential:")]
 		//void ResubmitWithURL (NSUrl url, AGSCredential cred);
@@ -1115,8 +1115,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("zoomScale")]
 		double ZoomScale { get; set; }
 
-		//[Export ("dataSourceStarted")]
-		//bool DataSourceStarted { [Bind ("isDataSourceStarted")] get; }
+		[Export ("dataSourceStarted")]
+		bool DataSourceStarted { [Bind ("isDataSourceStarted")] get; }
 
 		[Export ("interfaceOrientation")]
 		UIInterfaceOrientation InterfaceOrientation { get; set; }
@@ -1150,10 +1150,10 @@ namespace MonoTouch.ArcGIS {
 		void DidFailWithError (AGSLocationDisplayDataSource dataSource, NSError error);
 
 		[Export ("locationDisplayDataSourceStopped:")]
-		void DataSourceStopped (AGSLocationDisplayDataSource dataSource);
+		void LocationDisplayDataSourceStopped (AGSLocationDisplayDataSource dataSource);
 
 		[Export ("locationDisplayDataSourceStarted:")]
-		void DataSourceStarted (AGSLocationDisplayDataSource dataSource);
+		void LocationDisplayDataSourceStarted (AGSLocationDisplayDataSource dataSource);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
@@ -1208,5 +1208,224 @@ namespace MonoTouch.ArcGIS {
 
 		[Static, Export ("locationWithCLLocation:")]
 		AGSLocation LocationWithCLLocation (CLLocation cllocation);
+	}
+
+	[BaseType (typeof (AGSSymbol))]
+	public partial interface AGSSimpleLineSymbol {
+
+		[Export ("style")]
+		AGSSimpleLineSymbolStyle Style { get; set; }
+
+		[Export ("width")]
+		float Width { get; set; }
+
+		[Static, Export ("simpleLineSymbol")]
+		AGSSimpleLineSymbol SimpleLineSymbol ();
+
+		[Export ("initWithColor:")]
+		IntPtr Constructor (UIColor color);
+
+		[Export ("initWithColor:width:")]
+		IntPtr Constructor (UIColor color, float width);
+
+		[Static, Export ("simpleLineSymbolWithColor:")]
+		AGSSimpleLineSymbol SimpleLineSymbol (UIColor color);
+
+		[Static, Export ("simpleLineSymbolWithColor:width:")]
+		AGSSimpleLineSymbol SimpleLineSymbol (UIColor color, float width);
+	}
+
+	[BaseType (typeof (AGSSymbol))]
+	public partial interface AGSCompositeSymbol {
+
+		[Export ("symbols", ArgumentSemantic.Copy)]
+		AGSSymbol [] Symbols { get; }
+
+		[Static, Export ("compositeSymbol")]
+		AGSCompositeSymbol CompositeSymbol ();
+
+		[Export ("addSymbol:")]
+		void AddSymbol (AGSSymbol symbol);
+
+		[Export ("addSymbols:")]
+		void AddSymbols (AGSSymbol [] symbols);
+
+		[Export ("removeSymbol:")]
+		void RemoveSymbol (AGSSymbol symbol);
+
+		[Export ("removeAllSymbols")]
+		void RemoveAllSymbols ();
+	}
+
+	[BaseType (typeof (AGSSymbol))]
+	public partial interface AGSFillSymbol {
+
+		[Export ("outline", ArgumentSemantic.Retain)]
+		AGSSimpleLineSymbol Outline { get; set; }
+	}
+
+	[BaseType (typeof (AGSFillSymbol))]
+	public partial interface AGSSimpleFillSymbol {
+
+		[Export ("style")]
+		AGSSimpleFillSymbolStyle Style { get; set; }
+
+		[Static, Export ("simpleFillSymbol")]
+		AGSSimpleFillSymbol SimpleFillSymbol ();
+
+		[Export ("initWithColor:outlineColor:")]
+		IntPtr Constructor (UIColor fillColor, UIColor outlineColor);
+
+		[Static, Export ("simpleFillSymbolWithColor:outlineColor:")]
+		AGSSimpleFillSymbol SimpleFillSymbol (UIColor fillColor, UIColor outlineColor);
+	}
+
+	[BaseType (typeof (AGSFillSymbol))]
+	public partial interface AGSPictureFillSymbol {
+
+		[Export ("size")]
+		SizeF Size { get; set; }
+
+		[Export ("image", ArgumentSemantic.Copy)]
+		UIImage Image { get; }
+
+		[Export ("angle")]
+		double Angle { get; set; }
+
+		[Export ("offset", ArgumentSemantic.Assign)]
+		PointF Offset { get; set; }
+
+		[Export ("scale", ArgumentSemantic.Assign)]
+		SizeF Scale { get; set; }
+
+		[Export ("initWithImage:")]
+		IntPtr Constructor (UIImage image);
+
+		[Static, Export ("pictureFillSymbolWithImage:")]
+		NSObject PictureFillSymbolWithImage (UIImage image);
+
+		[Export ("initWithImageNamed:")]
+		IntPtr Constructor (string imageName);
+
+		[Static, Export ("pictureFillSymbolWithImageNamed:")]
+		NSObject PictureFillSymbolWithImageNamed (string imageName);
+
+		//[Export ("initWithContentsOfFile:")]
+		//IntPtr Constructor (string imagePath);
+	}
+
+	[BaseType (typeof (AGSSymbol))]
+	public partial interface AGSMarkerSymbol {
+
+		[Export ("angle")]
+		double Angle { get; set; }
+
+		[Export ("offset", ArgumentSemantic.Assign)]
+		PointF Offset { get; set; }
+
+		[Export ("leaderPoint", ArgumentSemantic.Assign)]
+		PointF LeaderPoint { get; set; }
+
+		[Export ("size", ArgumentSemantic.Assign)]
+		SizeF Size { get; set; }
+	}
+
+	[BaseType (typeof (AGSMarkerSymbol))]
+	public partial interface AGSTextSymbol {
+
+		[Export ("backgroundColor", ArgumentSemantic.Copy)]
+		UIColor BackgroundColor { get; set; }
+
+		[Export ("borderLineColor", ArgumentSemantic.Copy)]
+		UIColor BorderLineColor { get; set; }
+
+		[Export ("borderLineWidth")]
+		float BorderLineWidth { get; set; }
+
+		[Export ("vAlignment")]
+		AGSTextSymbolVAlignment VAlignment { get; set; }
+
+		[Export ("hAlignment")]
+		AGSTextSymbolHAlignment HAlignment { get; set; }
+
+		[Export ("fontFamily", ArgumentSemantic.Copy)]
+		string FontFamily { get; set; }
+
+		[Export ("fontSize")]
+		float FontSize { get; set; }
+
+		[Export ("text", ArgumentSemantic.Copy)]
+		string Text { get; set; }
+
+		[Export ("bold")]
+		bool Bold { get; set; }
+
+		[Export ("italic")]
+		bool Italic { get; set; }
+
+		[Export ("underline")]
+		bool Underline { get; set; }
+
+		[Export ("strikeThru")]
+		bool StrikeThru { get; set; }
+
+		[Export ("initWithText:color:")]
+		IntPtr Constructor (string text, UIColor color);
+
+		[Static, Export ("textSymbolWithText:color:")]
+		AGSTextSymbol TextSymbol (string text, UIColor color);
+	}
+
+	[BaseType (typeof (AGSMarkerSymbol))]
+	public partial interface AGSPictureMarkerSymbol {
+
+		[Export ("image", ArgumentSemantic.Copy)]
+		UIImage Image { get; set; }
+
+		[Export ("error", ArgumentSemantic.Retain)]
+		NSError Error { get; }
+
+		[Export ("setImageWithData:")]
+		void SetImageWithData (NSData data);
+
+		[Export ("setImageWithName:")]
+		void SetImageWithName (string name);
+
+		[Export ("setImageWithContentsOfFile:")]
+		void SetImageWithContentsOfFile (string path);
+
+		[Export ("initWithImage:")]
+		IntPtr Constructor (UIImage image);
+
+		[Static, Export ("pictureMarkerSymbolWithImage:")]
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImage (UIImage image);
+
+		[Export ("initWithImageNamed:")]
+		IntPtr Constructor (string imageName);
+
+		//[Export ("initWithContentsOfFile:")]
+		//IntPtr Constructor (string imagePath);
+
+		[Static, Export ("pictureMarkerSymbolWithImageNamed:")]
+		AGSPictureMarkerSymbol PictureMarkerSymbolWithImageNamed (string imageName);
+	}
+
+	[BaseType (typeof (AGSMarkerSymbol))]
+	public partial interface AGSSimpleMarkerSymbol {
+
+		[Export ("style")]
+		AGSSimpleMarkerSymbolStyle Style { get; set; }
+
+		[Export ("outline", ArgumentSemantic.Retain)]
+		AGSSimpleLineSymbol Outline { get; set; }
+
+		[Static, Export ("simpleMarkerSymbol")]
+		AGSSimpleMarkerSymbol SimpleMarkerSymbol ();
+
+		[Export ("initWithColor:")]
+		IntPtr Constructor (UIColor color);
+
+		[Static, Export ("simpleMarkerSymbolWithColor:")]
+		AGSSimpleMarkerSymbol SimpleMarkerSymbolWithColor (UIColor color);
 	}
 }
