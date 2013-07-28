@@ -555,11 +555,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("maxEnvelope", ArgumentSemantic.Retain)]
 		AGSEnvelope MaxEnvelope { get; set; }
 
-		//[Export ("locationDisplay", ArgumentSemantic.Retain)]
-		//AGSLocationDisplay LocationDisplay { get; }
+		[Export ("locationDisplay", ArgumentSemantic.Retain)]
+		AGSLocationDisplay LocationDisplay { get; }
 
-		//[Export ("callout", ArgumentSemantic.Retain)]
-		//AGSCallout Callout { get; }
+		[Export ("callout", ArgumentSemantic.Retain)]
+		AGSCallout Callout { get; }
 
 		[Export ("baseLayer", ArgumentSemantic.Retain)]
 		AGSLayer BaseLayer { get; }
@@ -683,24 +683,24 @@ namespace MonoTouch.ArcGIS {
 		[Export ("mapViewDidLoad:")]
 		void MapViewDidLoad (AGSMapView mapView);
 
-		//[Export ("mapView:shouldFindGraphicsInLayer:atPoint:mapPoint:")]
-		//bool ShouldFindGraphicsInLayer (AGSMapView mapView, AGSGraphicsLayer graphicsLayer, PointF screen, AGSPoint mappoint);
+		[Export ("mapView:shouldFindGraphicsInLayer:atPoint:mapPoint:")]
+		bool ShouldFindGraphicsInLayer (AGSMapView mapView, AGSGraphicsLayer graphicsLayer, PointF screen, AGSPoint mappoint);
 	}
 
 	[Model, BaseType (typeof (NSObject))]
 	public partial interface AGSMapViewCalloutDelegate {
 
-		//[Export ("mapView:shouldShowCalloutForLocationDisplay:")]
-		//bool ShouldShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
+		[Export ("mapView:shouldShowCalloutForLocationDisplay:")]
+		bool ShouldShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
 
-		//[Export ("mapView:didShowCalloutForLocationDisplay:")]
-		//void DidShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
+		[Export ("mapView:didShowCalloutForLocationDisplay:")]
+		void DidShowCalloutForLocationDisplay (AGSMapView mapView, AGSLocationDisplay ld);
 
-		//[Export ("mapView:shouldShowCalloutForGraphic:")]
-		//bool ShouldShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
+		[Export ("mapView:shouldShowCalloutForGraphic:")]
+		bool ShouldShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
 
-		//[Export ("mapView:didShowCalloutForGraphic:")]
-		//void DidShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
+		[Export ("mapView:didShowCalloutForGraphic:")]
+		void DidShowCalloutForGraphic (AGSMapView mapView, AGSGraphic graphic);
 
 		[Export ("mapViewWillDismissCallout:")]
 		void WillDismissCallout (AGSMapView mapView);
@@ -754,5 +754,459 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("isEqualToPolygon:")]
 		bool IsEqualToPolygon (AGSPolygon other);
+	}
+
+	[BaseType (typeof (UIView))]
+	public partial interface AGSCallout {
+
+		[Export ("mapView", ArgumentSemantic.Assign)]
+		AGSMapView MapView { get; }
+
+		[Export ("mapLocation", ArgumentSemantic.Retain)]
+		AGSPoint MapLocation { get; }
+
+		[Export ("pixelOffset")]
+		PointF PixelOffset { get; }
+
+		[Export ("width")]
+		float Width { get; set; }
+
+		[Export ("title", ArgumentSemantic.Copy)]
+		string Title { get; set; }
+
+		[Export ("detail", ArgumentSemantic.Copy)]
+		string Detail { get; set; }
+
+		[Export ("color", ArgumentSemantic.Retain)]
+		UIColor Color { get; set; }
+
+		[Export ("highlight", ArgumentSemantic.Retain)]
+		UIColor Highlight { get; set; }
+
+		[Export ("titleColor", ArgumentSemantic.Retain)]
+		UIColor TitleColor { get; set; }
+
+		[Export ("detailColor", ArgumentSemantic.Retain)]
+		UIColor DetailColor { get; set; }
+
+		[Export ("accessoryButtonHidden")]
+		bool AccessoryButtonHidden { [Bind ("isAccessoryButtonHidden")] get; set; }
+
+		[Export ("leaderPositionFlags")]
+		AGSCalloutLeaderPosition LeaderPositionFlags { get; set; }
+
+		[Export ("delegate", ArgumentSemantic.Assign)]
+		AGSCalloutDelegate Delegate { get; set; }
+
+		[Export ("moveCalloutTo:pixelOffset:animated:")]
+		void MoveCalloutTo (AGSPoint mapLocation, PointF pixelOffset, bool animated);
+
+		[Export ("showCalloutAt:pixelOffset:animated:")]
+		void ShowCalloutAt (AGSPoint mapLocation, PointF pixelOffset, bool animated);
+
+		[Export ("customView", ArgumentSemantic.Retain)]
+		UIView CustomView { get; set; }
+
+		[Export ("margin")]
+		SizeF Margin { get; set; }
+
+		[Export ("cornerRadius")]
+		float CornerRadius { get; set; }
+
+		[Export ("maxWidth")]
+		float MaxWidth { get; set; }
+
+		[Export ("accessoryButtonType")]
+		UIButtonType AccessoryButtonType { get; set; }
+
+		[Export ("accessoryButtonImage", ArgumentSemantic.Retain)]
+		UIImage AccessoryButtonImage { get; set; }
+
+		[Export ("image", ArgumentSemantic.Retain)]
+		UIImage Image { get; set; }
+
+		[Export ("autoAdjustWidth")]
+		bool AutoAdjustWidth { get; set; }
+
+		[Export ("representedObject", ArgumentSemantic.Retain)]
+		NSObject RepresentedObject { get; }
+
+		[Export ("showCalloutAtPoint:forGraphic:animated:")]
+		void ShowCalloutAtPoint (AGSPoint mapPoint, AGSGraphic graphic, bool animated);
+
+		[Export ("showCalloutForLocationDisplay")]
+		void ShowCalloutForLocationDisplay ();
+
+		[Export ("showCalloutAt:pixelOffset:rotateOffsetWithMap:animated:")]
+		void ShowCalloutAt (AGSPoint mapLocation, PointF pixelOffset, bool rotateOffsetWithMap, bool animated);
+
+		[Export ("moveCalloutTo:pixelOffset:rotateOffsetWithMap:animated:")]
+		void MoveCalloutTo (AGSPoint mapLocation, PointF pixelOffset, bool rotateOffsetWithMap, bool animated);
+
+		[Export ("dismiss")]
+		void Dismiss ();
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSCalloutDelegate {
+
+		[Export ("didClickAccessoryButtonForCallout:")]
+		void DidClickAccessoryButtonForCallout (AGSCallout callout);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSSymbol : AGSCoding {
+
+		[Export ("color", ArgumentSemantic.Copy)]
+		UIColor Color { get; set; }
+
+		[Export ("swatchForGeometryType:size:")]
+		UIImage SwatchForGeometryType (AGSGeometryType geometryType, SizeF size);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSGraphic : AGSCoding {
+
+		[Export ("allAttributes")]
+		NSDictionary AllAttributes ();
+
+		[Bind ("setAllAttributes:")]
+		void SetAllAttributes (NSDictionary attrs);
+
+		[Export ("hasAttributeForKey:")]
+		bool HasAttributeForKey (string key);
+
+		[Export ("attributeForKey:")]
+		NSObject AttributeForKey (string key);
+
+		[Export ("safeAttributeForKey:")]
+		NSObject SafeAttributeForKey (string key);
+
+		[Export ("setAttribute:forKey:")]
+		void SetAttribute (NSObject value, string key);
+
+		[Export ("removeAttributeForKey:")]
+		void RemoveAttributeForKey (string key);
+
+		[Export ("setAttributeWithString:forKey:")]
+		void SetAttributeWithString (string value, string key);
+
+		[Export ("setAttributeWithDouble:forKey:")]
+		void SetAttributeWithDouble (double value, string key);
+
+		[Export ("setAttributeWithInt:forKey:")]
+		void SetAttributeWithInt (int value, string key);
+
+		[Export ("setAttributeWithUnsignedInt:forKey:")]
+		void SetAttributeWithUnsignedInt (uint value, string key);
+
+		[Export ("setAttributeWithFloat:forKey:")]
+		void SetAttributeWithFloat (float value, string key);
+
+		[Export ("setAttributeWithBool:forKey:")]
+		void SetAttributeWithBool (bool value, string key);
+
+		[Export ("setAttributeWithDate:forKey:")]
+		void SetAttributeWithDate (NSDate value, string key);
+
+		[Export ("setAttributeWithLong:forKey:")]
+		void SetAttributeWithLong (int value, string key);
+
+		[Export ("setAttributeWithInteger:forKey:")]
+		void SetAttributeWithInteger (int value, string key);
+
+		[Export ("setAttributeToNullForKey:")]
+		void SetAttributeToNullForKey (string key);
+
+		[Export ("attributeAsStringForKey:")]
+		string AttributeAsStringForKey (string key);
+
+		[Export ("attributeAsDateForKey:")]
+		NSDate AttributeAsDateForKey (string key);
+
+		[Export ("attributeAsDoubleForKey:exists:")]
+		double AttributeAsDoubleForKey (string key, ref bool exists);
+
+		[Export ("attributeAsIntForKey:exists:")]
+		int AttributeAsIntForKey (string key, ref bool exists);
+
+		[Export ("attributeAsUnsignedIntForKey:exists:")]
+		uint AttributeAsUnsignedIntForKey (string key, ref bool exists);
+
+		[Export ("attributeAsFloatForKey:exists:")]
+		float AttributeAsFloatForKey (string key, ref bool exists);
+
+		[Export ("attributeAsBoolForKey:exists:")]
+		bool AttributeAsBoolForKey (string key, ref bool exists);
+
+		[Export ("attributeAsLongForKey:exists:")]
+		int AttributeAsLongForKey (string key, ref bool exists);
+
+		[Export ("attributeAsIntegerForKey:exists:")]
+		int AttributeAsIntegerForKey (string key, ref bool exists);
+
+		[Export ("geometry", ArgumentSemantic.Copy)]
+		AGSGeometry Geometry { get; set; }
+
+		[Export ("symbol", ArgumentSemantic.Retain)]
+		AGSSymbol Symbol { get; set; }
+
+		[Export ("infoTemplateDelegate", ArgumentSemantic.Assign)]
+		AGSInfoTemplateDelegate InfoTemplateDelegate { get; set; }
+
+		[Export ("layer", ArgumentSemantic.Assign)]
+		AGSGraphicsLayer Layer { get; }
+
+		[Export ("visible")]
+		bool Visible { [Bind ("isVisible")] get; set; }
+
+		[Export ("initWithGeometry:symbol:attributes:infoTemplateDelegate:")]
+		IntPtr Constructor (AGSGeometry geometry, AGSSymbol symbol, NSDictionary attributes, AGSInfoTemplateDelegate infoTemplateDelegate);
+
+		[Static, Export ("graphicWithGeometry:symbol:attributes:infoTemplateDelegate:")]
+		AGSGraphic GraphicWithGeometry (AGSGeometry geometry, AGSSymbol symbol, NSDictionary attributes, AGSInfoTemplateDelegate infoTemplateDelegate);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSInfoTemplateDelegate {
+
+		[Export ("titleForGraphic:screenPoint:mapPoint:")]
+		string TitleForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+
+		[Export ("detailForGraphic:screenPoint:mapPoint:")]
+		string DetailForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+
+		[Export ("imageForGraphic:screenPoint:mapPoint:")]
+		UIImage ImageForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+
+		[Export ("customViewForGraphic:screenPoint:mapPoint:")]
+		UIView CustomViewForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint);
+	}
+
+	[BaseType (typeof (AGSLayer))]
+	public partial interface AGSGraphicsLayer {
+
+		[Export ("initWithFullEnvelope:")]
+		IntPtr Constructor (AGSEnvelope fullEnv);
+
+		[Export ("initWithSpatialReference:")]
+		IntPtr Constructor (AGSSpatialReference sr);
+
+		[Export ("graphics", ArgumentSemantic.Copy)]
+		AGSGraphic [] Graphics { get; }
+
+		[Export ("graphicsCount")]
+		uint GraphicsCount { get; }
+
+		[Export ("renderer", ArgumentSemantic.Retain)]
+		AGSRenderer Renderer { get; set; }
+
+		[Export ("startTimeField", ArgumentSemantic.Copy)]
+		string StartTimeField { get; set; }
+
+		[Export ("endTimeField", ArgumentSemantic.Copy)]
+		string EndTimeField { get; set; }
+
+		[Export ("timeOffset")]
+		double TimeOffset { get; set; }
+
+		[Export ("timeOffsetUnits")]
+		AGSTimeIntervalUnits TimeOffsetUnits { get; set; }
+
+		[Static, Export ("graphicsLayer")]
+		AGSGraphicsLayer GraphicsLayer ();
+
+		[Export ("addGraphic:")]
+		void AddGraphic (AGSGraphic graphic);
+
+		[Export ("addGraphics:")]
+		void AddGraphics (AGSGraphic [] graphics);
+
+		[Export ("removeGraphic:")]
+		void RemoveGraphic (AGSGraphic graphic);
+
+		[Export ("removeAllGraphics")]
+		void RemoveAllGraphics ();
+
+		[Export ("removeGraphics:")]
+		void RemoveGraphics (AGSGraphic [] objects);
+
+		[Export ("selectionSymbol", ArgumentSemantic.Retain)]
+		AGSSymbol SelectionSymbol { get; set; }
+
+		[Export ("selectionColor", ArgumentSemantic.Copy)]
+		UIColor SelectionColor { get; set; }
+
+		[Export ("setSelected:forGraphic:")]
+		void SetSelected (bool selected, AGSGraphic graphic);
+
+		[Export ("isGraphicSelected:")]
+		bool IsGraphicSelected (AGSGraphic graphic);
+
+		[Export ("clearSelection")]
+		void ClearSelection ();
+
+		[Export ("selectedGraphics")]
+		AGSGraphic [] SelectedGraphics { get; }
+
+		[Export ("refresh")]
+		void Refresh ();
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSRenderer : AGSCoding {
+
+		[Export ("layer", ArgumentSemantic.Assign)]
+		AGSGraphicsLayer Layer { get; }
+
+		[Export ("symbolForGraphic:timeExtent:")]
+		AGSSymbol SymbolForGraphic (AGSGraphic graphic, AGSTimeExtent timeExtent);
+
+		[Export ("swatchForGraphic:size:")]
+		UIImage SwatchForGraphic (AGSGraphic graphic, SizeF size);
+
+		[Export ("swatchForGraphic:geometryType:size:")]
+		UIImage SwatchForGraphic (AGSGraphic graphic, AGSGeometryType geometryType, SizeF size);
+	}
+
+	[BaseType (typeof (AGSGeometry))]
+	public partial interface AGSPolyline {
+
+		[Export ("numPaths")]
+		int NumPaths { get; }
+
+		[Export ("numPointsInPath:")]
+		int NumPointsInPath (int path);
+
+		[Export ("numPoints")]
+		int NumPoints ();
+
+		[Export ("pointOnPath:atIndex:")]
+		AGSPoint PointOnPath (int path, int index);
+
+		[Static, Export ("polylineWithJSON:")]
+		AGSPolyline PolylineWithJSON (NSDictionary json);
+
+		[Export ("isEqualToPolyline:")]
+		bool IsEqualToPolyline (AGSPolyline other);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSLocationDisplay : AGSLocationDisplayDataSourceDelegate {
+
+		[Export ("dataSource", ArgumentSemantic.Retain)]
+		AGSLocationDisplayDataSource DataSource { get; set; }
+
+		[Export ("location", ArgumentSemantic.Retain)]
+		AGSLocation Location { get; }
+
+		[Export ("dataSourceError", ArgumentSemantic.Retain)]
+		NSError DataSourceError { get; }
+
+		[Export ("autoPanMode")]
+		AGSLocationDisplayAutoPanMode AutoPanMode { get; set; }
+
+		[Export ("wanderExtentFactor")]
+		float WanderExtentFactor { get; set; }
+
+		[Export ("infoTemplateDelegate", ArgumentSemantic.Assign)]
+		AGSLocationDisplayInfoTemplateDelegate InfoTemplateDelegate { get; set; }
+
+		[Export ("zoomScale")]
+		double ZoomScale { get; set; }
+
+		//[Export ("dataSourceStarted")]
+		//bool DataSourceStarted { [Bind ("isDataSourceStarted")] get; }
+
+		[Export ("interfaceOrientation")]
+		UIInterfaceOrientation InterfaceOrientation { get; set; }
+
+		[Export ("mapLocation")]
+		AGSPoint MapLocation ();
+
+		[Export ("startDataSource")]
+		void StartDataSource ();
+
+		[Export ("stopDataSource")]
+		void StopDataSource ();
+
+		[Export ("navigationPointHeightFactor")]
+		float NavigationPointHeightFactor { get; set; }
+
+		[Export ("alpha")]
+		float Alpha { get; set; }
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSLocationDisplayDataSourceDelegate {
+
+		[Export ("locationDisplayDataSource:didUpdateWithLocation:")]
+		void DidUpdateWithLocation (AGSLocationDisplayDataSource dataSource, AGSLocation location);
+
+		[Export ("locationDisplayDataSource:didUpdateWithHeading:")]
+		void DidUpdateWithHeading (AGSLocationDisplayDataSource dataSource, double heading);
+
+		[Export ("locationDisplayDataSource:didFailWithError:")]
+		void DidFailWithError (AGSLocationDisplayDataSource dataSource, NSError error);
+
+		[Export ("locationDisplayDataSourceStopped:")]
+		void DataSourceStopped (AGSLocationDisplayDataSource dataSource);
+
+		[Export ("locationDisplayDataSourceStarted:")]
+		void DataSourceStarted (AGSLocationDisplayDataSource dataSource);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSLocationDisplayInfoTemplateDelegate {
+
+		[Export ("titleForLocationDisplay:screenPoint:")]
+		string TitleForLocationDisplay (AGSLocationDisplay ld, PointF screen);
+
+		[Export ("detailForLocationDisplay:screenPoint:")]
+		string DetailForLocationDisplay (AGSLocationDisplay ld, PointF screen);
+
+		[Export ("imageForLocationDisplay:screenPoint:")]
+		UIImage ImageForLocationDisplay (AGSLocationDisplay ld, PointF screen);
+
+		[Export ("customViewForLocationDisplay:screenPoint:")]
+		UIView CustomViewForLocationDisplay (AGSLocationDisplay ld, PointF screen);
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSLocationDisplayDataSource {
+
+		[Export ("delegate", ArgumentSemantic.Assign)]
+		AGSLocationDisplayDataSourceDelegate Delegate { get; set; }
+
+		[Export ("start")]
+		void Start ();
+
+		[Export ("stop")]
+		void Stop ();
+
+		[Export ("started")]
+		bool Started { [Bind ("isStarted")] get; }
+
+		[Export ("error", ArgumentSemantic.Retain)]
+		NSError Error { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSLocation {
+
+		[Export ("point", ArgumentSemantic.Retain)]
+		AGSPoint Point { get; set; }
+
+		[Export ("accuracy")]
+		double Accuracy { get; set; }
+
+		[Export ("course")]
+		double Course { get; set; }
+
+		[Export ("velocity")]
+		double Velocity { get; set; }
+
+		[Static, Export ("locationWithCLLocation:")]
+		AGSLocation LocationWithCLLocation (CLLocation cllocation);
 	}
 }
