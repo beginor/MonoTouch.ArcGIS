@@ -12,5 +12,7 @@
 @interface MainViewController : UIViewController <AGSMapViewLayerDelegate>
 
 @property (weak, nonatomic) IBOutlet AGSMapView *mapView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *baseLayerSegment;
 
+- (IBAction)baseLayerSegmentValueChanged:(id)sender;
 @end
