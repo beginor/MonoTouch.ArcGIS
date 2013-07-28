@@ -1428,4 +1428,130 @@ namespace MonoTouch.ArcGIS {
 		[Static, Export ("simpleMarkerSymbolWithColor:")]
 		AGSSimpleMarkerSymbol SimpleMarkerSymbolWithColor (UIColor color);
 	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSUniqueValue : AGSCoding {
+
+		[Export ("value", ArgumentSemantic.Copy)]
+		string Value { get; }
+
+		[Export ("label", ArgumentSemantic.Copy)]
+		string Label { get; }
+
+		[Export ("valueDescription", ArgumentSemantic.Copy)]
+		string ValueDescription { get; }
+
+		[Export ("symbol", ArgumentSemantic.Retain)]
+		AGSSymbol Symbol { get; }
+
+		[Static, Export ("uniqueValueWithValue:symbol:")]
+		AGSUniqueValue UniqueValueWithValue (string value, AGSSymbol symbol);
+
+		[Export ("initWithValue:label:description:symbol:")]
+		IntPtr Constructor (string value, string label, string description, AGSSymbol symbol);
+	}
+
+	[BaseType (typeof (AGSRenderer))]
+	public partial interface AGSUniqueValueRenderer {
+
+		[Export ("defaultSymbol", ArgumentSemantic.Retain)]
+		AGSSymbol DefaultSymbol { get; set; }
+
+		[Export ("fields", ArgumentSemantic.Copy)]
+		string [] Fields { get; set; }
+
+		[Export ("fieldDelimiter", ArgumentSemantic.Copy)]
+		string FieldDelimiter { get; set; }
+
+		[Export ("defaultLabel", ArgumentSemantic.Copy)]
+		string DefaultLabel { get; set; }
+
+		[Export ("uniqueValues", ArgumentSemantic.Copy)]
+		AGSUniqueValue [] UniqueValues { get; set; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSClassBreak : AGSCoding {
+
+		[Export ("label", ArgumentSemantic.Copy)]
+		string Label { get; set; }
+
+		[Export ("breakDescription", ArgumentSemantic.Copy)]
+		string BreakDescription { get; set; }
+
+		[Export ("maxValue")]
+		double MaxValue { get; set; }
+
+		[Export ("symbol", ArgumentSemantic.Retain)]
+		AGSSymbol Symbol { get; set; }
+
+		[Export ("initWithLabel:description:maxValue:symbol:")]
+		IntPtr Constructor (string label, string description, double maxValue, AGSSymbol symbol);
+
+		[Static, Export ("classBreakInfoWithLabel:description:maxValue:symbol:")]
+		AGSClassBreak ClassBreak(string label, string description, double maxValue, AGSSymbol symbol);
+
+		[Export ("compare:")]
+		NSComparisonResult Compare (AGSClassBreak anotherClassBreak);
+	}
+
+	[BaseType (typeof (AGSRenderer))]
+	public partial interface AGSClassBreaksRenderer {
+
+		[Export ("field", ArgumentSemantic.Copy)]
+		string Field { get; set; }
+
+		[Export ("classBreaks", ArgumentSemantic.Copy)]
+		AGSClassBreak [] ClassBreaks { get; set; }
+
+		[Export ("minValue")]
+		double MinValue { get; set; }
+
+		[Export ("defaultSymbol", ArgumentSemantic.Retain)]
+		AGSSymbol DefaultSymbol { get; set; }
+	}
+
+	[BaseType (typeof (AGSRenderer))]
+	public partial interface AGSMPDictionaryRenderer {
+
+		[Export ("dictionaryRendererDescription", ArgumentSemantic.Copy)]
+		string DictionaryRendererDescription { get; set; }
+
+		[Export ("dictionaryType", ArgumentSemantic.Copy)]
+		string DictionaryType { get; }
+
+		[Export ("fieldName", ArgumentSemantic.Copy)]
+		string FieldName { get; set; }
+
+		[Export ("labelMaxScale")]
+		double LabelMaxScale { get; set; }
+
+		[Export ("labelMinScale")]
+		double LabelMinScale { get; set; }
+
+		[Export ("labelsVisible")]
+		bool LabelsVisible { get; set; }
+
+		[Export ("symbolScaleFactor")]
+		double SymbolScaleFactor { get; }
+	}
+
+	[BaseType (typeof (AGSRenderer))]
+	public partial interface AGSSimpleRenderer {
+
+		[Export ("symbol", ArgumentSemantic.Retain)]
+		AGSSymbol Symbol { get; }
+
+		[Export ("label", ArgumentSemantic.Copy)]
+		string Label { get; }
+
+		[Export ("rendererDescription", ArgumentSemantic.Copy)]
+		string RendererDescription { get; }
+
+		[Export ("initWithSymbol:")]
+		IntPtr Constructor (AGSSymbol symbol);
+
+		[Static, Export ("simpleRendererWithSymbol:")]
+		NSObject SimpleRendererWithSymbol (AGSSymbol symbol);
+	}
 }
