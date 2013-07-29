@@ -1552,6 +1552,507 @@ namespace MonoTouch.ArcGIS {
 		IntPtr Constructor (AGSSymbol symbol);
 
 		[Static, Export ("simpleRendererWithSymbol:")]
-		NSObject SimpleRendererWithSymbol (AGSSymbol symbol);
+		AGSSimpleRenderer SimpleRendererWithSymbol (AGSSymbol symbol);
 	}
+
+	[BaseType (typeof (AGSGraphicsLayer))]
+	public partial interface AGSFeatureLayer : AGSCoding, AGSInfoTemplateDelegate/*, AGSSecuredResource*/ {
+
+		[Export ("URL", ArgumentSemantic.Copy)]
+		NSUrl URL { get; }
+
+		[Export ("mode")]
+		AGSFeatureLayerMode Mode { get; }
+
+		//[Export ("credential", ArgumentSemantic.Copy)]
+		//AGSCredential Credential { get; set; }
+
+		//[Export ("credentialCache", ArgumentSemantic.Retain)]
+		//AGSCredentialCache CredentialCache { get; set; }
+
+		[Export ("requestCachePolicy")]
+		NSUrlRequestCachePolicy RequestCachePolicy { get; set; }
+
+		[Export ("timeoutInterval")]
+		double TimeoutInterval { get; set; }
+
+		[Export ("layerId")]
+		uint LayerId { get; }
+
+		[Export ("serviceLayerName", ArgumentSemantic.Copy)]
+		string ServiceLayerName { get; }
+
+		[Export ("layerDescription", ArgumentSemantic.Copy)]
+		string LayerDescription { get; }
+
+		[Export ("type", ArgumentSemantic.Copy)]
+		string Type { get; }
+
+		[Export ("geometryType")]
+		AGSGeometryType GeometryType { get; }
+
+		[Export ("displayField", ArgumentSemantic.Copy)]
+		string DisplayField { get; }
+
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
+
+		[Export ("objectIdField", ArgumentSemantic.Copy)]
+		string ObjectIdField { get; }
+
+		[Export ("typeIdField", ArgumentSemantic.Copy)]
+		string TypeIdField { get; }
+
+		[Export ("defaultDefinitionExpression", ArgumentSemantic.Copy)]
+		string DefaultDefinitionExpression { get; }
+
+		[Export ("types", ArgumentSemantic.Copy)]
+		AGSFeatureType [] Types { get; }
+
+		[Export ("templates", ArgumentSemantic.Copy)]
+		AGSFeatureTemplate [] Templates { get; }
+
+		[Export ("relationships", ArgumentSemantic.Copy)]
+		AGSRelationship [] Relationships { get; }
+
+		[Export ("timeInfo", ArgumentSemantic.Retain)]
+		AGSTimeInfo TimeInfo { get; }
+
+		[Export ("attachments")]
+		bool Attachments { [Bind ("hasAttachments")] get; }
+
+		[Export ("definitionExpression", ArgumentSemantic.Copy)]
+		string DefinitionExpression { get; set; }
+
+		//[Export ("editingDelegate", ArgumentSemantic.Assign)]
+		//AGSFeatureLayerEditingDelegate EditingDelegate { get; set; }
+
+		[Export ("queryDelegate", ArgumentSemantic.Assign)]
+		AGSFeatureLayerQueryDelegate QueryDelegate { get; set; }
+
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
+
+		[Export ("maxAllowableOffset")]
+		double MaxAllowableOffset { get; set; }
+
+		[Export ("queryable")]
+		bool Queryable { [Bind ("isQueryable")] get; }
+
+		[Export ("infoTemplateDelegate", ArgumentSemantic.Assign)]
+		AGSInfoTemplateDelegate InfoTemplateDelegate { get; set; }
+
+		[Export ("expirationInterval")]
+		double ExpirationInterval { get; set; }
+
+		[Export ("autoRefreshOnExpiration")]
+		bool AutoRefreshOnExpiration { get; set; }
+
+		[Export ("bufferFactor")]
+		float BufferFactor { get; set; }
+
+		[Export ("constraintFactor")]
+		float ConstraintFactor { get; set; }
+
+		[Export ("version")]
+		float Version { get; }
+
+		[Export ("serviceFullEnvelope", ArgumentSemantic.Retain)]
+		AGSEnvelope ServiceFullEnvelope { get; }
+
+		[Export ("labelingInfo", ArgumentSemantic.Copy)]
+		AGSLabelClass [] LabelingInfo { get; }
+
+		[Export ("timeDefinition", ArgumentSemantic.Retain)]
+		AGSTimeExtent TimeDefinition { get; set; }
+
+		//[Export ("editFieldsInfo", ArgumentSemantic.Retain)]
+		//AGSEditFieldsInfo EditFieldsInfo { get; }
+
+		[Export ("canUpdateGeometry")]
+		bool CanUpdateGeometry { get; }
+
+		[Export ("canCreate")]
+		bool CanCreate { get; }
+
+		[Export ("canUpdate")]
+		bool CanUpdate { get; }
+
+		[Export ("canDelete")]
+		bool CanDelete { get; }
+
+		[Export ("initWithURL:mode:")]
+		IntPtr Constructor (NSUrl url, AGSFeatureLayerMode mode);
+
+		//[Export ("initWithURL:mode:credential:")]
+		//IntPtr Constructor (NSUrl url, AGSFeatureLayerMode mode, AGSCredential cred);
+
+		[Export ("initWithURL:mode:error:")]
+		IntPtr Constructor (NSUrl url, AGSFeatureLayerMode mode, out NSError error);
+
+		//[Export ("initWithURL:mode:credential:error:")]
+		//IntPtr Constructor (NSUrl url, AGSFeatureLayerMode mode, AGSCredential cred, out NSError error);
+
+		[Static, Export ("featureServiceLayerWithURL:mode:")]
+		AGSFeatureLayer FeatureServiceLayerWithURL (NSUrl url, AGSFeatureLayerMode mode);
+
+		//[Static, Export ("featureServiceLayerWithURL:mode:credential:")]
+		//AGSFeatureLayer FeatureServiceLayerWithURL (NSUrl url, AGSFeatureLayerMode mode, AGSCredential cred);
+
+		[Export ("initWithLayerDefinitionJSON:featureSetJSON:")]
+		IntPtr Constructor (NSDictionary layerDefinitionJSON, NSDictionary featureSetJSON);
+
+		[Export ("initWithLayerDefinitionJSON:featureSet:")]
+		IntPtr Constructor (NSDictionary layerDefinitionJSON, AGSFeatureSet featureSet);
+
+		[Export ("queryFeatures:")]
+		NSOperation QueryFeatures (AGSQuery query);
+
+		[Export ("queryIds:")]
+		NSOperation QueryIds (AGSQuery query);
+
+		[Export ("queryFeatureCount:")]
+		NSOperation QueryFeatureCount (AGSQuery query);
+
+		[Export ("queryRelatedFeatures:")]
+		NSOperation QueryRelatedFeatures (AGSRelationshipQuery query);
+
+		[Export ("selectFeaturesWithQuery:selectionMethod:")]
+		NSOperation SelectFeaturesWithQuery (AGSQuery query, AGSFeatureLayerSelectionMethod selectionMethod);
+
+		[Export ("selectFeature:withSelectionMethod:")]
+		void SelectFeature (AGSGraphic feature, AGSFeatureLayerSelectionMethod selectionMethod);
+
+		[Export ("clearSelection")]
+		void ClearSelection ();
+
+		[Export ("lookupFeatureWithObjectId:")]
+		AGSGraphic LookupFeatureWithObjectId (int objectId);
+
+		[Export ("refresh")]
+		void Refresh ();
+
+		[Export ("objectIdForFeature:")]
+		int ObjectIdForFeature (AGSGraphic feature);
+
+		[Export ("resubmit")]
+		void Resubmit ();
+
+		//[Export ("resubmitWithURL:credential:")]
+		//void ResubmitWithURL (NSUrl url, AGSCredential cred);
+
+		[Export ("templateForFeature:type:")]
+		AGSFeatureTemplate TemplateForFeature (AGSGraphic feature, out AGSFeatureType type);
+
+		[Export ("findFieldWithName:")]
+		AGSField FindFieldWithName (string fieldName);
+
+		//[Export ("attachmentManagerForFeature:")]
+		//AGSAttachmentManager AttachmentManagerForFeature (AGSGraphic feature);
+
+		[Export ("clearAttachmentManagers")]
+		void ClearAttachmentManagers ();
+
+		[Export ("clearAttachmentManagerForFeatureWithObjectId:")]
+		void ClearAttachmentManagerForFeatureWithObjectId (int objectId);
+
+		[Export ("canUpdateFeature:")]
+		bool CanUpdateFeature (AGSGraphic feature);
+
+		[Export ("canDeleteFeature:")]
+		bool CanDeleteFeature (AGSGraphic feature);
+
+		[Export ("editSummaryForFeature:")]
+		string EditSummaryForFeature (AGSGraphic feature);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSRelationshipQuery : AGSCoding {
+
+		[Export ("relationshipId")]
+		int RelationshipId { get; set; }
+
+		[Export ("objectIds", ArgumentSemantic.Copy)]
+		NSNumber [] ObjectIds { get; set; }
+
+		[Export ("definitionExpression", ArgumentSemantic.Copy)]
+		string DefinitionExpression { get; set; }
+
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
+
+		[Export ("returnGeometry")]
+		bool ReturnGeometry { get; set; }
+
+		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference OutSpatialReference { get; set; }
+
+		[Export ("maxAllowableOffset")]
+		double MaxAllowableOffset { get; set; }
+
+		[Static, Export ("relationshipQuery")]
+		NSObject RelationshipQuery ();
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSQuery : AGSCoding {
+
+		[Export ("geometry", ArgumentSemantic.Retain)]
+		AGSGeometry Geometry { get; set; }
+
+		[Export ("outFields", ArgumentSemantic.Copy)]
+		string [] OutFields { get; set; }
+
+		[Export ("outSpatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference OutSpatialReference { get; set; }
+
+		[Export ("returnGeometry")]
+		bool ReturnGeometry { get; set; }
+
+		[Export ("spatialRelationship")]
+		AGSSpatialRelationship SpatialRelationship { get; set; }
+
+		[Export ("text", ArgumentSemantic.Copy)]
+		string Text { get; set; }
+
+		[Export ("where", ArgumentSemantic.Copy)]
+		string Where { get; set; }
+
+		[Export ("objectIds", ArgumentSemantic.Copy)]
+		NSNumber [] ObjectIds { get; set; }
+
+		[Export ("relationParam", ArgumentSemantic.Copy)]
+		string RelationParam { get; set; }
+
+		[Export ("timeExtent", ArgumentSemantic.Retain)]
+		AGSTimeExtent TimeExtent { get; set; }
+
+		[Export ("maxAllowableOffset")]
+		double MaxAllowableOffset { get; set; }
+
+		[Export ("outStatistics", ArgumentSemantic.Copy)]
+		AGSOutStatistic [] OutStatistics { get; set; }
+
+		[Export ("groupByFieldsForStatistics", ArgumentSemantic.Copy)]
+		string [] GroupByFieldsForStatistics { get; set; }
+
+		[Export ("orderByFields", ArgumentSemantic.Copy)]
+		string [] OrderByFields { get; set; }
+
+		[Static, Export ("query")]
+		AGSQuery Query ();
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSOutStatistic : AGSCoding {
+
+		[Export ("statisticType")]
+		AGSQueryStatisticsType StatisticType { get; set; }
+
+		[Export ("onStatisticField", ArgumentSemantic.Copy)]
+		string OnStatisticField { get; set; }
+
+		[Export ("outStatisticFieldName", ArgumentSemantic.Copy)]
+		string OutStatisticFieldName { get; set; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSFeatureSet : AGSCoding {
+
+		[Export ("displayFieldName", ArgumentSemantic.Copy)]
+		string DisplayFieldName { get; }
+
+		[Export ("features", ArgumentSemantic.Copy)]
+		AGSGraphic [] Features { get; set; }
+
+		[Export ("fieldAliases", ArgumentSemantic.Copy)]
+		NSDictionary FieldAliases { get; }
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; }
+
+		[Export ("geometryType")]
+		AGSGeometryType GeometryType { get; }
+
+		[Export ("fields", ArgumentSemantic.Copy)]
+		AGSField [] Fields { get; }
+
+		[Export ("initWithDisplayFieldName:features:fieldAliases:spatialReference:geometryType:")]
+		IntPtr Constructor (string displayFieldName, AGSGraphic [] features, NSDictionary fieldAliases, AGSSpatialReference spatialReference, AGSGeometryType geometryType);
+
+		[Export ("initWithFeatures:")]
+		IntPtr Constructor (NSObject [] features);
+
+		[Static, Export ("featureSetWithFeatures:")]
+		AGSFeatureSet FeatureSetWithFeatures ( AGSGraphic [] features);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSLabelClass : AGSCoding {
+
+		[Export ("placement")]
+		AGSLabelPlacement Placement { get; }
+
+		[Export ("labelExpression", ArgumentSemantic.Copy)]
+		string LabelExpression { get; }
+
+		[Export ("useCodedValues")]
+		bool UseCodedValues { get; }
+
+		[Export ("symbol", ArgumentSemantic.Retain)]
+		AGSTextSymbol Symbol { get; }
+
+		[Export ("minScale")]
+		float MinScale { get; }
+
+		[Export ("maxScale")]
+		float MaxScale { get; }
+	}
+
+	[Model, BaseType (typeof (NSObject))]
+	public partial interface AGSFeatureLayerQueryDelegate {
+
+		[Export ("featureLayer:operation:didQueryFeaturesWithFeatureSet:")]
+		void DidQueryFeaturesWithFeatureSet (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
+
+		[Export ("featureLayer:operation:didFailQueryFeaturesWithError:")]
+		void DidFailQueryFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+
+		[Export ("featureLayer:operation:didQueryObjectIdsWithResults:")]
+		void DidQueryObjectIdsWithResults (AGSFeatureLayer featureLayer, NSOperation op, int [] objectIds);
+
+		[Export ("featureLayer:operation:didFailQueryObjectIdsWithError:")]
+		void DidFailQueryObjectIdsWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+
+		[Export ("featureLayer:operation:didQueryFeatureCountWithResult:")]
+		void DidQueryFeatureCountWithResult (AGSFeatureLayer featureLayer, NSOperation op, int count);
+
+		[Export ("featureLayer:operation:didFailQueryFeatureCountWithError:")]
+		void DidFailQueryFeatureCountWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+
+		[Export ("featureLayer:operation:didQueryRelatedFeaturesWithResults:")]
+		void DidQueryRelatedFeaturesWithResults (AGSFeatureLayer featureLayer, NSOperation op, NSDictionary relatedFeatures);
+
+		[Export ("featureLayer:operation:didFailQueryRelatedFeaturesWithError:")]
+		void DidFailQueryRelatedFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+
+		[Export ("featureLayer:operation:didSelectFeaturesWithFeatureSet:")]
+		void DidSelectFeaturesWithFeatureSet (AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet);
+
+		[Export ("featureLayer:operation:didFailSelectFeaturesWithError:")]
+		void DidFailSelectFeaturesWithError (AGSFeatureLayer featureLayer, NSOperation op, NSError error);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSField : AGSCoding {
+
+		[Export ("name", ArgumentSemantic.Copy)]
+		string Name { get; }
+
+		[Export ("type")]
+		AGSFieldType Type { get; }
+
+		[Export ("alias", ArgumentSemantic.Copy)]
+		string Alias { get; }
+
+		[Export ("domain", ArgumentSemantic.Retain)]
+		AGSDomain Domain { get; }
+
+		[Export ("editable")]
+		bool Editable { get; }
+
+		[Export ("nullable")]
+		bool Nullable { get; }
+
+		[Export ("length")]
+		int Length { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSDomain : AGSCoding {
+
+		[Export ("name", ArgumentSemantic.Copy)]
+		string Name { get; }
+
+		[Static, Export ("domainWithJSON:parentField:")]
+		NSObject DomainWithJSON (NSDictionary json, AGSField parentField);
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSFeatureType : AGSCoding {
+
+		[Export ("typeId", ArgumentSemantic.Copy)]
+		NSObject TypeId { get; }
+
+		[Export ("name", ArgumentSemantic.Copy)]
+		string Name { get; }
+
+		[Export ("templates", ArgumentSemantic.Copy)]
+		AGSFeatureTemplate [] Templates { get; }
+
+		[Export ("domains", ArgumentSemantic.Copy)]
+		NSDictionary Domains { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSFeatureTemplate : AGSCoding {
+
+		[Export ("name", ArgumentSemantic.Copy)]
+		string Name { get; }
+
+		[Export ("featureDescription", ArgumentSemantic.Copy)]
+		string FeatureDescription { get; }
+
+		[Export ("prototype", ArgumentSemantic.Retain)]
+		AGSGraphic Prototype { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSRelationship : AGSCoding {
+
+		[Export ("relationshipId")]
+		int RelationshipId { get; }
+
+		[Export ("name", ArgumentSemantic.Copy)]
+		string Name { get; }
+
+		[Export ("relatedTableId")]
+		int RelatedTableId { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSTimeInfo : AGSCoding {
+
+		[Export ("startTimeField", ArgumentSemantic.Copy)]
+		string StartTimeField { get; }
+
+		[Export ("endTimeField", ArgumentSemantic.Copy)]
+		string EndTimeField { get; }
+
+		[Export ("trackIdField", ArgumentSemantic.Copy)]
+		string TrackIdField { get; }
+
+		[Export ("timeExtent", ArgumentSemantic.Retain)]
+		AGSTimeExtent TimeExtent { get; }
+
+		[Export ("timeReference", ArgumentSemantic.Retain)]
+		AGSTimeReference TimeReference { get; }
+
+		[Export ("timeInterval")]
+		double TimeInterval { get; }
+
+		[Export ("timeIntervalUnits")]
+		AGSTimeIntervalUnits TimeIntervalUnits { get; }
+	}
+
+	[BaseType (typeof (NSObject))]
+	public partial interface AGSTimeReference : AGSCoding {
+
+		[Export ("timeZone", ArgumentSemantic.Copy)]
+		NSTimeZone TimeZone { get; set; }
+
+		[Export ("respectsDaylightSaving")]
+		bool RespectsDaylightSaving { get; set; }
+	}
+
 }
