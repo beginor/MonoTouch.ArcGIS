@@ -15,7 +15,12 @@ namespace AGSTestCS {
 			"http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
 		};
 
+		private static readonly string[] FeatureLayerUrls = new [] {
+			"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/0"
+		};
+
 		private static readonly string BaseLayerName = "Base Map Layer";
+		private static readonly string TestFeatureLayerName = "Test Feature Layer";
 
 		public ViewController() : base ("ViewController", null) {
 		}
@@ -39,11 +44,17 @@ namespace AGSTestCS {
 			this.MapView.ZoomToEnvelope(envelop, false);
 
 			this.BaseLayerSegment.ValueChanged += BaseLayerSegment_ValueChanged;
+			this.FeatureLayerSegment.ValueChanged += FeatureLayerSegment_ValueChanged;
 		}
 
 		void BaseLayerSegment_ValueChanged (object sender, EventArgs e) {
 			var selectedIndex = this.BaseLayerSegment.SelectedSegment;
 			SetBaseLayer(selectedIndex);
+		}
+
+		void FeatureLayerSegment_ValueChanged(object sender, EventArgs e) {
+			var index = this.FeatureLayerSegment.SelectedSegment;
+			this.SetTestFeatureLayer(index);
 		}
 
 		void SetBaseLayer(int selectedIndex) {
@@ -55,6 +66,20 @@ namespace AGSTestCS {
 				Name = BaseLayerName
 			};
 			this.MapView.AddMapLayer(baseLayer, BaseLayerName);
+		}
+
+		void SetTestFeatureLayer(int index) {
+			this.MapView.RemoveMapLayerWithName(TestFeatureLayerName);
+			var url = NSUrl.FromString(FeatureLayerUrls[0]);
+			var testFeatureLayer = AGSFeatureLayer.FeatureServiceLayerWithURL(url, AGSFeatureLayerMode.OnDemand);
+
+			var testSymbol = new AGSSimpleMarkerSymbol(UIColor.Red) {
+				Size = new SizeF(10, 10),
+				Style = AGSSimpleMarkerSymbolStyle.Circle
+			};
+			testFeatureLayer.Renderer = new AGSSimpleRenderer(testSymbol);
+
+			this.MapView.AddMapLayer(testFeatureLayer, TestFeatureLayerName);
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations() {

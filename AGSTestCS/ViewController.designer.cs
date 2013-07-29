@@ -16,6 +16,9 @@ namespace AGSTestCS
 		MonoTouch.UIKit.UISegmentedControl BaseLayerSegment { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UISegmentedControl FeatureLayerSegment { get; set; }
+
+		[Outlet]
 		MonoTouch.ArcGIS.AGSMapView MapView { get; set; }
 
 		[Outlet]
@@ -23,6 +26,11 @@ namespace AGSTestCS
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (BaseLayerSegment != null) {
+				BaseLayerSegment.Dispose ();
+				BaseLayerSegment = null;
+			}
+
 			if (MapView != null) {
 				MapView.Dispose ();
 				MapView = null;
@@ -33,9 +41,9 @@ namespace AGSTestCS
 				Toolbar = null;
 			}
 
-			if (BaseLayerSegment != null) {
-				BaseLayerSegment.Dispose ();
-				BaseLayerSegment = null;
+			if (FeatureLayerSegment != null) {
+				FeatureLayerSegment.Dispose ();
+				FeatureLayerSegment = null;
 			}
 		}
 	}
