@@ -1639,7 +1639,11 @@ namespace MonoTouch.ArcGIS {
 		[Export ("queryable")]
 		bool Queryable { [Bind ("isQueryable")] get; }
 
-		[Export ("infoTemplateDelegate", ArgumentSemantic.Assign)]
+
+		[Export ("infoTemplateDelegate", ArgumentSemantic.Assign), NullAllowed]
+		NSObject WeakInfoTemplateDelegate { get; set; }
+
+		[Wrap ("WeakInfoTemplateDelegate"), NullAllowed]
 		AGSInfoTemplateDelegate InfoTemplateDelegate { get; set; }
 
 		[Export ("expirationInterval")]

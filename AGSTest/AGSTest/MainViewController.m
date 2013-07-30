@@ -37,6 +37,17 @@
     
     AGSEnvelope *envelope = [AGSEnvelope envelopeWithXmin:12178333 ymin:2973103 xmax:13088239 ymax:2255207 spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
     [self.mapView zoomToEnvelope:envelope animated:YES];
+	
+	NSURL* featureLayerUrl = [NSURL URLWithString:@"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/0"];
+	AGSFeatureLayer *featureLayer = [AGSFeatureLayer featureServiceLayerWithURL:featureLayerUrl mode:AGSFeatureLayerModeOnDemand];
+	
+	AGSSimpleMarkerSymbol* symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithColor:[UIColor redColor]];
+	symbol.size = CGSizeMake(10, 10);
+	
+	featureLayer.renderer = [AGSSimpleRenderer simpleRendererWithSymbol:symbol];
+	featureLayer.infoTemplateDelegate = self;
+	
+	[self.mapView addMapLayer:featureLayer withName:@"Test Feature Layer"];
 }
 
 - (void) setBaseLayer:(NSInteger)selectedIndex {
@@ -72,5 +83,9 @@
 - (IBAction)baseLayerSegmentValueChanged:(id)sender {
 	NSInteger index = self.baseLayerSegment.selectedSegmentIndex;
 	[self setBaseLayer:index];
+}
+
+- (NSString*) titleForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint {
+	return [graphic attributeAsStringForKey:@"CITY_NAME"];
 }
 @end

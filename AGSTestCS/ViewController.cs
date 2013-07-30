@@ -73,11 +73,16 @@ namespace AGSTestCS {
 			var url = NSUrl.FromString(FeatureLayerUrls[0]);
 			var testFeatureLayer = AGSFeatureLayer.FeatureServiceLayerWithURL(url, AGSFeatureLayerMode.OnDemand);
 
+
+
 			var testSymbol = new AGSSimpleMarkerSymbol(UIColor.Red) {
 				Size = new SizeF(10, 10),
 				Style = AGSSimpleMarkerSymbolStyle.Circle
 			};
 			testFeatureLayer.Renderer = new AGSSimpleRenderer(testSymbol);
+
+			testFeatureLayer.WeakInfoTemplateDelegate = new TestInfoTemplateDelegate();
+			//testFeatureLayer.InfoTemplateDelegate = new TestInfoTemplateDelegate();
 
 			this.MapView.AddMapLayer(testFeatureLayer, TestFeatureLayerName);
 		}
@@ -85,6 +90,39 @@ namespace AGSTestCS {
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations() {
 			return UIInterfaceOrientationMask.All;
 		}
+
+		[Export ("titleForGraphic:screenPoint:mapPoint:")]
+		public string TitleForGraphic (AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
+			//var attrs = graphic.AllAttributes();
+			var cityName = graphic.AttributeForKey("CITY_NAME");
+			return cityName.ToString();
+			//return new NSString("Hello,world");
+		}
+	}
+
+	public class TestInfoTemplateDelegate : AGSInfoTemplateDelegate {
+
+		public override NSString TitleForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
+			//var attrs = graphic.AllAttributes();
+			//var cityName = graphic.AttributeForKey("CITY_NAME");
+			//return cityName.ToString();
+			return new NSString("Hello,world!");
+		}
+
+//		public override string DetailForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
+//			var cityFips = graphic.AttributeAsStringForKey("CITY_FIPS");
+//			var cityName = graphic.AttributeAsStringForKey("CITY_NAME");
+//			var stateFips = graphic.AttributeAsStringForKey("STATE_FIPS");
+//			var stateName = graphic.AttributeAsStringForKey("STATE_NAME");
+//			return string.Format(
+//				"{0}, {1}, {2}, {3}",
+//				cityFips,
+//				cityName,
+//				stateFips,
+//				stateName
+//			);
+//		}
+		
 	}
 }
 
