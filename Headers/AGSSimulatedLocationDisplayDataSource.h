@@ -28,7 +28,6 @@
  This is useful for testing or demo purposes.
  
  @since 10.1.1
- @see AGSLocationDisplay
  */
 
 @interface AGSSimulatedLocationDisplayDataSource : NSObject <AGSLocationDisplayDataSource>

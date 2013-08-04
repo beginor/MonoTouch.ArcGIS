@@ -44,7 +44,7 @@
  @param url to request data from
  @param cred <code>AGSCredential</code> to be used if the resource is secured
  @param operation The specific resource to access at @p url
- @param queryParams parameters to submit to the @p url
+ @param query parameters to submit to the @p url
  @param post Boolean to determine whether to perform a <code>GET</code> or <code>POST</code>
  @param cachePolicy The cache policy that the request will honor.
  @param timeoutInterval The timeout interval (in seconds) of this request. Default is 60.

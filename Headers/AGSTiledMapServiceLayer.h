@@ -32,6 +32,9 @@
  A cached map service uses a cache of pre-generated tiles to create a map instead of 
  dynamically generating map images. 
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSTiledLayerView, is created when this layer is 
+ added to the map. 
  
  @define{AGSTiledMapServiceLayer.h,ArcGIS}
  @since 1.0
@@ -77,8 +80,8 @@
  @param url URL to cached map service.
  @return A new tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL *)url;
 
@@ -88,8 +91,8 @@
  @param cred @c AGSCredential used to access the secured resource.
  @return A new tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -100,8 +103,8 @@
  @param info Previously retrieved map service info.
  @return A new tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -110,8 +113,8 @@
  @param url URL to a cached map service.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 + (id)tiledMapServiceLayerWithURL:(NSURL *)url;
 
@@ -121,8 +124,8 @@
  @param cred @c AGSCredential used to access the secured resource.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 + (id)tiledMapServiceLayerWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -133,8 +136,8 @@
  @param info Previously retrieved map service info.
  @return A new, autoreleased, tiled map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 + (id)tiledMapServiceLayerWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -145,8 +148,8 @@
  @param cred The credential.
  @return A new tiled map service object.
  @since 2.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 - (id)initWithJSON:(NSDictionary *)json URL:(NSURL*)url credential:(AGSCredential*)cred;
 
@@ -159,8 +162,8 @@
  layer is already loaded. This function also does nothing if the layer is currently
  trying to load.
  @since 10.1.1
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 - (void)resubmit;
 
@@ -171,8 +174,8 @@
  @param url URL to the tiled map service.
  @param cred @c AGSCredential used to access the secured resource.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 -(void)resubmitWithURL:(NSURL*)url credential:(AGSCredential*)cred;
 

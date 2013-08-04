@@ -79,8 +79,8 @@
  @param params Specifies the parameters for executing the search.
  @return <code>NSOperation</code> for current execute request.
  @since 1.0
- @see @c AGSIdentifyTaskDelegate#identifyTask:operation:didExecuteWithIdentifyResults:, method on delegate for success
- @see @c AGSIdentifyTaskDelegate#identifyTask:operation:didFailWithError: , method on delegate for failure
+ @see @c AGSIdentifyTaskDelegate#identifyTask:operation:didExecuteWithIdentifyResults:, delegate method for success
+ @see @c AGSIdentifyTaskDelegate#identifyTask:operation:didFailWithError: , delegate method for failure
  
  */
 - (NSOperation *)executeWithParameters:(AGSIdentifyParameters *)params;

@@ -30,8 +30,8 @@
 
  The visibility (set / setLabelsVisible) behaves as follows:
  
- If the map is outside @c #labelMaxScale / @c #labelMinScale, the labels will not display, even if @c #labelsVisible is true.
- If the map is within @c #labelMaxScale/ @c #labelMinScale, then the labels will display, unless @c #labelsVisible is false.
+ If the map is outside @clabelMaxScale/@clabelMinScale, the labels will not display, even if @clabelsVisible is true.
+ If the map is within @clabelMaxScale/@clabelMinScale, then the labels will display, unless @clabelsVisible is false.
  @since 10.1.1
  */
 

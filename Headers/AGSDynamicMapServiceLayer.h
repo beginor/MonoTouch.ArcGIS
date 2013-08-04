@@ -38,6 +38,9 @@
  of ArcGIS Server. For example, <a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer</a>. 
  A dynamic map service generates map images on the fly. 
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSDynamicLayerView,  is created when this layer 
+ is added to the map.
  
  @define{AGSDynamicMapServiceLayer.h,ArcGIS}
  @see AGSTiledMapServiceLayer for cached map services.
@@ -135,8 +138,8 @@
  @param url URL to a dynamic map service.
  @return A new dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  
  */
 - (id)initWithURL:(NSURL *)url;
@@ -147,8 +150,8 @@
  @param cred @c AGSCredential to access a secured resource.
  @return A new dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -159,8 +162,8 @@
  @param info Previously retrieved map service info.
  @return A new dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -169,8 +172,8 @@
  @param url URL to a dynamic map service.
  @return A new, autoreleased, dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 + (id)dynamicMapServiceLayerWithURL:(NSURL *)url;
 
@@ -180,8 +183,8 @@
  @param cred @c AGSCredential used to access a secured resource.
  @return A new, autoreleased, dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 + (id)dynamicMapServiceLayerWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -191,8 +194,8 @@
  @param info Previously retrieved map service info.
  @return A new, autoreleased, dynamic map service layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 + (id)dynamicMapServiceLayerWithMapServiceInfo: (AGSMapServiceInfo *)info;
 
@@ -203,8 +206,8 @@
  @param cred The credential
  @return A new AGSDynamicMapServiceLayer object.
  @since 2.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithJSON:(NSDictionary *)json URL:(NSURL*)url credential:(AGSCredential*)cred;
 
@@ -217,8 +220,8 @@
  layer is already loaded. This function also does nothing if the layer is currently
  trying to load.
  @since 10.1.1
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 - (void)resubmit;
 
@@ -229,8 +232,8 @@
  @param url URL to the dynamic map service.
  @param cred @c AGSCredential to access the secured resource.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 -(void)resubmitWithURL:(NSURL*)url credential:(AGSCredential*)cred;
 

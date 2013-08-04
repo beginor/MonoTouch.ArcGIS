@@ -43,7 +43,7 @@
 /** Title text to be displayed in the callout.
  @param graphic The graphic to display a title for.
  @param screen The coordinates at which the graphic callout will be displayed.
- @param mapPoint The coordinates at which the graphic callout will be displayed.
+ @param map The coordinates at which the graphic callout will be displayed.
  @return The title text for the callout.
  @since 1.0
  */
@@ -52,7 +52,7 @@
 /** Detail string to be displayed in the callout.
  @param graphic The graphic to display detail for.
  @param screen The coordinates at which the graphic callout will be displayed.
- @param mapPoint The coordinates at which the graphic callout will be displayed.
+ @param map The coordinates at which the graphic callout will be displayed.
  @return The detail text for the callout.
  @since 1.0
  */

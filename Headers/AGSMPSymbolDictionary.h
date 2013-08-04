@@ -28,7 +28,6 @@
  
  @define{AGSMPSymbolDictionary.h, ArcGIS}
  @since 10.1.1
-  @see @c AGSMPMessageProcessor
  */
 @interface AGSMPSymbolDictionary : NSObject {
 }

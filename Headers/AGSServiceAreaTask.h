@@ -61,16 +61,16 @@
  @param serviceAreaParams The input parameters for the service area operation.
  @return <code>NSOperation</code> for the current service area task.
  @since 1.8
- @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didSolveServiceAreaWithResult: , method on delegate for success
- @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailSolveWithError:  , method on delegate for failure
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didSolveServiceAreaWithResult: , delegate method for success
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailSolveWithError:  , delegate method for failure
  */
 - (NSOperation*)solveServiceAreaWithParameters:(AGSServiceAreaTaskParameters*)serviceAreaParams;
 
 /** Retrieves the default service area parameters. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
- @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didRetrieveDefaultServiceAreaTaskParameters: , method on delegate for success
- @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailToRetrieveDefaultServiceAreaTaskParametersWithError:  , method on delegate for failure
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didRetrieveDefaultServiceAreaTaskParameters: , delegate method for success
+ @see @c AGSServiceAreaTaskDelegate#serviceAreaTask:operation:didFailToRetrieveDefaultServiceAreaTaskParametersWithError:  , delegate method for failure
  */
 - (NSOperation*)retrieveDefaultServiceAreaTaskParameters;
 

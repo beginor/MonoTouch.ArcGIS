@@ -304,7 +304,7 @@
  querying features given some criteria, finding addresses, 
  running geoprocessing jobs, performing network analysis such as routing, etc.
  
- The API is distributed as a framework called ArcGIS. This framework is installed by default under <i> ${HOME}/Library/SDKs/ArcGIS/iOS</i>. Classes and 
+ The API is distributed as a framework called ArcGIS. This framework is installed by default under <i> ${HOME}/Library/SDKs/ArcGIS</i>. Classes and 
  functions defined in this framework begin with the prefix AGS. This prefix acts 
  as a namespace and prevents naming conflicts with classes defined in your 
  application or other frameworks you use. 
@@ -315,7 +315,7 @@
  iOS 5 SDK to build your applications. Be sure to set your XCode project's 
  <b>Base SDK</b> setting accordingly. 
  
- Also, the applications you build will require a minimum of iOS 5 running on the device.
+ Also, the applications you build with the SDK require a minimum of iOS 5 and iPhone 3GS.
  
  The API depends upon the following iOS frameworks and libraries. These 
  need to be added to your XCode project as references -
@@ -335,7 +335,7 @@
  You need to set the project's <b>Frameworks Search Paths</b> setting to 
  include <i>${HOME}/Library/SDKs/ArcGIS</i> , and the <b>Other Linker Flags</b> setting to include the following entries: <i> -ObjC -all_load -framework ArcGIS </i>
  
- Finally, you must also add the <i>ArcGIS.bundle</i> file found under <i>${HOME}/Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources</i> to your project. This bundle file contains the resources (images, localized strings, etc) used by the API.
+ You must also add the <i>ArcGIS.bundle</i> file found under <i>${HOME}/Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources</i> to your project. This bundle file contains the resources (images, localized strings, etc) used by the API.
  
  @section Third-party Third party libraries
  

@@ -37,6 +37,9 @@
  For example, <a href=http://lasigpublic.nerc-lancaster.ac.uk/ArcGIS/services/Biodiversity/CSHedges/MapServer/WMSServer</a>.
  A dynamic map service generates map images on the fly.
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSDynamicLayerView,  is created when this layer 
+ is added to the map.
  
  @define{AGSWMSLayer.h,ArcGIS}
  @since 2.2

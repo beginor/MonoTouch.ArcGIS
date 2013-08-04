@@ -70,16 +70,16 @@
  @param routeParams The input parameters for the solve operation.
  @return <code>NSOperation</code> for the current solve task.
  @since 1.8
- @see @c AGSRouteTaskDelegate#routeTask:operation:didSolveWithResult: , method on delegate for success
- @see @c AGSRouteTaskDelegate#routeTask:operation:didFailSolveWithError: , method on delegate for failure
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didSolveWithResult: , delegate method for success
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didFailSolveWithError: , delegate method for failure
  */
 - (NSOperation*)solveWithParameters:(AGSRouteTaskParameters*)routeParams;
 
 /** Retrieves the default route parameters. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
- @see @c AGSRouteTaskDelegate#routeTask:operation:didRetrieveDefaultRouteTaskParameters: , method on delegate for success
- @see @c AGSRouteTaskDelegate#routeTask:operation:didFailToRetrieveDefaultRouteTaskParametersWithError: , method on delegate for failure
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didRetrieveDefaultRouteTaskParameters: , delegate method for success
+ @see @c AGSRouteTaskDelegate#routeTask:operation:didFailToRetrieveDefaultRouteTaskParametersWithError: , delegate method for failure
  */
 - (NSOperation*)retrieveDefaultRouteTaskParameters;
 

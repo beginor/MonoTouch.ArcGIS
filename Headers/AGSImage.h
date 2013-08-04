@@ -23,15 +23,7 @@
  @since 10.1.1
  */
 #define AGSImage UIImage
-
-/** AGSImagePNGRepresentation(x) is defined as a UIImagePNGRepresentation(x) for iOS platform.
- @since 10.1.1
- */
 #define AGSImagePNGRepresentation(x) UIImagePNGRepresentation(x)
-
-/** AGSImageJPEGRepresentation(x,y) is defined as a UIImageJPEGRepresentation(x,y) for iOS platform.
- @since 10.1.1
- */
 #define AGSImageJPEGRepresentation(x, y) UIImageJPEGRepresentation(x, y)
 #elif TARGET_OS_MAC && (!TARGET_OS_IPHONE)
 /** AGSImage is defined as a NSImage for MacOS platforms.

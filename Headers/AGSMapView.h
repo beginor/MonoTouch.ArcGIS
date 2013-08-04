@@ -37,7 +37,7 @@
  You can customize the behavior of the map and respond to events by attaching your own delegate classes. Your delegate classes
  must adopt the necessary protocols.  
  
- The map component also broadcasts 2 notifications -  @c #AGSMapViewDidEndPanningNotification and @c #AGSMapViewDidEndZoomingNotification . Observers interested
+ The map component also broadcasts 2 notifications -  @em AGSMapViewDidEndPanningNotification and @em AGSMapViewDidEndZoomingNotification . Observers interested
  in these notifications can register for them using the default <code>NSNotificationCenter</code>. Notificatons are delievered on the main thread. You should not block this 
  thread by pefroming expensive tasks otherwise your application will appear sluggish to the user.
  
@@ -51,7 +51,7 @@
  or the layer at index zero.
  
  <h3>Notifications</h3>
- The map view posts @c #AGSMapViewDidEndZoomingNotification , @c #AGSMapViewDidEndPanningNotification
+ The map view posts @c AGSMapViewDidEndZoomingNotification , @c AGSMapViewDidEndPanningNotification
  
  @see @concept{Creating_A_Map/00pw00000005000000/, Creating a Map}
  @since 1.0

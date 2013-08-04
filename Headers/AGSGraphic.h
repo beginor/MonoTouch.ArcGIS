@@ -80,7 +80,7 @@
 
 /** Returns the attribute value for the specified key.
  The type returned will be one of NSNull, NSString, NSDate, or NSNumber.
- @param key Name of the attribute
+ @key Name of the attribute
  @since 10.1.1
   */
 -(id)attributeForKey:(NSString*)key;

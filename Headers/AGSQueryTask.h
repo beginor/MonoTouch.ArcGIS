@@ -83,8 +83,8 @@
  @param query Specifies the criteria for the query.
  @return <code>NSOperation</code> for current execute request.
  @since 1.0
- @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithFeatureSetResult: , method on delegate for success
- @see @c AGSQueryTaskDelegate#queryTask:operation:didFailWithError:  , method on delegate for failure
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithFeatureSetResult: , delegate method for success
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didFailWithError:  , delegate method for failure
  */
 - (NSOperation *)executeWithQuery:(AGSQuery *)query;
 
@@ -103,8 +103,8 @@
  @since 1.0
 
  @avail{10}
- @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithObjectIds: , method on delegate for success
- @see @c AGSQueryTaskDelegate#queryTask:operation:didFailQueryForIdsWithError: , method on delegate for failure
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithObjectIds: , delegate method for success
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didFailQueryForIdsWithError: , delegate method for failure
  */
 - (NSOperation *)executeForIdsWithQuery:(AGSQuery *)query;
 
@@ -123,8 +123,8 @@
  @since 1.0
 
  @avail{10}
- @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithRelatedFeatures: , method on delegate for success
- @see @c AGSQueryTaskDelegate#queryTask:operation:didFailRelationshipQueryWithError: , method on delegate for failure
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithRelatedFeatures: , delegate method for success
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didFailRelationshipQueryWithError: , delegate method for failure
  */
 - (NSOperation *)executeWithRelationshipQuery:(AGSRelationshipQuery *)query;
 
@@ -140,8 +140,8 @@
  @since 1.0
  
  @avail{10}
- @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithFeatureCount: , method on delegate for success
- @see @c AGSQueryTaskDelegate#queryTask:operation:didFailQueryFeatureCountWithError: , method on delegate for failure
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didExecuteWithFeatureCount: , delegate method for success
+ @see @c AGSQueryTaskDelegate#queryTask:operation:didFailQueryFeatureCountWithError: , delegate method for failure
  */
 - (NSOperation *)executeFeatureCountWithQuery:(AGSQuery*)query;
 

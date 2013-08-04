@@ -25,10 +25,10 @@
 @protocol AGSLocationDisplayDataSourceDelegate;
 @protocol AGSLocationDisplayInfoTemplateDelegate;
 
-/** @file AGSLocationDisplay.h */
+/*@file AGSLocationDisplay.h */
 
 
-/** Modes for automatically  panning the map in response to location updates
+/** Modes for location display.
  @since 10.1.1
  */
 typedef enum {
@@ -39,31 +39,12 @@ typedef enum {
 } AGSLocationDisplayAutoPanMode;
 
 
-/** @brief Provides a location display over an @c AGSMapView.
- 
- This object controls how the map displays location information. It relies on
- its #dataSource which provides location updates on a frequent basis.
- 
- To make the map start
- displaying location information, use the <code>startDataSource</code> method, but ensure the map is loaded successfully before you do..
- 
- To make the map stop displaying location information, use the
- <code>stopDataSource</code> method.
- 
- By default a blue, round symbol is used to display the device's location. The map will always try to get
- most accurate location available. Depending upon signal strength, satellite positions, and other factors, the location
- reported could be a best possible approximation. The map also displays a blue-circle around the location symbol to indicate the range of accuracy.
- As the device moves, the map will respond to location updates and appropriately udpate the position of the location symbol.
- 
- @see @concept{Displaying_location_on_the_map/00pw0000004q000000/, Displaying %location on the map}
- @see @sample{5e9fe50031f5461796b5d158a11d0bad, GPS Sample}
+/** @brief Provides a location display over an AGSMapView.
  @since 10.1.1
  */
 @interface AGSLocationDisplay : NSObject <AGSLocationDisplayDataSourceDelegate>
 
 /** The source of location updates.
- Defaults to @c AGSCLLocationManagerLocationDisplayDataSource.
- You can create your own datasource, or choose from one of the datasources provided.
  @since 10.1.1
  */
 @property (nonatomic, strong) id<AGSLocationDisplayDataSource> dataSource;

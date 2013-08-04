@@ -26,6 +26,19 @@
  layers represented by the sub-classes of this class, for instance, 
  @c AGSDynamicMapServiceLayer.
  
+ Sub-classes must provide implementation for the #spatialReference, #fullEnvelope, 
+ #initialEnvelope, and #units properties declared by @c AGSLayer. They must also 
+ provide implementation for the 
+ @link #exportMapImage: <code>exportMapImage:</code>@endlink
+ method and notify the #exportDelegate when appropriate. It is also the 
+ responsibility of sub-classes to update the #loaded property and notify the 
+ #delegate when appropriate.
+ 
+ In a Model-View-Controller architecture, this object represents the Model. It 
+ is responsible for creating or fetching the map image. The corresponding View 
+ object, @c AGSDynamicLayerView, is responsible for displaying the map image on 
+ screen. It is created when sub-classes, for instance @c AGSDynamicMapServiceLayer, 
+ are added to the map. 
  
  @define{AGSDynamicLayer.h,ArcGIS}
  @since 1.0

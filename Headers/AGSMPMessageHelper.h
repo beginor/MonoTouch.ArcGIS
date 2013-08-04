@@ -28,7 +28,6 @@
  
  @define{AGSMPMessageHelper.h, ArcGIS}
  @since 10.1.1
-  @see @c AGSMPMessageProcessor
  */
 @interface AGSMPMessageHelper : NSObject
 

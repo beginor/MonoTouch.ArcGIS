@@ -40,11 +40,15 @@ AGS_EXTERN NSString *const AGSLayerDidInitializeSpatialReferenceStatusNotificati
 /** @brief A base class for all layers.
  
  A base class for all layers, tiled or dynamic. Sub-classes must provide 
- valid values for the #spatialReference, #fullEnvelope, and #initialEnvelope properties declared by this class.
+ implementation for the #spatialReference, #fullEnvelope, #initialEnvelope, and 
+ #units properties declared by this class. They must also update the #loaded 
+ property and notify the #delegate when appropriate.
  
+ Will fire notifications AGSLayerDidLoadNotification and AGSLayerDidFailToLoadNotification
+ when the layer loads successfully or fails to load respectively.
  
  <h3>Notifications</h3>
- All layers post @c #AGSLayerDidLoadNotification , @c #AGSLayerDidFailToLoadNotification, and @c #AGSLayerDidInitializeSpatialReferenceStatusNotification 
+ All layers post @c AGSLayerDidLoadNotification , @c AGSLayerDidFailToLoadNotification, and @c AGSLayerDidInitializeSpatialReferenceStatusNotification 
  
  @see @concept{Overview/00pw0000001v000000/, Overview of Layers}
  @since 1.0
@@ -87,7 +91,7 @@ AGS_EXTERN NSString *const AGSLayerDidInitializeSpatialReferenceStatusNotificati
 @property (nonatomic, weak, readwrite) id<AGSLayerDelegate> delegate;
 
 /** This property will be NO until the spatial reference status has been initialized.
- See the layer:didInitializeSpatialReferenceStatus method on delegate for more information.
+ See the layer:didInitializeSpatialReferenceStatus delegate method for more information.
  */
 @property (nonatomic, assign) BOOL spatialReferenceStatusValid;
 

@@ -74,16 +74,16 @@
  @param closestFacilityParams The input parameters for the closest facility operation.
  @return <code>NSOperation</code> for the current closest facility task.
  @since 1.8
- @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didSolveClosestFacilityWithResult: , method on delegate for success
- @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didFailSolveWithError:  , method on delegate for failure
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didSolveClosestFacilityWithResult: , delegate method for success
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didFailSolveWithError:  , delegate method for failure
  */
 - (NSOperation*)solveClosestFacilityWithParameters:(AGSClosestFacilityTaskParameters*)closestFacilityParams;
 
 /** Retrieves the default closest facility parameters as defined by the service. 
  @return <code>NSOperation</code> for the request.
  @since 1.8
- @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didRetrieveDefaultClosestFacilityTaskParameters: , method on delegate for success
- @see @c AGSClosestFacilityTaskDelegate# closestFacilityTask:operation:didFailToRetrieveDefaultClosestFacilityTaskParametersWithError: , method on delegate for failure
+ @see @c AGSClosestFacilityTaskDelegate#closestFacilityTask:operation:didRetrieveDefaultClosestFacilityTaskParameters: , delegate method for success
+ @see @c AGSClosestFacilityTaskDelegate# closestFacilityTask:operation:didFailToRetrieveDefaultClosestFacilityTaskParametersWithError: , delegate method for failure
 
  */
 - (NSOperation*)retrieveDefaultClosestFacilityTaskParameters;

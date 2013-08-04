@@ -29,7 +29,6 @@
  to avoid locking up the main UI thread.
  
  @since 10.1.1
- @see AGSLocationDisplay
  */
 @interface AGSGPXLocationDisplayDataSource : AGSSimulatedLocationDisplayDataSource
 

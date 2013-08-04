@@ -20,19 +20,13 @@
 
 /** @file AGSTiledServiceLayer+Subclass.h */ //Required for Globals API doc
 
-/** @brief Information relevant to sublcasses of @c AGSTiledServiceLayer
- 
- This category organizes the  methods that are relevant to subclassing a tiled service layer.
- Developer can create custom tiled service layers by paying special attention to the methods in this category when subclassing @c AGSTiledServiceLayer.
-
- @since 10.1.1
- @see AGSLayer(ForSubclassEyesOnly)
+/** @brief Information relevant to sublcasses of AGSTiledServiceLayer
  */
 @interface AGSTiledServiceLayer (ForSubclassEyesOnly)
 
 
-/** This must be implemented by the subclasses. Subclasses must simply provide a URL to the tile. The request will be made by the superclass.
- @since 10.1.1
+/** This must be implemented by the subclasses. Subclasses must simply provide a URL to
+ the tile. The request will be made by the superclass.
  */
 -(NSURL*)urlForTileKey:(AGSTileKey*)key;
 

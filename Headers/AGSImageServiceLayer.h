@@ -34,6 +34,10 @@
  An instance of this class allows you to display maps from an image service of 
  ArcGIS Server. For example: <a href="http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer">http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/World/MODIS/ImageServer</a>.
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSDynamicLayerView,  is created when this layer 
+ is added to the map.
+ 
  @define{AGSImageServiceLayer.h,ArcGIS}
  @since 1.0
  */
@@ -125,8 +129,8 @@
  @param url URL pointing to an image service.
  @return A new, initialized, image serivce layer.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 -(id)initWithURL:(NSURL *)url;
 
@@ -135,8 +139,8 @@
  @param url URL pointing to an image service.
  @return A new, autoreleased, image service layer.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 +(id)imageServiceLayerWithURL: (NSURL*)url;
 
@@ -145,8 +149,8 @@
  @param cred @c AGSCredential used to access secure service.
  @return A new, initialized, image serivce layer.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 -(id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -156,8 +160,8 @@
  @param cred @c AGSCredential used to access secure service.
  @return A new, autoreleased, image service layer.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 +(id)imageServiceLayerWithURL: (NSURL*)url credential:(AGSCredential*)cred;
 
@@ -168,8 +172,8 @@
  @param cred @c AGSCredential used to access secure service.
  @return A new object.
  @since 2.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 - (id)initWithJSON:(NSDictionary *)json URL:(NSURL*)url credential:(AGSCredential*)cred;
 
@@ -182,8 +186,8 @@
  layer is already loaded. This function also does nothing if the layer is currently
  trying to load.
  @since 10.1.1
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 
 - (void)resubmit;
@@ -194,8 +198,8 @@
  @param url URL pointing to an image service.
  @param cred @c AGSCredential used to access the secured resource.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 -(void)resubmitWithURL:(NSURL*)url credential:(AGSCredential*)cred;
 

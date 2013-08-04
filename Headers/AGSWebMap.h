@@ -53,11 +53,6 @@
  Note, you should always open a webmap into a
  map view on the main thread.
  @see @concept{Viewing_a_Web_Map/00pw00000055000000/, Viewing a Web Map}
- @see @sample{d76ed99f71e24116b324ff624a194ef9, Web Map Sample}
- @see @sample{17a21ac9f847472b84bcda8c66f942c8, Web Map Popup Sample}
- 
- 
-
  @since 1.8
  */
 @interface AGSWebMap : NSObject <AGSCoding, AGSSecuredResource>
@@ -68,8 +63,8 @@
  For example, http://<my_arcgis_portal>/sharing/rest/content/items/<web_map_id>/data
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 -(id)initWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -79,8 +74,8 @@
  For example, http://<my_arcgis_portal>/sharing/rest/content/items/<web_map_id>/data
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 +(AGSWebMap*)webMapWithURL:(NSURL *)url credential:(AGSCredential*)cred;
 
@@ -89,8 +84,8 @@
  @param itemId The item id of the webmap on ArcGIS.com
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
 */
 +(AGSWebMap*)webMapWithItemId:(NSString*)itemId credential:(AGSCredential*)cred;
 
@@ -99,8 +94,8 @@
  @param itemId The item id of the webmap on ArcGIS.com
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
 */
 -(id)initWithItemId:(NSString*)itemId credential:(AGSCredential*)cred;
 
@@ -112,8 +107,8 @@
  stored on ArcGIS.com.
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 +(AGSWebMap*)webMapWithItemId:(NSString*)itemId sharingEndPoint:(NSURL*)sharingEndPoint credential:(AGSCredential*)cred;
 
@@ -125,8 +120,8 @@
  stored on ArcGIS.com.
  @param cred The credential to access the webmap.
  @since 2.0
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 -(id)initWithItemId:(NSString*)itemId sharingEndPoint:(NSURL*)sharingEndPoint credential:(AGSCredential*)cred;
 
@@ -137,8 +132,8 @@
  
  @param item The item which is a webmap
  @since 2.2
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 -(id)initWithPortalItem:(AGSPortalItem*)item;
 
@@ -148,8 +143,8 @@
  or if an error is encountered.
  @param item The item which is a webmap
  @since 2.2
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
  */
 +(AGSWebMap*)webMapWithPortalItem:(AGSPortalItem*)item;
 
@@ -160,8 +155,8 @@
  @param itemId The id of the item which is a webmap
  @param portal The portal where the item resides
  @since 2.2
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
 */
 +(AGSWebMap*)webMapWithItemId:(NSString*)itemId portal:(AGSPortal*)portal;
 
@@ -172,8 +167,8 @@
  @param itemId The id of the item which is a webmap
  @param portal The portal where the item resides
  @since 2.2
- @see @c AGSWebMapDelegate#webMapDidLoad: , method on delegate for success
- @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , method on delegate for error
+ @see @c AGSWebMapDelegate#webMapDidLoad: , delegate method for success
+ @see @c AGSWebMapDelegate#webMap:didFailToLoadWithError: , delegate method for error
 */
 -(id)initWithItemId:(NSString*)itemId portal:(AGSPortal*)portal;
 
@@ -357,8 +352,8 @@
 -(void)didOpenWebMap:(AGSWebMap*)webMap intoMapView:(AGSMapView*)mapView;
 
 /** Called when a layer fails to load. The delegate can either
- skip loading the layer using @c AGSWebMap#continueOpenAndSkipCurrentLayer method or retry loading it with credentials
- using @c AGSWebMap#continueOpenWithCredential: method 
+ skip loading the layer using @c continueOpenAndSkipCurrentLayer method or retry loading it with credentials
+ using @c continueOpenWithCredential: method on @c AGSWebMap
  @param layerTitle The title of the layer being loaded.
  @param url The url of the layer being loaded.
  @param baseLayer Whether or not the layer is part of the basemap layers.
@@ -369,8 +364,8 @@
 -(void)didFailToLoadLayer:(NSString*)layerTitle url:(NSURL*)url baseLayer:(BOOL)baseLayer withError:(NSError*)error __attribute__((deprecated));
 
 /** Called when a layer fails to load. The delegate can either
- skip loading the layer using @c AGSWebMap#continueOpenAndSkipCurrentLayer method or retry loading it with credentials
- using @c AGSWebMap#continueOpenWithCredential: methods
+ skip loading the layer using @c #continueOpenAndSkipCurrentLayer method or retry loading it with credentials
+ using @c #continueOpenWithCredential: methods on @c AGSWebMap
  @param webMap The webmap that was loaded
  @param layerInfo The @c AGSWebMapLayerInfo of the layer that failed to load.
  @param baseLayer Whether or not the layer is part of the basemap layers.

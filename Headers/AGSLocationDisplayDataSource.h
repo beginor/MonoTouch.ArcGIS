@@ -22,32 +22,25 @@
 
 /** @brief An abstract source of location updates
  
- Instances of this class represent datasources that provide location information.
- 
- 
  @define{AGSLocationDisplayDataSource.h, ArcGIS}
  @since 10.1.1
  */
 
 @protocol AGSLocationDisplayDataSource <NSObject>
 /**
- The datasource conveys the most recent location information to this delegate.
- The delegate is typically an @c AGSLocationDisplay. The framework will set this.
- If you implement a custom datasource, you must invoke appropriate methods on the 
- delegate to pass the location information.
+ The delegate is typically an AGSLocationDisplay. The framework will set this.
+ You should not set this.
  @since 10.1.1
  */
 @property (nonatomic, weak) id<AGSLocationDisplayDataSourceDelegate> delegate;
 
 /**
- Starts the datasource. The framework will call this method when  @c AGSLocationDisplay::startDataSource is invoked. You should not call this directly.
- @since 10.1.1
+ Starts the datasource. The framework will call this when you invoke @c AGSLocationDisplay::startDataSource. You should not call this directly.
  */
 -(void)start;
 
 /**
- Stops the datasource. The framework will call this when @c AGSLocationDisplay::stopDataSource is invoked. You should not call this directly.
- @since 10.1.1
+ Stops the datasource. The framework will call this when you invoke @c AGSLocationDisplay::stopDataSource. You should not call this directly.
  */
 -(void)stop;
 

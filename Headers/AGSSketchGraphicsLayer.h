@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-/** @file AGSSketchGraphicsLayer.h */ //Required for Globals API doc
+/*@file AGSSketchGraphicsLayer.h */ //Required for Globals API doc
 
 @class AGSGeometry;
 @class AGSGraphic;
@@ -27,7 +27,7 @@
 @class AGSMapView;
 @protocol AGSMapViewTouchDelegate;
 
-/** Notification that indicates that the geometry of @c AGSSketchGraphicsLayer changed.
+/** Notification that indicates that the geometry of AGSSketchGraphicsLayer changed.
  @since 10.1.1
  */
 AGS_EXTERN NSString *const AGSSketchGraphicsLayerGeometryDidChangeNotification;
@@ -39,7 +39,7 @@ AGS_EXTERN NSString *const AGSSketchGraphicsLayerGeometryDidChangeNotification;
  modify existing geometries, insert and remove vertices, undo and redo changes, and so on.
  
  <h3>Notifications</h3>
- The layer posts @c #AGSSketchGraphicsLayerGeometryDidChangeNotification when its geometry changes.
+ The layer posts @c AGSSketchGraphicsLayerGeometryDidChangeNotification when its geometry changes.
  
  @see @concept{Sketch_Layer/00pw00000052000000/, Using a Sketch Layer}
  @see @sample{5106817cf79f44c99f8045e2d705f279, Sketch Layer}

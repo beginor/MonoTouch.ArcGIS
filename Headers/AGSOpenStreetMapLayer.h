@@ -24,6 +24,10 @@
  
  An instance of this class allows you display maps from Open Street Map. 
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSTiledLayerView,  is created when this object 
+ is added to the map. 
+ 
  @define{AGSOpenStreetMapLayer.h, ArcGIS}
  @since 1.0
  */
@@ -32,8 +36,8 @@
 
 /** Returns an autoreleased, initialized layer
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 +(AGSOpenStreetMapLayer*)openStreetMapLayer;
 @end

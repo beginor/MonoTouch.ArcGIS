@@ -28,22 +28,18 @@
  
  A message processor allows you to process a @c AGSMPMessage from external resources.
  For example, display a military symbol by passing a 2525C message to a
- message processor. 
- 
- Each message processor comes with a @c AGSMPSymbolDictionaryType
+ message processor. Each message processor comes with a @c AGSMPSymbolDictionaryType
  which dictates the message format understood by the message processor, e.g. a message needs
  to have one or more properties from '_wkid', 'sic', '_Type', '_Action' and
- '_Control_Points' in order to be successfully processed by a 2525C message processor. Each dictionary type is backed by resources which include a dictionary data
+ '_Control_Points' in order to be successfully processed by a 2525C message processor.
+ Each dictionary type is backed by resources which include a dictionary data
  file and message type files. The path to the resource files needs to be specified
- when a message processor object is initialized. 
- 
- A message processor is bound to a
- @c AGSGroupLayer, which is used to display, update and remove @c AGSMultiLayerSymbol
+ when a message processor object is initialized. A message processor is bound to a
+ @c AGSGroupLayer, which is used to display, update and remove @ AGSMultiLayerSymbol
  associated with the message. The group layer has to be added into @c AGSMapView, otherwise
  the message processor will fail to process the message.
  
  @define{AGSMPMessageProcessor.h, ArcGIS}
- @see @sample{479cad9e55a641aa9f20a0386a64d86a, Military 2525c Message Sample}
  @since 10.1.1
  */
 

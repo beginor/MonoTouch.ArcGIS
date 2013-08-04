@@ -22,14 +22,10 @@
 
 /*@file AGSCLLocationManagerLocationDisplayDataSource.h */
 
-/** @brief A datasource for @c AGSLocationDisplay based on Core Location
- 
- Instances of this class represent a datasource that provides the most
- up-to-date device location based on Core Location services.
- 
+/** @brief The default datasource for AGSLocationDisplay. Uses Core Location Services
+ to get location information.
  @since 10.1.1
- @see AGSLocationDisplay
-x */
+ */
 
 @interface AGSCLLocationManagerLocationDisplayDataSource : NSObject <AGSLocationDisplayDataSource>
 

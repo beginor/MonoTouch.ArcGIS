@@ -71,45 +71,45 @@
 
 /** Adds the specified features to the server.
  
- Only applicable if @c AGSFeatureLayer#canCreate is @c true.
+ Only applicable if @c #canCreate is @c true.
  
  @param features The features to add.
  @return <code>NSOperation</code> that performs the add.
  @since 1.0 
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , delegate method for error
  */
 -(NSOperation *)addFeatures: (NSArray*)features;
 
 /** Commits changes made to the specified features to the server.
  
- Only applicable if @c AGSFeatureLayer#canUpdateFeature: is @c true for each of the 
+ Only applicable if @c #canUpdateFeature: is @c true for each of the 
  specified featrues
  
  @param features The features to update.
  @return <code>NSOperation</code> that performs the update.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , delegate method for error
  */
 -(NSOperation *)updateFeatures: (NSArray *)features;
 
 /** Delete features on the server based on the specified @em OBJECTIDs
  
- Only applicable if @c AGSFeatureLayer#canDeleteFeature: is true for each specified feature.
+ Only applicable if @c canDeleteFeature: is true for each specified feature.
  
  @param objectIds The object IDs of the features to delete.
  @return <code>NSOperation</code> that performs the delete.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , delegate method for error
 */
 -(NSOperation *)deleteFeaturesWithObjectIds: (NSArray *)objectIds;
 
 /** Deletes features on the server based on the specified query parameters. Only 
  features satisfying all parameters will be deleted.
  
- Only applicable if @c AGSFeatureLayer#canDeleteFeature: is true for each feature specified by the
+ Only applicable if @c canDeleteFeature: is true for each feature specified by the
  parameters.
  
  @param where The where clause to restrict the set of candidate features.
@@ -118,14 +118,14 @@
  the candidate features and the geometry.
  @return <code>NSOperation</code> that performs the delete.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , delegate method for error
  */
 -(NSOperation *)deleteFeaturesWithWhereClause: (NSString *)where geometry: (AGSGeometry*)geometry spatialRelation: (AGSSpatialRelationship)spatialRelation;
 
 /** A convenience method to add, delete, and update features on the server.
  
- Only applicable if @c AGSFeatureLayer#canCreate, @c AGSFeatureLayer#canDeleteFeature:, and @c AGSFeatureLayer#canUpdateFeature:
+ Only applicable if @c canCreate, @c canDeleteFeature:, and @c canUpdateFeature:
  permit the edit.
  
  @param addFeatures The array of features to add.
@@ -133,8 +133,8 @@
  @param objectIds The object IDs of the features to delete.
  @return <code>NSOperation</code> that applies the edits.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFeatureEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailFeatureEditsWithError: , delegate method for error
  */
 -(NSOperation *)applyEditsWithFeaturesToAdd: (NSArray *)addFeatures
 											toUpdate: (NSArray *)updateFeatures
@@ -143,8 +143,8 @@
 #pragma mark attachment edit methods
 
 /** Add an attachment to the feature specified by @p objectId on the server. Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs.
  @param data The raw contents of the attachment.
  @param filename The name for the attachment.
@@ -152,58 +152,58 @@
  try to match a content type to known file extensions.
  @return <code>NSOperation</code> that performs the add.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
 
  */
 -(NSOperation *)addAttachment:(NSUInteger)objectId data:(NSData*)data filename:(NSString*)filename contentType:(NSString*)contentType;
 
 /** Add an attachment to the feature specified by @p objectId on the server. Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs.
  @param data The raw contents of the attachment.
  @param filename The name for the attachment.
  @return <code>NSOperation</code> that performs the add.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
  */
 -(NSOperation *)addAttachment:(NSUInteger)objectId data:(NSData*)data filename:(NSString*)filename;
 
 /** Add the provided attachment for the specified feature on the server.
  Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs .
  @param filepath The path of the attachment on the device.
  @param contentType The content type of the attachment. If nil is passed, the api will
  try to match a content type to known file extensions.
  @return <code>NSOperation</code> that performs the add.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
  */
 -(NSOperation *)addAttachment:(NSUInteger)objectId filepath:(NSString*)filepath contentType:(NSString*)contentType;
 
 /** Add the provided attachment for the specified feature on the server.
  Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs .
  @param filepath The path of the attachment on the device.
  @return <code>NSOperation</code> that performs the add.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
 */
 -(NSOperation *)addAttachment:(NSUInteger)objectId filepath:(NSString*)filepath;
 
 /** Update the specified attachment of the specified feature on the server using 
  the provided attachment.
  Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs.
  @param data The raw contents of the new attachment.
  @param filename The name for the new attachment.
@@ -213,16 +213,16 @@
  attachment will replace.
  @return <code>NSOperation</code> that performs the update.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
 */
 -(NSOperation *)updateAttachment:(NSUInteger)objectId data:(NSData*)data filename:(NSString*)filename contentType:(NSString*)contentType attachmentId:(NSInteger) attachmentId;
 
 /** Update the specified attachment of the specified feature on the server using 
  the provided attachment.
  Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachment belongs.
  @param data The raw contents of the new attachment.
  @param filename The name for the new attachment.
@@ -230,21 +230,21 @@
  attachment will replace.
  @return <code>NSOperation</code> that performs the update.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
 */
 -(NSOperation *)updateAttachment:(NSUInteger)objectId data:(NSData*)data filename:(NSString*)filename attachmentId:(NSInteger)attachmentId;
 
 /** Delete the specified attachments for the specified feature on the server.
  Only applicable
- if @c AGSFeatureLayer#attachments property is  <code>true</code> and the feature (to which this 
- attachment belongs) can be edited (@c AGSFeatureLayer#canUpdateFeature:).
+ if #attachments property is  <code>true</code> and the feature (to which this 
+ attachment belongs) can be edited (#canUpdateFeature:).
  @param objectId The object ID of the feature to which the attachments belong.
  @param attachmentIds The attachment IDs of the attachments to be deleted.
  @return <code>NSOperation</code> that performs the delete.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didAttachmentEditsWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailAttachmentEditsWithError: , delegate method for error
  */
 -(NSOperation *)deleteAttachmentsForObjectId: (NSUInteger)objectId attachmentIds:(NSArray *)attachmentIds;
 
@@ -254,8 +254,8 @@
  @param objectId The object ID of the feature.
  @return <code>NSOperation</code> that performs the query.
  @since 1.0
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didQueryAttachmentInfosWithResults: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailQueryAttachmentInfosWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didQueryAttachmentInfosWithResults: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didFailQueryAttachmentInfosWithError: , delegate method for error
  */
 -(NSOperation *)queryAttachmentInfosForObjectId: (NSUInteger)objectId;
 
@@ -266,8 +266,8 @@
  @param attachmentId The ID of the attachment to fetch.
  @return <code>NSOperation</code> that performs the retrieval.
  @since 1.0.
- @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didRetrieveAttachmentWithData: , method on delegate for success
- @see @c AGSFeatureLayerEditingDelegate# featureLayer:operation:didFailRetrieveAttachmentWithError: , method on delegate for error
+ @see @c AGSFeatureLayerEditingDelegate#featureLayer:operation:didRetrieveAttachmentWithData: , delegate method for success
+ @see @c AGSFeatureLayerEditingDelegate# featureLayer:operation:didFailRetrieveAttachmentWithError: , delegate method for error
  */
 -(NSOperation *)retrieveAttachmentForObjectId: (NSUInteger)objectId attachmentId: (NSInteger)attachmentId;
 

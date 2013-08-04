@@ -99,7 +99,7 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  Note, Feature Services are only avaialble on ArcGIS Server 10.0 or above. 
  
  <h3>Notifications</h3>
- The layer posts @c #AGSFeatureLayerDidLoadFeaturesNotification when it finishes loading features
+ The layer posts @c AGSFeatureLayerDidLoadFeaturesNotification when it finishes loading features
  from a remote feature service.
  
  @see @concept{ArcGIS_Feature_Layer/00pw0000004s000000/, ArcGIS Feature Layer}
@@ -439,8 +439,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param url URL to a map or feature service layer. 
  @param mode The mode in which to retrieve features.
  @return A new feature layer object.
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  @since 1.0
  */
 - (id)initWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode;
@@ -451,8 +451,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param cred <code>AGSCredential</code> used to access secure resource.
  @return A new feature layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred;
 
@@ -464,8 +464,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param error Information about the error returned if init fails.
  @return A new feature layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL*)url mode:(AGSFeatureLayerMode)mode error:(NSError**)error;
 
@@ -478,8 +478,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param error Information about the error returned if init fails.
  @return A new feature layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 - (id)initWithURL:(NSURL*)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred error:(NSError**)error;
 
@@ -489,8 +489,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param mode The mode in which to retrieve features.
  @return A new, autoreleased, feature layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
  */
 + (id)featureServiceLayerWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode;
 
@@ -501,8 +501,8 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @param cred <code>AGSCredential</code> used to access secure resource.
  @return A new, autoreleased, feature layer object.
  @since 1.0
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 */
 + (id)featureServiceLayerWithURL:(NSURL *)url mode:(AGSFeatureLayerMode)mode credential:(AGSCredential*)cred;
 
@@ -596,7 +596,7 @@ AGS_EXTERN NSString *const AGSFeatureLayerDidLoadFeaturesNotification;
  @return The operation performing the selection.
  
  @since 1.0
- @see @c AGSGraphicsLayer#selectedFeatures
+ @see #selectedFeatures
  */
 -(NSOperation*)selectFeaturesWithQuery:(AGSQuery*)query selectionMethod:(AGSFeatureLayerSelectionMethod)selectionMethod;
 

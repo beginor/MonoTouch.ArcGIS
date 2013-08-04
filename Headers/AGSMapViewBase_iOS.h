@@ -16,7 +16,7 @@
  email: contracts@esri.com
  */
 
-/** @file AGSMapViewBase.h */
+/*@file AGSMapViewBase.h */
 
 @class AGSSpatialReference;
 @class AGSPolygon;
@@ -33,13 +33,13 @@
 @protocol AGSMapViewCalloutDelegate;
 @protocol AGSMapViewTouchDelegate;
 
-/** Notification that indicates that an @c AGSMapView finished zooming.
+/** Notification that indicates that an AGSMapView finished zooming.
  @since 10.1.1
  */
 AGS_EXTERN NSString *const AGSMapViewDidEndZoomingNotification;
 
 
-/** Notification that indicates that an @c AGSMapView finished panning.
+/** Notification that indicates that an AGSMapView finished panning.
  @since 10.1.1
  */
 AGS_EXTERN NSString *const AGSMapViewDidEndPanningNotification;
@@ -371,7 +371,7 @@ AGS_EXTERN NSString *const AGSMapViewDidEndPanningNotification;
 - (void)addMapLayer:(AGSLayer *)mapLayer withName:(NSString *)name;
 
 /** Remove a layer from the map with specified name. Even when the <i>basemap</i> 
- layer is removed, the map's #visibleArea , #maxEnvelope, and #spatialReference  
+ layer is removed, the map's #visibleArea , #fullEnvelope, and #spatialReference  
  properties remain unchanged. 
  @param name Name of the layer to be removed.
  @since 1.0

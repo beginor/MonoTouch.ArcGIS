@@ -26,6 +26,9 @@
  A base class for layers which displays cached maps. You would typically work 
  with one or more sub-classes of this class, for instance, @c AGSTiledMapServiceLayer.
  
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSTiledLayerView, is created when subclasses, for 
+ instance @c AGSTiledMapServiceLayer, are added to the map.
  
  @define{AGSTiledLayer.h,ArcGIS}
  @since 1.0

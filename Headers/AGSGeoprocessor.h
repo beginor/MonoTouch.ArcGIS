@@ -132,8 +132,8 @@ typedef enum {
  property is set to @em esriGPParameterDirectionInput.
  @return <code>NSOperation</code> for current request.
  @since 1.0
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didExecuteWithResults:messages: , method on delegate for success
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailExecuteWithError: , method on delegate for error
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didExecuteWithResults:messages: , delegate method for success
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailExecuteWithError: , delegate method for error
  
  */
 - (NSOperation *)executeWithParameters:(NSArray *)params;
@@ -154,9 +154,9 @@ typedef enum {
  
  @return <code>NSOperation</code> for the current submit request.
  @since 1.0
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didSubmitJob: , method on delegate for when job is submitted successfully
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidSucceed: , method on delegate for when submitted job succeeds
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidFail: , method on delegate for when submitted job failed
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didSubmitJob: , delegate method for when job is submitted successfully
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidSucceed: , delegate method for when submitted job succeeds
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:jobDidFail: , delegate method for when submitted job failed
 
  */
 - (NSOperation *)submitJobWithParameters:(NSArray *)params;
@@ -226,8 +226,8 @@ typedef enum {
  @return The operation associated with the request.
  @avail{10.1}
  @since 2.3
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didCancelJob: , method on delegate for when job cancelled
- @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailToCancelJob:withError:, method on delegate for when job not cancelled
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didCancelJob: , delegate method for when job cancelled
+ @see @c AGSGeoprocessorDelegate#geoprocessor:operation:didFailToCancelJob:withError:, delegate method for when job not cancelled
 
  */
 - (NSOperation*)cancelJob:(NSString*)jobId;

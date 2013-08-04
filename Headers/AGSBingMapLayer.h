@@ -36,7 +36,10 @@ typedef enum {
  
  An instance of this class allows you display maps from Bing Maps.
  
-
+ In a Model-View-Controller architecture, this object represents the Model. The 
+ corresponding View object, @c AGSTiledLayerView, is created when this layer is 
+ added to an instance of @c AGSMapView.
+ 
  @define{AGSBingMapLayer.h, ArcGIS}
  @since 1.0
  */
@@ -85,8 +88,8 @@ typedef enum {
  @return A new Bing Maps layer object.
  @since 1.0
  @see AGSBingMapLayerStyle
- @see @c AGSLayerDelegate#layerDidLoad: , method on delegate for success
- @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , method on delegate for failure
+ @see @c AGSLayerDelegate#layerDidLoad: , delegate method for success
+ @see @c AGSLayerDelegate#layer:didFailToLoadWithError: , delegate method for failure
 
  */
 -(id)initWithAppID: (NSString*) appID style:(AGSBingMapLayerStyle) style;

@@ -127,7 +127,7 @@
  This operation can be cancelled with the @c #cancelDownloadAttachmentInfos method.
  The @c #delegate will be informed when this operation is completed.
  @since 2.0
- @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadAttachmentInfos: , method on delegate for success 
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadAttachmentInfos: , delegate method for success 
  @see @c #downloadAttachmentInfosError for error
  */
 -(void)downloadAttachmentInfos;
@@ -137,7 +137,7 @@
  This operation can be cancelled with the @c #cancelDownloadDataForId: method. The @c #delegate will be informed when this operation is completed. 
  @param attachmentId ID of the attachment for which to download the data
  @since 2.0
- @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadDataForAttachment: , method on delegate for success or failure
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didDownloadDataForAttachment: , delegate method for success or failure
  */
 -(void)downloadAttachmentDataForId:(NSInteger)attachmentId;
 
@@ -145,7 +145,7 @@
  This operation can be cancelled with the @c #cancelPostLocalEditsToServer method.
 The @c #delegate will be informed when this operation is completed.
  @since 2.0
- @see @c AGSAttachmentManagerDelegate#attachmentManager:didPostLocalEditsToServer: , method on delegate for success or failure
+ @see @c AGSAttachmentManagerDelegate#attachmentManager:didPostLocalEditsToServer: , delegate method for success or failure
   */
 -(void)postLocalEditsToServer;
 

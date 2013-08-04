@@ -29,14 +29,11 @@
 
 /** @brief A locator to geocode and reverse-geocode addresses.
  
- An instance of this class allows you to geocode addresses and reverse-geocode locations using a remote geocoding service.  Geocoding involves finding matching locations for a given address. Reverse-geocoding is the opposite and involves finding corresponding addresses for a given location.
+ An instance of this class allows you to geocode and reverse-geocode addresses 
+ using a geocode service of ArcGIS Server. For example, <a target="_blank" href="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer">http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer</a>.
  
- The geocoding service could be hosted by ArcGIS Online or based on an ArcGIS Server ( For example, <a target="_blank" href="http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer">http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/ESRI_Places_World/GeocodeServer</a>.
-
- 
- The @link AGSLocator::locator default locator @endlink uses the <a target="_blank" href="http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/#/Overview_of_the_World_Geocoding_Service/02q000000008000000/">World Geocode Service</a> on ArcGIS Online. The service covers 100+ countries and is
- capable of finding locations based on street addresses, points of interest, 
- postal codes, x/y coordinates, place names, and more.
+ Geocoding involves finding matching locations for a given address. 
+ Reverse-geocoding involves finding corresponding addresses for a given location.
  
  @see @concept{Locator/00pw00000049000000/, Using a Locator}
  @see @sample{c1e9abdacf524c2f99d39fbac14b3e0d, Geocoding}
@@ -51,12 +48,9 @@
  */
 @property (nonatomic, weak) id<AGSLocatorDelegate> delegate;
 
-/** Initializes a default locator that uses the <a target="_blank" href="http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/#/Overview_of_the_World_Geocoding_Service/02q000000008000000/">World Geocode Service</a> on ArcGIS Online. The service covers 100+ countries and is
- capable of finding locations based on street addresses, points of interest,
- postal codes, x/y coordinates, place names, and more.
-
+/** Initializes a default locator that uses the world geocode service on ArcGIS Online. 
+ You can find more information about the service <a target="_blank" href="http://resources.arcgis.com/en/help/arcgis-online-geocoding-rest-api/#/Overview_of_the_World_Geocoding_Service/02q000000008000000/">here</a>
  @since 10.1.1
- @see @c #findWithParameters: 
  */
 +(id)locator;
 
@@ -90,8 +84,8 @@
  value is provided, a default value of 0 meters is used.
  @return <code>NSOperation</code> for current request.
  @since 1.0
- @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , delegate method for failure
  */
 - (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance;
 
@@ -112,8 +106,8 @@
  @return <code>NSOperation</code> for current request.
  @avail{10.0}
  @since 1.0
- @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFindAddressForLocation: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailAddressForLocation: , delegate method for failure
  */
 - (NSOperation *)addressForLocation:(AGSPoint *)location maxSearchDistance:(double)distance outSpatialReference:(AGSSpatialReference*)sr;
 
@@ -136,8 +130,8 @@
  fields.
  @return <code>NSOperation</code> for current operation.
  @since 1.0
- @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , delegate method for failure
  */
 - (NSOperation *)locationsForAddress:(NSDictionary *)address returnFields:(NSArray *)outFields;
 
@@ -163,8 +157,8 @@
  @return <code>NSOperation</code> for current operation.
  @avail{10.0}
  @since 1.0
- @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , delegate method for failure
  */
 - (NSOperation *)locationsForAddress:(NSDictionary *)address returnFields:(NSArray *)outFields outSpatialReference:(AGSSpatialReference*)sr;
 
@@ -175,10 +169,10 @@
  This method is functionally equivalent to #locationsForAddress:returnFields:
  #locationsForAddress:returnFields:outSpatialReference: , but its parameters provide a few more options
  for narrowing down the results.
- @param params Parameters for performing the operation
+ @param param Parameters for performing the operation
  @since 10.1.1
- @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFindLocationsForAddress: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailLocationsForAddress: , delegate method for failure
  */
 -(NSOperation *)locationsForAddressWithParameters:(AGSLocationsForAddressParameters*)params;
 
@@ -192,11 +186,11 @@
  The @c #delegate will be notified when the operation completes or if
  an error is encountered.
  
- <b>Note</b>, this operation is only applicable to the @link AGSLocator::locator default locator @endlink at this time.
+ <b>Note</b>, this feature is only available with the @link AGSLocator::locator default locator @endlink.  
  @param findParams Parameters for performing the operation
  @since 10.1.1
- @see @c AGSLocatorDelegate#locator:operation:didFind: , method on delegate for success
- @see @c AGSLocatorDelegate#locator:operation:didFailToFindWithError: , method on delegate for failure
+ @see @c AGSLocatorDelegate#locator:operation:didFind: , delegate method for success
+ @see @c AGSLocatorDelegate#locator:operation:didFailToFindWithError: , delegate method for failure
 
  */
 -(NSOperation*)findWithParameters:(AGSLocatorFindParameters*)findParams;

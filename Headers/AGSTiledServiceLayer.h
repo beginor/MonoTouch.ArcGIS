@@ -20,9 +20,9 @@
 
 /** @file AGSTiledServiceLayer.h */ //Required for Globals API doc
 
-/** @brief A super-class for all tiled service layers
+/** @brief A super-class for all tiled layers
  
- A super class for all tiled layers that fetch map tiles from a remote service 
+ A super class for all tiled layers
  
  @define{AGSTiledServiceLayer.h, ArcGIS}
  @since 10.1.1
