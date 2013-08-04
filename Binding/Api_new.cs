@@ -150,14 +150,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("simpleRepresentation")]
 		string SimpleRepresentation ();
 
-		[Export ("intersectsWithEnvelope:")]
-		bool IntersectsWithEnvelope (AGSEnvelope envelope);
+		//[Export ("intersectsWithEnvelope:")]
+		//bool IntersectsWithEnvelope (AGSEnvelope envelope);
 
 		[Export ("intersectionWithEnvelope:")]
 		AGSEnvelope IntersectionWithEnvelope (AGSEnvelope envelope);
 
-		[Export ("isEmpty")]
-		bool IsEmpty ();
+		//[Export ("isEmpty")]
+		//bool IsEmpty ();
 
 		[Export ("isEqualToEnvelope:")]
 		bool IsEqualToEnvelope (AGSEnvelope other);
@@ -403,8 +403,8 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("credentialCache", ArgumentSemantic.Retain)]
 		//AGSCredentialCache CredentialCache { get; set; }
 
-		[Export ("renderNativeResolution")]
-		bool RenderNativeResolution { get; set; }
+		//[Export ("renderNativeResolution")]
+		//bool RenderNativeResolution { get; set; }
 
 		[Export ("initWithURL:")]
 		IntPtr Constructor (NSUrl url);
@@ -564,8 +564,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("baseLayer", ArgumentSemantic.Retain)]
 		AGSLayer BaseLayer { get; }
 
-		[Export ("backgroundColor", ArgumentSemantic.Retain)]
-		UIColor BackgroundColor { get; set; }
+		//[Export ("backgroundColor", ArgumentSemantic.Retain)]
+		//UIColor BackgroundColor { get; set; }
 
 		[Export ("gridSize")]
 		float GridSize { get; set; }
@@ -992,6 +992,12 @@ namespace MonoTouch.ArcGIS {
 		[Export ("initWithSpatialReference:")]
 		IntPtr Constructor (AGSSpatialReference sr);
 
+		[Export ("initWithFullEnvelope:renderingMode:")]
+		IntPtr Constructor (AGSEnvelope fullEnv, AGSGraphicsLayerRenderingMode renderingMode);
+
+		[Export ("renderingMode")]
+		AGSGraphicsLayerRenderingMode RenderingMode { get; }
+
 		[Export ("graphics", ArgumentSemantic.Copy)]
 		AGSGraphic [] Graphics { get; }
 
@@ -1012,6 +1018,9 @@ namespace MonoTouch.ArcGIS {
 
 		[Export ("timeOffsetUnits")]
 		AGSTimeIntervalUnits TimeOffsetUnits { get; set; }
+
+		[Export ("allowLayerConsolidation")]
+		bool AllowLayerConsolidation { get; set; }
 
 		[Static, Export ("graphicsLayer")]
 		AGSGraphicsLayer GraphicsLayer ();
@@ -1049,8 +1058,8 @@ namespace MonoTouch.ArcGIS {
 		[Export ("selectedGraphics")]
 		AGSGraphic [] SelectedGraphics { get; }
 
-		[Export ("refresh")]
-		void Refresh ();
+		//[Export ("refresh")]
+		//void Refresh ();
 	}
 
 	[BaseType (typeof (NSObject))]
@@ -1727,14 +1736,14 @@ namespace MonoTouch.ArcGIS {
 		[Export ("selectFeature:withSelectionMethod:")]
 		void SelectFeature (AGSGraphic feature, AGSFeatureLayerSelectionMethod selectionMethod);
 
-		[Export ("clearSelection")]
-		void ClearSelection ();
+		//[Export ("clearSelection")]
+		//void ClearSelection ();
 
 		[Export ("lookupFeatureWithObjectId:")]
 		AGSGraphic LookupFeatureWithObjectId (int objectId);
 
-		[Export ("refresh")]
-		void Refresh ();
+		//[Export ("refresh")]
+		//void Refresh ();
 
 		[Export ("objectIdForFeature:")]
 		int ObjectIdForFeature (AGSGraphic feature);

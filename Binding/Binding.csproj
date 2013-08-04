@@ -54,4 +54,66 @@
   <ItemGroup>
     <ObjcBindingApiDefinition Include="Api_new.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\ar.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\da.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\de.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\en.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\es.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\et.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\fr.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\he.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\it.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\ja.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\ko.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\lt.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\lv.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\nb.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\nl.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\pl.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\pt-BR.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\pt-PT.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\ro.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\ru.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\sv.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\zh-Hans.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Resources\AGSAttributeCollectorViewController.nib" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Attachments.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Attachments%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\BingLogo.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\BingLogo%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\CollectLocation.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\CollectLocation%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Disclosure.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Disclosure%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\DocIcon.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\DocIcon%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Down.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Down%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\EditLocation.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\EditLocation%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\esri.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\esri%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LeftArrow.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LeftArrow%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplay.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplay%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplayCourse.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplayCourse%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplayHeading.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\LocationDisplayHeading%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Magnifier.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Magnifier%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\Magnifier~ipad.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\MagnifierMask.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\MagnifierMask%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\MagnifierMask~ipad.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\NoData.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\PngIcon.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\PngIcon%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\RightArrow.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\RightArrow%402x.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\X.png" />
+    <BundleResource Include="Resources\ArcGIS.bundle\X%402x.png" />
+  </ItemGroup>
 </Project>

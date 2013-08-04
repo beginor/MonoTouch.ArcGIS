@@ -725,5 +725,10 @@ namespace MonoTouch.ArcGIS {
 		Navigation,
 		CompassNavigation
 	}
+
+	public enum AGSGraphicsLayerRenderingMode {
+		Static = 0,
+		Dynamic
+	}
 }
 
