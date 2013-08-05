@@ -39,7 +39,7 @@ namespace AGSTestCS {
 
 			this.SetBaseLayer(this.BaseLayerSegment.SelectedSegment);
 
-			var envelop = AGSEnvelope.EnvelopeWith(12178333, 2973103, 13088239, 2255207, AGSSpatialReference.WebMercatorSpatialReference());
+			var envelop = AGSEnvelope.EnvelopeWith(-20459599.886135, 2391609.82508004, -6833470.96896499, 11289636.17822, AGSSpatialReference.WebMercatorSpatialReference());
 
 			this.MapView.ZoomToEnvelope(envelop, false);
 
@@ -76,7 +76,7 @@ namespace AGSTestCS {
 
 
 			var testSymbol = new AGSSimpleMarkerSymbol(UIColor.Red) {
-				Size = new SizeF(10, 10),
+				Size = new SizeF(30, 30),
 				Style = AGSSimpleMarkerSymbolStyle.Circle
 			};
 			testFeatureLayer.Renderer = new AGSSimpleRenderer(testSymbol);
@@ -96,25 +96,24 @@ namespace AGSTestCS {
 	public class TestInfoTemplateDelegate : AGSInfoTemplateDelegate {
 
 		public override string TitleForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
-			//var attrs = graphic.AllAttributes();
-			//var cityName = graphic.AttributeForKey("CITY_NAME");
-			//return cityName.ToString();
-			return new NSString("Hello,world!");
+			var attrs = graphic.AllAttributes();
+			var cityName = graphic.AttributeForKey("CITY_NAME");
+			return cityName.ToString();
 		}
 
-//		public override string DetailForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
-//			var cityFips = graphic.AttributeAsStringForKey("CITY_FIPS");
-//			var cityName = graphic.AttributeAsStringForKey("CITY_NAME");
-//			var stateFips = graphic.AttributeAsStringForKey("STATE_FIPS");
-//			var stateName = graphic.AttributeAsStringForKey("STATE_NAME");
-//			return string.Format(
-//				"{0}, {1}, {2}, {3}",
-//				cityFips,
-//				cityName,
-//				stateFips,
-//				stateName
-//			);
-//		}
+		public override string DetailForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
+			var cityFips = graphic.AttributeAsStringForKey("CITY_FIPS");
+			var cityName = graphic.AttributeAsStringForKey("CITY_NAME");
+			var stateFips = graphic.AttributeAsStringForKey("STATE_FIPS");
+			var stateName = graphic.AttributeAsStringForKey("STATE_NAME");
+			return string.Format(
+				"{0}, {1}, {2}, {3}",
+				cityFips,
+				cityName,
+				stateFips,
+				stateName
+			);
+		}
 		
 	}
 }
