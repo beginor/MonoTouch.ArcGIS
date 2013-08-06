@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "TestInfoTemplateDelegate.h"
 
 #define BASE_Layer_Name @"Base Map Layer"
 
@@ -45,7 +46,9 @@
 	symbol.size = CGSizeMake(10, 10);
 	
 	featureLayer.renderer = [AGSSimpleRenderer simpleRendererWithSymbol:symbol];
-	featureLayer.infoTemplateDelegate = self;
+	TestInfoTemplateDelegate *infoTemplateDelegate = [[TestInfoTemplateDelegate alloc] init];
+	featureLayer.infoTemplateDelegate = infoTemplateDelegate;
+	
 	
 	[self.mapView addMapLayer:featureLayer withName:@"Test Feature Layer"];
 }

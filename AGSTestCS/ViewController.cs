@@ -82,7 +82,8 @@ namespace AGSTestCS {
 			testFeatureLayer.Renderer = new AGSSimpleRenderer(testSymbol);
 
 			//testFeatureLayer.WeakInfoTemplateDelegate = new TestInfoTemplateDelegate();
-			testFeatureLayer.InfoTemplateDelegate = new TestInfoTemplateDelegate();
+			var testInfoTemplateDelegate = new TestInfoTemplateDelegate();
+			testFeatureLayer.InfoTemplateDelegate = testInfoTemplateDelegate;
 
 			this.MapView.AddMapLayer(testFeatureLayer, TestFeatureLayerName);
 		}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		524BD54217B0CA380067C0A3 /* TestInfoTemplateDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 524BD54117B0CA380067C0A3 /* TestInfoTemplateDelegate.m */; };
 		525FE6CF16DC77BA0008991A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6CE16DC77BA0008991A /* UIKit.framework */; };
 		525FE6D116DC77BA0008991A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6D016DC77BA0008991A /* Foundation.framework */; };
 		525FE6D316DC77BA0008991A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525FE6D216DC77BA0008991A /* CoreGraphics.framework */; };
@@ -31,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		524BD54017B0CA380067C0A3 /* TestInfoTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestInfoTemplateDelegate.h; sourceTree = "<group>"; };
+		524BD54117B0CA380067C0A3 /* TestInfoTemplateDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestInfoTemplateDelegate.m; sourceTree = "<group>"; };
 		525FE6CB16DC77BA0008991A /* AGSTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGSTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		525FE6CE16DC77BA0008991A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		525FE6D016DC77BA0008991A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,6 +130,8 @@
 				52950CDF179FA7FA00764DDC /* MainViewController.h */,
 				52950CE0179FA7FA00764DDC /* MainViewController.m */,
 				52950CE1179FA7FA00764DDC /* MainViewController.xib */,
+				524BD54017B0CA380067C0A3 /* TestInfoTemplateDelegate.h */,
+				524BD54117B0CA380067C0A3 /* TestInfoTemplateDelegate.m */,
 			);
 			path = AGSTest;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 				525FE6DB16DC77BA0008991A /* main.m in Sources */,
 				525FE6DF16DC77BA0008991A /* AppDelegate.m in Sources */,
 				52950CE2179FA7FA00764DDC /* MainViewController.m in Sources */,
+				524BD54217B0CA380067C0A3 /* TestInfoTemplateDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
