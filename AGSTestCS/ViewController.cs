@@ -72,7 +72,7 @@ namespace AGSTestCS {
 			this.MapView.RemoveMapLayerWithName(TestFeatureLayerName);
 			var url = NSUrl.FromString(FeatureLayerUrls[0]);
 			var testFeatureLayer = AGSFeatureLayer.FeatureServiceLayerWithURL(url, AGSFeatureLayerMode.OnDemand);
-
+			testFeatureLayer.OutFields = new string[] { "*" };
 
 
 			var testSymbol = new AGSSimpleMarkerSymbol(UIColor.Red) {

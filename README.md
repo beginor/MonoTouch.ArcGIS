@@ -2,7 +2,9 @@
 
 [ArcGIS Runtime SDK for iOS][1] Version 10.1.1 Update 1 (Apr 2013) binding to MonoTouch.
 
-![ArcGIS Runtime SDK for iOS](Screenshots/BaseMapLayer.jpg)
+![AGSTiledMapServiceLayer](Screenshots/BaseMapLayer.jpg)
+
+![AGSFeatureLayer](Screenshots/PointFeatureLayerWithInfo.png)
 
 ## Support Features
 
