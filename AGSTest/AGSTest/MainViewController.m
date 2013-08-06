@@ -9,11 +9,14 @@
 #import "MainViewController.h"
 #import "TestInfoTemplateDelegate.h"
 
-#define BASE_Layer_Name @"Base Map Layer"
+#define BASE_LAYER_NAME @"Base Map Layer"
+#define FEATURE_LAYER_NAME @"Feature Layer"
 
 @interface MainViewController ()
 
 @property NSArray *baseLayerUrls;
+
+@property NSArray *featureLayerUrls;
 
 @end
 
@@ -24,6 +27,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		 self.baseLayerUrls = @[@"http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", @"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer", @"http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"];
+		 
+		 self.featureLayerUrls = @[@"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/0"];
     }
     return self;
 }
@@ -36,37 +41,57 @@
 	
 	[self setBaseLayer:self.baseLayerSegment.selectedSegmentIndex];
     
-    AGSEnvelope *envelope = [AGSEnvelope envelopeWithXmin:12178333 ymin:2973103 xmax:13088239 ymax:2255207 spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
+    AGSEnvelope *envelope = [AGSEnvelope envelopeWithXmin:-20459599 ymin:2391609 xmax:-6833470 ymax:11289636 spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
     [self.mapView zoomToEnvelope:envelope animated:YES];
-	
-	NSURL* featureLayerUrl = [NSURL URLWithString:@"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StatesCitiesRivers_USA/MapServer/0"];
-	AGSFeatureLayer *featureLayer = [AGSFeatureLayer featureServiceLayerWithURL:featureLayerUrl mode:AGSFeatureLayerModeOnDemand];
-	
-	AGSSimpleMarkerSymbol* symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithColor:[UIColor redColor]];
-	symbol.size = CGSizeMake(10, 10);
-	
-	featureLayer.renderer = [AGSSimpleRenderer simpleRendererWithSymbol:symbol];
-	TestInfoTemplateDelegate *infoTemplateDelegate = [[TestInfoTemplateDelegate alloc] init];
-	featureLayer.infoTemplateDelegate = infoTemplateDelegate;
-	
-	
-	[self.mapView addMapLayer:featureLayer withName:@"Test Feature Layer"];
 }
 
 - (void) setBaseLayer:(NSInteger)selectedIndex {
 	
-	for (AGSLayer *layer in self.mapView.mapLayers) {
-		if ([layer.name isEqualToString:BASE_Layer_Name]) {
-			[self.mapView removeMapLayer:layer];
-			break;
+	[self.mapView removeMapLayerWithName:BASE_LAYER_NAME];
+
+	if (selectedIndex < [self.baseLayerUrls count]) {
+		NSString *url = self.baseLayerUrls[selectedIndex];
+		NSURL *layerUrl = [NSURL URLWithString:url];
+		AGSTiledMapServiceLayer *layer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:layerUrl];
+
+		[self.mapView insertMapLayer:layer withName:BASE_LAYER_NAME atIndex:0];
+	}
+}
+
+- (void)setPointFeatureLayer:(NSInteger)layerUrlIndex {
+    NSURL *featureLayerUrl = [NSURL URLWithString:self.featureLayerUrls[layerUrlIndex]];
+    AGSFeatureLayer *featureLayer = [AGSFeatureLayer featureServiceLayerWithURL:featureLayerUrl mode:AGSFeatureLayerModeSnapshot];
+	
+    AGSSimpleMarkerSymbol *symbol = [AGSSimpleMarkerSymbol simpleMarkerSymbolWithColor:[UIColor redColor]];
+    symbol.size = CGSizeMake(30, 30);
+
+    featureLayer.renderer = [AGSSimpleRenderer simpleRendererWithSymbol:symbol];
+	
+	featureLayer.outFields = @[@"*"];
+    //TestInfoTemplateDelegate *infoTemplateDelegate = [[TestInfoTemplateDelegate alloc] init];
+    //featureLayer.infoTemplateDelegate = infoTemplateDelegate;
+	
+	AGSCalloutTemplate *template = [[AGSCalloutTemplate alloc] init];
+	template.titleTemplate = @"{CITY_NAME}";
+	template.detailTemplate = @"{POP1990}";
+	featureLayer.infoTemplateDelegate = template;
+	//featureLayer.queryDelegate = nil;
+	AGSQuery *query = [[AGSQuery alloc] init];
+	query.where = @"POP1990 > 1000000";
+	
+	//[[featureLayer queryFeatures:query] start];
+	
+    [self.mapView insertMapLayer:featureLayer withName:FEATURE_LAYER_NAME atIndex:1];
+}
+
+- (void) setFeatureLayer:(NSInteger)selectedIndex {
+	[self.mapView removeMapLayerWithName:FEATURE_LAYER_NAME];
+
+	if (selectedIndex < [self.featureLayerUrls count]) {
+		if (selectedIndex == 0) {
+            [self setPointFeatureLayer:selectedIndex];
 		}
 	}
-
-	NSString *url = self.baseLayerUrls[selectedIndex];
-	NSURL *layerUrl = [NSURL URLWithString:url];
-	AGSTiledMapServiceLayer *layer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:layerUrl];
-
-	[self.mapView addMapLayer:layer withName:BASE_Layer_Name];
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,7 +113,9 @@
 	[self setBaseLayer:index];
 }
 
-- (NSString*) titleForGraphic:(AGSGraphic *)graphic screenPoint:(CGPoint)screen mapPoint:(AGSPoint *)mapPoint {
-	return [graphic attributeAsStringForKey:@"CITY_NAME"];
+- (IBAction)featureLayerSegmentValueChanged:(id)sender {
+	NSInteger selectedIndex = self.featureLayerSegment.selectedSegmentIndex;
+	[self setFeatureLayer:selectedIndex];
 }
+
 @end

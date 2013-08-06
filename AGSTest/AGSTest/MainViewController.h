@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <ArcGIS/ArcGIS.h>
 
-@interface MainViewController : UIViewController <AGSMapViewLayerDelegate, AGSInfoTemplateDelegate>
+@interface MainViewController : UIViewController <AGSMapViewLayerDelegate>
 
 @property (weak, nonatomic) IBOutlet AGSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *baseLayerSegment;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *featureLayerSegment;
 
 - (IBAction)baseLayerSegmentValueChanged:(id)sender;
+- (IBAction)featureLayerSegmentValueChanged:(id)sender;
 @end
