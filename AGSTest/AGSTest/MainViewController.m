@@ -68,13 +68,13 @@
     featureLayer.renderer = [AGSSimpleRenderer simpleRendererWithSymbol:symbol];
 	
 	featureLayer.outFields = @[@"*"];
-    //TestInfoTemplateDelegate *infoTemplateDelegate = [[TestInfoTemplateDelegate alloc] init];
-    //featureLayer.infoTemplateDelegate = infoTemplateDelegate;
+    TestInfoTemplateDelegate *infoTemplateDelegate = [[TestInfoTemplateDelegate alloc] init];
+    featureLayer.infoTemplateDelegate = infoTemplateDelegate;
 	
-	AGSCalloutTemplate *template = [[AGSCalloutTemplate alloc] init];
-	template.titleTemplate = @"{CITY_NAME}";
-	template.detailTemplate = @"{POP1990}";
-	featureLayer.infoTemplateDelegate = template;
+	//AGSCalloutTemplate *template = [[AGSCalloutTemplate alloc] init];
+	//template.titleTemplate = @"${CITY_NAME}";
+	//template.detailTemplate = @"${POP1990}";
+	//featureLayer.infoTemplateDelegate = template;
 	//featureLayer.queryDelegate = nil;
 	AGSQuery *query = [[AGSQuery alloc] init];
 	query.where = @"POP1990 > 1000000";
