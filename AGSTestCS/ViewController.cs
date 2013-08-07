@@ -97,7 +97,6 @@ namespace AGSTestCS {
 	public class TestInfoTemplateDelegate : AGSInfoTemplateDelegate {
 
 		public override string TitleForGraphic(AGSGraphic graphic, PointF screen, AGSPoint mapPoint) {
-			var attrs = graphic.AllAttributes();
 			var cityName = graphic.AttributeForKey("CITY_NAME");
 			return cityName.ToString();
 		}
