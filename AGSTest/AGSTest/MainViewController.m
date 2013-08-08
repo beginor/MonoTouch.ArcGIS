@@ -100,7 +100,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIInterfaceOrientationMask) supportedInterfaceOrientations {
+- (NSUInteger) supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 
