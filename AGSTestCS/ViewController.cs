@@ -39,7 +39,7 @@ namespace AGSTestCS {
 
 			this.SetBaseLayer(this.BaseLayerSegment.SelectedSegment);
 
-			var envelop = AGSEnvelope.EnvelopeWith(-20459599, 2391609, -6833470, 11289636, AGSSpatialReference.WebMercatorSpatialReference());
+			var envelop = AGSEnvelope.EnvelopeWith(-14206250, 2487500, -7493750, 6593750, AGSSpatialReference.WebMercatorSpatialReference());
 
 			this.MapView.ZoomToEnvelope(envelop, false);
 
