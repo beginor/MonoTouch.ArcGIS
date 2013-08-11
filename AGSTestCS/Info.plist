@@ -21,5 +21,14 @@
 	<string>cn.beginor.agstestcs</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>AppIcon@2x</string>
+		<string>AppIcon</string>
+		<string>Sportlight@2x</string>
+		<string>Sportlight</string>
+		<string>Settings@2x</string>
+		<string>Settings</string>
+	</array>
 </dict>
 </plist>

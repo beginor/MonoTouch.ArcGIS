@@ -49,7 +49,7 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <IpaPackageName />
-    <MtouchI18n />
+    <MtouchI18n>cjk</MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -113,5 +113,23 @@
       <Project>{677363EB-5B1F-4548-B055-B94538D646A3}</Project>
       <Name>Binding</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AppIcon.png" />
+    <BundleResource Include="Resources\AppIcon%402x.png" />
+    <BundleResource Include="Resources\iTunes.png" />
+    <BundleResource Include="Resources\iTunes%402x.png" />
+    <BundleResource Include="Resources\Settings.png" />
+    <BundleResource Include="Resources\Settings%402x.png" />
+    <BundleResource Include="Resources\Sportlight.png" />
+    <BundleResource Include="Resources\Sportlight%402x.png" />
+    <BundleResource Include="Resources\Default-Portrait.png" />
+    <BundleResource Include="Resources\Default-Landscape.png" />
+    <BundleResource Include="Resources\Default-Portrait%402x.png" />
+    <BundleResource Include="Resources\Default-Landscape%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork" />
+    <ITunesArtwork Include="Resources\iTunesArtwork%402x" />
   </ItemGroup>
 </Project>
