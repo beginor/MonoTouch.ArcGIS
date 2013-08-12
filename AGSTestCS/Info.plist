@@ -30,5 +30,7 @@
 		<string>Settings@2x</string>
 		<string>Settings</string>
 	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 </dict>
 </plist>
