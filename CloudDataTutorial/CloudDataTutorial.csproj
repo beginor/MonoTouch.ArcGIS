@@ -46,6 +46,8 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <IpaPackageName />
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -113,5 +115,20 @@
     <BundleResource Include="Resources\Default%402x.png" />
     <BundleResource Include="Resources\icon.png" />
     <BundleResource Include="Resources\icon%402x.png" />
+    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon%402x.png" />
+    <BundleResource Include="Resources\Icon-72.png" />
+    <BundleResource Include="Resources\Icon-Small.png" />
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
+    <BundleResource Include="Resources\Icon-Small-50.png" />
+    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-all-target-headers.hmap" />
+    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-generated-files.hmap" />
+    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-own-target-headers.hmap" />
+    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-project-headers.hmap" />
+    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial.hmap" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork" />
+    <ITunesArtwork Include="Resources\iTunesArtwork%402x" />
   </ItemGroup>
 </Project>
