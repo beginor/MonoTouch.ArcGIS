@@ -9,6 +9,11 @@ namespace CloudDataTutorial {
 
 	public partial class ViewController : UIViewController {
 
+		public string[] Countries {
+			get;
+			set;
+		}
+
 		public ViewController() : base ("ViewController", null) {
 		}
 
@@ -38,6 +43,51 @@ namespace CloudDataTutorial {
 			//featureSymbol.Outline
 			featureLayer.Renderer = AGSSimpleRenderer.SimpleRendererWithSymbol(featureSymbol);
 		}
+
+		partial void ShowCountryPicker(MonoTouch.UIKit.UIButton sender) {
+			if (this.Countries == null) {
+				this.Countries = new string[] { @"None",@"US",@"Canada",@"France",@"Australia",@"Brazil" };
+			}
+
+			var pickerSheet = new UIActionSheet(new RectangleF(0, 0, 320, 410));
+			pickerSheet.ShowInView(this.View);
+			pickerSheet.Bounds = new RectangleF(0, 0, 320, 410);
+
+			var countryPicker = new UIPickerView(pickerSheet.Bounds);
+			countryPicker.WeakDelegate = this;
+			countryPicker.DataSource = this;
+			countryPicker.ShowSelectionIndicator = true;
+
+			pickerSheet.AddSubview(countryPicker);
+		}
+
+		#region "UIPickerview DataSource Part"
+		[Export("numberOfComponentsInPickerView:")]
+		public int GetComponentCount(UIPickerView picker) {
+			return 1;
+		}
+
+		[Export("pickerView:numberOfRowsInComponent:")]
+		public virtual int GetRowsInComponent(UIPickerView picker, int component) {
+			return this.Countries.Length;
+		}
+
+		[Export("pickerView:titleForRow:forComponent:")]
+		public virtual string GetTitle(UIPickerView picker, int row, int component) {
+			return this.Countries[row];
+		}
+		#endregion
+
+		#region "UIPickerview Delegate Part"
+		[Export("pickerView:didSelectRow:inComponent:")]
+		public virtual void Selected(UIPickerView picker, int row, int component) {
+			// Dismiss action sheet
+
+			var pickerSheet = (UIActionSheet)picker.Superview;
+			pickerSheet.DismissWithClickedButtonIndex(0, true);
+		}
+		#endregion
 	}
+
 }
 

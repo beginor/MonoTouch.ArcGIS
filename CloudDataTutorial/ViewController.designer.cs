@@ -14,6 +14,9 @@ namespace CloudDataTutorial
 	{
 		[Outlet]
 		MonoTouch.ArcGIS.AGSMapView MapView { get; set; }
+
+		[Action ("ShowCountryPicker:")]
+		partial void ShowCountryPicker (MonoTouch.UIKit.UIButton sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

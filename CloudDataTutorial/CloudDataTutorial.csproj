@@ -121,11 +121,8 @@
     <BundleResource Include="Resources\Icon-Small.png" />
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small-50.png" />
-    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-all-target-headers.hmap" />
-    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-generated-files.hmap" />
-    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-own-target-headers.hmap" />
-    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial-project-headers.hmap" />
-    <BundleResource Include="build\CloudDataTutorial.build\MonoTouch-iphonesimulator\CloudDataTutorial.build\CloudDataTutorial.hmap" />
+    <BundleResource Include="Resources\menu.png" />
+    <BundleResource Include="Resources\menu%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\iTunesArtwork" />
