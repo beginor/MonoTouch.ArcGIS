@@ -1637,6 +1637,9 @@ namespace MonoTouch.ArcGIS {
 		//AGSFeatureLayerEditingDelegate EditingDelegate { get; set; }
 
 		[Export ("queryDelegate", ArgumentSemantic.Assign)]
+		NSObject WeakQueryDelegate { get; set; }
+
+		[Wrap ("WeakQueryDelegate"), NullAllowed]
 		AGSFeatureLayerQueryDelegate QueryDelegate { get; set; }
 
 		[Export ("outFields", ArgumentSemantic.Copy)]

@@ -34,6 +34,7 @@ namespace CloudDataTutorial {
 			// cloud data
 			var featureLayerUrl = NSUrl.FromString("http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0");
 			var featureLayer = AGSFeatureLayer.FeatureServiceLayerWithURL(featureLayerUrl, AGSFeatureLayerMode.OnDemand);
+			featureLayer.OutFields = new string[] { "*" };
 			this.MapView.AddMapLayer(featureLayer, "CloudData");
 
 			// symbology
@@ -44,7 +45,7 @@ namespace CloudDataTutorial {
 			featureLayer.Renderer = AGSSimpleRenderer.SimpleRendererWithSymbol(featureSymbol);
 		}
 
-		partial void ShowCountryPicker(MonoTouch.UIKit.UIButton sender) {
+		partial void ShowCountryPicker(UIButton sender) {
 			if (this.Countries == null) {
 				this.Countries = new string[] { @"None",@"US",@"Canada",@"France",@"Australia",@"Brazil" };
 			}
@@ -81,13 +82,48 @@ namespace CloudDataTutorial {
 		#region "UIPickerview Delegate Part"
 		[Export("pickerView:didSelectRow:inComponent:")]
 		public virtual void Selected(UIPickerView picker, int row, int component) {
-			// Dismiss action sheet
+			var countryName = this.Countries[row];
+			var featureLayer = (AGSFeatureLayer)this.MapView.MapLayerForName("CloudData");
 
+			if (featureLayer.SelectionSymbol == null) {
+				// SYMBOLOGY FOR WHERE CLAUSE SELECTION
+				var selectedFeatureSymbol = AGSSimpleMarkerSymbol.SimpleMarkerSymbolWithColor(UIColor.FromRGBA(0.78f, 0.3f, 0.19f, 1f));
+				selectedFeatureSymbol.Style = AGSSimpleMarkerSymbolStyle.Circle;
+				selectedFeatureSymbol.Size = new SizeF(10, 10);
+				featureLayer.SelectionSymbol = selectedFeatureSymbol;
+			}
+
+			if (featureLayer.QueryDelegate == null) {
+				featureLayer.QueryDelegate = new FeatureLayerQueryDelegate();
+			}
+
+			if (countryName == "None") {
+				// CLEAR SELECTION
+				featureLayer.ClearSelection();
+			}
+			else {
+				var selectQuery = AGSQuery.Query();
+				selectQuery.Where = string.Format("COUNTRY = {0}", countryName);
+				featureLayer.SelectFeaturesWithQuery(selectQuery, AGSFeatureLayerSelectionMethod.New);
+			}
+
+			// Dismiss action sheet
 			var pickerSheet = (UIActionSheet)picker.Superview;
 			pickerSheet.DismissWithClickedButtonIndex(0, true);
 		}
 		#endregion
+
 	}
 
+	public class FeatureLayerQueryDelegate : AGSFeatureLayerQueryDelegate {
+
+		public override void DidSelectFeaturesWithFeatureSet(AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet) {
+			int a = 2;
+		}
+
+		public override void DidFailSelectFeaturesWithError(AGSFeatureLayer featureLayer, NSOperation op, NSError error) {
+			int a = 1;
+		}
+	}
 }
 
