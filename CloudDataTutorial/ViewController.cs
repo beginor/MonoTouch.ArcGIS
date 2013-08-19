@@ -93,8 +93,8 @@ namespace CloudDataTutorial {
 				featureLayer.SelectionSymbol = selectedFeatureSymbol;
 			}
 
-			if (featureLayer.QueryDelegate == null) {
-				featureLayer.QueryDelegate = new FeatureLayerQueryDelegate();
+			if (featureLayer.WeakQueryDelegate == null) {
+				featureLayer.WeakQueryDelegate = this;
 			}
 
 			if (countryName == "None") {
@@ -103,7 +103,7 @@ namespace CloudDataTutorial {
 			}
 			else {
 				var selectQuery = AGSQuery.Query();
-				selectQuery.Where = string.Format("COUNTRY = {0}", countryName);
+				selectQuery.Where = string.Format("COUNTRY = '{0}'", countryName);
 				featureLayer.SelectFeaturesWithQuery(selectQuery, AGSFeatureLayerSelectionMethod.New);
 			}
 
@@ -113,17 +113,22 @@ namespace CloudDataTutorial {
 		}
 		#endregion
 
-	}
-
-	public class FeatureLayerQueryDelegate : AGSFeatureLayerQueryDelegate {
-
-		public override void DidSelectFeaturesWithFeatureSet(AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet) {
-			int a = 2;
+		#region "AGSFeature Query Delegate part"
+		[Export("featureLayer:operation:didSelectFeaturesWithFeatureSet:")]
+		public virtual void DidSelectFeaturesWithFeatureSet(AGSFeatureLayer featureLayer, NSOperation op, AGSFeatureSet featureSet) {
+			AGSMutableEnvelope env = null;
+			foreach (var selectedFature in featureSet.Features) {
+				if (env != null) {
+					env.UnionWithEnvelope(selectedFature.Geometry.Envelope);
+				}
+				else {
+					env = (AGSMutableEnvelope)selectedFature.Geometry.Envelope.MutableCopy();
+				}
+			}
+			this.MapView.ZoomToGeometry(env, 20, true);
 		}
-
-		public override void DidFailSelectFeaturesWithError(AGSFeatureLayer featureLayer, NSOperation op, NSError error) {
-			int a = 1;
-		}
+		#endregion
 	}
+	
 }
 
