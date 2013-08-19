@@ -1636,7 +1636,7 @@ namespace MonoTouch.ArcGIS {
 		//[Export ("editingDelegate", ArgumentSemantic.Assign)]
 		//AGSFeatureLayerEditingDelegate EditingDelegate { get; set; }
 
-		[Export ("queryDelegate", ArgumentSemantic.Assign)]
+		[Export ("queryDelegate", ArgumentSemantic.Assign), NullAllowed]
 		NSObject WeakQueryDelegate { get; set; }
 
 		[Wrap ("WeakQueryDelegate"), NullAllowed]
@@ -2071,4 +2071,156 @@ namespace MonoTouch.ArcGIS {
 		bool RespectsDaylightSaving { get; set; }
 	}
 
+	[BaseType (typeof (AGSEnvelope))]
+	public partial interface AGSMutableEnvelope {
+
+		[Export ("updateWithXmin:ymin:xmax:ymax:")]
+		void UpdateWithXmin (double xmin, double ymin, double xmax, double ymax);
+
+		[Export ("centerAtPoint:")]
+		void CenterAtPoint (AGSPoint point);
+
+		[Export ("unionWithEnvelope:")]
+		void UnionWithEnvelope (AGSEnvelope envelope);
+
+		[Export ("unionWithPoint:")]
+		void UnionWithPoint (AGSPoint point);
+
+		[Export ("expandByFactor:")]
+		void ExpandByFactor (double factor);
+
+		[Export ("expandByFactor:withAnchorPoint:")]
+		void ExpandByFactor (double factor, AGSPoint anchorPoint);
+
+		[Export ("reaspect:")]
+		void Reaspect (SizeF size);
+
+		[Export ("offsetByX:y:")]
+		void OffsetByX (double offsetX, double offsetY);
+
+		[Export ("normalize")]
+		void Normalize ();
+
+		[Export ("normalizeToEnvelope:")]
+		void NormalizeToEnvelope (AGSEnvelope env);
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; set; }
+	}
+
+	[BaseType (typeof (AGSPoint))]
+	public partial interface AGSMutablePoint {
+
+		[Export ("updateWithX:y:")]
+		void UpdateWithX (double x, double y);
+
+		[Export ("offsetByX:y:")]
+		void OffsetByX (double xOffset, double yOffset);
+
+		[Export ("normalize")]
+		void Normalize ();
+
+		[Export ("normalizeToEnvelope:")]
+		void NormalizeToEnvelope (AGSEnvelope env);
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; set; }
+	}
+
+	[BaseType (typeof (AGSPolygon))]
+	public partial interface AGSMutablePolygon {
+
+		[Export ("addRingToPolygon")]
+		void AddRingToPolygon ();
+
+		[Export ("insertRingAtIndex:")]
+		void InsertRingAtIndex (int ringIndex);
+
+		//[Export ("addPointToRing:")]
+		//void AddPointToRing (AGSPoint point);
+
+		[Export ("addPoint:toRing:")]
+		void AddPoint (AGSPoint point, int ring);
+
+		[Export ("insertPoint:onRing:atIndex:")]
+		void InsertPoint (AGSPoint point, int ring, int index);
+
+		[Export ("removePointOnRing:atIndex:")]
+		void RemovePointOnRing (int ring, int index);
+
+		[Export ("updatePoint:onRing:atIndex:")]
+		void UpdatePoint (AGSPoint point, int ring, int index);
+
+		[Export ("removeRingAtIndex:")]
+		void RemoveRingAtIndex (int index);
+
+		[Export ("closePolygon")]
+		void ClosePolygon ();
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; set; }
+	}
+
+	[BaseType (typeof (AGSPolyline))]
+	public partial interface AGSMutablePolyline {
+
+		[Export ("addPathToPolyline")]
+		void AddPathToPolyline ();
+
+		[Export ("insertPathAtIndex:")]
+		void InsertPathAtIndex (int pathIndex);
+
+		//[Export ("addPointToPath:")]
+		//void AddPointToPath (AGSPoint point);
+
+		[Export ("addPoint:toPath:")]
+		void AddPoint (AGSPoint point, int path);
+
+		[Export ("insertPoint:onPath:atIndex:")]
+		void InsertPoint (AGSPoint point, int path, int index);
+
+		[Export ("removePointOnPath:atIndex:")]
+		void RemovePointOnPath (int path, int index);
+
+		[Export ("updatePoint:onPath:atIndex:")]
+		void UpdatePoint (AGSPoint point, int pathIndex, int ptIndex);
+
+		[Export ("removePathAtIndex:")]
+		void RemovePathAtIndex (int index);
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; set; }
+	}
+
+	[BaseType (typeof (AGSGeometry))]
+	public partial interface AGSMultipoint {
+
+		[Export ("numPoints")]
+		int NumPoints { get; }
+
+		[Export ("pointAtIndex:")]
+		AGSPoint PointAtIndex (int index);
+
+		[Export ("isEqualToMultipoint:")]
+		bool IsEqualToMultipoint (AGSMultipoint other);
+	}
+
+	[BaseType (typeof (AGSMultipoint))]
+	public partial interface AGSMutableMultipoint {
+
+		[Export ("addPoint:")]
+		void AddPoint (AGSPoint point);
+
+		[Export ("insertPoint:atIndex:")]
+		void InsertPoint (AGSPoint point, int index);
+
+		[Export ("removePointAtIndex:")]
+		void RemovePointAtIndex (int index);
+
+		[Export ("updatePoint:atIndex:")]
+		void UpdatePoint (AGSPoint point, int index);
+
+		[Export ("spatialReference", ArgumentSemantic.Retain)]
+		AGSSpatialReference SpatialReference { get; set; }
+	}
 }
