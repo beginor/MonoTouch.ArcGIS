@@ -7,5 +7,5 @@ using MonoTouch.ObjCRuntime;
 	IsCxx = true,
 	ForceLoad = true,
 	Frameworks = "CoreGraphics CoreLocation CoreText Foundation QuartzCore MediaPlayer MobileCoreServices OpenGLES Security UIKit",
-	LinkerFlags = "-lz -lc++"
+	LinkerFlags = "-lz -lc++ -all_load -ObjC"
 	)]
